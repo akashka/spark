@@ -1,5 +1,6 @@
 var AuthenticationController = require('./controllers/authentication'),  
     StudentController = require('./controllers/students'),  
+    CenterController = require('./controllers/centers'),  
     express = require('express'),
     passportService = require('../config/passport'),
     passport = require('passport');
@@ -11,13 +12,16 @@ module.exports = function(app){
  
     var apiRoutes = express.Router(),
         authRoutes = express.Router(),
-        studentRoutes = express.Router();
+        studentRoutes = express.Router(),
+        centerRoutes = express.Router();
  
     // Auth Routes
     apiRoutes.use('/auth', authRoutes);
     authRoutes.post('/register', AuthenticationController.register);
+    authRoutes.put('/update', AuthenticationController.update);
     authRoutes.post('/login', requireLogin, AuthenticationController.login);
- 
+    authRoutes.post('/forgotPassword', AuthenticationController.forgotPassword);
+    authRoutes.get('/', AuthenticationController.getUsers);
     authRoutes.get('/protected', requireAuth, function(req, res){
         res.send({ content: 'Success'});
     });
@@ -27,6 +31,12 @@ module.exports = function(app){
     studentRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), StudentController.getStudents);
     studentRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), StudentController.createStudent);
     studentRoutes.put('/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), StudentController.updateStudent);
+ 
+    // Center Routes
+    apiRoutes.use('/centers', centerRoutes); 
+    centerRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.getCenters);
+    centerRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.createCenter);
+    centerRoutes.put('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.updateCenter);
  
     // Set up routes
     app.use('/api', apiRoutes);

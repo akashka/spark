@@ -32,12 +32,6 @@ var StudentSchema = new mongoose.Schema({
     	type: String,
     	required: true
     },
-    enquiry_details: {
-    	type: Array,
-    },
-    confirmation_details: {
-    	type: Array,
-    },
     parent_name: {
         type: String,
         required: true
@@ -49,14 +43,42 @@ var StudentSchema = new mongoose.Schema({
         type: String,
         required: true  
     },
-    center: {},
-    counsellor: {},
-    today_age: {},
-    month_date: {},
-    month_age: {},
-    class_group: {},
-    photo: {}
- 
+    center: {
+        type: String,
+        required: true
+    },
+    counsellor: {
+        type: String,
+        required: true
+    },
+    class_group: {
+        type: String,
+        required: true
+    },
+    photo: {},
+    enquiry_date: {},
+    class_type: {
+        type: String,
+    },
+    uniform_size: {
+        type: String,
+    },
+    shoe_size: {
+        type: String,
+    },
+    is_Confirmed: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    is_Indented: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    confirmation_date: {},
+    indentation_date: {}
+
 }, {
     timestamps: true
 });
