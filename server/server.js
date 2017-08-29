@@ -9,6 +9,7 @@ var databaseConfig = require('./config/database');
 var router = require('./app/routes');
  
 mongoose.connect(databaseConfig.url);
+console.log(databaseConfig);
  
 app.listen(process.env.PORT || 8080);
 console.log("App listening on port 8080");
