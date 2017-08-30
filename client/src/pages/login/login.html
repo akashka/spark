@@ -7,7 +7,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="!isForgotPassword">
           <ion-col>
               <ion-list inset [@bounceInBottom]="formState">
 
@@ -36,11 +36,45 @@
           </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="!isForgotPassword">
           <ion-col>
               <button ion-button full (click)="login()" [@fadeIn]="loginState" class="login-button">Login</button>
           </ion-col>
       </ion-row>
+
+      <ion-col *ngIf="!isForgotPassword">
+          <a class="forgot-password" (click)="forgotPassword()" [@fadeIn]="loginState"> FORGOT PASSWORD? </a>
+      </ion-col>
+
+      <ion-row *ngIf="isForgotPassword">
+          <ion-col>
+              <ion-list inset [@bounceInBottom]="formState">
+
+                <form [formGroup]="forgotPasswordForm">
+   
+                    <ion-item>
+                      <ion-label><ion-icon name="person"></ion-icon></ion-label>
+                      <ion-input formControlName="email" placeholder="email" type="text"></ion-input>
+                    </ion-item>
+
+                    <p *ngIf="!forgotPasswordForm.controls.email.valid  && (forgotPasswordForm.controls.email.dirty || submitAttempt)" class="errorMessage">
+                      Enter valid email id
+                    </p>
+
+                </form>
+              </ion-list>
+          </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="isForgotPassword">
+          <ion-col>
+              <button ion-button full (click)="submitForgotPassword()" [@fadeIn]="loginState" class="login-button">Submit</button>
+          </ion-col>
+      </ion-row>
+
+      <ion-col *ngIf="isForgotPassword">
+          <a class="forgot-password" (click)="forgotPassword()" [@fadeIn]="loginState"> Login? </a>
+      </ion-col>
 
       <ion-row>
         <ion-col>

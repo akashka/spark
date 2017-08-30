@@ -1,61 +1,80 @@
 <ion-header>
  <ion-navbar color="secondary">
-  <ion-buttons start>
+  <!-- <ion-buttons start>
     <button ion-button icon-only (click)="logout()"><ion-icon name="power"></ion-icon></button>
-  </ion-buttons>
+  </ion-buttons> -->
   <ion-title>
-    SPARK
+    SEARCH
   </ion-title>
   <ion-buttons end>
     <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>
   </ion-buttons>
  </ion-navbar>
 </ion-header>
+
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="openCenterPage()" *ngIf="isAdmin">
+        Center
+      </button>
+      <button ion-item (click)="openSignupPage()" *ngIf="!isCounsellor">
+        Users
+      </button>
+      <button ion-item (click)="openReportsPage()">
+        Reports
+      </button>
+      <button ion-item (click)="openIndentPage()">
+        Indent
+      </button>
+      <button ion-item (click)="logOut()">
+        Log Out
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
  
 <ion-content>
+
+  <ion-list>
  
-  <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">
-   
-      <button ion-item *ngIf="student.status==='confirmed'" class="confirmedStudent">
-        <div class="col_left">
-          <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>
-          <div *ngIf="!student.photo"><img src="../assets/images/NoImageAvailable.png" class="bg_student"/></div>
-        </div>
-        <div class="col_right">
-          <h1>{{student.name}}</h1>
-          <h3 *ngIf="student.gender === 'male'"> S/O {{student.parent_name}}</h3>
-          <h3 *ngIf="student.gender !== 'male'"> D/O {{student.parent_name}}</h3>
-          <h2><ion-icon name="mail"></ion-icon>  {{student.email_id}}</h2>
-          <h2><ion-icon name="call"></ion-icon>  {{student.phone_number}}</h2>
-          <h2><ion-icon name="locate"></ion-icon>  {{student.locality}}</h2>
-          <h2><ion-icon name="clock"></ion-icon>  {{student.dob | date:'dd-MMM-yyyy'}} ({{student.month_age}})</h2>
-          <h2>{{student.class_group}}</h2>
-        </div>
-      </button>
+    <img src="../assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />
+    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>
 
-      <button ion-item *ngIf="student.status!='confirmed'">
-        <div class="col_left">
-          <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>
-          <div *ngIf="!student.photo"><img src="../assets/images/NoImageAvailable.png" class="bg_student"/></div>
-        </div>
-        <div class="col_right">
-          <h1>{{student.name}}</h1>
-          <h3 *ngIf="student.gender === 'male'"> S/O {{student.parent_name}}</h3>
-          <h3 *ngIf="student.gender !== 'male'"> D/O {{student.parent_name}}</h3>
-          <h2>{{student.email_id}}</h2>
-          <h2>{{student.phone_number}} / {{student.alternate_contact}}</h2>
-          <h2>{{student.locality}}</h2>
-          <h2>{{student.dob}} ({{student.month_age}})</h2>
-          <h2>{{student.class_group}}</h2>
-        </div>
-      </button>
-   
-      <ion-item-options side="right">
-        <button ion-button color="danger" (click)="update(student)">
-          <ion-icon name="redo"></ion-icon>
-          Confirmed
+    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">
+     
+        <button ion-item>
+          <div class="col_left">
+            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>
+            <div *ngIf="!student.photo"><img src="../assets/images/NoImageAvailable.png" class="bg_student"/></div>
+          </div>
+          <div class="col_right">
+            <h1>{{student.name}}</h1>
+            <h3 *ngIf="student.gender === 'Male'"> S/O {{student.parent_name}}</h3>
+            <h3 *ngIf="student.gender !== 'Male'"> D/O {{student.parent_name}}</h3>
+            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>
+            <h2><ion-icon name="call"></ion-icon> {{student.phone_number}} </h2>
+            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->
+            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>
+            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: 'dd/MMM/yyyy'}} </h2>
+            <h2>{{student.class_group}}</h2>
+          </div>
         </button>
-      </ion-item-options>
-  </ion-item-sliding>
+     
+        <ion-item-options side="right">
+          <button ion-button color="info" (click)="update(student)">
+            <ion-icon name="redo"></ion-icon>
+            Confirm
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
 
+  </ion-list>
 </ion-content>

@@ -1,16 +1,5 @@
 .ios, .md {
  
-    signup-page {
- 
-        ion-content {
-            background-color: map-get($colors, secondary);
-        }
- 
-        scroll-content {
-            display: flex;
-            flex-direction: column;
-        }
- 
         ion-item {
             border-radius: 30px !important;
             padding-left: 10px !important;
@@ -22,32 +11,61 @@
  
         ion-list {
             margin: 0;
+            padding-bottom: 30px;
         }
- 
-        .heading-text {
-            flex: 1;
-            align-items: center;
-            text-align: center;
+
+        .searchbar-md {
+            background: rgba(0, 0, 0, .2);
+            border-color: rgba(0, 0, 0, .05);
+            min-height: 44px;
         }
- 
-        .heading-text h3 {
-            color: #fff;
+
+        .col {
+            padding: 0;
         }
- 
- 
-        .account-form {
-            flex: 1;
-        }
- 
+
         .continue-button {
+            bottom: 0;
             width: 100%;
-            border-radius: 30px;
-            margin-top: 30px;
-            font-size: 0.9em;
-            background-color: transparent;
-            border: 1px solid #fff;
+            position: fixed;
+            height: 5.6rem;
+            font-size: 2.4rem;
         }
- 
-    }
- 
+
+        ion-searchbar {
+                display: inline-flex;
+                width: 85%;
+        }
+
+        .search-row {
+            background: rgb(169, 169, 169);
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .search-ic {
+                padding: 0;
+                width: 10%;
+                display: inline-block;
+                border-color: rgba(0, 0, 0, 0.05);
+                height: 36px;
+                vertical-align: middle;
+                margin-left: 5px;
+        }
+
+        .search-ic .select-icon {
+            margin: 7px;
+        }
+
+        .search-ic .select-text {
+            display: none;
+        }
+
+        .search-ic .item-cover {
+            position: initial;
+        }
+
+        .error-message {
+            font-color: red;
+        }
+
 }

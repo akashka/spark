@@ -11,16 +11,20 @@ import {
     MenuController
   } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import * as _ from 'lodash'
+import { Storage } from '@ionic/storage';
 
 // Providers
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
+import { Center } from '../../providers/center/center';
 
 // Pages
 import { SearchPage } from '../search/search';
 import { LoginPage } from '../login/login';
 import { SignupPage } from '../signup/signup';
 import { CenterPage } from '../center/center';
+import { IndentPage } from '../indent/indent';
 import { ReportsPage } from '../reports/reports';
 
 // Files Images
@@ -41,6 +45,24 @@ export class HomePage {
   studentForm: FormGroup;
   public submitAttempt: Boolean = false;
   public lastImage: any;
+  public centers: any;
+  public userCenter: any;
+  public users: any;
+
+  public today_age_years: any;
+  public today_age_months: any;
+  public today_age_days: any;
+  
+  public month_date: any;
+
+  public month_age_years: any;
+  public month_age_months: any;
+  public month_age_days: any;
+
+  public class_group: any;
+  public isAdmin: Boolean = false;
+  public isCenterAdmin: Boolean = false;
+  public isCounsellor: Boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -59,6 +81,8 @@ export class HomePage {
     public platform: Platform,
     public app: App,
     public menu: MenuController,
+    public centerService: Center,
+    public storage: Storage
   ) { 
       menu.enable(true);
 
@@ -82,22 +106,72 @@ export class HomePage {
         
         center: [''],
         counsellor: [''],
-        today_age: [],
-        month_date: [],
-        month_age: [],
-        class_group: [],
-        photo: []
+        today_age: [''],
+        month_date: [''],
+        month_age: [''],
+        class_group: [''],
+        photo: [''],
+        student_id: ['']
       });
+
+      this.storage.get('user').then((user) => {
+              if(user.role === "counsellor")  this.isCounsellor = true;
+         else if(user.role === "admin")  this.isAdmin = true;
+         else if(user.role === "centerAdmin")  this.isCenterAdmin = true;
+         else this.isCounsellor = true;
+      }); 
   }
  
-  ionViewDidLoad() { }
- 
+  ionViewDidLoad() {
+    this.authService.searchUser().then((users) => {
+      this.users = users;
+      this.centerService.searchCenter().then((centers) => {
+        this.userCenter = _.find(centers, ['center_code', this.users[0].center]);
+        this.studentService.getStudents().then((data) => {
+          var student = _.filter(data, ['center', this.userCenter.center_code]);
+          var student_ids = this.userCenter.center_code;
+          student_ids += student ? (student.length > 0 ? student.length : 1) : 0;
+          this.studentForm.controls['student_id'].setValue(student_ids);
+        }, (err) => {
+            console.log("not allowed");
+        });
+      }, (err) => {
+        console.log(err);
+      });
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  resetStudent() {
+        this.studentForm.controls['name'].setValue('');
+        this.studentForm.controls['email_id'].setValue('');
+        this.studentForm.controls['phone_number'].setValue('');
+        this.studentForm.controls['parent_name'].setValue('');
+        this.studentForm.controls['alternate_contact'].setValue('');
+        this.studentForm.controls['locality'].setValue('');
+        this.studentForm.controls['today_age'].setValue('');
+        this.studentForm.controls['month_date'].setValue('');
+        this.studentForm.controls['month_age'].setValue('');
+        this.studentForm.controls['class_group'].setValue('');
+        this.studentForm.controls['photo'].setValue('');
+        this.studentForm.controls['dob'].setValue('');
+        this.today_age_years = '';
+        this.today_age_months = '';
+        this.today_age_days= '';
+        this.month_date = '';
+        this.month_age_years = '';
+        this.month_age_months = '';
+        this.month_age_days = '';
+        this.class_group = '';
+  }
+
   addStudent = () => {
     this.showLoader;
     this.submitAttempt = true;
 
     if(this.studentForm.valid) {
-      this.studentService.createStudent(this.studentForm).then((result) => {
+      this.studentService.createStudent(this.studentForm.value).then((result) => {
         this.hideLoader();
         this.presentToast('student data saved successfully');
       }, (err) => {
@@ -122,25 +196,41 @@ export class HomePage {
     this.navCtrl.setRoot(SearchPage);
   };
 
-  logout() {
+  logOut = () => {
     this.authService.logout();
     this.navCtrl.setRoot(LoginPage);
   }
 
-  onDobChange = (dob) => {
+  onDobChange = () => {
+    var dob = this.studentForm.value.dob;
     var now = new Date();
     this.studentForm.value.today_age = this.getAge(dob, now);
     now.setDate(1);
     now.setMonth(5);
     this.studentForm.value.month_age = this.getAge(dob, now);
     this.studentForm.value.month_date = now;
+
+    this.studentForm.value.today_age.years += 1900;
+    this.today_age_years = this.studentForm.value.today_age.years;
+    this.today_age_months = this.studentForm.value.today_age.months;
+    this.today_age_days = this.studentForm.value.today_age.days;
+
+    this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + (this.studentForm.value.month_date.getYear() + 1900);
+    
+    this.studentForm.value.month_age.years += 1900;
+    this.month_age_years = this.studentForm.value.month_age.years;
+    this.month_age_months = this.studentForm.value.month_age.months;
+    this.month_age_days = this.studentForm.value.month_age.days;
+    
+    this.class_group = this.calculateClass(this.studentForm.value.month_age);
+    this.studentForm.controls['class_group'].setValue(this.class_group);
   }
 
   public getAge = (birthday, tillday) => {
     var today = new Date(
-                  tillday.substring(6,10),
-                  tillday.substring(0,2)-1,                   
-                  tillday.substring(3,5)
+                  tillday.getYear(),
+                  tillday.getMonth(),                   
+                  tillday.getDate()
                 );
 
     var yearNow = today.getFullYear();
@@ -148,9 +238,9 @@ export class HomePage {
     var dateNow = today.getDate();
 
     var dob = new Date(
-                birthday.substring(6,10),
-                birthday.substring(0,2)-1,                   
-                birthday.substring(3,5)                  
+                birthday.substring(0,4),
+                birthday.substring(5,7)-1,                   
+                birthday.substring(8,10)                  
               );
 
     var yearDob = dob.getFullYear();
@@ -198,6 +288,7 @@ export class HomePage {
     else if(age >= 206 && age < 306) return "Nursery"
     else if(age >= 306 && age < 406) return "LKG"
     else if(age >= 406 && age < 506) return "UKG"
+    return "Not eligible"
   }
 
   private createFileName() {
@@ -331,6 +422,10 @@ export class HomePage {
 
   openReportsPage() {
     this.navCtrl.setRoot(ReportsPage);
+  }
+
+  openIndentPage() {
+    this.navCtrl.setRoot(IndentPage);
   }
 
 };

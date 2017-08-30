@@ -62,6 +62,7 @@ import { SignupPage } from '../signup/signup';
 export class LoginPage {
  
     loginForm: FormGroup;
+    forgotPasswordForm: FormGroup;
     loading: any;
     logoState: any = "in";
     cloudState: any = "in";
@@ -69,6 +70,7 @@ export class LoginPage {
     formState: any = "in";
     errorMessage: string = "";
     submitAttempt: Boolean = false;
+    isForgotPassword: Boolean = false;
 
     constructor(
       public navCtrl: NavController, 
@@ -80,13 +82,14 @@ export class LoginPage {
           email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Validators.required])],
           password: ['', Validators.compose([Validators.required])],
         });
+        this.forgotPasswordForm = formBuilder.group({
+          email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Validators.required])]
+        });
     }
 
  
     ionViewDidLoad() {
- 
         this.showLoader();
- 
         //Check if already authenticated
         this.authService.checkAuthentication().then((res) => {
             console.log("Already authorized");
@@ -96,19 +99,15 @@ export class LoginPage {
             console.log("Not already authorized");
             this.loading.dismiss();
         });
- 
     }
  
     login(){
- 
         this.showLoader();
         this.submitAttempt = true;
-
         let credentials = {
             email: this.loginForm.value.email,
             password: this.loginForm.value.password
         };
-
         if(this.loginForm.valid) {
             this.authService.login(credentials).then((result) => {
                 this.loading.dismiss();
@@ -121,24 +120,49 @@ export class LoginPage {
             });
         }
         else {
-            this.errorMessage = ""
+            this.errorMessage = "Please fill all details correctly";
             this.loading.dismiss();
         }
- 
+    }
+
+    submitForgotPassword() {
+        this.showLoader();
+        this.submitAttempt = true;
+        let credentials = {
+            email: this.forgotPasswordForm.value.email,
+        };
+        if(this.forgotPasswordForm.valid) {
+            this.authService.forgotPassword(credentials).then((result) => {
+                this.loading.dismiss();
+                console.log(result);
+                this.isForgotPassword = !this.isForgotPassword; 
+                this.errorMessage = "Please check your mail for further information!"
+            }, (err) => {
+                this.errorMessage = "Authentication Failed!";
+                this.loading.dismiss();
+                console.log(err);
+            });
+        }
+        else {
+            this.errorMessage = "Please fill all details correctly";
+            this.loading.dismiss();
+        }
     }
  
     launchSignup(){
         this.navCtrl.push(SignupPage);
+        this.errorMessage = "";
     }
  
     showLoader(){
- 
         this.loading = this.loadingCtrl.create({
             content: 'Authenticating...'
         });
- 
         this.loading.present();
- 
+    }
+
+    forgotPassword(){
+      this.isForgotPassword = !this.isForgotPassword; 
     }
  
 }

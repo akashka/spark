@@ -29,6 +29,10 @@
 		    box-shadow: 0 2px 10px -3px rgba(0,0,0,.3);
 		}
 
+		ion-item-sliding .item {
+			padding-left: 0;
+		}
+
 		.col_left {
 			float: left;
 		    width: 40%;
@@ -75,6 +79,18 @@
 
 		.confirmedStudent {
 			background-color: lightgrey;
+		}
+
+		.col_right ion-icon {
+			color: #488aff;
+		}
+
+		.emozi {
+			padding: 50px;
+		}
+
+		.no_record {
+			text-align: center;
 		}
 
 }

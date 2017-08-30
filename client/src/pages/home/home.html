@@ -1,10 +1,10 @@
 <ion-header>
  <ion-navbar color="secondary">
-  <ion-buttons start>
+  <!-- <ion-buttons start>
     <button ion-button icon-only (click)="logout()"><ion-icon name="power"></ion-icon></button>
-  </ion-buttons>
+  </ion-buttons> -->
   <ion-title>
-    SPARK
+    ENQUIRY
   </ion-title>
   <ion-buttons end>
     <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>
@@ -20,17 +20,20 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <button ion-item (click)="openCenterPage()">
+      <button ion-item (click)="openCenterPage()" *ngIf="isAdmin">
         Center
       </button>
-      <button ion-item (click)="openSignupPage()">
+      <button ion-item (click)="openSignupPage()" *ngIf="!isCounsellor">
         Users
       </button>
       <button ion-item (click)="openReportsPage()">
         Reports
       </button>
-      <button ion-item (click)="closeMenu()">
-        Close Menu
+      <button ion-item (click)="openIndentPage()">
+        Indent
+      </button>
+      <button ion-item (click)="logOut()">
+        Log Out
       </button>
     </ion-list>
   </ion-content>
@@ -50,7 +53,7 @@
             <ion-input type="text" formControlName="name"></ion-input>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">
           Please enter a valid name
         </p>
 
@@ -58,22 +61,22 @@
         <ion-item>
             <ion-label floating><ion-icon name="transgender"></ion-icon> Gender*</ion-label>
             <ion-select formControlName="gender">
-              <ion-option value="Boy" selected="true">Boy</ion-option>
-              <ion-option value="Girl">Girl</ion-option>
+              <ion-option value="Male" selected="true">Male</ion-option>
+              <ion-option value="Female">Female</ion-option>
             </ion-select>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">
           Please select Gender
         </p>
 
         <!-- DOB of the student -->
         <ion-item>
           <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>
-          <ion-datetime displayFormat="DD/MMM/YYYY" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>
+          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">
           Please select valid date
         </p>
 
@@ -83,7 +86,7 @@
             <ion-input type="text" formControlName="parent_name"></ion-input>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">
           Please enter a valid name
         </p>
  
@@ -92,7 +95,7 @@
             <ion-input type="text" formControlName="email_id"></ion-input>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">
           Please enter a valid E-mail Id
         </p>
  
@@ -101,7 +104,7 @@
             <ion-input type="text" formControlName="phone_number"></ion-input>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">
           Please enter a valid Phone No.
         </p>
 
@@ -110,7 +113,7 @@
             <ion-input type="text" formControlName="alternate_contact"></ion-input>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">
           Please enter a valid alternate No.
         </p>
 
@@ -119,20 +122,22 @@
             <ion-input type="text" formControlName="locality"></ion-input>
         </ion-item>
 
-        <p *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">
+        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">
           Please enter a valid locality
         </p>
 
         <ion-item>
-            <h2>Age as of Today - </h2>
+            <h2>Age as of Today - 
+            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>
         </ion-item>
 
         <ion-item>
-            <h2>Age as of  - </h2>
+            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>
         </ion-item>
 
         <ion-item>
-            <h2>Class - </h2>
+            <h2>Class - 
+            <span class="numbering">{{ class_group }}</span></h2>
         </ion-item>
 
         <ion-toolbar color="primary" class="upload_button">

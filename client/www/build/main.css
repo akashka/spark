@@ -1,3 +1,4 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat:300,400,700';
 .ion-ios-add:before {
   content: "\f102";
 }
@@ -25199,6 +25200,86 @@ ion-navbar.toolbar {
   }
 }
 
+.ios page-center ion-item, .md page-center ion-item {
+  border-radius: 30px !important;
+  padding-left: 10px !important;
+  margin-bottom: 10px;
+  background-color: #f6f6f6;
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.ios page-center ion-list, .md page-center ion-list {
+  margin: 0;
+}
+
+.ios page-center .searchbar-md, .md page-center .searchbar-md {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.05);
+  min-height: 44px;
+}
+
+.ios page-center .col, .md page-center .col {
+  padding: 0;
+}
+
+.ios page-center .continue-button, .md page-center .continue-button {
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  height: 5.6rem;
+  font-size: 2.4rem;
+}
+
+.ios page-center ion-searchbar, .md page-center ion-searchbar {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 85%;
+}
+
+.ios page-center .search-row, .md page-center .search-row {
+  background: darkgray;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.ios page-center .search-ic, .md page-center .search-ic {
+  padding: 0;
+  width: 10%;
+  display: inline-block;
+  border-color: rgba(0, 0, 0, 0.05);
+  height: 36px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.ios page-center .search-ic .select-icon, .md page-center .search-ic .select-icon {
+  margin: 7px;
+}
+
+.ios page-center .search-ic .select-text, .md page-center .search-ic .select-text {
+  display: none;
+}
+
+.ios page-center .search-ic .item-cover, .md page-center .search-ic .item-cover {
+  position: initial;
+}
+
+.booking_card {
+  border-bottom: 1px solid #e7e7e7;
+  padding: 15px;
+  background: #fffbf3;
+}
+
+.booking_card h4 {
+  margin: 0;
+}
+
+.booking_card .h4 .ion-icon {
+  color: #488aff;
+}
+
 .ios, .md {
   background-image: url(../../assets/images/15549a14589707.5628669c64769.png);
   background-size: cover;
@@ -25285,6 +25366,14 @@ ion-navbar.toolbar {
   width: 100%;
 }
 
+.ios .errorMessage, .md .errorMessage {
+  color: red;
+}
+
+.ios .numbering, .md .numbering {
+  color: blue;
+}
+
 .ios .login-page .scroll-content, .md .login-page .scroll-content {
   background-color: #42c7ff;
   display: -webkit-box;
@@ -25319,6 +25408,7 @@ ion-navbar.toolbar {
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
+  margin-bottom: 35px;
 }
 
 .ios .login-page ion-item, .md .login-page ion-item {
@@ -25346,6 +25436,223 @@ ion-navbar.toolbar {
   font-size: 1em;
   color: #B33A3A;
   font-weight: bold;
+}
+
+.ios .login-page .forgot-password, .md .login-page .forgot-password {
+  float: right;
+  color: red;
+}
+
+page-reports .button-bar {
+  display: table;
+}
+
+page-reports .button {
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  min-width: 90px;
+}
+
+page-reports .button-positive {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 28px;
+}
+
+page-reports .button-assertive {
+  background-color: #008CBA;
+  color: white;
+}
+
+page-reports .button-energized {
+  background-color: #f44336;
+  color: white;
+}
+
+page-reports .button-simple {
+  background-color: #009688;
+  color: white;
+}
+
+page-reports .button-option:active {
+  background: olive;
+  color: white;
+}
+
+page-reports .button-option:focus {
+  background: olive;
+  color: white;
+}
+
+page-reports .button-option:visited {
+  background: olive;
+  color: white;
+}
+
+page-reports .gm_drawer_footer_wrapper {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  background: #fff;
+  bottom: 0;
+  z-index: 1;
+  -webkit-box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+page-reports .btn-danger {
+  color: white;
+  padding: 14px 20px;
+  background-color: #f44336;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  height: 80%;
+}
+
+page-reports .btn-success {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  height: 80%;
+}
+
+page-reports .btn-info {
+  background-color: #008CBA;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  height: 80%;
+}
+
+page-reports .result-number {
+  font-size: 0.89em;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: orangered;
+}
+
+page-reports .confirmed {
+  background: #008CBA;
+}
+
+page-reports .enquiry {
+  background: #f44336;
+}
+
+page-reports .indented {
+  background: #4CAF50;
+}
+
+.days-btn p {
+  color: #444444;
+}
+
+.title-md .toolbar-title-md {
+  color: white;
+}
+
+.bar-buttons-md .bar-button-clear-md {
+  color: white;
+}
+
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px;
+}
+
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.rwd-table th {
+  display: none;
+}
+
+.rwd-table td {
+  display: block;
+}
+
+.rwd-table td:first-child {
+  padding-top: .5em;
+}
+
+.rwd-table td:last-child {
+  padding-bottom: .5em;
+}
+
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 6.5em;
+  display: inline-block;
+}
+
+@media (min-width: 480px) {
+  .rwd-table td:before {
+    display: none;
+  }
+}
+
+.rwd-table th, .rwd-table td {
+  text-align: left;
+}
+
+@media (min-width: 480px) {
+  .rwd-table th, .rwd-table td {
+    display: table-cell;
+    padding: .25em .5em;
+  }
+  .rwd-table th:first-child, .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child, .rwd-table td:last-child {
+    padding-right: 0;
+  }
+}
+
+.rwd-table {
+  background: #34495E;
+  color: #fff;
+  border-radius: .4em;
+  overflow: hidden;
+  width: 100%;
+}
+
+.rwd-table tr {
+  border-color: #46637f;
+}
+
+.rwd-table th, .rwd-table td {
+  margin: .5em 1em;
+}
+
+@media (min-width: 480px) {
+  .rwd-table th, .rwd-table td {
+    padding: 1em !important;
+  }
+}
+
+.rwd-table th, .rwd-table td:before {
+  color: #dd5;
 }
 
 .ios .toolbar-background, .md .toolbar-background {
@@ -25376,6 +25683,10 @@ ion-navbar.toolbar {
   padding-bottom: 10px;
   -webkit-box-shadow: 0 2px 10px -3px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 10px -3px rgba(0, 0, 0, 0.3);
+}
+
+.ios ion-item-sliding .item, .md ion-item-sliding .item {
+  padding-left: 0;
 }
 
 .ios .col_left, .md .col_left {
@@ -25426,23 +25737,19 @@ ion-navbar.toolbar {
   background-color: lightgrey;
 }
 
-.ios signup-page ion-content, .md signup-page ion-content {
-  background-color: #32db64;
+.ios .col_right ion-icon, .md .col_right ion-icon {
+  color: #488aff;
 }
 
-.ios signup-page scroll-content, .md signup-page scroll-content {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+.ios .emozi, .md .emozi {
+  padding: 50px;
 }
 
-.ios signup-page ion-item, .md signup-page ion-item {
+.ios .no_record, .md .no_record {
+  text-align: center;
+}
+
+.ios ion-item, .md ion-item {
   border-radius: 30px !important;
   padding-left: 10px !important;
   margin-bottom: 10px;
@@ -25451,38 +25758,64 @@ ion-navbar.toolbar {
   font-size: 0.9em;
 }
 
-.ios signup-page ion-list, .md signup-page ion-list {
+.ios ion-list, .md ion-list {
   margin: 0;
+  padding-bottom: 30px;
 }
 
-.ios signup-page .heading-text, .md signup-page .heading-text {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  text-align: center;
+.ios .searchbar-md, .md .searchbar-md {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.05);
+  min-height: 44px;
 }
 
-.ios signup-page .heading-text h3, .md signup-page .heading-text h3 {
-  color: #fff;
+.ios .col, .md .col {
+  padding: 0;
 }
 
-.ios signup-page .account-form, .md signup-page .account-form {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.ios signup-page .continue-button, .md signup-page .continue-button {
+.ios .continue-button, .md .continue-button {
+  bottom: 0;
   width: 100%;
-  border-radius: 30px;
-  margin-top: 30px;
-  font-size: 0.9em;
-  background-color: transparent;
-  border: 1px solid #fff;
+  position: fixed;
+  height: 5.6rem;
+  font-size: 2.4rem;
+}
+
+.ios ion-searchbar, .md ion-searchbar {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 85%;
+}
+
+.ios .search-row, .md .search-row {
+  background: darkgray;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.ios .search-ic, .md .search-ic {
+  padding: 0;
+  width: 10%;
+  display: inline-block;
+  border-color: rgba(0, 0, 0, 0.05);
+  height: 36px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.ios .search-ic .select-icon, .md .search-ic .select-icon {
+  margin: 7px;
+}
+
+.ios .search-ic .select-text, .md .search-ic .select-text {
+  display: none;
+}
+
+.ios .search-ic .item-cover, .md .search-ic .item-cover {
+  position: initial;
+}
+
+.ios .error-message, .md .error-message {
+  font-color: red;
 }

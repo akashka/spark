@@ -51,18 +51,19 @@ export class Students {
     return null; 
   }
  
-  updateStudent(id){
+  updateStudent(student){
  
     return new Promise((resolve, reject) => {
  
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
  
-        this.http.put('http://localhost:8080/api/students/' + id, {headers: headers}).subscribe((res) => {
+        this.http.put('http://localhost:8080/api/students/' + student._id, student, {headers: headers})
+          .subscribe((res) => {
             resolve(res);
-        }, (err) => {
-            reject(err);
-        });    
+          }, (err) => {
+              reject(err);
+          });    
  
     });
  

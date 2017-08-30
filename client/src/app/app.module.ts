@@ -5,16 +5,22 @@ import { IonicStorageModule } from '@ionic/storage';
 import { BrowserModule } from '@angular/platform-browser'
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from "ion2-calendar";
 
 // Pages
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { SearchPage } from '../pages/search/search';
+import { CenterPage } from '../pages/center/center';
+import { ReportsPage } from '../pages/reports/reports';
+import { ConfirmPage } from '../pages/confirm/confirm';
+import { IndentPage } from '../pages/indent/indent';
 
 // Providers
 import { Students } from '../providers/students/students';
 import { Auth } from '../providers/auth/auth';
+import { Center } from '../providers/center/center';
 
 // Camera
 import { File } from '@ionic-native/file';
@@ -28,12 +34,17 @@ import { Camera } from '@ionic-native/camera';
     HomePage,
     LoginPage,
     SignupPage,
-    SearchPage
+    SearchPage,
+    CenterPage,
+    ReportsPage,
+    ConfirmPage,
+    IndentPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     BrowserAnimationsModule,
+    CalendarModule,
     IonicStorageModule.forRoot(MyApp),
     IonicModule.forRoot(MyApp)
   ],
@@ -43,12 +54,17 @@ import { Camera } from '@ionic-native/camera';
     HomePage,
     LoginPage,
     SignupPage,
-    SearchPage
+    SearchPage,
+    CenterPage,
+    ReportsPage,
+    ConfirmPage,
+    IndentPage
   ],
   providers: [
     IonicStorageModule,
     Students,
     Auth,
+    Center,
     File,
     Transfer,
     Camera,
