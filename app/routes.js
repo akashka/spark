@@ -1,6 +1,7 @@
 var AuthenticationController = require('./controllers/authentication'),  
     StudentController = require('./controllers/students'),  
     CenterController = require('./controllers/centers'),  
+    IndentationController = require('./controllers/indentations'),  
     express = require('express'),
     passportService = require('../config/passport'),
     passport = require('passport');
@@ -14,7 +15,8 @@ module.exports = function(app){
         authRoutes = express.Router(),
         studentRoutes = express.Router(),
         centerRoutes = express.Router();
- 
+        indentationRoutes = express.Router();
+
     // Auth Routes
     apiRoutes.use('/auth', authRoutes);
     authRoutes.post('/register', AuthenticationController.register);
@@ -38,6 +40,12 @@ module.exports = function(app){
     centerRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.createCenter);
     centerRoutes.put('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.updateCenter);
  
+    // Indentation Routes
+    apiRoutes.use('/indentations', indentationRoutes); 
+    indentationRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.getIndentations);
+    indentationRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.createIndentation);
+    indentationRoutes.put('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.updateIndentation);
+
     // Set up routes
     app.use('/api', apiRoutes);
  

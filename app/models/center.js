@@ -26,6 +26,22 @@ var CenterSchema = new mongoose.Schema({
     },
     active: {
         type: Boolean,
+    },
+    playgroup: {
+        type: Number,
+        required: true
+    },
+    nursery: {
+        type: Number,
+        required: true
+    },
+    lkg: {
+        type: Number,
+        required: true
+    },
+    ukg: {
+        type: Number,
+        required: true
     }
 
 }, {
