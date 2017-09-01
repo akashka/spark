@@ -2,6 +2,7 @@ page-reports {
 
 	.button-bar {
 		display: table;
+    width: 100%;
 	}
 
 	.button {
@@ -13,7 +14,7 @@ page-reports {
 	    text-decoration: none;
 	    display: inline-block;
 	    font-size: 16px;
-	    min-width: 90px;
+	    width: 25%;
 	}
 
 	.button-positive {

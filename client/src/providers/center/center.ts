@@ -6,6 +6,9 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class Center {
+
+  url = "https://spark-olw.herokuapp.com/";
+  //url = "http://localhost:8080/";
  
   constructor(public http: Http, public authService: Auth, public storage: Storage) {
  
@@ -16,7 +19,7 @@ export class Center {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Authorization', this.authService.token);
-      this.http.get('http://localhost:8080/api/centers', {headers: headers})
+      this.http.get(this.url+'api/centers', {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -31,7 +34,7 @@ export class Center {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', this.authService.token);
-      this.http.post('http://localhost:8080/api/centers', JSON.stringify(center), {headers: headers})
+      this.http.post(this.url+'api/centers', JSON.stringify(center), {headers: headers})
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
@@ -45,7 +48,7 @@ export class Center {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
-        this.http.put('http://localhost:8080/api/centers', JSON.stringify(center), {headers: headers})
+        this.http.put(this.url+'api/centers', JSON.stringify(center), {headers: headers})
           .map(res => res.json())
           .subscribe((res) => {
             resolve(res);

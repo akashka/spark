@@ -7,7 +7,9 @@ import 'rxjs/add/operator/map';
 export class Auth {
  
   public token: any;
- 
+  url = "https://spark-olw.herokuapp.com/";
+  //url = "http://localhost:8080/";
+
   constructor(public http: Http, public storage: Storage) {
  
   }
@@ -19,7 +21,7 @@ export class Auth {
             this.token = value;
             let headers = new Headers();
             headers.append('Authorization', this.token);
-            this.http.get('http://localhost:8080/api/auth/protected', {headers: headers})
+            this.http.get(this.url + 'api/auth/protected', {headers: headers})
                 .subscribe(res => {
                     resolve(res);
                 }, (err) => {
@@ -33,7 +35,7 @@ export class Auth {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('http://localhost:8080/api/auth/register', JSON.stringify(details), {headers: headers})
+        this.http.post(this.url+'api/auth/register', JSON.stringify(details), {headers: headers})
           .subscribe(res => {
             let data = res.json();
             this.token = data.token;
@@ -48,7 +50,7 @@ export class Auth {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('http://localhost:8080/api/auth/update', JSON.stringify(details), {headers: headers})
+        this.http.post(this.url+'api/auth/update', JSON.stringify(details), {headers: headers})
           .subscribe(res => {
             let data = res.json();
             this.token = data.token;
@@ -63,7 +65,7 @@ export class Auth {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('http://localhost:8080/api/auth/login', JSON.stringify(credentials), {headers: headers})
+        this.http.post(this.url+'api/auth/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
             let data = res.json();
             this.token = data.token;
@@ -81,7 +83,7 @@ export class Auth {
       return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        this.http.post('http://localhost:8080/api/auth/forgotPassword', JSON.stringify(credentials), {headers: headers})
+        this.http.post(this.url+'api/auth/forgotPassword', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
             let data = res.json();
             resolve(data);
@@ -95,7 +97,7 @@ export class Auth {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      this.http.get('http://localhost:8080/api/auth', {headers: headers})
+      this.http.get(this.url+'api/auth', {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);

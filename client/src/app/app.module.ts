@@ -21,6 +21,7 @@ import { IndentPage } from '../pages/indent/indent';
 import { Students } from '../providers/students/students';
 import { Auth } from '../providers/auth/auth';
 import { Center } from '../providers/center/center';
+import { Indentation } from '../providers/indentation/indentation';
 
 // Camera
 import { File } from '@ionic-native/file';
@@ -65,6 +66,7 @@ import { Camera } from '@ionic-native/camera';
     Students,
     Auth,
     Center,
+    Indentation,
     File,
     Transfer,
     Camera,

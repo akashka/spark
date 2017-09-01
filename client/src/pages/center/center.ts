@@ -37,6 +37,10 @@ export class CenterPage {
   myInput: string;
   center_id: string;
   mySelect: string;
+  playgroup: number;
+  nursery: number;
+  lkg: number;
+  ukg: number;
 
   constructor(
   			public navCtrl: NavController, 
@@ -61,7 +65,11 @@ export class CenterPage {
 		  center_phoneno: this.center_phoneno,
 		  center_email: this.center_email,
 		  center_address: this.center_address,
-		  active: this.active
+		  active: this.active,
+      playgroup: this.playgroup,
+      nursery: this.nursery,
+      lkg: this.lkg,
+      ukg: this.ukg
     };
     this.centerService.createCenter(center).then((result) => {
       console.log(result);
@@ -78,6 +86,10 @@ export class CenterPage {
     		  center_email: this.center_email,
     		  center_address: this.center_address,
     		  active: this.active,
+          playgroup: this.playgroup,
+          nursery: this.nursery,
+          lkg: this.lkg,
+          ukg: this.ukg,
           _id: this.center_id
     };
     this.centerService.updateCenter(center).then((result) => {
@@ -114,6 +126,10 @@ export class CenterPage {
   	  this.center_email = result[0].center_email;
   	  this.center_address = result[0].center_address;
   	  this.active = result[0].active;
+      this.playgroup = result[0].playgroup;
+      this.nursery = result[0].nursery;
+      this.lkg = result[0].lkg;
+      this.ukg = result[0].ukg;
       this.center_id = result[0]._id;
       this.btnText = "Update";
     }
@@ -125,6 +141,10 @@ export class CenterPage {
       this.center_address = "";
       this.active = true;
       this.center_id = "";
+      this.playgroup = 0;
+      this.nursery = 0;
+      this.lkg = 0;
+      this.ukg = 0;
     }
   }
 
@@ -142,6 +162,10 @@ export class CenterPage {
       this.center_address = result[0].center_address;
       this.active = result[0].active;
       this.center_id = result[0]._id;
+      this.playgroup = result[0].playgroup;
+      this.nursery = result[0].nursery;
+      this.lkg = result[0].lkg;
+      this.ukg = result[0].ukg;
       this.btnText = "Update";
     }
     else {
@@ -152,6 +176,10 @@ export class CenterPage {
       this.center_address = "";
       this.active = true;
       this.center_id = "";
+      this.playgroup = 0;
+      this.nursery = 0;
+      this.lkg = 0;
+      this.ukg = 0;
     }
   }
 

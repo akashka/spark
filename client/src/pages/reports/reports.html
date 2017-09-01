@@ -11,7 +11,7 @@
  
 <ion-content>
 
-	<div class="button-bar">
+	  <div class="button-bar">
         <a class="button button-option" (click)="searchToday()">Day</a>
         <a class="button button-option" (click)="searchWeek()">Week</a>
         <a class="button button-option" (click)="searchMonth()">Month</a>
@@ -32,28 +32,28 @@
 
     <p *ngIf="reports && reports.length" class="result-number"> {{reports.length}} {{searchType}} results found for {{startDate | date: 'dd/MMM/yyyy'}} - {{endDate | date: 'dd/MMM/yyyy'}}</p>
 
-	<table class="rwd-table">
-	  <tr>
-	    <th>ID</th>
-	    <th>Name</th>
-	    <th>Parent</th>
-	    <th>Phone</th>
-	    <th>DOB</th>
-	    <th>Email</th>
-	    <th>Gender</th>
-	    <th>Class</th>
-	  </tr>
-	  <tr *ngFor="let report of reports" class="{{report.status}}">
-	    <td data-th="ID">{{report.student_id}}</td>
-	    <td data-th="Name">{{report.name}}</td>
-	    <td data-th="Parent">{{report.parent_name}}</td>
-	    <td data-th="Phone">{{report.phone_number}}</td>
-	    <td data-th="DOB">{{report.dob | date: 'dd/MMM/yyyy'}}</td>
-	    <td data-th="Email">{{report.email_id}}</td>
-	    <td data-th="Gender">{{report.gender}}</td>
-	    <td data-th="Class">{{report.class_group}}</td>
-	  </tr>
-	</table>
+  	<table class="rwd-table">
+  	  <tr>
+  	    <th>ID</th>
+  	    <th>Name</th>
+  	    <th>Parent</th>
+  	    <th>Phone</th>
+  	    <th>DOB</th>
+  	    <th>Email</th>
+  	    <th>Gender</th>
+  	    <th>Class</th>
+  	  </tr>
+  	  <tr *ngFor="let report of reports" class="{{report.status}}">
+  	    <td data-th="ID">{{report.student_id}}</td>
+  	    <td data-th="Name">{{report.name}}</td>
+  	    <td data-th="Parent">{{report.parent_name}}</td>
+  	    <td data-th="Phone">{{report.phone_number}}</td>
+  	    <td data-th="DOB">{{report.dob | date: 'dd/MMM/yyyy'}}</td>
+  	    <td data-th="Email">{{report.email_id}}</td>
+  	    <td data-th="Gender">{{report.gender}}</td>
+  	    <td data-th="Class">{{report.class_group}}</td>
+  	  </tr>
+  	</table>
 
     <div class="gm_drawer_footer_wrapper" *ngIf="reports && reports.length">
       <button (click)="downloadReport()" ion-button class="btn-info">Download</button>
