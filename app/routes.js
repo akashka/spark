@@ -12,9 +12,12 @@ var requireAuth = passport.authenticate('jwt', {session: false}),
 module.exports = function(app){
 
     app.all('/*', function(req, res, next) {
+        console.log(req);
+        console.log(res);
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "X-Requested-With", "Content-Type");
       res.header("Access-Control-Allow-Methods", "GET, POST","PUT");
+        console.log(res);
       next();
     });
  
