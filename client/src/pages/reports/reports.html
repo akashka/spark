@@ -27,7 +27,7 @@
 
   <ion-list>
  
-    <img src="../assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />
+    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />
     <h1 *ngIf="reports && !reports.length" class="no_record"> NO RECORDS FOUND </h1>
 
     <p *ngIf="reports && reports.length" class="result-number"> {{reports.length}} {{searchType}} results found for {{startDate | date: 'dd/MMM/yyyy'}} - {{endDate | date: 'dd/MMM/yyyy'}}</p>

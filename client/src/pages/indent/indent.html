@@ -11,7 +11,7 @@
  
 <ion-content>
 
-  <img src="../assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />
+  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />
   <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>
 
   <ion-list *ngIf="!confirm_indent && students && students.length">
@@ -21,7 +21,7 @@
         <button ion-item>
           <div class="col_left indent_left">
             <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>
-            <div *ngIf="!student.photo"><img src="../assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
+            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
           </div>
           <div class="col_right indent_right">
             <h1>{{student.name}}</h1>

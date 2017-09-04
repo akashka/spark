@@ -661,12 +661,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Indentation = (function () {
+    //url = "http://localhost:8080/";
     function Indentation(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        //url = "https://spark-olw.herokuapp.com/";
-        this.url = "http://localhost:8080/";
+        this.url = "https://spark-olw.herokuapp.com/";
     }
     // Function to get list of al the Indentations
     Indentation.prototype.searchIndentation = function () {
@@ -747,11 +747,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Auth = (function () {
+    //url = "http://localhost:8080/";
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
-        //url = "https://spark-olw.herokuapp.com/";
-        this.url = "http://localhost:8080/";
+        this.url = "https://spark-olw.herokuapp.com/";
     }
     Auth.prototype.checkAuthentication = function () {
         var _this = this;
@@ -1552,12 +1552,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Students = (function () {
+    //url = "http://localhost:8080/";
     function Students(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        //url = "https://spark-olw.herokuapp.com/";
-        this.url = "http://localhost:8080/";
+        this.url = "https://spark-olw.herokuapp.com/";
     }
     Students.prototype.getStudents = function () {
         var _this = this;
@@ -1643,12 +1643,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Center = (function () {
+    //url = "http://localhost:8080/";
     function Center(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        //url = "https://spark-olw.herokuapp.com/";
-        this.url = "http://localhost:8080/";
+        this.url = "https://spark-olw.herokuapp.com/";
     }
     // Function to get list of al the centers
     Center.prototype.searchCenter = function () {
