@@ -747,11 +747,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Auth = (function () {
+    //url = "http://localhost:8080/";
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
-        //url = "https://spark-olw.herokuapp.com/";
-        this.url = "http://localhost:8080/";
+        this.url = "https://spark-olw.herokuapp.com/";
     }
     Auth.prototype.checkAuthentication = function () {
         var _this = this;
@@ -853,9 +853,10 @@ var Auth = (function () {
 }());
 Auth = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === "function" && _b || Object])
 ], Auth);
 
+var _a, _b;
 //# sourceMappingURL=auth.js.map
 
 /***/ }),
@@ -1643,12 +1644,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Center = (function () {
+    //url = "http://localhost:8080/";
     function Center(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        //url = "https://spark-olw.herokuapp.com/";
-        this.url = "http://localhost:8080/";
+        this.url = "https://spark-olw.herokuapp.com/";
     }
     // Function to get list of al the centers
     Center.prototype.searchCenter = function () {
@@ -1698,9 +1699,10 @@ var Center = (function () {
 }());
 Center = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Center);
 
+var _a, _b, _c;
 //# sourceMappingURL=center.js.map
 
 /***/ }),
