@@ -63,9 +63,10 @@ exports.forgotPassword = function(req, res, next){
             bcrypt.hash(token, 10, function(err, hash) {
                 existingUser.password = hash;
                 console.log(existingUser.password);
+                var id = existingUser._id;
                 delete existingUser._id;
 
-                User.findOneAndUpdate(existingUser._id, existingUser, {new: true}, function(err, user){
+                User.findOneAndUpdate(id, existingUser, {new: true}, function(err, user){
                     if(err){
                         return next(err);
                     }
