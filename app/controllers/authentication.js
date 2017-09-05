@@ -71,9 +71,16 @@ exports.forgotPassword = function(req, res, next){
 
                 User.findOneAndUpdate({_id: id}, existingUser, {upsert: true, new: true}, function(err, user){
                     if(err){
+                        console.log(err);
                         return next(err);
                     }
-                    sendMail(existingUser, token.secret);
+                    console.log(user);
+                    sendMail(user, token);
+                    var userInfo = setUserInfo(user);
+                    res.status(201).json({
+                        token: 'JWT ' + generateToken(userInfo),
+                        user: userInfo
+                    })
                 });
             });
 
