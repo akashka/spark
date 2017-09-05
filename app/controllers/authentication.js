@@ -65,7 +65,7 @@ exports.forgotPassword = function(req, res, next){
                     if(err){
                         return next(err);
                     }
-                    sendMail(existingUser);
+                    sendMail(existingUser, token.secret);
                 });
             });
 
@@ -180,14 +180,14 @@ exports.roleAuthorization = function(roles){
  
 }
 
-sendMail = function(user) {
+sendMail = function(user, token) {
   let smtpTransport = nodemailer.createTransport({
     host: 'smtp.sendgrid.net',
-    port: 587,
+    port: 465,
     service: 'Sendgrid',
     auth: {
-      user: 'axisrooms',
-      pass: 'admin1!'
+      user: 'Abcd123$0',
+      pass: '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'
     }
   });
 
@@ -195,7 +195,7 @@ sendMail = function(user) {
 
   var stringTemplate = "Hi" + user.name + 
     "<br/> <br/> You requested for new password. Your new password is: <br/> <br/>"
-    + user.password + "<br/> <br/> You can change your password after logging in from update profile section."
+    + token + "<br/> <br/> You can change your password after logging in from update profile section."
     + "<br/> <br/> If you facing any issues logging in, please contact Head Office.";
 
   var mailOptions = {

@@ -58,13 +58,17 @@
         </p>
 
         <!-- Gender of the student -->
-        <ion-item>
-            <ion-label floating><ion-icon name="transgender"></ion-icon> Gender*</ion-label>
-            <ion-select formControlName="gender">
-              <ion-option value="Male" selected="true">Male</ion-option>
-              <ion-option value="Female">Female</ion-option>
-            </ion-select>
-        </ion-item>
+        <ion-list radio-group formControlName="gender">
+          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>
+          <ion-item>
+            <ion-label>Male</ion-label>
+            <ion-radio value="Male"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Female</ion-label>
+            <ion-radio value="Female"></ion-radio>
+          </ion-item>
+        </ion-list>
 
         <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">
           Please select Gender
