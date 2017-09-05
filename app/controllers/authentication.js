@@ -8,12 +8,14 @@ var path = require("path");
 var bcrypt = require('bcrypt');
 
 function generateToken(user){
+    console.log("Generating Token for user " + user.email);
     return jwt.sign(user, authConfig.secret, {
         expiresIn: 10080
     });
 }
 
 exports.getUsers = function(req, res, next) {
+    console.log("Getting list of all user ");
     User.find(function(err, users) {
         if (err) { res.send(err); }
         res.json(users);
@@ -21,6 +23,7 @@ exports.getUsers = function(req, res, next) {
 }
  
 function setUserInfo(request){
+    console.log("Setting User Info for " + request.email);
     return {
         _id: request._id,
         email: request.email,
@@ -32,7 +35,7 @@ function setUserInfo(request){
 }
  
 exports.login = function(req, res, next){
-    console.log(req);
+    console.log("Logging in for user " + req.user.email);
     var userInfo = setUserInfo(req.user);
     res.status(200).json({
         token: 'JWT ' + generateToken(userInfo),
@@ -60,6 +63,7 @@ exports.forgotPassword = function(req, res, next){
             bcrypt.hash(token, 10, function(err, hash) {
                 existingUser.password = hash;
                 console.log(existingUser.password);
+                delete existingUser._id;
 
                 User.findOneAndUpdate(existingUser._id, existingUser, {new: true}, function(err, user){
                     if(err){
@@ -192,6 +196,7 @@ sendMail = function(user, token) {
   });
 
   console.log(user);
+  console.log(token);
 
   var stringTemplate = "Hi" + user.name + 
     "<br/> <br/> You requested for new password. Your new password is: <br/> <br/>"
