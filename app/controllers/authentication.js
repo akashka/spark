@@ -66,7 +66,10 @@ exports.forgotPassword = function(req, res, next){
                 var id = existingUser._id;
                 delete existingUser._id;
 
-                User.findOneAndUpdate(id, existingUser, {new: true}, function(err, user){
+                console.log(id);
+                console.log(existingUser);
+
+                User.findOneAndUpdate({_id: id}, existingUser, {upsert: true, new: true}, function(err, user){
                     if(err){
                         return next(err);
                     }
