@@ -20,7 +20,9 @@ exports.createIndentation = function(req, res, next) {
  
 exports.updateIndentation = function(req, res, next) {
     var indentation = req.body;
-    Indentation.findOneAndUpdate(req.body._id, indentation, {new: true}, function(err, indentation) {
+    delete indentation._id;
+    
+    Indentation.findOneAndUpdate(req.body._id, indentation, {upsert: true, new: true}, function(err, indentation) {
         if (err) return res.send(err);
         res.json(indentation);
     });

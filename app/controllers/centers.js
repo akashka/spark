@@ -20,7 +20,9 @@ exports.createCenter = function(req, res, next) {
  
 exports.updateCenter = function(req, res, next) {
     var center = req.body;
-    Center.findOneAndUpdate(req.body._id, center, {new: true}, function(err, center) {
+    delete center._id;
+
+    Center.findOneAndUpdate(req.body._id, center, {upsert: true, new: true}, function(err, center) {
         if (err) return res.send(err);
         res.json(center);
     });

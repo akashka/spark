@@ -201,8 +201,8 @@ sendMail = function(user, token) {
     port: 465,
     service: 'Sendgrid',
     auth: {
-      user: 'Abcd123$0',
-      pass: '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'
+      user: '',
+      pass: ''
     }
   });
 

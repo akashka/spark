@@ -78,8 +78,8 @@ sendMail = function(student) {
     port: 587,
     service: 'Sendgrid',
     auth: {
-      user: 'axisrooms',
-      pass: 'admin1!'
+      user: '',
+      pass: ''
     }
   });
 
