@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "io.ionic.starter"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "io.ionic.starter"
         }
     },
     "dependent_plugins": {
@@ -25,9 +28,6 @@
             "PACKAGE_NAME": "io.ionic.starter"
         },
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "io.ionic.starter"
         },
         "cordova-plugin-statusbar": {
