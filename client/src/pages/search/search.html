@@ -48,6 +48,15 @@
     <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />
     <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>
 
+    <div class="search-row search-full" *ngIf="students && students.length">
+        <ion-searchbar
+            [(ngModel)]="myInput"
+            (animated)="true"
+            (placeholder)="Search"
+            (ionInput)="search()"
+        ></ion-searchbar>
+    </div>
+
     <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">
      
         <button ion-item>

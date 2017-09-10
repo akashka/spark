@@ -19,12 +19,16 @@ exports.createCenter = function(req, res, next) {
 }
  
 exports.updateCenter = function(req, res, next) {
+    var id = req.body._id;
     var center = req.body;
     delete center._id;
+    delete center.center_code;
 
-    Center.findOneAndUpdate(req.body._id, center, {upsert: true, new: true}, function(err, center) {
+    console.log(center);
+    console.log(id);
+
+    Center.findOneAndUpdate( {_id: id}, center, {upsert: true, new: true}, function(err, center) {
         if (err) return res.send(err);
         res.json(center);
     });
- 
 }

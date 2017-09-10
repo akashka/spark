@@ -22,7 +22,6 @@ var StudentSchema = new mongoose.Schema({
     email_id: {
     	type: String,
     	required: true,
-        index: { unique: true }
     },
     phone_number:  {
     	type: Number,

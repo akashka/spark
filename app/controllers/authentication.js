@@ -6,6 +6,15 @@ var nodemailer = require('nodemailer');
 var fs = require('fs');
 var path = require("path");
 var bcrypt = require('bcrypt');
+var sgMail = require('@sendgrid/mail');
+
+var apiKey = "SG";
+apiKey += ".9kXtc70kTr2d62";
+apiKey += "_zZHxelg";
+apiKey += "J9HoPQ";
+apiKey += "-3C3W12tJY9XTltepTBqQHV0RGx5XQiCdO";
+apiKey += "-eU";
+sgMail.setApiKey(apiKey);
 
 function generateToken(user){
     console.log("Generating Token for user " + user.email);
@@ -196,32 +205,20 @@ exports.roleAuthorization = function(roles){
 }
 
 sendMail = function(user, token) {
-  let smtpTransport = nodemailer.createTransport({
-    host: 'smtp.sendgrid.net',
-    port: 465,
-    service: 'Sendgrid',
-    auth: {
-      user: '',
-      pass: ''
-    }
-  });
-
-  console.log(user);
-  console.log(token);
-
-  var stringTemplate = "Hi" + user.name + 
-    "<br/> <br/> You requested for new password. Your new password is: <br/> <br/>"
-    + token + "<br/> <br/> You can change your password after logging in from update profile section."
-    + "<br/> <br/> If you facing any issues logging in, please contact Head Office.";
+    console.log("Sending mail on reset password to " + user.name);
+  var stringTemplate = "Dear " + user.name + 
+    "<br/> You requested for new password. Your new password is: <br/> <strong>"
+    + token + "</strong> <br/> You can change your password after logging in from update profile section."
+    + "<br/> If you have any issues logging in, please contact Head Office.";
 
   var mailOptions = {
     to: user.email,
     from: 'info@little-wonders.in',
-    subject: 'Password reset - Our Little Wonderz',
+    subject: 'Password reset - Our Little Wonders',
     html: stringTemplate,
   };
 
-  smtpTransport.sendMail(mailOptions, function(err) {
-    if(err) console.log(err);
+  sgMail.send(mailOptions, function(err) {
+    if(err) console.log(err.response.body);
   });
 }

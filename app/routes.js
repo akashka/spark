@@ -45,13 +45,13 @@ module.exports = function(app){
     apiRoutes.use('/centers', centerRoutes); 
     centerRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.getCenters);
     centerRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.createCenter);
-    centerRoutes.put('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.updateCenter);
+    centerRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), CenterController.updateCenter);
  
     // Indentation Routes
     apiRoutes.use('/indentations', indentationRoutes); 
     indentationRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.getIndentations);
     indentationRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.createIndentation);
-    indentationRoutes.put('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.updateIndentation);
+    indentationRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor']), IndentationController.updateIndentation);
 
     // Set up routes
     app.use('/api', apiRoutes);

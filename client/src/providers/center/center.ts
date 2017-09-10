@@ -7,8 +7,8 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Center {
 
-  url = "https://spark-olw.herokuapp.com/";
-  //url = "http://localhost:8080/";
+  //url = "https://spark-olw.herokuapp.com/";
+  url = "http://localhost:8080/";
  
   constructor(public http: Http, public authService: Auth, public storage: Storage) {
  
@@ -48,7 +48,7 @@ export class Center {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
-        this.http.put(this.url+'api/centers', JSON.stringify(center), {headers: headers})
+        this.http.put(this.url+'api/centers/' + center._id, center, {headers: headers})
           .map(res => res.json())
           .subscribe((res) => {
             resolve(res);

@@ -12,7 +12,8 @@ import { ConfirmPage } from '../confirm/confirm';
 
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
- 
+import * as moment from 'moment';
+
 @Component({
   selector: 'indent-page',
   templateUrl: './indent.html'
@@ -146,7 +147,7 @@ export class IndentPage {
     let indentation = {
       total_amount: this.total_amount,
       payment_mode: this.payment_mode,
-      payment_date: this.payment_date,
+      payment_date: moment(this.payment_date,"YYYY-MM-DD").toDate(),
       bank_name: this.bank_name,
       transaction_no: this.transaction_no,
       cheque_no: this.cheque_no,

@@ -81,6 +81,9 @@ export class SignupPage {
     this.users = [];
     this.authService.searchUser().then((result) => {
       this.users = result;
+      for(var i = 0; i < this.users.length; i++){
+        this.users[i].password = "";
+      }
     }, (err) => {
       console.log(err);
     });
@@ -152,7 +155,7 @@ export class SignupPage {
     var result = [];
     
     for(var i = 0; i < this.users.length; i++) {
-      if (_.includes(this.users[i].name, this.myInput)) { result.push(this.users[i]); } 
+      if (_.includes(this.users[i].name, this.mySelect)) { result.push(this.users[i]); } 
     }
 
     if(result && result.length === 1) {
@@ -187,8 +190,8 @@ export class SignupPage {
   // Function to check if password and confirm password match
   checkPassword() {
     this.isPasswordMatching = false;
-    if((this.password == "" || this.password == undefined || this.password == null) 
-      && (this.confirm_password == "" || this.confirm_password == undefined || this.confirm_password == null)) {
+    if((this.password == undefined || this.password == null) 
+      && (this.confirm_password == undefined || this.confirm_password == null)) {
               this.isPasswordMatching = false;
     } else {
         this.isPasswordMatching = (this.password == this.confirm_password) ? true : false;

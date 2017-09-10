@@ -13,6 +13,7 @@ import {
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment';
 
 // Providers
 import { Students } from '../../providers/students/students';
@@ -34,6 +35,11 @@ import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
 declare var cordova: any;
+
+interface Window {
+    resolveLocalFileSystemURL: any;
+}
+declare var window: Window;
 
 @Component({
   selector: 'home-page',
@@ -171,12 +177,14 @@ export class HomePage {
     this.submitAttempt = true;
 
     if(this.studentForm.valid) {
+      this.studentForm.value.dob = moment(this.studentForm.value.dob,"YYYY-MM-DD").toDate();
       this.studentService.createStudent(this.studentForm.value).then((result) => {
         this.hideLoader();
         this.presentToast('student data saved successfully');
+        this.search();
       }, (err) => {
         this.hideLoader;
-        this.presentToast('student data saving failed');
+        this.presentToast('Failed! Please try again.');
       });
     }
   };
@@ -364,23 +372,23 @@ export class HomePage {
   }
 
   getFileContentAsBase64(path,callback){
-//    window.resolveLocalFileSystemURL(path, gotFile, fail);
-//            
-//    function fail(e) {
-//          alert('Cannot found requested file');
-//    }
+    window.resolveLocalFileSystemURL(path, gotFile, fail);
+            
+    function fail(e) {
+          alert('Cannot found requested file');
+    }
 
-//    function gotFile(fileEntry) {
-//           fileEntry.file(function(file) {
-//              var reader = new FileReader();
-//              reader.onloadend = function(e) {
-//                   var content = this.result;
-//                   callback(content);
-//              };
-//   // The most important point, use the readAsDatURL Method from the file plugin
-//              reader.readAsDataURL(file);
-//           });
-//    }
+    function gotFile(fileEntry) {
+           fileEntry.file(function(file) {
+              var reader = new FileReader();
+              reader.onloadend = function(e) {
+                   var content = this.result;
+                   callback(content);
+              };
+   // The most important point, use the readAsDatURL Method from the file plugin
+              reader.readAsDataURL(file);
+           });
+    }
   }
 
   takePicture(sourceType) {
