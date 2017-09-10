@@ -11,7 +11,6 @@ var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f
 var adminNumber = "7259596963";
 var adminEmail = "akash.ka01@gmail.com";
 var senderID = "LILWON";
-var image = "../../../client/src/assets/images/logo_littleW_0.png";
 
 var apiKey = "SG";
 apiKey += ".Jy";
