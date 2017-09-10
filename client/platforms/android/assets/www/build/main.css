@@ -25857,6 +25857,10 @@ page-reports .indented {
   text-align: center;
 }
 
+.ios .search-full .searchbar-md, .md .search-full .searchbar-md {
+  width: 100%;
+}
+
 .ios ion-item, .md ion-item {
   border-radius: 30px !important;
   padding-left: 10px !important;
