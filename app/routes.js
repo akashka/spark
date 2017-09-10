@@ -27,7 +27,7 @@ module.exports = function(app){
     // Auth Routes
     apiRoutes.use('/auth', authRoutes);
     authRoutes.post('/register', AuthenticationController.register);
-    authRoutes.put('/update', AuthenticationController.update);
+    authRoutes.post('/update', AuthenticationController.update);
     authRoutes.post('/login', requireLogin, AuthenticationController.login);
     authRoutes.post('/forgotPassword', AuthenticationController.forgotPassword);
     authRoutes.get('/', AuthenticationController.getUsers);

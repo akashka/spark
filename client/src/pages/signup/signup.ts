@@ -41,6 +41,7 @@ export class SignupPage {
   myInput;
   mySelect;
   btnText: String = "Save";
+  existingUser: Boolean = false;
 
   constructor(
         public navCtrl: NavController, 
@@ -129,6 +130,7 @@ export class SignupPage {
     }
 
     if(result && result.length === 1) {
+      this.existingUser = true;
       this.role = result[0].role;
       this.email = result[0].email;
       this.password = result[0].password;
@@ -140,6 +142,7 @@ export class SignupPage {
       this.btnText = "Update";
     }
     else {
+      this.existingUser = false;
       this.role = "";
       this.email = "";
       this.password = "";
@@ -159,6 +162,7 @@ export class SignupPage {
     }
 
     if(result && result.length === 1) {
+      this.existingUser = true;
       this.role = result[0].role;
       this.email = result[0].email;
       this.password = result[0].password;
@@ -170,6 +174,7 @@ export class SignupPage {
       this.btnText = "Update";
     }
     else {
+      this.existingUser = false;
       this.role = "";
       this.email = "";
       this.password = "";

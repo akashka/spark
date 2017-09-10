@@ -10,11 +10,13 @@ var adminEmail = "akash.ka01@gmail.com";
 var senderID = "LILWON";
 
 var apiKey = "SG";
-apiKey += ".9kXtc70kTr2d62";
-apiKey += "_zZHxelg";
-apiKey += "J9HoPQ";
-apiKey += "-3C3W12tJY9XTltepTBqQHV0RGx5XQiCdO";
-apiKey += "-eU";
+apiKey += ".Jy";
+apiKey += "-SHrC";
+apiKey += "-TOmdhaQO";
+apiKey += "_WEApA";
+apiKey += ".LybA2o2680TaJN3qyr";
+apiKey += "_b8XPISnq";
+apiKey += "_R0fjXb1pq9tLYM4";
 sgMail.setApiKey(apiKey);
 
 exports.getIndentations = function(req, res, next) {

@@ -11,13 +11,16 @@ var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f
 var adminNumber = "7259596963";
 var adminEmail = "akash.ka01@gmail.com";
 var senderID = "LILWON";
+var image = "../../../client/src/assets/images/logo_littleW_0.png";
 
 var apiKey = "SG";
-apiKey += ".9kXtc70kTr2d62";
-apiKey += "_zZHxelg";
-apiKey += "J9HoPQ";
-apiKey += "-3C3W12tJY9XTltepTBqQHV0RGx5XQiCdO";
-apiKey += "-eU";
+apiKey += ".Jy";
+apiKey += "-SHrC";
+apiKey += "-TOmdhaQO";
+apiKey += "_WEApA";
+apiKey += ".LybA2o2680TaJN3qyr";
+apiKey += "_b8XPISnq";
+apiKey += "_R0fjXb1pq9tLYM4";
 sgMail.setApiKey(apiKey);
 
 exports.getStudents = function(req, res, next){
@@ -58,10 +61,10 @@ exports.createStudent = function(req, res, next){
             console.log("Error in saving enquiry of student:  " + err);
             return res.send(err);
         }
-       // sendAdminMail(student, "enquiry");
-       // sendParentMail(student, "enquiry");
-       // sendParentSms(student, "enquiry");
-       // sendAdminSms(student, "enquiry");
+       sendAdminMail(student, "enquiry");
+       sendParentMail(student, "enquiry");
+       sendParentSms(student, "enquiry");
+       sendAdminSms(student, "enquiry");
 
        res.json(student);
     });

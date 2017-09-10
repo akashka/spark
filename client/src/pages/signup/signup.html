@@ -51,16 +51,26 @@
         <ion-col>
             <ion-list inset>
 
-                <ion-item>
+                <ion-item *ngIf="!existingUser">
                   <ion-label>Center</ion-label>
                   <ion-select interface="popover" [(ngModel)]="center">
                     <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>
                   </ion-select>
                 </ion-item>
+
+                <ion-item *ngIf="existingUser">
+                  <ion-label>Center</ion-label>
+                  <ion-input [(ngModel)]="center" [readonly]=true placeholder="Center" type="text"></ion-input>
+                </ion-item>
  
-                <ion-item>
+                <ion-item *ngIf="!existingUser">
                     <ion-label><ion-icon name="mail"></ion-icon></ion-label>
                     <ion-input [(ngModel)]="email" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>
+                </ion-item>
+
+                <ion-item *ngIf="existingUser">
+                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>
+                    <ion-input [(ngModel)]="email" [readonly]=true placeholder="Email" type="email"></ion-input>
                 </ion-item>
 
                 <p class="error-message" *ngIf="isExisting">Email already exists</p>

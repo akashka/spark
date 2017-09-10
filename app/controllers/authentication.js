@@ -9,11 +9,13 @@ var bcrypt = require('bcrypt');
 var sgMail = require('@sendgrid/mail');
 
 var apiKey = "SG";
-apiKey += ".9kXtc70kTr2d62";
-apiKey += "_zZHxelg";
-apiKey += "J9HoPQ";
-apiKey += "-3C3W12tJY9XTltepTBqQHV0RGx5XQiCdO";
-apiKey += "-eU";
+apiKey += ".Jy";
+apiKey += "-SHrC";
+apiKey += "-TOmdhaQO";
+apiKey += "_WEApA";
+apiKey += ".LybA2o2680TaJN3qyr";
+apiKey += "_b8XPISnq";
+apiKey += "_R0fjXb1pq9tLYM4";
 sgMail.setApiKey(apiKey);
 
 function generateToken(user){
@@ -157,24 +159,31 @@ exports.update = function(req, res, next){
         if(err){
             return next(err);
         }
-        if(existingUser){
+
+        var id = existingUser._id;
+        delete existingUser._id;
+
+        bcrypt.hash(password, 10, function(err, hash) {
             existingUser.email = email;
-            existingUser.password = password;
+            if(existingUser.password != "") existingUser.password = hash;
             existingUser.role = role;
             existingUser.center = center;
             existingUser.name = name;
             existingUser.active = active;
-        }
-        user.findOneAndUpdate(existingUser._id, existingUser, {new: true}, function(err, user){
-            if(err){
-                return next(err);
-            }
-            var userInfo = setUserInfo(user);
-            res.status(201).json({
-                token: 'JWT ' + generateToken(userInfo),
-                user: userInfo
-            })
+
+            User.findOneAndUpdate( {_id:id}, existingUser, {upsert: true, new: true}, function(err, user){
+                if(err){
+                    return next(err);
+                }
+                var userInfo = setUserInfo(user);
+                res.status(201).json({
+                    token: 'JWT ' + generateToken(userInfo),
+                    user: userInfo
+                })
+            });
+
         });
+        
     });
 }
  
