@@ -209,6 +209,10 @@ export class HomePage {
     this.navCtrl.setRoot(LoginPage);
   }
 
+  onNameChange = () => {
+    this.studentForm.value.name = this.studentForm.value.name.toUpperCase();
+  }
+
   onDobChange = () => {
     var dob = this.studentForm.value.dob;
     var now = new Date();

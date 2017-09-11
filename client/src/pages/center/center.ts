@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { 
-      IonicPage, 
-      NavController, 
-      NavParams, 
-      LoadingController,
-      App,
-      MenuController
+    NavController, 
+    ModalController, 
+    AlertController, 
+    LoadingController,
+    ActionSheetController, 
+    ToastController, 
+    Platform,
+    App,
+    MenuController
   } from 'ionic-angular';
-import { Center } from '../../providers/center/center';
 import * as _ from 'lodash'
 
 //Pages
@@ -17,10 +19,11 @@ import { ReportsPage } from '../reports/reports';
 import { SearchPage } from '../search/search';
 import { SignupPage } from '../signup/signup';
 
-@IonicPage()
+import { Center } from '../../providers/center/center';
+
 @Component({
-  selector: 'page-center',
-  templateUrl: 'center.html',
+  selector: 'center-page',
+  templateUrl: './center.html',
 })
 export class CenterPage {
 
@@ -37,18 +40,38 @@ export class CenterPage {
   myInput: string;
   center_id: string;
   mySelect: string;
-  playgroup: number;
-  nursery: number;
-  lkg: number;
-  ukg: number;
+  playgroup = {
+    annual: 0,
+    mid_term: 0,
+    early_start: 0
+  };
+  nursery = {
+    annual: 0,
+    mid_term: 0,
+    early_start: 0
+  };
+  lkg = {
+    annual: 0,
+    mid_term: 0,
+    early_start: 0
+  };
+  ukg = {
+    annual: 0,
+    mid_term: 0,
+    early_start: 0
+  };
 
   constructor(
   			public navCtrl: NavController, 
-  			public navParams: NavParams, 
   			public centerService: Center, 
   			public loadingCtrl: LoadingController,
         public app: App,
-        public menu: MenuController
+        public menu: MenuController,
+        public modalCtrl: ModalController, 
+        public alertCtrl: AlertController, 
+        public actionSheetCtrl: ActionSheetController,
+        public toastCtrl: ToastController,
+        public platform: Platform
 	) {
       menu.enable(true);
   }
@@ -141,10 +164,26 @@ export class CenterPage {
       this.center_address = "";
       this.active = true;
       this.center_id = "";
-      this.playgroup = 0;
-      this.nursery = 0;
-      this.lkg = 0;
-      this.ukg = 0;
+      this.playgroup = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
+      this.nursery = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
+      this.lkg = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
+      this.ukg = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
     }
   }
 
@@ -176,10 +215,26 @@ export class CenterPage {
       this.center_address = "";
       this.active = true;
       this.center_id = "";
-      this.playgroup = 0;
-      this.nursery = 0;
-      this.lkg = 0;
-      this.ukg = 0;
+      this.playgroup = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
+      this.nursery = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
+      this.lkg = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
+      this.ukg = {
+        annual: 0,
+        mid_term: 0,
+        early_start: 0
+      };
     }
   }
 
@@ -214,10 +269,6 @@ export class CenterPage {
   // Function to open Pages
   openSignupPage() {
     this.navCtrl.setRoot(SignupPage);
-  }
-
-  openCenterPage() {
-    this.navCtrl.setRoot(CenterPage);
   }
 
   openReportsPage() {

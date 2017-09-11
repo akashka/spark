@@ -28,19 +28,19 @@ var CenterSchema = new mongoose.Schema({
         type: Boolean,
     },
     playgroup: {
-        type: Number,
+        type: Object,
         required: true
     },
     nursery: {
-        type: Number,
+        type: Object,
         required: true
     },
     lkg: {
-        type: Number,
+        type: Object,
         required: true
     },
     ukg: {
-        type: Number,
+        type: Object,
         required: true
     }
 

@@ -28,7 +28,7 @@ export class IndentPage {
 
   public total_amount: number = 0;
   public payment_mode;
-  public payment_date;
+  public payment_date = moment();
   public bank_name;
   public transaction_no;
   public cheque_no;
@@ -106,24 +106,64 @@ export class IndentPage {
   }
 
   addAmount(student: any) {
-      if(student.class_group === 'Play Group') this.total_amount += this.user_center.playgroup;
-      else if(student.class_group === 'Nursery') this.total_amount += this.user_center.nursery;
-      else if(student.class_group === 'LKG') this.total_amount += this.user_center.lkg;
-      else if(student.class_group === 'UKG') this.total_amount += this.user_center.ukg;
+      if(student.class_group === 'Play Group'){
+          if(student.class_type === "Annual") this.total_amount += Number(this.user_center.playgroup.annual);
+          if(student.class_type === "Mid-term") this.total_amount += Number(this.user_center.playgroup.mid_term);
+          if(student.class_type === "Early start") this.total_amount += Number(this.user_center.playgroup.early_start);
+      } 
+      else if(student.class_group === 'Nursery'){
+          if(student.class_type === "Annual") this.total_amount += Number(this.user_center.nursery.annual);
+          if(student.class_type === "Mid-term") this.total_amount += Number(this.user_center.nursery.mid_term);
+          if(student.class_type === "Early start") this.total_amount += Number(this.user_center.nursery.early_start);
+      }
+      else if(student.class_group === 'LKG'){
+          if(student.class_type === "Annual") this.total_amount += Number(this.user_center.lkg.annual);
+          if(student.class_type === "Mid-term") this.total_amount += Number(this.user_center.lkg.mid_term);
+          if(student.class_type === "Early start") this.total_amount += Number(this.user_center.lkg.early_start);
+      }
+      else if(student.class_group === 'UKG'){
+          if(student.class_type === "Annual") this.total_amount += Number(this.user_center.ukg.annual);
+          if(student.class_type === "Mid-term") this.total_amount += Number(this.user_center.ukg.mid_term);
+          if(student.class_type === "Early start") this.total_amount += Number(this.user_center.ukg.early_start);
+      }
   }
 
   subtractAmount(student: any) {
-      if(student.class_group === 'Play Group') this.total_amount -= this.user_center.playgroup;
-      else if(student.class_group === 'Nursery') this.total_amount -= this.user_center.nursery;
-      else if(student.class_group === 'LKG') this.total_amount -= this.user_center.lkg;
-      else if(student.class_group === 'UKG') this.total_amount -= this.user_center.ukg;
+      if(student.class_group === 'Play Group'){
+          if(student.class_type === "Annual") this.total_amount -= this.user_center.playgroup.annual;
+          if(student.class_type === "Mid-term") this.total_amount -= this.user_center.playgroup.mid_term;
+          if(student.class_type === "Early start") this.total_amount -= this.user_center.playgroup.early_start;
+      } 
+      else if(student.class_group === 'Nursery'){
+          if(student.class_type === "Annual") this.total_amount -= this.user_center.nursery.annual;
+          if(student.class_type === "Mid-term") this.total_amount -= this.user_center.nursery.mid_term;
+          if(student.class_type === "Early start") this.total_amount -= this.user_center.nursery.early_start;
+      }
+      else if(student.class_group === 'LKG'){
+          if(student.class_type === "Annual") this.total_amount -= this.user_center.lkg.annual;
+          if(student.class_type === "Mid-term") this.total_amount -= this.user_center.lkg.mid_term;
+          if(student.class_type === "Early start") this.total_amount -= this.user_center.lkg.early_start;
+      }
+      else if(student.class_group === 'UKG'){
+          if(student.class_type === "Annual") this.total_amount -= this.user_center.ukg.annual;
+          if(student.class_type === "Mid-term") this.total_amount -= this.user_center.ukg.mid_term;
+          if(student.class_type === "Early start") this.total_amount -= this.user_center.ukg.early_start;
+      }
   }
 
-  findAmount(cg) {
-      if(cg === 'Play Group') return(this.user_center.playgroup);
-      else if(cg === 'Nursery') return(this.user_center.nursery);
-      else if(cg === 'LKG') return(this.user_center.lkg);
-      else if(cg === 'UKG') return(this.user_center.ukg);
+  findAmount(cg, ct) {
+      if(cg === 'Play Group' && ct === 'Annual') return(this.user_center.playgroup.annual);
+      else if(cg === 'Play Group' && ct === 'Mid-term') return(this.user_center.playgroup.mid_term);
+      else if(cg === 'Play Group' && ct === 'Early start') return(this.user_center.playgroup.early_start);
+      else if(cg === 'Nursery' && ct === 'Annual') return(this.user_center.nursery.annual);
+      else if(cg === 'Nursery' && ct === 'Mid-term') return(this.user_center.nursery.mid_term);
+      else if(cg === 'Nursery' && ct === 'Early start') return(this.user_center.nursery.early_start);
+      else if(cg === 'LKG' && ct === 'Annual') return(this.user_center.lkg.annual);
+      else if(cg === 'LKG' && ct === 'Mid-term') return(this.user_center.lkg.mid_term);
+      else if(cg === 'LKG' && ct === 'Early start') return(this.user_center.lkg.early_start);
+      else if(cg === 'UKG' && ct === 'Annual') return(this.user_center.ukg.annual);
+      else if(cg === 'UKG' && ct === 'Mid-term') return(this.user_center.ukg.mid_term);
+      else if(cg === 'UKG' && ct === 'Early start') return(this.user_center.ukg.early_start);
       else return 0;
   }
 
@@ -160,7 +200,14 @@ export class IndentPage {
         var tempis = {
             student_id: this.indented_students[is].student_id,
             student_key: this.indented_students[is]._id,
-            amount: this.findAmount(this.indented_students[is].class_group)
+            student_name: this.indented_students[is].name,
+            phone_number: this.indented_students[is].phone_number,
+            gender: this.indented_students[is].gender,
+            class_group: this.indented_students[is].class_group,
+            class_type: this.indented_students[is].class_type,
+            uniform_size: this.indented_students[is].uniform_size,
+            shoe_size: this.indented_students[is].shoe_size,
+            amount: this.findAmount(this.indented_students[is].class_group, this.indented_students[is].class_type)
         };
         indentation.students_amount.push(tempis);
     }

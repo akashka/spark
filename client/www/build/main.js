@@ -1,370 +1,4 @@
-webpackJsonp([2],{
-
-/***/ 118:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__confirm_confirm__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__signup_signup__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__center_center__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__indent_indent__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__reports_reports__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(29);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-var SearchPage = (function () {
-    function SearchPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, menu, loadingCtrl, storage, app) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.studentService = studentService;
-        this.modalCtrl = modalCtrl;
-        this.alertCtrl = alertCtrl;
-        this.authService = authService;
-        this.menu = menu;
-        this.loadingCtrl = loadingCtrl;
-        this.storage = storage;
-        this.app = app;
-        this.isAdmin = false;
-        this.isCenterAdmin = false;
-        this.isCounsellor = false;
-        menu.enable(true);
-        this.storage.get('user').then(function (user) {
-            if (user.role === "counsellor")
-                _this.isCounsellor = true;
-            else if (user.role === "admin")
-                _this.isAdmin = true;
-            else if (user.role === "centerAdmin")
-                _this.isCenterAdmin = true;
-            else
-                _this.isCounsellor = true;
-        });
-    }
-    SearchPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.studentService.getStudents().then(function (data) {
-            data = __WEBPACK_IMPORTED_MODULE_11_lodash__["filter"](data, function (o) {
-                return (o.status == 'enquiry' && !o.is_Confirmed);
-            });
-            _this.storage.get('user').then(function (user) {
-                data = __WEBPACK_IMPORTED_MODULE_11_lodash__["filter"](data, function (o) {
-                    return (o.center == user.center);
-                });
-                _this.students = (__WEBPACK_IMPORTED_MODULE_11_lodash__["sortBy"](data, 'enquiry_date')).reverse();
-                _this.studentsList = (__WEBPACK_IMPORTED_MODULE_11_lodash__["sortBy"](data, 'enquiry_date')).reverse();
-            });
-        }, function (err) {
-            console.log("not allowed");
-        });
-    };
-    // Function to search for a student dynamically based on an input
-    SearchPage.prototype.search = function () {
-        var result = [];
-        for (var i = 0; i < this.studentsList.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].name, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].alternate_contact, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].class_group, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].email_id, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].locality, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].parent_name, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-        }
-        this.students = result;
-        if (this.myInput === "")
-            this.students = this.studentsList;
-    };
-    SearchPage.prototype.logout = function () {
-        this.authService.logout();
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__login_login__["a" /* LoginPage */]);
-    };
-    SearchPage.prototype.add = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
-    };
-    SearchPage.prototype.update = function (student) {
-        this.storage.set('confirmed_student', student);
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__confirm_confirm__["a" /* ConfirmPage */]);
-    };
-    SearchPage.prototype.openSignupPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__signup_signup__["a" /* SignupPage */]);
-    };
-    SearchPage.prototype.openCenterPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__center_center__["a" /* CenterPage */]);
-    };
-    SearchPage.prototype.openReportsPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_10__reports_reports__["a" /* ReportsPage */]);
-    };
-    SearchPage.prototype.openIndentPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__indent_indent__["a" /* IndentPage */]);
-    };
-    return SearchPage;
-}());
-SearchPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'search-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/search/search.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <!-- <ion-buttons start>\n    <button ion-button icon-only (click)="logout()"><ion-icon name="power"></ion-icon></button>\n  </ion-buttons> -->\n  <ion-title>\n    SEARCH\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n  <ion-content>\n    <ion-list>\n      <button ion-item (click)="openCenterPage()" *ngIf="isAdmin">\n        Center\n      </button>\n      <button ion-item (click)="openSignupPage()" *ngIf="!isCounsellor">\n        Users\n      </button>\n      <button ion-item (click)="openReportsPage()">\n        Reports\n      </button>\n      <button ion-item (click)="openIndentPage()">\n        Indent\n      </button>\n      <button ion-item (click)="logOut()">\n        Log Out\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<ion-nav id="nav" #content [root]="rootPage"></ion-nav>\n \n<ion-content>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <div class="search-row search-full" *ngIf="students && students.length">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>\n            <h2><ion-icon name="call"></ion-icon> {{student.phone_number}} </h2>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}}</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="update(student)">\n            <ion-icon name="redo"></ion-icon>\n            Confirm\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/search/search.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_12__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
-], SearchPage);
-
-//# sourceMappingURL=search.js.map
-
-/***/ }),
-
-/***/ 122:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndentPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_moment__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-
-var IndentPage = (function () {
-    function IndentPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loadingCtrl, storage, centerService, indentationService) {
-        this.navCtrl = navCtrl;
-        this.studentService = studentService;
-        this.modalCtrl = modalCtrl;
-        this.alertCtrl = alertCtrl;
-        this.authService = authService;
-        this.loadingCtrl = loadingCtrl;
-        this.storage = storage;
-        this.centerService = centerService;
-        this.indentationService = indentationService;
-        this.indented_students = [];
-        this.confirm_indent = false;
-        this.total_amount = 0;
-        this.students_amount = [];
-    }
-    IndentPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.studentService.getStudents().then(function (data) {
-            _this.students = __WEBPACK_IMPORTED_MODULE_8_lodash__["filter"](data, function (o) {
-                return (o.status == 'confirmed' && !o.is_Indented);
-            });
-            _this.storage.get('user').then(function (user) {
-                _this.students = __WEBPACK_IMPORTED_MODULE_8_lodash__["filter"](_this.students, function (o) {
-                    return (o.center == user.center);
-                });
-                _this.students = __WEBPACK_IMPORTED_MODULE_8_lodash__["sortBy"](_this.students, 'enquiry_date');
-            });
-        }, function (err) {
-            console.log("not allowed");
-        });
-        this.centerService.searchCenter().then(function (centers) {
-            _this.storage.get('user').then(function (user) {
-                _this.email = user.email;
-                _this.center_code = user.center;
-                _this.user_center = __WEBPACK_IMPORTED_MODULE_8_lodash__["find"](centers, ['center_code', user.center]);
-            });
-        });
-    };
-    IndentPage.prototype.logout = function () {
-        this.authService.logout();
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */]);
-    };
-    IndentPage.prototype.add = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__home_home__["a" /* HomePage */]);
-    };
-    IndentPage.prototype.indent = function (student) {
-        this.indented_students.push(student);
-        for (var i = 0; i < this.students.length; i++) {
-            if (this.students[i] === student)
-                this.students[i].indented = true;
-        }
-        this.addAmount(student);
-    };
-    IndentPage.prototype.unindent = function (student) {
-        var s = -1;
-        for (var i = 0; i < this.indented_students.length; i++) {
-            if (this.indented_students[i] === student) {
-                s = i;
-                break;
-            }
-        }
-        this.indented_students.splice(s, 1);
-        for (var i = 0; i < this.students.length; i++) {
-            if (this.students[i] === student)
-                delete this.students[i].indented;
-        }
-        this.subtractAmount(student);
-    };
-    IndentPage.prototype.addAmount = function (student) {
-        if (student.class_group === 'Play Group')
-            this.total_amount += this.user_center.playgroup;
-        else if (student.class_group === 'Nursery')
-            this.total_amount += this.user_center.nursery;
-        else if (student.class_group === 'LKG')
-            this.total_amount += this.user_center.lkg;
-        else if (student.class_group === 'UKG')
-            this.total_amount += this.user_center.ukg;
-    };
-    IndentPage.prototype.subtractAmount = function (student) {
-        if (student.class_group === 'Play Group')
-            this.total_amount -= this.user_center.playgroup;
-        else if (student.class_group === 'Nursery')
-            this.total_amount -= this.user_center.nursery;
-        else if (student.class_group === 'LKG')
-            this.total_amount -= this.user_center.lkg;
-        else if (student.class_group === 'UKG')
-            this.total_amount -= this.user_center.ukg;
-    };
-    IndentPage.prototype.findAmount = function (cg) {
-        if (cg === 'Play Group')
-            return (this.user_center.playgroup);
-        else if (cg === 'Nursery')
-            return (this.user_center.nursery);
-        else if (cg === 'LKG')
-            return (this.user_center.lkg);
-        else if (cg === 'UKG')
-            return (this.user_center.ukg);
-        else
-            return 0;
-    };
-    IndentPage.prototype.indentStudents = function () {
-        this.confirm_indent = !this.confirm_indent;
-    };
-    IndentPage.prototype.setCash = function () {
-        this.payment_mode = "cash";
-    };
-    IndentPage.prototype.setCheque = function () {
-        this.payment_mode = "cheque";
-    };
-    IndentPage.prototype.setOnline = function () {
-        this.payment_mode = "online";
-    };
-    IndentPage.prototype.confirmIndent = function () {
-        var indentation = {
-            total_amount: this.total_amount,
-            payment_mode: this.payment_mode,
-            payment_date: __WEBPACK_IMPORTED_MODULE_10_moment__(this.payment_date, "YYYY-MM-DD").toDate(),
-            bank_name: this.bank_name,
-            transaction_no: this.transaction_no,
-            cheque_no: this.cheque_no,
-            email: this.email,
-            center_code: this.center_code,
-            students_amount: []
-        };
-        for (var is = 0; is < this.indented_students.length; is++) {
-            var tempis = {
-                student_id: this.indented_students[is].student_id,
-                student_key: this.indented_students[is]._id,
-                amount: this.findAmount(this.indented_students[is].class_group)
-            };
-            indentation.students_amount.push(tempis);
-        }
-        this.indentationService.createIndentation(indentation).then(function (result) {
-            console.log(result);
-        }, function (err) {
-        });
-        for (var is = 0; is < this.indented_students.length; is++) {
-            this.indented_students[is].status = "indented";
-            this.indented_students[is].is_Indented = true;
-            delete this.indented_students[is].indented;
-            this.studentService.updateStudent(this.indented_students[is]).then(function (result) {
-                console.log('student data saved successfully');
-            }, function (err) {
-                console.log('student data saving failed');
-            });
-        }
-    };
-    return IndentPage;
-}());
-IndentPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'indent-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/indent/indent.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-title>\n    SPARK\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />\n  <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <ion-list *ngIf="!confirm_indent && students && students.length">\n \n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results">\n     \n        <button ion-item>\n          <div class="col_left indent_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>\n          </div>\n          <div class="col_right indent_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2>{{student.class_group}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.confirmation_date | date: \'dd/MMM/yyyy\'}} </h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="indent(student)" *ngIf="!student.indented">\n            <ion-icon name="redo"></ion-icon>\n            Indent\n          </button>\n          <button ion-button color="danger" (click)="unindent(student)" *ngIf="student.indented">\n            <ion-icon name="undo"></ion-icon>\n            UnIndent\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n    <div class="gm_drawer_footer_wrapper">\n      <div class="amt_button">\n        <p class="total_left"> \n            <em> &#8377; {{ total_amount }} </em>\n            <br/>\n            <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>\n        </p>\n      </div>\n      <button (click)="indentStudents()" ion-button class="btn-success">Indent</button>\n    </div>\n\n  </ion-list>\n\n  <ion-list *ngIf="confirm_indent">\n\n    <div class="button-bar">\n        <a class="button button-positive button-indent" (click)="setCash()">Cash</a>\n        <a class="button button-positive button-indent" (click)="setCheque()">Cheque</a>\n        <a class="button button-positive button-indent" (click)="setOnline()">Online</a>\n    </div>\n\n    <ion-list inset>\n\n        <ion-item>\n            <h3> Amount: {{ total_amount }} </h3>\n        </ion-item>\n\n        <ion-item>\n            <ion-label><ion-icon name="calendar"></ion-icon></ion-label>\n            <ion-datetime [(ngModel)]="payment_date" placeholder="Date of Payment" required displayFormat="DD/MMM/YYYY" ></ion-datetime>\n        </ion-item>\n \n        <ion-item *ngIf="payment_mode != \'cash\'">\n            <ion-label><ion-icon name="home"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="bank_name" placeholder="Name of the bank" type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'online\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="transaction_no" placeholder="Transaction No." type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'cheque\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="cheque_no" placeholder="Cheque No." type="string"></ion-input>\n        </ion-item>\n\n    </ion-list>\n\n\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="indentStudents()" ion-button class="btn-danger">Go Back</button>\n      <button (click)="confirmIndent()" ion-button class="btn-success">Confirm</button>\n    </div>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/indent/indent.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */]])
-], IndentPage);
-
-//# sourceMappingURL=indent.js.map
-
-/***/ }),
+webpackJsonp([1],{
 
 /***/ 160:
 /***/ (function(module, exports) {
@@ -383,10 +17,6 @@ webpackEmptyAsyncContext.id = 160;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"../pages/center/center.module": [
-		846,
-		1
-	],
 	"../pages/reports/reports.module": [
 		845,
 		0
@@ -408,15 +38,15 @@ webpackAsyncContext.id = 203;
 
 /***/ }),
 
-/***/ 28:
+/***/ 27:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Auth; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -432,11 +62,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Auth = (function () {
-    //url = "http://localhost:8080/";
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Auth.prototype.checkAuthentication = function () {
         var _this = this;
@@ -545,355 +175,7 @@ Auth = __decorate([
 
 /***/ }),
 
-/***/ 320:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_students_students__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__search_search__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__signup_signup__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__center_center__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__reports_reports__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_transfer__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(121);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-// Providers
-
-
-
-// Pages
-
-
-
-
-// Files Images
-
-
-
-
-var ConfirmPage = (function () {
-    function ConfirmPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loadingCtrl, formBuilder, camera, transfer, file, filePath, actionSheetCtrl, toastCtrl, platform, app, menu, centerService, storage) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.studentService = studentService;
-        this.modalCtrl = modalCtrl;
-        this.alertCtrl = alertCtrl;
-        this.authService = authService;
-        this.loadingCtrl = loadingCtrl;
-        this.formBuilder = formBuilder;
-        this.camera = camera;
-        this.transfer = transfer;
-        this.file = file;
-        this.filePath = filePath;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.toastCtrl = toastCtrl;
-        this.platform = platform;
-        this.app = app;
-        this.menu = menu;
-        this.centerService = centerService;
-        this.storage = storage;
-        this.submitAttempt = false;
-        this.confirmStudent = function () {
-            _this.submitAttempt = true;
-            if (_this.confirmForm.valid) {
-                _this.student.class_group = _this.confirmForm.value.class_group;
-                _this.student.status = "confirmed";
-                _this.student.is_Confirmed = true;
-                if (_this.student.photo === null)
-                    _this.student.photo = _this.confirmForm.value.photo;
-                _this.student.class_type = _this.confirmForm.value.class_type;
-                _this.student.uniform_size = _this.confirmForm.value.uniform_size;
-                _this.student.shoe_size = _this.confirmForm.value.shoe_size;
-                _this.studentService.updateStudent(_this.student).then(function (result) {
-                    _this.presentToast('student data saved successfully');
-                }, function (err) {
-                    _this.presentToast('student data saving failed');
-                });
-            }
-        };
-        this.takePhoto = function () {
-            var actionSheet = _this.actionSheetCtrl.create({
-                title: 'Select Image Source',
-                buttons: [
-                    {
-                        text: 'Load from Library',
-                        handler: function () {
-                            _this.takePicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
-                        }
-                    },
-                    {
-                        text: 'Use Camera',
-                        handler: function () {
-                            _this.takePicture(_this.camera.PictureSourceType.CAMERA);
-                        }
-                    },
-                    {
-                        text: 'Cancel',
-                        role: 'cancel'
-                    }
-                ]
-            });
-            actionSheet.present();
-        };
-        menu.enable(true);
-        this.confirmForm = formBuilder.group({
-            class_group: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            student_id: [''],
-            class_type: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            uniform_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            shoe_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            photo: ['']
-        });
-    }
-    ConfirmPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.storage.get('confirmed_student').then(function (student) {
-            _this.student = student;
-            _this.confirmForm.controls['class_group'].setValue(student.class_group);
-            _this.confirmForm.controls['student_id'].setValue(student.student_id);
-            _this.confirmForm.controls['photo'].setValue(student.photo);
-        });
-    };
-    // Photos
-    ConfirmPage.prototype.createFileName = function () {
-        var d = new Date(), n = d.getTime(), newFileName = n + ".jpg";
-        return newFileName;
-    };
-    // Copy the image to a local folder
-    ConfirmPage.prototype.copyFileToLocalDir = function (namePath, currentName, newFileName) {
-        var _this = this;
-        this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
-            _this.lastImage = newFileName;
-        }, function (error) {
-            _this.presentToast('Error while storing file.');
-        });
-    };
-    ConfirmPage.prototype.presentToast = function (text) {
-        var toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    };
-    // Always get the accurate path to your apps folder
-    ConfirmPage.prototype.pathForImage = function (img) {
-        if (img === null) {
-            return '';
-        }
-        else {
-            return cordova.file.dataDirectory + img;
-        }
-    };
-    ConfirmPage.prototype.uploadImage = function () {
-        // File for Upload
-        var targetPath = this.pathForImage(this.lastImage);
-        // File name only
-        var filename = this.lastImage;
-        var path = targetPath + filename;
-        this.getFileContentAsBase64(path, function (base64Image) {
-            this.confirmForm.photo = base64Image;
-        });
-    };
-    ConfirmPage.prototype.getFileContentAsBase64 = function (path, callback) {
-        window.resolveLocalFileSystemURL(path, gotFile, fail);
-        function fail(e) {
-            alert('Cannot found requested file');
-        }
-        function gotFile(fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-                reader.onloadend = function (e) {
-                    var content = this.result;
-                    callback(content);
-                };
-                // The most important point, use the readAsDatURL Method from the file plugin
-                reader.readAsDataURL(file);
-            });
-        }
-    };
-    ConfirmPage.prototype.takePicture = function (sourceType) {
-        var _this = this;
-        // Create options for the Camera Dialog
-        var options = {
-            quality: 100,
-            sourceType: sourceType,
-            saveToPhotoAlbum: false,
-            correctOrientation: true
-        };
-        // Get the data of an image
-        this.camera.getPicture(options).then(function (imagePath) {
-            // Special handling for Android library
-            if (_this.platform.is('android') && sourceType === _this.camera.PictureSourceType.PHOTOLIBRARY) {
-                _this.filePath.resolveNativePath(imagePath)
-                    .then(function (filePath) {
-                    var correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-                    var currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-                    _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
-                });
-            }
-            else {
-                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-                _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
-            }
-        }, function (err) {
-            _this.presentToast('Error while selecting image.');
-        });
-    };
-    ConfirmPage.prototype.openSignupPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__signup_signup__["a" /* SignupPage */]);
-    };
-    ConfirmPage.prototype.openCenterPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__center_center__["a" /* CenterPage */]);
-    };
-    ConfirmPage.prototype.openReportsPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_10__reports_reports__["a" /* ReportsPage */]);
-    };
-    ConfirmPage.prototype.goBack = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__search_search__["a" /* SearchPage */]);
-    };
-    return ConfirmPage;
-}());
-ConfirmPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'confirm-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons start>\n    <button ion-button icon-only (click)="goBack()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n<!--   <ion-buttons end>\n    <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>\n  </ion-buttons>\n --> </ion-navbar>\n</ion-header>\n\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n  <ion-content>\n    <ion-list>\n      <button ion-item (click)="openCenterPage()">\n        Center\n      </button>\n      <button ion-item (click)="openSignupPage()">\n        Users\n      </button>\n      <button ion-item (click)="openReportsPage()">\n        Reports\n      </button>\n      <button ion-item (click)="closeMenu()">\n        Close Menu\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<ion-nav id="nav" #content [root]="rootPage"></ion-nav>\n\n<ion-content padding class="home-page">\n \n    <div class="booking_card" *ngIf="student != null">\n        <h3>{{student.name}} \n          <span> \n            <h5 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h5>\n            <h5 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h5>\n          </span>\n        </h3>\n        <h4><ion-icon name="mail"></ion-icon> {{student.email_id}}</h4>\n        <h4><ion-icon name="call"></ion-icon> {{student.phone_number}} </h4>\n        <h4><ion-icon name="locate"></ion-icon> {{student.locality}}</h4>\n    </div>\n\n    <ion-list no-lines>\n\n      <form [formGroup]="confirmForm">\n \n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_group.valid  && (confirmForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_type.valid  && (confirmForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- uniform_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.uniform_size.valid  && (confirmForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <!-- shoe_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.shoe_size.valid  && (confirmForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="takePhoto()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n \n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__["a" /* Camera */],
-        __WEBPACK_IMPORTED_MODULE_12__ionic_native_transfer__["a" /* Transfer */],
-        __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */],
-        __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_6__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]])
-], ConfirmPage);
-
-;
-//# sourceMappingURL=confirm.js.map
-
-/***/ }),
-
-/***/ 323:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Indentation; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(29);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var Indentation = (function () {
-    //url = "http://localhost:8080/";
-    function Indentation(http, authService, storage) {
-        this.http = http;
-        this.authService = authService;
-        this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
-    }
-    // Function to get list of al the Indentations
-    Indentation.prototype.searchIndentation = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-            headers.append('Authorization', _this.authService.token);
-            _this.http.get(_this.url + 'api/indentations', { headers: headers })
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                resolve(data);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    Indentation.prototype.createIndentation = function (indentation) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            headers.append('Authorization', _this.authService.token);
-            _this.http.post(_this.url + 'api/indentations', JSON.stringify(indentation), { headers: headers })
-                .map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    Indentation.prototype.updateIndentation = function (indentation) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-            headers.append('Authorization', _this.authService.token);
-            _this.http.put(_this.url + 'api/indentations', JSON.stringify(indentation), { headers: headers })
-                .map(function (res) { return res.json(); })
-                .subscribe(function (res) {
-                resolve(res);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    return Indentation;
-}());
-Indentation = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
-], Indentation);
-
-//# sourceMappingURL=indentation.js.map
-
-/***/ }),
-
-/***/ 46:
+/***/ 43:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -903,22 +185,22 @@ Indentation = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_students_students__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_center_center__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__search_search__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__login_login__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__signup_signup__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_students_students__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_center_center__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__search_search__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__login_login__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__signup_signup__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__center_center__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__indent_indent__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__reports_reports__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_file__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_transfer__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file_path__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_camera__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__indent_indent__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_file__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_transfer__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file_path__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_camera__ = __webpack_require__(149);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1005,6 +287,9 @@ var HomePage = (function () {
         this.logOut = function () {
             _this.authService.logout();
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_10__login_login__["a" /* LoginPage */]);
+        };
+        this.onNameChange = function () {
+            _this.studentForm.value.name = _this.studentForm.value.name.toUpperCase();
         };
         this.onDobChange = function () {
             var dob = _this.studentForm.value.dob;
@@ -1275,14 +560,14 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'home-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/home/home.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <!-- <ion-buttons start>\n    <button ion-button icon-only (click)="logout()"><ion-icon name="power"></ion-icon></button>\n  </ion-buttons> -->\n  <ion-title>\n    ENQUIRY\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n  <ion-content>\n    <ion-list>\n      <button ion-item (click)="openCenterPage()" *ngIf="isAdmin">\n        Center\n      </button>\n      <button ion-item (click)="openSignupPage()" *ngIf="!isCounsellor">\n        Users\n      </button>\n      <button ion-item (click)="openReportsPage()">\n        Reports\n      </button>\n      <button ion-item (click)="openIndentPage()">\n        Indent\n      </button>\n      <button ion-item (click)="logOut()">\n        Log Out\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<ion-nav id="nav" #content [root]="rootPage"></ion-nav>\n\n<ion-content padding class="home-page">\n \n    <ion-list no-lines>\n\n      <form [formGroup]="studentForm">\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female"></ion-radio>\n          </ion-item>\n        </ion-list>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n            <ion-input type="text" formControlName="email_id"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" formControlName="phone_number"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n\n        <ion-item>\n            <h2>Age as of Today - \n            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Class - \n            <span class="numbering">{{ class_group }}</span></h2>\n        </ion-item>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="takePhoto()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n \n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="resetStudent()" ion-button class="btn-danger">Reset</button>\n      <button (click)="addStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/home/home.html"*/
+        selector: 'home-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>\n      ENQUIRY\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n \n    <ion-list no-lines>\n\n      <form [formGroup]="studentForm">\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female"></ion-radio>\n          </ion-item>\n        </ion-list>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n            <ion-input type="text" formControlName="email_id"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" formControlName="phone_number"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n\n        <ion-item>\n            <h2>Age as of Today - \n            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Class - \n            <span class="numbering">{{ class_group }}</span></h2>\n        </ion-item>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="takePhoto()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n \n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="resetStudent()" ion-button class="btn-danger">Reset</button>\n      <button (click)="addStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/home/home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_6__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
         __WEBPACK_IMPORTED_MODULE_7__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
         __WEBPACK_IMPORTED_MODULE_18__ionic_native_camera__["a" /* Camera */],
         __WEBPACK_IMPORTED_MODULE_16__ionic_native_transfer__["a" /* Transfer */],
@@ -1292,7 +577,7 @@ HomePage = __decorate([
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
         __WEBPACK_IMPORTED_MODULE_8__providers_center_center__["a" /* Center */],
         __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
 ], HomePage);
@@ -1306,21 +591,249 @@ HomePage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_center_center__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__center_center__ = __webpack_require__(53);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+//Pages
+
+
+
+var SignupPage = SignupPage_1 = (function () {
+    function SignupPage(navCtrl, navParams, centerService, authService, loadingCtrl, app, menu, storage) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.centerService = centerService;
+        this.authService = authService;
+        this.loadingCtrl = loadingCtrl;
+        this.app = app;
+        this.menu = menu;
+        this.storage = storage;
+        this.active = true;
+        this.isPasswordMatching = true;
+        this.isExisting = false;
+        this.btnText = "Save";
+        this.existingUser = false;
+        menu.enable(true);
+    }
+    SignupPage.prototype.ionViewDidLoad = function () {
+        this.getCenters();
+        this.getUsers();
+    };
+    // Function to get list of all the centers
+    SignupPage.prototype.getCenters = function () {
+        var _this = this;
+        this.centers = [];
+        this.centerService.searchCenter().then(function (result) {
+            _this.centers = result;
+            _this.storage.get('user').then(function (user) {
+                if (user.role != "admin") {
+                    _this.centers = __WEBPACK_IMPORTED_MODULE_4_lodash__["find"](_this.centers, ['center_code', user.center]);
+                    _this.center = _this.centers;
+                }
+            });
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    // Function to get list of all the Users
+    SignupPage.prototype.getUsers = function () {
+        var _this = this;
+        this.users = [];
+        this.authService.searchUser().then(function (result) {
+            _this.users = result;
+            for (var i = 0; i < _this.users.length; i++) {
+                _this.users[i].password = "";
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    SignupPage.prototype.save = function () {
+        if (!this.isExisting && this.isPasswordMatching) {
+            var details = {
+                email: this.email,
+                password: this.password,
+                role: this.role,
+                name: this.name,
+                center: this.center,
+                active: this.active
+            };
+            this.authService.createAccount(details).then(function (result) {
+                console.log(result);
+            }, function (err) {
+            });
+        }
+    };
+    SignupPage.prototype.update = function () {
+        var details = {
+            email: this.email,
+            password: this.password,
+            role: this.role,
+            name: this.name,
+            center: this.center,
+            active: this.active
+        };
+        this.authService.updateAccount(details).then(function (result) {
+        }, function (err) { });
+    };
+    // Function to search for a User dynamically based on an input
+    SignupPage.prototype.search = function () {
+        var result = [];
+        for (var i = 0; i < this.users.length; i++) {
+            if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].name, this.myInput)) {
+                result.push(this.users[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].email, this.myInput)) {
+                result.push(this.users[i]);
+            }
+        }
+        if (result && result.length === 1) {
+            this.existingUser = true;
+            this.role = result[0].role;
+            this.email = result[0].email;
+            this.password = result[0].password;
+            this.confirm_password = result[0].password;
+            this.name = result[0].name;
+            this.center = result[0].center;
+            this.active = result[0].active;
+            this._id = result[0]._id;
+            this.btnText = "Update";
+        }
+        else {
+            this.existingUser = false;
+            this.role = "";
+            this.email = "";
+            this.password = "";
+            this.confirm_password = "";
+            this.name = "";
+            this.center = "";
+            this.active = true;
+        }
+    };
+    // Function to search for a User dynamically based on select
+    SignupPage.prototype.onSelectChange = function () {
+        var result = [];
+        for (var i = 0; i < this.users.length; i++) {
+            if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].name, this.mySelect)) {
+                result.push(this.users[i]);
+            }
+        }
+        if (result && result.length === 1) {
+            this.existingUser = true;
+            this.role = result[0].role;
+            this.email = result[0].email;
+            this.password = result[0].password;
+            this.confirm_password = result[0].password;
+            this.name = result[0].name;
+            this.center = result[0].center;
+            this.active = result[0].active;
+            this._id = result[0]._id;
+            this.btnText = "Update";
+        }
+        else {
+            this.existingUser = false;
+            this.role = "";
+            this.email = "";
+            this.password = "";
+            this.confirm_password = "";
+            this.name = "";
+            this.center = "";
+            this.active = true;
+        }
+    };
+    // Function to check if user exists with same email ID
+    SignupPage.prototype.checkEmail = function () {
+        this.isExisting = false;
+        var result = __WEBPACK_IMPORTED_MODULE_4_lodash__["find"](this.users, ['email', this.email]);
+        this.isExisting = (result != null && result != undefined) ? true : false;
+    };
+    // Function to check if password and confirm password match
+    SignupPage.prototype.checkPassword = function () {
+        this.isPasswordMatching = false;
+        if ((this.password == undefined || this.password == null)
+            && (this.confirm_password == undefined || this.confirm_password == null)) {
+            this.isPasswordMatching = false;
+        }
+        else {
+            this.isPasswordMatching = (this.password == this.confirm_password) ? true : false;
+        }
+    };
+    // Function to open Pages
+    SignupPage.prototype.openSignupPage = function () {
+        this.navCtrl.setRoot(SignupPage_1);
+    };
+    SignupPage.prototype.openCenterPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__center_center__["a" /* CenterPage */]);
+    };
+    SignupPage.prototype.openReportsPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__reports_reports__["a" /* ReportsPage */]);
+    };
+    SignupPage.prototype.openHomePage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__home_home__["a" /* HomePage */]);
+    };
+    return SignupPage;
+}());
+SignupPage = SignupPage_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'signup',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/signup/signup.html"*/' <ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-buttons start>\n        <button ion-button icon-only (click)="openHomePage()"><ion-icon name="close"></ion-icon></button>\n    </ion-buttons>\n    <ion-title>Users</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n    <div class="search-row">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()">\n        </ion-searchbar>\n        <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">\n          <ion-option *ngFor="let user of users" [value]="user.name">{{user.name}}</ion-option>\n        </ion-select>\n    </div>\n \n    <ion-row class="account-form">\n        <ion-col>\n            <ion-list inset>\n\n                <ion-item *ngIf="!existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-select interface="popover" [(ngModel)]="center">\n                    <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>\n                  </ion-select>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-input [(ngModel)]="center" [readonly]=true placeholder="Center" type="text"></ion-input>\n                </ion-item>\n \n                <ion-item *ngIf="!existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" [readonly]=true placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="isExisting">Email already exists</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="password" (ionChange)="checkPassword()" placeholder="Password" type="password"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="confirm_password" placeholder="Confirm Password" (ionChange)="checkPassword()" type="password"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="!isPasswordMatching">Password do not match</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="person-add"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="name" placeholder="Name"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label>Active</ion-label>\n                    <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>\n                </ion-item>\n \n                <ion-list radio-group [(ngModel)]="role">\n                  <ion-item>\n                    <ion-label>Counsellor</ion-label>\n                    <ion-radio value="counsellor" checked></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Center Admin</ion-label>\n                    <ion-radio value="centerAdmin"></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Admin</ion-label>\n                    <ion-radio value="admin"></ion-radio>\n                  </ion-item>\n                </ion-list>\n \n            </ion-list>\n \n            <button ion-button (click)="save()" *ngIf="btnText == \'Save\'" class="continue-button">{{ btnText }}</button>\n            <button ion-button (click)="update()" *ngIf="btnText != \'Save\'" class="continue-button">{{ btnText }}</button>\n        \n        </ion-col>\n    </ion-row>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/signup/signup.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_5__ionic_storage__["b" /* Storage */]])
+], SignupPage);
+
+var SignupPage_1;
+//# sourceMappingURL=signup.js.map
+
+/***/ }),
+
+/***/ 48:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReportsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__ = __webpack_require__(555);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__ = __webpack_require__(841);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1542,16 +1055,16 @@ var ReportsPage = (function () {
 ReportsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-reports',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-title>\n    Reports\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n	  <div class="button-bar">\n        <a class="button button-option" (click)="searchToday()">Day</a>\n        <a class="button button-option" (click)="searchWeek()">Week</a>\n        <a class="button button-option" (click)="searchMonth()">Month</a>\n        <a class="button button-option" (click)="dateRange()">Dates</a>\n    </div>\n\n    <div class="button-bar">\n        <a class="button button-energized" (click)="setEnquiry()">Enq.</a>\n        <a class="button button-assertive" (click)="setConfirmed()">Conf.</a>\n        <a class="button button-positive" (click)="setIndented()">Ind.</a>\n        <a class="button button-simple" (click)="setAll()">All</a>\n    </div>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />\n    <h1 *ngIf="reports && !reports.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <p *ngIf="reports && reports.length" class="result-number"> {{reports.length}} {{searchType}} results found for {{startDate | date: \'dd/MMM/yyyy\'}} - {{endDate | date: \'dd/MMM/yyyy\'}}</p>\n\n  	<table class="rwd-table">\n  	  <tr>\n  	    <th>ID</th>\n  	    <th>Name</th>\n  	    <th>Parent</th>\n  	    <th>Phone</th>\n  	    <th>DOB</th>\n  	    <th>Email</th>\n  	    <th>Gender</th>\n  	    <th>Class</th>\n  	  </tr>\n  	  <tr *ngFor="let report of reports" class="{{report.status}}">\n  	    <td data-th="ID">{{report.student_id}}</td>\n  	    <td data-th="Name">{{report.name}}</td>\n  	    <td data-th="Parent">{{report.parent_name}}</td>\n  	    <td data-th="Phone">{{report.phone_number}}</td>\n  	    <td data-th="DOB">{{report.dob | date: \'dd/MMM/yyyy\'}}</td>\n  	    <td data-th="Email">{{report.email_id}}</td>\n  	    <td data-th="Gender">{{report.gender}}</td>\n  	    <td data-th="Class">{{report.class_group}}</td>\n  	  </tr>\n  	</table>\n\n    <div class="gm_drawer_footer_wrapper" *ngIf="reports && reports.length">\n      <button (click)="downloadReport()" ion-button class="btn-info">Download</button>\n      <button (click)="mailReport()" ion-button class="btn-info">Send Mail</button>\n    </div>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/,
+        selector: 'page-reports',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    Reports\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n	  <div class="button-bar">\n        <a class="button button-option" (click)="searchToday()">Day</a>\n        <a class="button button-option" (click)="searchWeek()">Week</a>\n        <a class="button button-option" (click)="searchMonth()">Month</a>\n        <a class="button button-option" (click)="dateRange()">Dates</a>\n    </div>\n\n    <div class="button-bar">\n        <a class="button button-energized" (click)="setEnquiry()">Enq.</a>\n        <a class="button button-assertive" (click)="setConfirmed()">Conf.</a>\n        <a class="button button-positive" (click)="setIndented()">Ind.</a>\n        <a class="button button-simple" (click)="setAll()">All</a>\n    </div>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />\n    <h1 *ngIf="reports && !reports.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <p *ngIf="reports && reports.length" class="result-number"> {{reports.length}} {{searchType}} results found for {{startDate | date: \'dd/MMM/yyyy\'}} - {{endDate | date: \'dd/MMM/yyyy\'}}</p>\n\n  	<table class="rwd-table">\n  	  <tr>\n  	    <th>ID</th>\n  	    <th>Name</th>\n  	    <th>Parent</th>\n  	    <th>Phone</th>\n  	    <th>DOB</th>\n  	    <th>Email</th>\n  	    <th>Gender</th>\n  	    <th>Class</th>\n  	  </tr>\n  	  <tr *ngFor="let report of reports" class="{{report.status}}">\n  	    <td data-th="ID">{{report.student_id}}</td>\n  	    <td data-th="Name">{{report.name}}</td>\n  	    <td data-th="Parent">{{report.parent_name}}</td>\n  	    <td data-th="Phone">{{report.phone_number}}</td>\n  	    <td data-th="DOB">{{report.dob | date: \'dd/MMM/yyyy\'}}</td>\n  	    <td data-th="Email">{{report.email_id}}</td>\n  	    <td data-th="Gender">{{report.gender}}</td>\n  	    <td data-th="Class">{{report.class_group}}</td>\n  	  </tr>\n  	</table>\n\n    <div class="gm_drawer_footer_wrapper" *ngIf="reports && reports.length">\n      <button (click)="downloadReport()" ion-button class="btn-info">Download</button>\n      <button (click)="mailReport()" ion-button class="btn-info">Send Mail</button>\n    </div>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/,
         providers: [__WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["b" /* TransferObject */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
         __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
         __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */],
         __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */],
@@ -1563,17 +1076,17 @@ ReportsPage = __decorate([
 
 /***/ }),
 
-/***/ 49:
+/***/ 51:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Students; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1589,12 +1102,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Students = (function () {
-    //url = "http://localhost:8080/";
     function Students(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Students.prototype.getStudents = function () {
         var _this = this;
@@ -1654,17 +1167,379 @@ Students = __decorate([
 
 /***/ }),
 
-/***/ 51:
+/***/ 517:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_students_students__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__search_search__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__signup_signup__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__center_center__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_transfer__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(149);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+// Providers
+
+
+
+// Pages
+
+
+
+
+// Files Images
+
+
+
+
+var ConfirmPage = (function () {
+    function ConfirmPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loadingCtrl, formBuilder, camera, transfer, file, filePath, actionSheetCtrl, toastCtrl, platform, app, menu, centerService, storage) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.studentService = studentService;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.loadingCtrl = loadingCtrl;
+        this.formBuilder = formBuilder;
+        this.camera = camera;
+        this.transfer = transfer;
+        this.file = file;
+        this.filePath = filePath;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.toastCtrl = toastCtrl;
+        this.platform = platform;
+        this.app = app;
+        this.menu = menu;
+        this.centerService = centerService;
+        this.storage = storage;
+        this.submitAttempt = false;
+        this.confirmStudent = function () {
+            _this.submitAttempt = true;
+            if (_this.confirmForm.valid) {
+                _this.student.class_group = _this.confirmForm.value.class_group;
+                _this.student.status = "confirmed";
+                _this.student.is_Confirmed = true;
+                if (_this.student.photo === null)
+                    _this.student.photo = _this.confirmForm.value.photo;
+                _this.student.class_type = _this.confirmForm.value.class_type;
+                _this.student.uniform_size = _this.confirmForm.value.uniform_size;
+                _this.student.shoe_size = _this.confirmForm.value.shoe_size;
+                _this.studentService.updateStudent(_this.student).then(function (result) {
+                    _this.presentToast('student data saved successfully');
+                }, function (err) {
+                    _this.presentToast('student data saving failed');
+                });
+            }
+        };
+        this.takePhoto = function () {
+            var actionSheet = _this.actionSheetCtrl.create({
+                title: 'Select Image Source',
+                buttons: [
+                    {
+                        text: 'Load from Library',
+                        handler: function () {
+                            _this.takePicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
+                        }
+                    },
+                    {
+                        text: 'Use Camera',
+                        handler: function () {
+                            _this.takePicture(_this.camera.PictureSourceType.CAMERA);
+                        }
+                    },
+                    {
+                        text: 'Cancel',
+                        role: 'cancel'
+                    }
+                ]
+            });
+            actionSheet.present();
+        };
+        menu.enable(true);
+        this.confirmForm = formBuilder.group({
+            class_group: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            student_id: [''],
+            class_type: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            uniform_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            shoe_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            photo: ['']
+        });
+    }
+    ConfirmPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.storage.get('confirmed_student').then(function (student) {
+            _this.student = student;
+            _this.confirmForm.controls['class_group'].setValue(student.class_group);
+            _this.confirmForm.controls['student_id'].setValue(student.student_id);
+            _this.confirmForm.controls['photo'].setValue(student.photo);
+        });
+    };
+    // Photos
+    ConfirmPage.prototype.createFileName = function () {
+        var d = new Date(), n = d.getTime(), newFileName = n + ".jpg";
+        return newFileName;
+    };
+    // Copy the image to a local folder
+    ConfirmPage.prototype.copyFileToLocalDir = function (namePath, currentName, newFileName) {
+        var _this = this;
+        this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
+            _this.lastImage = newFileName;
+        }, function (error) {
+            _this.presentToast('Error while storing file.');
+        });
+    };
+    ConfirmPage.prototype.presentToast = function (text) {
+        var toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
+    // Always get the accurate path to your apps folder
+    ConfirmPage.prototype.pathForImage = function (img) {
+        if (img === null) {
+            return '';
+        }
+        else {
+            return cordova.file.dataDirectory + img;
+        }
+    };
+    ConfirmPage.prototype.uploadImage = function () {
+        // File for Upload
+        var targetPath = this.pathForImage(this.lastImage);
+        // File name only
+        var filename = this.lastImage;
+        var path = targetPath + filename;
+        this.getFileContentAsBase64(path, function (base64Image) {
+            this.confirmForm.photo = base64Image;
+        });
+    };
+    ConfirmPage.prototype.getFileContentAsBase64 = function (path, callback) {
+        window.resolveLocalFileSystemURL(path, gotFile, fail);
+        function fail(e) {
+            alert('Cannot found requested file');
+        }
+        function gotFile(fileEntry) {
+            fileEntry.file(function (file) {
+                var reader = new FileReader();
+                reader.onloadend = function (e) {
+                    var content = this.result;
+                    callback(content);
+                };
+                // The most important point, use the readAsDatURL Method from the file plugin
+                reader.readAsDataURL(file);
+            });
+        }
+    };
+    ConfirmPage.prototype.takePicture = function (sourceType) {
+        var _this = this;
+        // Create options for the Camera Dialog
+        var options = {
+            quality: 100,
+            sourceType: sourceType,
+            saveToPhotoAlbum: false,
+            correctOrientation: true
+        };
+        // Get the data of an image
+        this.camera.getPicture(options).then(function (imagePath) {
+            // Special handling for Android library
+            if (_this.platform.is('android') && sourceType === _this.camera.PictureSourceType.PHOTOLIBRARY) {
+                _this.filePath.resolveNativePath(imagePath)
+                    .then(function (filePath) {
+                    var correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+                    var currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+                    _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+                });
+            }
+            else {
+                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+                _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+            }
+        }, function (err) {
+            _this.presentToast('Error while selecting image.');
+        });
+    };
+    ConfirmPage.prototype.openSignupPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__signup_signup__["a" /* SignupPage */]);
+    };
+    ConfirmPage.prototype.openCenterPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__center_center__["a" /* CenterPage */]);
+    };
+    ConfirmPage.prototype.openReportsPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_10__reports_reports__["a" /* ReportsPage */]);
+    };
+    ConfirmPage.prototype.goBack = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__search_search__["a" /* SearchPage */]);
+    };
+    return ConfirmPage;
+}());
+ConfirmPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'confirm-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-buttons start>\n    <button ion-button icon-only (click)="goBack()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n \n    <div class="booking_card" *ngIf="student != null">\n        <h3>{{student.name}} \n          <span> \n            <h5 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h5>\n            <h5 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h5>\n          </span>\n        </h3>\n        <h4><ion-icon name="mail"></ion-icon> {{student.email_id}}</h4>\n        <h4><ion-icon name="call"></ion-icon> {{student.phone_number}} </h4>\n        <h4><ion-icon name="locate"></ion-icon> {{student.locality}}</h4>\n    </div>\n\n    <ion-list no-lines>\n\n      <form [formGroup]="confirmForm">\n \n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_group.valid  && (confirmForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_type.valid  && (confirmForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- uniform_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.uniform_size.valid  && (confirmForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <!-- shoe_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.shoe_size.valid  && (confirmForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="takePhoto()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n \n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__["a" /* Camera */],
+        __WEBPACK_IMPORTED_MODULE_12__ionic_native_transfer__["a" /* Transfer */],
+        __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__["a" /* File */],
+        __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__["a" /* FilePath */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_6__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]])
+], ConfirmPage);
+
+;
+//# sourceMappingURL=confirm.js.map
+
+/***/ }),
+
+/***/ 518:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Indentation; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(26);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var Indentation = (function () {
+    function Indentation(http, authService, storage) {
+        this.http = http;
+        this.authService = authService;
+        this.storage = storage;
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
+    }
+    // Function to get list of al the Indentations
+    Indentation.prototype.searchIndentation = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Authorization', _this.authService.token);
+            _this.http.get(_this.url + 'api/indentations', { headers: headers })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                resolve(data);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    Indentation.prototype.createIndentation = function (indentation) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Authorization', _this.authService.token);
+            _this.http.post(_this.url + 'api/indentations', JSON.stringify(indentation), { headers: headers })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    Indentation.prototype.updateIndentation = function (indentation) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Authorization', _this.authService.token);
+            _this.http.put(_this.url + 'api/indentations', JSON.stringify(indentation), { headers: headers })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    return Indentation;
+}());
+Indentation = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+], Indentation);
+
+//# sourceMappingURL=indentation.js.map
+
+/***/ }),
+
+/***/ 519:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(520);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(524);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 52:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Center; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1680,12 +1555,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Center = (function () {
-    //url = "http://localhost:8080/";
     function Center(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     // Function to get list of al the centers
     Center.prototype.searchCenter = function () {
@@ -1742,248 +1617,6 @@ Center = __decorate([
 
 /***/ }),
 
-/***/ 519:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(520);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(524);
-
-
-Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 52:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_center_center__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__reports_reports__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__center_center__ = __webpack_require__(53);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-//Pages
-
-
-
-var SignupPage = SignupPage_1 = (function () {
-    function SignupPage(navCtrl, navParams, centerService, authService, loadingCtrl, app, menu, storage) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.centerService = centerService;
-        this.authService = authService;
-        this.loadingCtrl = loadingCtrl;
-        this.app = app;
-        this.menu = menu;
-        this.storage = storage;
-        this.active = true;
-        this.isPasswordMatching = true;
-        this.isExisting = false;
-        this.btnText = "Save";
-        this.existingUser = false;
-        menu.enable(true);
-    }
-    SignupPage.prototype.ionViewDidLoad = function () {
-        this.getCenters();
-        this.getUsers();
-    };
-    // Function to get list of all the centers
-    SignupPage.prototype.getCenters = function () {
-        var _this = this;
-        this.centers = [];
-        this.centerService.searchCenter().then(function (result) {
-            _this.centers = result;
-            _this.storage.get('user').then(function (user) {
-                if (user.role != "admin") {
-                    _this.centers = __WEBPACK_IMPORTED_MODULE_4_lodash__["find"](_this.centers, ['center_code', user.center]);
-                    _this.center = _this.centers;
-                }
-            });
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    // Function to get list of all the Users
-    SignupPage.prototype.getUsers = function () {
-        var _this = this;
-        this.users = [];
-        this.authService.searchUser().then(function (result) {
-            _this.users = result;
-            for (var i = 0; i < _this.users.length; i++) {
-                _this.users[i].password = "";
-            }
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    SignupPage.prototype.save = function () {
-        if (!this.isExisting && this.isPasswordMatching) {
-            var details = {
-                email: this.email,
-                password: this.password,
-                role: this.role,
-                name: this.name,
-                center: this.center,
-                active: this.active
-            };
-            this.authService.createAccount(details).then(function (result) {
-                console.log(result);
-            }, function (err) {
-            });
-        }
-    };
-    SignupPage.prototype.update = function () {
-        var details = {
-            email: this.email,
-            password: this.password,
-            role: this.role,
-            name: this.name,
-            center: this.center,
-            active: this.active
-        };
-        this.authService.updateAccount(details).then(function (result) {
-        }, function (err) { });
-    };
-    // Function to search for a User dynamically based on an input
-    SignupPage.prototype.search = function () {
-        var result = [];
-        for (var i = 0; i < this.users.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].name, this.myInput)) {
-                result.push(this.users[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].email, this.myInput)) {
-                result.push(this.users[i]);
-            }
-        }
-        if (result && result.length === 1) {
-            this.existingUser = true;
-            this.role = result[0].role;
-            this.email = result[0].email;
-            this.password = result[0].password;
-            this.confirm_password = result[0].password;
-            this.name = result[0].name;
-            this.center = result[0].center;
-            this.active = result[0].active;
-            this._id = result[0]._id;
-            this.btnText = "Update";
-        }
-        else {
-            this.existingUser = false;
-            this.role = "";
-            this.email = "";
-            this.password = "";
-            this.confirm_password = "";
-            this.name = "";
-            this.center = "";
-            this.active = true;
-        }
-    };
-    // Function to search for a User dynamically based on select
-    SignupPage.prototype.onSelectChange = function () {
-        var result = [];
-        for (var i = 0; i < this.users.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].name, this.mySelect)) {
-                result.push(this.users[i]);
-            }
-        }
-        if (result && result.length === 1) {
-            this.existingUser = true;
-            this.role = result[0].role;
-            this.email = result[0].email;
-            this.password = result[0].password;
-            this.confirm_password = result[0].password;
-            this.name = result[0].name;
-            this.center = result[0].center;
-            this.active = result[0].active;
-            this._id = result[0]._id;
-            this.btnText = "Update";
-        }
-        else {
-            this.existingUser = false;
-            this.role = "";
-            this.email = "";
-            this.password = "";
-            this.confirm_password = "";
-            this.name = "";
-            this.center = "";
-            this.active = true;
-        }
-    };
-    // Function to check if user exists with same email ID
-    SignupPage.prototype.checkEmail = function () {
-        this.isExisting = false;
-        var result = __WEBPACK_IMPORTED_MODULE_4_lodash__["find"](this.users, ['email', this.email]);
-        this.isExisting = (result != null && result != undefined) ? true : false;
-    };
-    // Function to check if password and confirm password match
-    SignupPage.prototype.checkPassword = function () {
-        this.isPasswordMatching = false;
-        if ((this.password == undefined || this.password == null)
-            && (this.confirm_password == undefined || this.confirm_password == null)) {
-            this.isPasswordMatching = false;
-        }
-        else {
-            this.isPasswordMatching = (this.password == this.confirm_password) ? true : false;
-        }
-    };
-    // Function to open Pages
-    SignupPage.prototype.openSignupPage = function () {
-        this.navCtrl.setRoot(SignupPage_1);
-    };
-    SignupPage.prototype.openCenterPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__center_center__["a" /* CenterPage */]);
-    };
-    SignupPage.prototype.openReportsPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__reports_reports__["a" /* ReportsPage */]);
-    };
-    SignupPage.prototype.openHomePage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__home_home__["a" /* HomePage */]);
-    };
-    return SignupPage;
-}());
-SignupPage = SignupPage_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'signup',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/signup/signup.html"*/' <ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons start>\n        <button ion-button icon-only (click)="openHomePage()"><ion-icon name="close"></ion-icon></button>\n    </ion-buttons>\n    <ion-title>Users</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n  <ion-content>\n    <ion-list>\n      <button ion-item (click)="openCenterPage()">\n        Center\n      </button>\n      <button ion-item (click)="openSignupPage()">\n        Users\n      </button>\n      <button ion-item (click)="openReportsPage()">\n        Reports\n      </button>\n      <button ion-item (click)="closeMenu()">\n        Close Menu\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<ion-nav id="nav" #content [root]="rootPage"></ion-nav> \n\n<ion-content>\n\n    <div class="search-row">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()">\n        </ion-searchbar>\n        <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">\n          <ion-option *ngFor="let user of users" [value]="user.name">{{user.name}}</ion-option>\n        </ion-select>\n    </div>\n \n    <ion-row class="account-form">\n        <ion-col>\n            <ion-list inset>\n\n                <ion-item *ngIf="!existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-select interface="popover" [(ngModel)]="center">\n                    <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>\n                  </ion-select>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-input [(ngModel)]="center" [readonly]=true placeholder="Center" type="text"></ion-input>\n                </ion-item>\n \n                <ion-item *ngIf="!existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" [readonly]=true placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="isExisting">Email already exists</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="password" (ionChange)="checkPassword()" placeholder="Password" type="password"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="confirm_password" placeholder="Confirm Password" (ionChange)="checkPassword()" type="password"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="!isPasswordMatching">Password do not match</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="person-add"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="name" placeholder="Name"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label>Active</ion-label>\n                    <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>\n                </ion-item>\n \n                <ion-list radio-group [(ngModel)]="role">\n                  <ion-item>\n                    <ion-label>Counsellor</ion-label>\n                    <ion-radio value="counsellor" checked></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Center Admin</ion-label>\n                    <ion-radio value="centerAdmin"></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Admin</ion-label>\n                    <ion-radio value="admin"></ion-radio>\n                  </ion-item>\n                </ion-list>\n \n            </ion-list>\n \n            <button ion-button (click)="save()" *ngIf="btnText == \'Save\'" class="continue-button">{{ btnText }}</button>\n            <button ion-button (click)="update()" *ngIf="btnText != \'Save\'" class="continue-button">{{ btnText }}</button>\n        \n        </ion-col>\n    </ion-row>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/signup/signup.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["c" /* App */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["j" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_5__ionic_storage__["b" /* Storage */]])
-], SignupPage);
-
-var SignupPage_1;
-//# sourceMappingURL=signup.js.map
-
-/***/ }),
-
 /***/ 524:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1991,28 +1624,28 @@ var SignupPage_1;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__(573);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__(561);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser_animations__ = __webpack_require__(842);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ion2_calendar__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_signup_signup__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_search_search__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_center_center__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_reports_reports__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_confirm_confirm__ = __webpack_require__(320);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_indent_indent__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_students_students__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_center_center__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_indentation_indentation__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_file__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_transfer__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_file_path__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ion2_calendar__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_signup_signup__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_search_search__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__ = __webpack_require__(517);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_center_center__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_students_students__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_center_center__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_indentation_indentation__ = __webpack_require__(518);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_file__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_transfer__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_file_path__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_camera__ = __webpack_require__(149);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2059,10 +1692,10 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */],
             __WEBPACK_IMPORTED_MODULE_10__pages_signup_signup__["a" /* SignupPage */],
             __WEBPACK_IMPORTED_MODULE_11__pages_search_search__["a" /* SearchPage */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_center_center__["a" /* CenterPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_reports_reports__["a" /* ReportsPage */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_confirm_confirm__["a" /* ConfirmPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_indent_indent__["a" /* IndentPage */]
+            __WEBPACK_IMPORTED_MODULE_12__pages_reports_reports__["a" /* ReportsPage */],
+            __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__["a" /* ConfirmPage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__["a" /* IndentPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_center_center__["a" /* CenterPage */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__["a" /* BrowserModule */],
@@ -2072,8 +1705,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["a" /* IonicStorageModule */].forRoot(__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* MyApp */]),
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* MyApp */], {}, {
                 links: [
-                    { loadChildren: '../pages/reports/reports.module#ReportsPageModule', name: 'ReportsPage', segment: 'reports', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/center/center.module#CenterPageModule', name: 'CenterPage', segment: 'center', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/reports/reports.module#ReportsPageModule', name: 'ReportsPage', segment: 'reports', priority: 'low', defaultHistory: [] }
                 ]
             })
         ],
@@ -2084,10 +1716,10 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */],
             __WEBPACK_IMPORTED_MODULE_10__pages_signup_signup__["a" /* SignupPage */],
             __WEBPACK_IMPORTED_MODULE_11__pages_search_search__["a" /* SearchPage */],
-            __WEBPACK_IMPORTED_MODULE_12__pages_center_center__["a" /* CenterPage */],
-            __WEBPACK_IMPORTED_MODULE_13__pages_reports_reports__["a" /* ReportsPage */],
-            __WEBPACK_IMPORTED_MODULE_14__pages_confirm_confirm__["a" /* ConfirmPage */],
-            __WEBPACK_IMPORTED_MODULE_15__pages_indent_indent__["a" /* IndentPage */]
+            __WEBPACK_IMPORTED_MODULE_12__pages_reports_reports__["a" /* ReportsPage */],
+            __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__["a" /* ConfirmPage */],
+            __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__["a" /* IndentPage */],
+            __WEBPACK_IMPORTED_MODULE_15__pages_center_center__["a" /* CenterPage */]
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["a" /* IonicStorageModule */],
@@ -2114,12 +1746,12 @@ AppModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CenterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_center_center__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__reports_reports__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(52);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2132,21 +1764,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 //Pages
 
 
 
-var CenterPage = CenterPage_1 = (function () {
-    function CenterPage(navCtrl, navParams, centerService, loadingCtrl, app, menu) {
+
+var CenterPage = (function () {
+    function CenterPage(navCtrl, centerService, loadingCtrl, app, menu, modalCtrl, alertCtrl, actionSheetCtrl, toastCtrl, platform) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
         this.centerService = centerService;
         this.loadingCtrl = loadingCtrl;
         this.app = app;
         this.menu = menu;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.toastCtrl = toastCtrl;
+        this.platform = platform;
         this.active = true;
         this.btnText = "Save";
+        this.playgroup = {
+            annual: 0,
+            mid_term: 0,
+            early_start: 0
+        };
+        this.nursery = {
+            annual: 0,
+            mid_term: 0,
+            early_start: 0
+        };
+        this.lkg = {
+            annual: 0,
+            mid_term: 0,
+            early_start: 0
+        };
+        this.ukg = {
+            annual: 0,
+            mid_term: 0,
+            early_start: 0
+        };
         menu.enable(true);
     }
     CenterPage.prototype.ionViewDidLoad = function () {
@@ -2205,16 +1861,16 @@ var CenterPage = CenterPage_1 = (function () {
     CenterPage.prototype.search = function () {
         var result = [];
         for (var i = 0; i < this.centers.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_3_lodash__["includes"](this.centers[i].center_name, this.myInput)) {
+            if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_name, this.myInput)) {
                 result.push(this.centers[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_3_lodash__["includes"](this.centers[i].center_code, this.myInput)) {
+            else if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_code, this.myInput)) {
                 result.push(this.centers[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_3_lodash__["includes"](this.centers[i].center_phoneno, this.myInput)) {
+            else if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_phoneno, this.myInput)) {
                 result.push(this.centers[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_3_lodash__["includes"](this.centers[i].center_email, this.myInput)) {
+            else if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_email, this.myInput)) {
                 result.push(this.centers[i]);
             }
         }
@@ -2240,16 +1896,32 @@ var CenterPage = CenterPage_1 = (function () {
             this.center_address = "";
             this.active = true;
             this.center_id = "";
-            this.playgroup = 0;
-            this.nursery = 0;
-            this.lkg = 0;
-            this.ukg = 0;
+            this.playgroup = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
+            this.nursery = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
+            this.lkg = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
+            this.ukg = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
         }
     };
     CenterPage.prototype.onSelectChange = function () {
         var result = [];
         for (var i = 0; i < this.centers.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_3_lodash__["includes"](this.centers[i].center_name, this.mySelect)) {
+            if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_name, this.mySelect)) {
                 result.push(this.centers[i]);
             }
         }
@@ -2275,10 +1947,26 @@ var CenterPage = CenterPage_1 = (function () {
             this.center_address = "";
             this.active = true;
             this.center_id = "";
-            this.playgroup = 0;
-            this.nursery = 0;
-            this.lkg = 0;
-            this.ukg = 0;
+            this.playgroup = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
+            this.nursery = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
+            this.lkg = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
+            this.ukg = {
+                annual: 0,
+                mid_term: 0,
+                early_start: 0
+            };
         }
     };
     // Function to generate unique center code
@@ -2316,299 +2004,53 @@ var CenterPage = CenterPage_1 = (function () {
     };
     // Function to open Pages
     CenterPage.prototype.openSignupPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__signup_signup__["a" /* SignupPage */]);
-    };
-    CenterPage.prototype.openCenterPage = function () {
-        this.navCtrl.setRoot(CenterPage_1);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__signup_signup__["a" /* SignupPage */]);
     };
     CenterPage.prototype.openReportsPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__reports_reports__["a" /* ReportsPage */]);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__reports_reports__["a" /* ReportsPage */]);
     };
     CenterPage.prototype.openHomePage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__home_home__["a" /* HomePage */]);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__home_home__["a" /* HomePage */]);
     };
     return CenterPage;
 }());
-CenterPage = CenterPage_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPage */])(),
+CenterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-center',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/center/center.html"*/'<ion-header>\n  <ion-navbar color="secondary">\n  	<ion-buttons start>\n		<button ion-button icon-only (click)="openHomePage()"><ion-icon name="close"></ion-icon></button>\n  	</ion-buttons>\n    <ion-title>Centers</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n  <ion-content>\n    <ion-list>\n      <button ion-item (click)="openCenterPage()">\n        Center\n      </button>\n      <button ion-item (click)="openSignupPage()">\n        Users\n      </button>\n      <button ion-item (click)="openReportsPage()">\n        Reports\n      </button>\n      <button ion-item (click)="closeMenu()">\n        Close Menu\n      </button>\n    </ion-list>\n  </ion-content>\n</ion-menu>\n\n<ion-nav id="nav" #content [root]="rootPage"></ion-nav> \n\n<ion-content>\n    <div class="search-row">\n      	<ion-searchbar\n      		  [(ngModel)]="myInput"\n      		  (animated)="true"\n      		  (placeholder)="Search"\n      		  (ionInput)="search()">\n      	</ion-searchbar>\n        <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">\n          <ion-option *ngFor="let center of centers" [value]="center.center_name">{{center.center_name}}</ion-option>\n        </ion-select>\n    </div>\n\n    <ion-row class="account-form">\n        <ion-col>\n            <ion-list inset>\n \n                <ion-item>\n                    <ion-label><ion-icon name="paper-plane"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_name" (ionChange)="generateCode()" placeholder="Center Name" required type="string"></ion-input>\n                </ion-item>\n \n                <ion-item>\n                    <h3> Center Code: {{ center_code }} </h3>\n                </ion-item>\n \n               <ion-item>\n                    <ion-label><ion-icon name="call"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_phoneno" placeholder="Center Phone No" required type="string"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_email" placeholder="Center E-Mail" required type="string"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="locate"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_address" placeholder="Center Address" required type="string"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Play Group</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Nursery</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">LKG</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">UKG</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label>Active</ion-label>\n                 	<ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>\n 				        </ion-item>\n            </ion-list>\n \n            <button ion-button (click)="save()" *ngIf="btnText == \'Save\'" class="continue-button">{{ btnText }}</button>\n            <button ion-button (click)="update()" *ngIf="btnText != \'Save\'" class="continue-button">{{ btnText }}</button>\n \n        </ion-col>\n    </ion-row>\n \n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/center/center.html"*/,
+        selector: 'center-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/center/center.html"*/'<ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n  	<ion-buttons start>\n		  <button ion-button icon-only (click)="openHomePage()"><ion-icon name="close"></ion-icon></button>\n  	</ion-buttons>\n    <ion-title>Centers</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div class="search-row">\n      	<ion-searchbar\n      		  [(ngModel)]="myInput"\n      		  (animated)="true"\n      		  (placeholder)="Search"\n      		  (ionInput)="search()">\n      	</ion-searchbar>\n        <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">\n          <ion-option *ngFor="let center of centers" [value]="center.center_name">{{center.center_name}}</ion-option>\n        </ion-select>\n    </div>\n\n    <ion-row class="account-form">\n        <ion-col>\n            <ion-list inset>\n \n                <ion-item>\n                    <ion-label><ion-icon name="paper-plane"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_name" (ionChange)="generateCode()" placeholder="Center Name" required type="string"></ion-input>\n                </ion-item>\n \n                <ion-item>\n                    <h3> Center Code: {{ center_code }} </h3>\n                </ion-item>\n \n               <ion-item>\n                    <ion-label><ion-icon name="call"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_phoneno" placeholder="Center Phone No" required type="string"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_email" placeholder="Center E-Mail" required type="string"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="locate"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="center_address" placeholder="Center Address" required type="string"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label>Active</ion-label>\n                  <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>\n                </ion-item>\n\n\n                <h4> Playgroup</h4>\n\n                <ion-item>\n                  <ion-label color="primary">Annual</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.annual" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Mid-term</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.mid_term" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Early start</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.early_start" required></ion-input>\n                </ion-item>\n\n\n                <h4> Nursery</h4>\n\n                <ion-item>\n                  <ion-label color="primary">Annual</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.annual" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Mid-term</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.mid_term" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Early start</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.early_start" required></ion-input>\n                </ion-item>\n\n\n                <h4> LKG</h4>\n\n                <ion-item>\n                  <ion-label color="primary">Annual</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.annual" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Mid-term</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.mid_term" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Early start</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.early_start" required></ion-input>\n                </ion-item>\n\n\n                <h4> UKG</h4>\n\n                <ion-item>\n                  <ion-label color="primary">Annual</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.annual" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Mid-term</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.mid_term" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                  <ion-label color="primary">Early start</ion-label>\n                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.early_start" required></ion-input>\n                </ion-item>\n\n            </ion-list>\n \n            <button ion-button (click)="save()" *ngIf="btnText == \'Save\'" class="continue-button">{{ btnText }}</button>\n            <button ion-button (click)="update()" *ngIf="btnText != \'Save\'" class="continue-button">{{ btnText }}</button>\n \n        </ion-col>\n    </ion-row>\n \n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/center/center.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_6__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]])
 ], CenterPage);
 
-var CenterPage_1;
 //# sourceMappingURL=center.js.map
 
 /***/ }),
 
-/***/ 547:
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./af": 205,
-	"./af.js": 205,
-	"./ar": 206,
-	"./ar-dz": 207,
-	"./ar-dz.js": 207,
-	"./ar-kw": 208,
-	"./ar-kw.js": 208,
-	"./ar-ly": 209,
-	"./ar-ly.js": 209,
-	"./ar-ma": 210,
-	"./ar-ma.js": 210,
-	"./ar-sa": 211,
-	"./ar-sa.js": 211,
-	"./ar-tn": 212,
-	"./ar-tn.js": 212,
-	"./ar.js": 206,
-	"./az": 213,
-	"./az.js": 213,
-	"./be": 214,
-	"./be.js": 214,
-	"./bg": 215,
-	"./bg.js": 215,
-	"./bn": 216,
-	"./bn.js": 216,
-	"./bo": 217,
-	"./bo.js": 217,
-	"./br": 218,
-	"./br.js": 218,
-	"./bs": 219,
-	"./bs.js": 219,
-	"./ca": 220,
-	"./ca.js": 220,
-	"./cs": 221,
-	"./cs.js": 221,
-	"./cv": 222,
-	"./cv.js": 222,
-	"./cy": 223,
-	"./cy.js": 223,
-	"./da": 224,
-	"./da.js": 224,
-	"./de": 225,
-	"./de-at": 226,
-	"./de-at.js": 226,
-	"./de-ch": 227,
-	"./de-ch.js": 227,
-	"./de.js": 225,
-	"./dv": 228,
-	"./dv.js": 228,
-	"./el": 229,
-	"./el.js": 229,
-	"./en-au": 230,
-	"./en-au.js": 230,
-	"./en-ca": 231,
-	"./en-ca.js": 231,
-	"./en-gb": 232,
-	"./en-gb.js": 232,
-	"./en-ie": 233,
-	"./en-ie.js": 233,
-	"./en-nz": 234,
-	"./en-nz.js": 234,
-	"./eo": 235,
-	"./eo.js": 235,
-	"./es": 236,
-	"./es-do": 237,
-	"./es-do.js": 237,
-	"./es.js": 236,
-	"./et": 238,
-	"./et.js": 238,
-	"./eu": 239,
-	"./eu.js": 239,
-	"./fa": 240,
-	"./fa.js": 240,
-	"./fi": 241,
-	"./fi.js": 241,
-	"./fo": 242,
-	"./fo.js": 242,
-	"./fr": 243,
-	"./fr-ca": 244,
-	"./fr-ca.js": 244,
-	"./fr-ch": 245,
-	"./fr-ch.js": 245,
-	"./fr.js": 243,
-	"./fy": 246,
-	"./fy.js": 246,
-	"./gd": 247,
-	"./gd.js": 247,
-	"./gl": 248,
-	"./gl.js": 248,
-	"./gom-latn": 249,
-	"./gom-latn.js": 249,
-	"./he": 250,
-	"./he.js": 250,
-	"./hi": 251,
-	"./hi.js": 251,
-	"./hr": 252,
-	"./hr.js": 252,
-	"./hu": 253,
-	"./hu.js": 253,
-	"./hy-am": 254,
-	"./hy-am.js": 254,
-	"./id": 255,
-	"./id.js": 255,
-	"./is": 256,
-	"./is.js": 256,
-	"./it": 257,
-	"./it.js": 257,
-	"./ja": 258,
-	"./ja.js": 258,
-	"./jv": 259,
-	"./jv.js": 259,
-	"./ka": 260,
-	"./ka.js": 260,
-	"./kk": 261,
-	"./kk.js": 261,
-	"./km": 262,
-	"./km.js": 262,
-	"./kn": 263,
-	"./kn.js": 263,
-	"./ko": 264,
-	"./ko.js": 264,
-	"./ky": 265,
-	"./ky.js": 265,
-	"./lb": 266,
-	"./lb.js": 266,
-	"./lo": 267,
-	"./lo.js": 267,
-	"./lt": 268,
-	"./lt.js": 268,
-	"./lv": 269,
-	"./lv.js": 269,
-	"./me": 270,
-	"./me.js": 270,
-	"./mi": 271,
-	"./mi.js": 271,
-	"./mk": 272,
-	"./mk.js": 272,
-	"./ml": 273,
-	"./ml.js": 273,
-	"./mr": 274,
-	"./mr.js": 274,
-	"./ms": 275,
-	"./ms-my": 276,
-	"./ms-my.js": 276,
-	"./ms.js": 275,
-	"./my": 277,
-	"./my.js": 277,
-	"./nb": 278,
-	"./nb.js": 278,
-	"./ne": 279,
-	"./ne.js": 279,
-	"./nl": 280,
-	"./nl-be": 281,
-	"./nl-be.js": 281,
-	"./nl.js": 280,
-	"./nn": 282,
-	"./nn.js": 282,
-	"./pa-in": 283,
-	"./pa-in.js": 283,
-	"./pl": 284,
-	"./pl.js": 284,
-	"./pt": 285,
-	"./pt-br": 286,
-	"./pt-br.js": 286,
-	"./pt.js": 285,
-	"./ro": 287,
-	"./ro.js": 287,
-	"./ru": 288,
-	"./ru.js": 288,
-	"./sd": 289,
-	"./sd.js": 289,
-	"./se": 290,
-	"./se.js": 290,
-	"./si": 291,
-	"./si.js": 291,
-	"./sk": 292,
-	"./sk.js": 292,
-	"./sl": 293,
-	"./sl.js": 293,
-	"./sq": 294,
-	"./sq.js": 294,
-	"./sr": 295,
-	"./sr-cyrl": 296,
-	"./sr-cyrl.js": 296,
-	"./sr.js": 295,
-	"./ss": 297,
-	"./ss.js": 297,
-	"./sv": 298,
-	"./sv.js": 298,
-	"./sw": 299,
-	"./sw.js": 299,
-	"./ta": 300,
-	"./ta.js": 300,
-	"./te": 301,
-	"./te.js": 301,
-	"./tet": 302,
-	"./tet.js": 302,
-	"./th": 303,
-	"./th.js": 303,
-	"./tl-ph": 304,
-	"./tl-ph.js": 304,
-	"./tlh": 305,
-	"./tlh.js": 305,
-	"./tr": 306,
-	"./tr.js": 306,
-	"./tzl": 307,
-	"./tzl.js": 307,
-	"./tzm": 308,
-	"./tzm-latn": 309,
-	"./tzm-latn.js": 309,
-	"./tzm.js": 308,
-	"./uk": 310,
-	"./uk.js": 310,
-	"./ur": 311,
-	"./ur.js": 311,
-	"./uz": 312,
-	"./uz-latn": 313,
-	"./uz-latn.js": 313,
-	"./uz.js": 312,
-	"./vi": 314,
-	"./vi.js": 314,
-	"./x-pseudo": 315,
-	"./x-pseudo.js": 315,
-	"./yo": 316,
-	"./yo.js": 316,
-	"./zh-cn": 317,
-	"./zh-cn.js": 317,
-	"./zh-hk": 318,
-	"./zh-hk.js": 318,
-	"./zh-tw": 319,
-	"./zh-tw.js": 319
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 547;
-
-/***/ }),
-
-/***/ 573:
+/***/ 561:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(574);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_login_login__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(562);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_search_search__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_signup_signup__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_center_center__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_indent_indent__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__ = __webpack_require__(27);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2622,27 +2064,79 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// Pages
+
+
+
+
+
+
+
+// Services
+
 var MyApp = (function () {
-    function MyApp(platform) {
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_3__pages_login_login__["a" /* LoginPage */];
+    function MyApp(platform, storage, authService) {
+        var _this = this;
+        this.storage = storage;
+        this.authService = authService;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
+        this.isAdmin = false;
+        this.isCenterAdmin = false;
+        this.isCounsellor = false;
         platform.ready().then(function () {
-            __WEBPACK_IMPORTED_MODULE_2_ionic_native__["a" /* StatusBar */].styleDefault();
+            __WEBPACK_IMPORTED_MODULE_2_ionic_native__["b" /* StatusBar */].styleDefault();
+            __WEBPACK_IMPORTED_MODULE_2_ionic_native__["a" /* Splashscreen */].hide();
+        });
+        this.storage.get('user').then(function (user) {
+            if (user.role === "counsellor")
+                _this.isCounsellor = true;
+            else if (user.role === "admin")
+                _this.isAdmin = true;
+            else if (user.role === "centerAdmin")
+                _this.isCenterAdmin = true;
+            else
+                _this.isCounsellor = true;
         });
     }
+    MyApp.prototype.go_to_home = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */]);
+    };
+    MyApp.prototype.go_to_search = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_search_search__["a" /* SearchPage */]);
+    };
+    MyApp.prototype.go_to_login = function () {
+        this.authService.logout();
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */]);
+    };
+    MyApp.prototype.go_to_signup = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_7__pages_signup_signup__["a" /* SignupPage */]);
+    };
+    MyApp.prototype.go_to_center = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_8__pages_center_center__["a" /* CenterPage */]);
+    };
+    MyApp.prototype.go_to_indent = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_9__pages_indent_indent__["a" /* IndentPage */]);
+    };
+    MyApp.prototype.go_to_reports = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_10__pages_reports_reports__["a" /* ReportsPage */]);
+    };
     return MyApp;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
+], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        template: "<ion-nav [root]=\"rootPage\"></ion-nav>"
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/app/app.html"*/'<ion-menu side="left" [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>        \n    <ion-content>\n        <ion-list>\n        	<ion-item *ngIf="isAdmin" (click)="go_to_center()" menuClose>\n                Centers\n            </ion-item>\n            <ion-item *ngIf="isAdmin" (click)="go_to_signup()" menuClose>\n                Users\n            </ion-item>\n            <ion-item (click)="go_to_home()" menuClose>\n                Enquiry\n            </ion-item>\n            <ion-item (click)="go_to_search()" menuClose>\n                Confirm\n            </ion-item>\n            <ion-item *ngIf="!isCounsellor" (click)="go_to_indent()" menuClose>\n                Indentations\n            </ion-item>\n            <ion-item (click)="go_to_reports()" menuClose>\n                Reports\n            </ion-item>\n            <ion-item (click)="go_to_login()" menuClose>\n                SignOut\n            </ion-item>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" id="nav" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__["a" /* Auth */]])
 ], MyApp);
 
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 65:
+/***/ 69:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2650,9 +2144,9 @@ MyApp = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__signup_signup__ = __webpack_require__(47);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2816,11 +2310,695 @@ LoginPage = __decorate([
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
 ], LoginPage);
 
 //# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 836:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 399,
+	"./af.js": 399,
+	"./ar": 400,
+	"./ar-dz": 401,
+	"./ar-dz.js": 401,
+	"./ar-kw": 402,
+	"./ar-kw.js": 402,
+	"./ar-ly": 403,
+	"./ar-ly.js": 403,
+	"./ar-ma": 404,
+	"./ar-ma.js": 404,
+	"./ar-sa": 405,
+	"./ar-sa.js": 405,
+	"./ar-tn": 406,
+	"./ar-tn.js": 406,
+	"./ar.js": 400,
+	"./az": 407,
+	"./az.js": 407,
+	"./be": 408,
+	"./be.js": 408,
+	"./bg": 409,
+	"./bg.js": 409,
+	"./bn": 410,
+	"./bn.js": 410,
+	"./bo": 411,
+	"./bo.js": 411,
+	"./br": 412,
+	"./br.js": 412,
+	"./bs": 413,
+	"./bs.js": 413,
+	"./ca": 414,
+	"./ca.js": 414,
+	"./cs": 415,
+	"./cs.js": 415,
+	"./cv": 416,
+	"./cv.js": 416,
+	"./cy": 417,
+	"./cy.js": 417,
+	"./da": 418,
+	"./da.js": 418,
+	"./de": 419,
+	"./de-at": 420,
+	"./de-at.js": 420,
+	"./de-ch": 421,
+	"./de-ch.js": 421,
+	"./de.js": 419,
+	"./dv": 422,
+	"./dv.js": 422,
+	"./el": 423,
+	"./el.js": 423,
+	"./en-au": 424,
+	"./en-au.js": 424,
+	"./en-ca": 425,
+	"./en-ca.js": 425,
+	"./en-gb": 426,
+	"./en-gb.js": 426,
+	"./en-ie": 427,
+	"./en-ie.js": 427,
+	"./en-nz": 428,
+	"./en-nz.js": 428,
+	"./eo": 429,
+	"./eo.js": 429,
+	"./es": 430,
+	"./es-do": 431,
+	"./es-do.js": 431,
+	"./es.js": 430,
+	"./et": 432,
+	"./et.js": 432,
+	"./eu": 433,
+	"./eu.js": 433,
+	"./fa": 434,
+	"./fa.js": 434,
+	"./fi": 435,
+	"./fi.js": 435,
+	"./fo": 436,
+	"./fo.js": 436,
+	"./fr": 437,
+	"./fr-ca": 438,
+	"./fr-ca.js": 438,
+	"./fr-ch": 439,
+	"./fr-ch.js": 439,
+	"./fr.js": 437,
+	"./fy": 440,
+	"./fy.js": 440,
+	"./gd": 441,
+	"./gd.js": 441,
+	"./gl": 442,
+	"./gl.js": 442,
+	"./gom-latn": 443,
+	"./gom-latn.js": 443,
+	"./he": 444,
+	"./he.js": 444,
+	"./hi": 445,
+	"./hi.js": 445,
+	"./hr": 446,
+	"./hr.js": 446,
+	"./hu": 447,
+	"./hu.js": 447,
+	"./hy-am": 448,
+	"./hy-am.js": 448,
+	"./id": 449,
+	"./id.js": 449,
+	"./is": 450,
+	"./is.js": 450,
+	"./it": 451,
+	"./it.js": 451,
+	"./ja": 452,
+	"./ja.js": 452,
+	"./jv": 453,
+	"./jv.js": 453,
+	"./ka": 454,
+	"./ka.js": 454,
+	"./kk": 455,
+	"./kk.js": 455,
+	"./km": 456,
+	"./km.js": 456,
+	"./kn": 457,
+	"./kn.js": 457,
+	"./ko": 458,
+	"./ko.js": 458,
+	"./ky": 459,
+	"./ky.js": 459,
+	"./lb": 460,
+	"./lb.js": 460,
+	"./lo": 461,
+	"./lo.js": 461,
+	"./lt": 462,
+	"./lt.js": 462,
+	"./lv": 463,
+	"./lv.js": 463,
+	"./me": 464,
+	"./me.js": 464,
+	"./mi": 465,
+	"./mi.js": 465,
+	"./mk": 466,
+	"./mk.js": 466,
+	"./ml": 467,
+	"./ml.js": 467,
+	"./mr": 468,
+	"./mr.js": 468,
+	"./ms": 469,
+	"./ms-my": 470,
+	"./ms-my.js": 470,
+	"./ms.js": 469,
+	"./my": 471,
+	"./my.js": 471,
+	"./nb": 472,
+	"./nb.js": 472,
+	"./ne": 473,
+	"./ne.js": 473,
+	"./nl": 474,
+	"./nl-be": 475,
+	"./nl-be.js": 475,
+	"./nl.js": 474,
+	"./nn": 476,
+	"./nn.js": 476,
+	"./pa-in": 477,
+	"./pa-in.js": 477,
+	"./pl": 478,
+	"./pl.js": 478,
+	"./pt": 479,
+	"./pt-br": 480,
+	"./pt-br.js": 480,
+	"./pt.js": 479,
+	"./ro": 481,
+	"./ro.js": 481,
+	"./ru": 482,
+	"./ru.js": 482,
+	"./sd": 483,
+	"./sd.js": 483,
+	"./se": 484,
+	"./se.js": 484,
+	"./si": 485,
+	"./si.js": 485,
+	"./sk": 486,
+	"./sk.js": 486,
+	"./sl": 487,
+	"./sl.js": 487,
+	"./sq": 488,
+	"./sq.js": 488,
+	"./sr": 489,
+	"./sr-cyrl": 490,
+	"./sr-cyrl.js": 490,
+	"./sr.js": 489,
+	"./ss": 491,
+	"./ss.js": 491,
+	"./sv": 492,
+	"./sv.js": 492,
+	"./sw": 493,
+	"./sw.js": 493,
+	"./ta": 494,
+	"./ta.js": 494,
+	"./te": 495,
+	"./te.js": 495,
+	"./tet": 496,
+	"./tet.js": 496,
+	"./th": 497,
+	"./th.js": 497,
+	"./tl-ph": 498,
+	"./tl-ph.js": 498,
+	"./tlh": 499,
+	"./tlh.js": 499,
+	"./tr": 500,
+	"./tr.js": 500,
+	"./tzl": 501,
+	"./tzl.js": 501,
+	"./tzm": 502,
+	"./tzm-latn": 503,
+	"./tzm-latn.js": 503,
+	"./tzm.js": 502,
+	"./uk": 504,
+	"./uk.js": 504,
+	"./ur": 505,
+	"./ur.js": 505,
+	"./uz": 506,
+	"./uz-latn": 507,
+	"./uz-latn.js": 507,
+	"./uz.js": 506,
+	"./vi": 508,
+	"./vi.js": 508,
+	"./x-pseudo": 509,
+	"./x-pseudo.js": 509,
+	"./yo": 510,
+	"./yo.js": 510,
+	"./zh-cn": 511,
+	"./zh-cn.js": 511,
+	"./zh-hk": 512,
+	"./zh-hk.js": 512,
+	"./zh-tw": 513,
+	"./zh-tw.js": 513
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 836;
+
+/***/ }),
+
+/***/ 92:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__confirm_confirm__ = __webpack_require__(517);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__signup_signup__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__center_center__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__indent_indent__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__reports_reports__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(26);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+var SearchPage = (function () {
+    function SearchPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, menu, loadingCtrl, storage, app) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.studentService = studentService;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.menu = menu;
+        this.loadingCtrl = loadingCtrl;
+        this.storage = storage;
+        this.app = app;
+        this.isAdmin = false;
+        this.isCenterAdmin = false;
+        this.isCounsellor = false;
+        menu.enable(true);
+        this.storage.get('user').then(function (user) {
+            if (user.role === "counsellor")
+                _this.isCounsellor = true;
+            else if (user.role === "admin")
+                _this.isAdmin = true;
+            else if (user.role === "centerAdmin")
+                _this.isCenterAdmin = true;
+            else
+                _this.isCounsellor = true;
+        });
+    }
+    SearchPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.studentService.getStudents().then(function (data) {
+            data = __WEBPACK_IMPORTED_MODULE_11_lodash__["filter"](data, function (o) {
+                return (o.status == 'enquiry' && !o.is_Confirmed);
+            });
+            _this.storage.get('user').then(function (user) {
+                data = __WEBPACK_IMPORTED_MODULE_11_lodash__["filter"](data, function (o) {
+                    return (o.center == user.center);
+                });
+                _this.students = (__WEBPACK_IMPORTED_MODULE_11_lodash__["sortBy"](data, 'enquiry_date')).reverse();
+                _this.studentsList = (__WEBPACK_IMPORTED_MODULE_11_lodash__["sortBy"](data, 'enquiry_date')).reverse();
+            });
+        }, function (err) {
+            console.log("not allowed");
+        });
+    };
+    // Function to search for a student dynamically based on an input
+    SearchPage.prototype.search = function () {
+        var result = [];
+        for (var i = 0; i < this.studentsList.length; i++) {
+            if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].name, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].alternate_contact, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].class_group, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].email_id, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].locality, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].parent_name, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_11_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+        }
+        this.students = result;
+        if (this.myInput === "")
+            this.students = this.studentsList;
+    };
+    SearchPage.prototype.logout = function () {
+        this.authService.logout();
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__login_login__["a" /* LoginPage */]);
+    };
+    SearchPage.prototype.add = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
+    };
+    SearchPage.prototype.update = function (student) {
+        this.storage.set('confirmed_student', student);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__confirm_confirm__["a" /* ConfirmPage */]);
+    };
+    SearchPage.prototype.openSignupPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__signup_signup__["a" /* SignupPage */]);
+    };
+    SearchPage.prototype.openCenterPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__center_center__["a" /* CenterPage */]);
+    };
+    SearchPage.prototype.openReportsPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_10__reports_reports__["a" /* ReportsPage */]);
+    };
+    SearchPage.prototype.openIndentPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_9__indent_indent__["a" /* IndentPage */]);
+    };
+    return SearchPage;
+}());
+SearchPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'search-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/search/search.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    SEARCH\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <div class="search-row search-full" *ngIf="students && students.length">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>\n            <h2><ion-icon name="call"></ion-icon> {{student.phone_number}} </h2>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}}</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="update(student)">\n            <ion-icon name="redo"></ion-icon>\n            Confirm\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/search/search.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_12__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
+], SearchPage);
+
+//# sourceMappingURL=search.js.map
+
+/***/ }),
+
+/***/ 95:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndentPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(518);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_moment__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+var IndentPage = (function () {
+    function IndentPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loadingCtrl, storage, centerService, indentationService) {
+        this.navCtrl = navCtrl;
+        this.studentService = studentService;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.loadingCtrl = loadingCtrl;
+        this.storage = storage;
+        this.centerService = centerService;
+        this.indentationService = indentationService;
+        this.indented_students = [];
+        this.confirm_indent = false;
+        this.total_amount = 0;
+        this.payment_date = __WEBPACK_IMPORTED_MODULE_10_moment__();
+        this.students_amount = [];
+    }
+    IndentPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.studentService.getStudents().then(function (data) {
+            _this.students = __WEBPACK_IMPORTED_MODULE_8_lodash__["filter"](data, function (o) {
+                return (o.status == 'confirmed' && !o.is_Indented);
+            });
+            _this.storage.get('user').then(function (user) {
+                _this.students = __WEBPACK_IMPORTED_MODULE_8_lodash__["filter"](_this.students, function (o) {
+                    return (o.center == user.center);
+                });
+                _this.students = __WEBPACK_IMPORTED_MODULE_8_lodash__["sortBy"](_this.students, 'enquiry_date');
+            });
+        }, function (err) {
+            console.log("not allowed");
+        });
+        this.centerService.searchCenter().then(function (centers) {
+            _this.storage.get('user').then(function (user) {
+                _this.email = user.email;
+                _this.center_code = user.center;
+                _this.user_center = __WEBPACK_IMPORTED_MODULE_8_lodash__["find"](centers, ['center_code', user.center]);
+            });
+        });
+    };
+    IndentPage.prototype.logout = function () {
+        this.authService.logout();
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */]);
+    };
+    IndentPage.prototype.add = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__home_home__["a" /* HomePage */]);
+    };
+    IndentPage.prototype.indent = function (student) {
+        this.indented_students.push(student);
+        for (var i = 0; i < this.students.length; i++) {
+            if (this.students[i] === student)
+                this.students[i].indented = true;
+        }
+        this.addAmount(student);
+    };
+    IndentPage.prototype.unindent = function (student) {
+        var s = -1;
+        for (var i = 0; i < this.indented_students.length; i++) {
+            if (this.indented_students[i] === student) {
+                s = i;
+                break;
+            }
+        }
+        this.indented_students.splice(s, 1);
+        for (var i = 0; i < this.students.length; i++) {
+            if (this.students[i] === student)
+                delete this.students[i].indented;
+        }
+        this.subtractAmount(student);
+    };
+    IndentPage.prototype.addAmount = function (student) {
+        if (student.class_group === 'Play Group') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.playgroup.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.playgroup.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.playgroup.early_start);
+        }
+        else if (student.class_group === 'Nursery') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.nursery.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.nursery.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.nursery.early_start);
+        }
+        else if (student.class_group === 'LKG') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.lkg.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.lkg.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.lkg.early_start);
+        }
+        else if (student.class_group === 'UKG') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.ukg.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.ukg.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.ukg.early_start);
+        }
+    };
+    IndentPage.prototype.subtractAmount = function (student) {
+        if (student.class_group === 'Play Group') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.playgroup.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.playgroup.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.playgroup.early_start;
+        }
+        else if (student.class_group === 'Nursery') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.nursery.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.nursery.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.nursery.early_start;
+        }
+        else if (student.class_group === 'LKG') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.lkg.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.lkg.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.lkg.early_start;
+        }
+        else if (student.class_group === 'UKG') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.ukg.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.ukg.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.ukg.early_start;
+        }
+    };
+    IndentPage.prototype.findAmount = function (cg, ct) {
+        if (cg === 'Play Group' && ct === 'Annual')
+            return (this.user_center.playgroup.annual);
+        else if (cg === 'Play Group' && ct === 'Mid-term')
+            return (this.user_center.playgroup.mid_term);
+        else if (cg === 'Play Group' && ct === 'Early start')
+            return (this.user_center.playgroup.early_start);
+        else if (cg === 'Nursery' && ct === 'Annual')
+            return (this.user_center.nursery.annual);
+        else if (cg === 'Nursery' && ct === 'Mid-term')
+            return (this.user_center.nursery.mid_term);
+        else if (cg === 'Nursery' && ct === 'Early start')
+            return (this.user_center.nursery.early_start);
+        else if (cg === 'LKG' && ct === 'Annual')
+            return (this.user_center.lkg.annual);
+        else if (cg === 'LKG' && ct === 'Mid-term')
+            return (this.user_center.lkg.mid_term);
+        else if (cg === 'LKG' && ct === 'Early start')
+            return (this.user_center.lkg.early_start);
+        else if (cg === 'UKG' && ct === 'Annual')
+            return (this.user_center.ukg.annual);
+        else if (cg === 'UKG' && ct === 'Mid-term')
+            return (this.user_center.ukg.mid_term);
+        else if (cg === 'UKG' && ct === 'Early start')
+            return (this.user_center.ukg.early_start);
+        else
+            return 0;
+    };
+    IndentPage.prototype.indentStudents = function () {
+        this.confirm_indent = !this.confirm_indent;
+    };
+    IndentPage.prototype.setCash = function () {
+        this.payment_mode = "cash";
+    };
+    IndentPage.prototype.setCheque = function () {
+        this.payment_mode = "cheque";
+    };
+    IndentPage.prototype.setOnline = function () {
+        this.payment_mode = "online";
+    };
+    IndentPage.prototype.confirmIndent = function () {
+        var indentation = {
+            total_amount: this.total_amount,
+            payment_mode: this.payment_mode,
+            payment_date: __WEBPACK_IMPORTED_MODULE_10_moment__(this.payment_date, "YYYY-MM-DD").toDate(),
+            bank_name: this.bank_name,
+            transaction_no: this.transaction_no,
+            cheque_no: this.cheque_no,
+            email: this.email,
+            center_code: this.center_code,
+            students_amount: []
+        };
+        for (var is = 0; is < this.indented_students.length; is++) {
+            var tempis = {
+                student_id: this.indented_students[is].student_id,
+                student_key: this.indented_students[is]._id,
+                student_name: this.indented_students[is].name,
+                phone_number: this.indented_students[is].phone_number,
+                gender: this.indented_students[is].gender,
+                class_group: this.indented_students[is].class_group,
+                class_type: this.indented_students[is].class_type,
+                uniform_size: this.indented_students[is].uniform_size,
+                shoe_size: this.indented_students[is].shoe_size,
+                amount: this.findAmount(this.indented_students[is].class_group, this.indented_students[is].class_type)
+            };
+            indentation.students_amount.push(tempis);
+        }
+        this.indentationService.createIndentation(indentation).then(function (result) {
+            console.log(result);
+        }, function (err) {
+        });
+        for (var is = 0; is < this.indented_students.length; is++) {
+            this.indented_students[is].status = "indented";
+            this.indented_students[is].is_Indented = true;
+            delete this.indented_students[is].indented;
+            this.studentService.updateStudent(this.indented_students[is]).then(function (result) {
+                console.log('student data saved successfully');
+            }, function (err) {
+                console.log('student data saving failed');
+            });
+        }
+    };
+    return IndentPage;
+}());
+IndentPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'indent-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/indent/indent.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />\n  <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <ion-list *ngIf="!confirm_indent && students && students.length">\n \n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results">\n     \n        <button ion-item>\n          <div class="col_left indent_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>\n          </div>\n          <div class="col_right indent_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2>{{student.class_group}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.confirmation_date | date: \'dd/MMM/yyyy\'}} </h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="indent(student)" *ngIf="!student.indented">\n            <ion-icon name="redo"></ion-icon>\n            Indent\n          </button>\n          <button ion-button color="danger" (click)="unindent(student)" *ngIf="student.indented">\n            <ion-icon name="undo"></ion-icon>\n            UnIndent\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n    <div class="gm_drawer_footer_wrapper">\n      <div class="amt_button">\n        <p class="total_left"> \n            <em> &#8377; {{ total_amount }} </em>\n            <br/>\n            <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>\n        </p>\n      </div>\n      <button (click)="indentStudents()" ion-button class="btn-success">Indent</button>\n    </div>\n\n  </ion-list>\n\n  <ion-list *ngIf="confirm_indent">\n\n    <div class="button-bar">\n        <a class="button button-positive button-indent" (click)="setCash()">Cash</a>\n        <a class="button button-positive button-indent" (click)="setCheque()">Cheque</a>\n        <a class="button button-positive button-indent" (click)="setOnline()">Online</a>\n    </div>\n\n    <ion-list inset>\n\n        <ion-item>\n            <h3> Amount: {{ total_amount }} </h3>\n        </ion-item>\n\n        <ion-item>\n            <ion-label><ion-icon name="calendar"></ion-icon></ion-label>\n            <ion-datetime [(ngModel)]="payment_date" placeholder="Date of Payment" required displayFormat="DD/MMM/YYYY" ></ion-datetime>\n        </ion-item>\n \n        <ion-item *ngIf="payment_mode != \'cash\'">\n            <ion-label><ion-icon name="home"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="bank_name" placeholder="Name of the bank" type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'online\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="transaction_no" placeholder="Transaction No." type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'cheque\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="cheque_no" placeholder="Cheque No." type="string"></ion-input>\n        </ion-item>\n\n    </ion-list>\n\n\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="indentStudents()" ion-button class="btn-danger">Go Back</button>\n      <button (click)="confirmIndent()" ion-button class="btn-success">Confirm</button>\n    </div>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/indent/indent.html"*/
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */]) === "function" && _j || Object])
+], IndentPage);
+
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+//# sourceMappingURL=indent.js.map
 
 /***/ })
 

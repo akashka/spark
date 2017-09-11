@@ -25200,7 +25200,7 @@ ion-navbar.toolbar {
   }
 }
 
-.ios page-center ion-item, .md page-center ion-item {
+.ios center-page ion-item, .md center-page ion-item {
   border-radius: 30px !important;
   padding-left: 10px !important;
   margin-bottom: 10px;
@@ -25209,21 +25209,21 @@ ion-navbar.toolbar {
   font-size: 0.9em;
 }
 
-.ios page-center ion-list, .md page-center ion-list {
+.ios center-page ion-list, .md center-page ion-list {
   margin: 0;
 }
 
-.ios page-center .searchbar-md, .md page-center .searchbar-md {
+.ios center-page .searchbar-md, .md center-page .searchbar-md {
   background: rgba(0, 0, 0, 0.2);
   border-color: rgba(0, 0, 0, 0.05);
   min-height: 44px;
 }
 
-.ios page-center .col, .md page-center .col {
+.ios center-page .col, .md center-page .col {
   padding: 0;
 }
 
-.ios page-center .continue-button, .md page-center .continue-button {
+.ios center-page .continue-button, .md center-page .continue-button {
   bottom: 0;
   width: 100%;
   position: fixed;
@@ -25231,7 +25231,7 @@ ion-navbar.toolbar {
   font-size: 2.4rem;
 }
 
-.ios page-center ion-searchbar, .md page-center ion-searchbar {
+.ios center-page ion-searchbar, .md center-page ion-searchbar {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -25239,12 +25239,12 @@ ion-navbar.toolbar {
   width: 85%;
 }
 
-.ios page-center .search-row, .md page-center .search-row {
+.ios center-page .search-row, .md center-page .search-row {
   background: darkgray;
   border-color: rgba(0, 0, 0, 0.05);
 }
 
-.ios page-center .search-ic, .md page-center .search-ic {
+.ios center-page .search-ic, .md center-page .search-ic {
   padding: 0;
   width: 10%;
   display: inline-block;
@@ -25254,15 +25254,15 @@ ion-navbar.toolbar {
   margin-left: 5px;
 }
 
-.ios page-center .search-ic .select-icon, .md page-center .search-ic .select-icon {
+.ios center-page .search-ic .select-icon, .md center-page .search-ic .select-icon {
   margin: 7px;
 }
 
-.ios page-center .search-ic .select-text, .md page-center .search-ic .select-text {
+.ios center-page .search-ic .select-text, .md center-page .search-ic .select-text {
   display: none;
 }
 
-.ios page-center .search-ic .item-cover, .md page-center .search-ic .item-cover {
+.ios center-page .search-ic .item-cover, .md center-page .search-ic .item-cover {
   position: initial;
 }
 
@@ -25281,7 +25281,7 @@ ion-navbar.toolbar {
 }
 
 .ios, .md {
-  background-image: url(../../assets/images/15549a14589707.5628669c64769.png);
+  background-image: url("../assets/images/15549a14589707.5628669c64769.png");
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -25503,7 +25503,7 @@ ion-navbar.toolbar {
 }
 
 .ios .login-page #cloud-layer, .md .login-page #cloud-layer {
-  background-image: url(../../assets/images/sky_background.jpg);
+  background-image: url("../assets/images/sky_background.jpg");
   background-size: cover;
   width: 100%;
   height: 100%;

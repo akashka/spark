@@ -60,10 +60,10 @@ exports.createStudent = function(req, res, next){
             console.log("Error in saving enquiry of student:  " + err);
             return res.send(err);
         }
-       sendAdminMail(student, "enquiry");
-       sendParentMail(student, "enquiry");
-       sendParentSms(student, "enquiry");
-       sendAdminSms(student, "enquiry");
+       // sendAdminMail(student, "enquiry");
+       // sendParentMail(student, "enquiry");
+       // sendParentSms(student, "enquiry");
+       // sendAdminSms(student, "enquiry");
 
        res.json(student);
     });
@@ -87,10 +87,10 @@ exports.updateStudent = function(req, res, next){
         }
         console.log("Successfully updated Student");
         if(student.status == "confirmed") {
-          sendAdminMail(student, "enquiry");
-          sendAdminSms(student, "enquiry");
-          sendParentMail(student, "enquiry");
-          sendParentSms(student, "enquiry");
+          // sendAdminMail(student, "confirmed");
+          // sendAdminSms(student, "confirmed");
+          // sendParentMail(student, "confirmed");
+          // sendParentSms(student, "confirmed");
         }
 
         res.json(student);

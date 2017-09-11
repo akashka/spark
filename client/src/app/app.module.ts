@@ -12,10 +12,10 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { SearchPage } from '../pages/search/search';
-import { CenterPage } from '../pages/center/center';
 import { ReportsPage } from '../pages/reports/reports';
 import { ConfirmPage } from '../pages/confirm/confirm';
 import { IndentPage } from '../pages/indent/indent';
+import { CenterPage } from '../pages/center/center';
 
 // Providers
 import { Students } from '../providers/students/students';
@@ -36,10 +36,10 @@ import { Camera } from '@ionic-native/camera';
     LoginPage,
     SignupPage,
     SearchPage,
-    CenterPage,
     ReportsPage,
     ConfirmPage,
-    IndentPage
+    IndentPage,
+    CenterPage
   ],
   imports: [
     BrowserModule,
@@ -56,10 +56,10 @@ import { Camera } from '@ionic-native/camera';
     LoginPage,
     SignupPage,
     SearchPage,
-    CenterPage,
     ReportsPage,
     ConfirmPage,
-    IndentPage
+    IndentPage,
+    CenterPage
   ],
   providers: [
     IonicStorageModule,

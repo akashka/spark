@@ -58,10 +58,19 @@ exports.updateIndentation = function(req, res, next) {
 sendMail = function(indentation) {
     console.log("Sending indentation mail");
 
-    var amt = "Student ID - Amount <br/>";
+    var amt = "<table> <thead> <td> Student ID </td> <td> Amount </td> <td> Name </td> <td> Phone No </td> <td> Gender </td> <td> Class Group </td> <td> Class Type </td> <td> Shoe Size </td> <td> Uniform Size </td> </thead> <tbody>";
     for(var i = 0; i < indentation.students_amount.length; i++) {
-       amt += indentation.students_amount[i].student_id + " - " + indentation.students_amount.amount + "<br/>";
+       amt += "<tr><td>" + indentation.students_amount[i].student_id + "</td>";
+       amt += "<td>" + indentation.students_amount[i].amount + "</td>";
+       amt += "<td>" + indentation.students_amount[i].student_name + "</td>";
+       amt += "<td>" + indentation.students_amount[i].phone_number + "</td>";
+       amt += "<td>" + indentation.students_amount[i].gender + "</td>";
+       amt += "<td>" + indentation.students_amount[i].class_group + "</td>";
+       amt += "<td>" + indentation.students_amount[i].class_type + "</td>";
+       amt += "<td>" + indentation.students_amount[i].shoe_size + "</td>";
+       amt += "<td>" + indentation.students_amount[i].uniform_size + "</td></tr>";
     }
+    amt += "</tbody> </table>";
 
     var stringTemplate = fs.readFileSync(path.join(__dirname, '../helpers') + '/admin_indentation.html', "utf8");
      stringTemplate = stringTemplate.replace('{{total_amount}}', indentation.total_amount);
