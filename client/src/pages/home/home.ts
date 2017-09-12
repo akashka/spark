@@ -19,6 +19,7 @@ import * as moment from 'moment';
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
+import { Networks } from '../../providers/network/network';
 
 // Pages
 import { SearchPage } from '../search/search';
@@ -88,9 +89,13 @@ export class HomePage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
+    public networkService: Networks,
     public storage: Storage
-  ) { 
-      menu.enable(true);
+  ) {
+
+      if (this.networkService.noConnection()) {
+        this.networkService.showNetworkAlert();
+      }
 
       this.studentForm = formBuilder.group({
 

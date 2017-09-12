@@ -2,6 +2,7 @@ import { Component, trigger, state, style, transition, animate, keyframes } from
 import { NavController, LoadingController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Auth } from '../../providers/auth/auth';
+import { Networks } from '../../providers/network/network';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
 
@@ -76,8 +77,14 @@ export class LoginPage {
       public navCtrl: NavController, 
       public authService: Auth, 
       public loadingCtrl: LoadingController,
-      public formBuilder: FormBuilder
+      public formBuilder: FormBuilder,
+      public networkService: Networks
     ) {
+
+        if (this.networkService.noConnection()) {
+          this.networkService.showNetworkAlert();
+        }
+
         this.loginForm = formBuilder.group({
           email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Validators.required])],
           password: ['', Validators.compose([Validators.required])],

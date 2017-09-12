@@ -22,6 +22,7 @@ import { Students } from '../providers/students/students';
 import { Auth } from '../providers/auth/auth';
 import { Center } from '../providers/center/center';
 import { Indentation } from '../providers/indentation/indentation';
+import { Networks } from '../providers/network/network';
 
 // Camera
 import { File } from '@ionic-native/file';
@@ -66,6 +67,7 @@ import { Camera } from '@ionic-native/camera';
     Students,
     Auth,
     Center,
+    Networks,
     Indentation,
     File,
     Transfer,
