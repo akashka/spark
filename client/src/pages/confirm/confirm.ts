@@ -11,7 +11,6 @@ import {
     MenuController
   } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
 
 // Providers
@@ -21,14 +20,9 @@ import { Center } from '../../providers/center/center';
 
 // Pages
 import { SearchPage } from '../search/search';
-import { LoginPage } from '../login/login';
-import { SignupPage } from '../signup/signup';
-import { CenterPage } from '../center/center';
-import { ReportsPage } from '../reports/reports';
 
 // Files Images
 import { File } from '@ionic-native/file';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
@@ -43,9 +37,9 @@ declare var window: Window;
   selector: 'confirm-page',
   templateUrl: './confirm.html'
 })
+
 export class ConfirmPage {
 
-  public loading: any;
   confirmForm: FormGroup;
   public submitAttempt: Boolean = false;
   public lastImage: any;
@@ -53,6 +47,7 @@ export class ConfirmPage {
   public userCenter: any;
   public users: any;
   public student: any;
+  public loader: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -60,10 +55,9 @@ export class ConfirmPage {
     public modalCtrl: ModalController, 
     public alertCtrl: AlertController, 
     public authService: Auth, 
-    public loadingCtrl: LoadingController,
+    public loading: LoadingController,
     public formBuilder: FormBuilder,
     private camera: Camera,
-    private transfer: Transfer,
     private file: File,
     private filePath: FilePath,
     public actionSheetCtrl: ActionSheetController,
@@ -74,27 +68,20 @@ export class ConfirmPage {
     public centerService: Center,
     public storage: Storage
   ) { 
-      menu.enable(true);
-
       this.confirmForm = formBuilder.group({
-
         class_group: ['', Validators.compose([Validators.required])],
-        
         student_id: [''],
-      
         class_type: ['', Validators.compose([Validators.required])],
-
         uniform_size: ['', Validators.compose([Validators.required])],
-
         shoe_size: ['', Validators.compose([Validators.required])],
-
         photo: ['']
-
       });
-
   }
  
   ionViewDidLoad() {
+    this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
     this.storage.get('confirmed_student').then((student) => {
       this.student = student;
       this.confirmForm.controls['class_group'].setValue(student.class_group);
@@ -107,6 +94,7 @@ export class ConfirmPage {
     this.submitAttempt = true;
 
     if(this.confirmForm.valid) {
+      this.loader.present();
       this.student.class_group = this.confirmForm.value.class_group;
       this.student.status = "confirmed";
       this.student.is_Confirmed = true;
@@ -116,9 +104,12 @@ export class ConfirmPage {
       this.student.shoe_size = this.confirmForm.value.shoe_size;
 
       this.studentService.updateStudent(this.student).then((result) => {
+        this.loader.dismiss();
         this.presentToast('student data saved successfully');
+        this.goBack();
       }, (err) => {
-        this.presentToast('student data saving failed');
+        this.loader.dismiss();
+        this.presentToast('Error! Please try again.');
       });
     }
   };
@@ -243,18 +234,6 @@ export class ConfirmPage {
     }, (err) => {
       this.presentToast('Error while selecting image.');
     });
-  }
-
-  openSignupPage() {
-    this.navCtrl.setRoot(SignupPage);
-  }
-
-  openCenterPage() {
-    this.navCtrl.setRoot(CenterPage);
-  }
-
-  openReportsPage() {
-    this.navCtrl.setRoot(ReportsPage);
   }
 
   goBack() {

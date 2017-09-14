@@ -3,12 +3,12 @@ import {
     NavController, 
     ModalController, 
     AlertController, 
-    LoadingController,
     ActionSheetController, 
     ToastController, 
     Platform,
     App,
-    MenuController
+    MenuController,
+    LoadingController
   } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import * as _ from 'lodash'
@@ -31,7 +31,6 @@ import { ReportsPage } from '../reports/reports';
 
 // Files Images
 import { File } from '@ionic-native/file';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
@@ -48,7 +47,6 @@ declare var window: Window;
 })
 export class HomePage {
 
-  public loading: any;
   studentForm: FormGroup;
   public submitAttempt: Boolean = false;
   public lastImage: any;
@@ -71,16 +69,16 @@ export class HomePage {
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
 
+  public loader: any;
+
   constructor(
     public navCtrl: NavController, 
     public studentService: Students, 
     public modalCtrl: ModalController, 
     public alertCtrl: AlertController, 
     public authService: Auth, 
-    public loadingCtrl: LoadingController,
     public formBuilder: FormBuilder,
     private camera: Camera,
-    private transfer: Transfer,
     private file: File,
     private filePath: FilePath,
     public actionSheetCtrl: ActionSheetController,
@@ -90,7 +88,8 @@ export class HomePage {
     public menu: MenuController,
     public centerService: Center,
     public networkService: Networks,
-    public storage: Storage
+    public storage: Storage,
+    public loading: LoadingController
   ) {
 
       if (this.networkService.noConnection()) {
@@ -134,6 +133,10 @@ export class HomePage {
   }
  
   ionViewDidLoad() {
+    this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
+
     this.authService.searchUser().then((users) => {
       this.users = users;
       this.centerService.searchCenter().then((centers) => {
@@ -178,31 +181,17 @@ export class HomePage {
   }
 
   addStudent = () => {
-    this.showLoader;
     this.submitAttempt = true;
 
     if(this.studentForm.valid) {
       this.studentForm.value.dob = moment(this.studentForm.value.dob,"YYYY-MM-DD").toDate();
       this.studentService.createStudent(this.studentForm.value).then((result) => {
-        this.hideLoader();
         this.presentToast('student data saved successfully');
         this.search();
       }, (err) => {
-        this.hideLoader;
         this.presentToast('Failed! Please try again.');
       });
     }
-  };
-
-  showLoader = () => {
-    this.loading = this.loadingCtrl.create({
-      content: 'Saving...'
-    });
-    this.loading.present();
-  };
-
-  hideLoader = () => {
-    this.loading.dismiss();
   };
 
   search = () => {
@@ -264,10 +253,6 @@ export class HomePage {
     var monthDob = dob.getMonth();
     var dateDob = dob.getDate();
     var age = {};
-    var ageString = "";
-    var yearString = "";
-    var monthString = "";
-    var dayString = "";
 
     var yearAge = yearNow - yearDob;
 
@@ -425,7 +410,7 @@ export class HomePage {
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
-      this.presentToast('Error while selecting image.');
+      this.presentToast(err);
     });
   }
 

@@ -2,22 +2,16 @@ import { Component } from '@angular/core';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
  import { 
-      IonicPage, 
       NavController, 
       NavParams, 
       LoadingController,
       App,
-      MenuController
+      MenuController,
+      ToastController
   } from 'ionic-angular';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
-
-//Pages
 import { HomePage } from '../home/home';
-import { LoginPage } from '../login/login';
-import { ReportsPage } from '../reports/reports';
-import { SearchPage } from '../search/search';
-import { CenterPage } from '../center/center';
 
 @Component({
   selector: 'signup',
@@ -34,7 +28,6 @@ export class SignupPage {
   active: Boolean = true;
   isPasswordMatching: Boolean = true;
   isExisting: Boolean = false;
-  loading;
   centers;
   users;
   _id;
@@ -42,23 +35,53 @@ export class SignupPage {
   mySelect;
   btnText: String = "Save";
   existingUser: Boolean = false;
+  public loader: any;
 
   constructor(
         public navCtrl: NavController, 
         public navParams: NavParams, 
         public centerService: Center, 
         public authService: Auth, 
-        public loadingCtrl: LoadingController,
+        public loading: LoadingController,
         public app: App,
         public menu: MenuController,
-        public storage: Storage
-  ) {
-      menu.enable(true);
-  }
+        public storage: Storage,
+        public toastCtrl: ToastController,
+  ) { }
 
   ionViewDidLoad() {
+    this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
     this.getCenters();
     this.getUsers();
+  }
+
+  reset() {
+      this.existingUser = false;
+      this.role = "";
+      this.email = "";
+      this.password = "";
+      this.confirm_password = "";
+      this.name = "";
+      this.center = "";
+      this.active = true;
+      this.isPasswordMatching = true;
+      this.isExisting = false;
+      this._id = "";
+      this.myInput = "";
+      this.mySelect = "";
+      this.btnText = "Save";
+      this.existingUser = false;
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
   // Function to get list of all the centers
@@ -92,6 +115,7 @@ export class SignupPage {
  
   save() {
     if(!this.isExisting && this.isPasswordMatching) {
+      this.loader.present();
       let details = {
         email: this.email,
         password: this.password,
@@ -101,13 +125,18 @@ export class SignupPage {
         active: this.active
       };
       this.authService.createAccount(details).then((result) => {
-        console.log(result);
+          this.loader.dismiss();
+          this.reset();
+          this.presentToast('User data saved successfully');
       }, (err) => {
+          this.loader.dismiss();
+          this.presentToast('Error! Please try again.');
       });
     }
   }
 
   update() {
+    this.loader.present();
     let details = {
       email: this.email,
       password: this.password,
@@ -117,7 +146,13 @@ export class SignupPage {
       active: this.active
     };
     this.authService.updateAccount(details).then((result) => {
-    }, (err) => { });
+        this.reset();
+        this.loader.dismiss();
+        this.presentToast('User data saved successfully');
+    }, (err) => {
+        this.loader.dismiss();
+        this.presentToast('Error! Please try again.');
+    });
   }
 
   // Function to search for a User dynamically based on an input
@@ -201,19 +236,6 @@ export class SignupPage {
     } else {
         this.isPasswordMatching = (this.password == this.confirm_password) ? true : false;
     }
-  }
-
-  // Function to open Pages
-  openSignupPage() {
-    this.navCtrl.setRoot(SignupPage);
-  }
-
-  openCenterPage() {
-    this.navCtrl.setRoot(CenterPage);
-  }
-
-  openReportsPage() {
-    this.navCtrl.setRoot(ReportsPage);
   }
 
   openHomePage() {

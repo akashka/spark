@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {AlertController} from 'ionic-angular';
-import {Network, Connection} from 'ionic-native';
+import {Network} from 'ionic-native';
 
 declare var cordova:any;
 
 @Injectable()
 export class Networks {
 
-  constructor() {
+  constructor(public alertCtrl: AlertController) {
   }
 
   noConnection() {
-    return (Network.connection === 'none');
+    return (Network.type === 'none');
   }
 
   private showSettings() {
@@ -23,7 +23,7 @@ export class Networks {
   }
 
   showNetworkAlert() {
-    let networkAlert = AlertController.create({
+    let networkAlert = this.alertCtrl.create({
       title: 'No Internet Connection',
       message: 'Please check your internet connection.',
       buttons: [

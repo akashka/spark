@@ -1,14 +1,17 @@
 import { Component } from "@angular/core";
-import { NavController, ModalController, AlertController, LoadingController } from 'ionic-angular';
+import { 
+      NavController, 
+      ModalController, 
+      AlertController, 
+      LoadingController,
+      ToastController
+} from 'ionic-angular';
 
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
 import { Indentation } from '../../providers/indentation/indentation';
-
-import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
-import { ConfirmPage } from '../confirm/confirm';
 
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
@@ -35,6 +38,7 @@ export class IndentPage {
   public email;
   public center_code;
   public students_amount = [];
+  public loader: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -42,13 +46,17 @@ export class IndentPage {
     public modalCtrl: ModalController, 
     public alertCtrl: AlertController, 
     public authService: Auth, 
-    public loadingCtrl: LoadingController,
+    public loading: LoadingController,
     public storage: Storage,
     public centerService: Center,
-    public indentationService: Indentation
+    public indentationService: Indentation,
+    public toastCtrl: ToastController
   ) { }
  
   ionViewDidLoad() {
+    this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
     this.studentService.getStudents().then((data) => {
       this.students = _.filter(data, function(o) { 
         return (o.status == 'confirmed' && !o.is_Indented); 
@@ -70,14 +78,17 @@ export class IndentPage {
             this.user_center = _.find(centers, ['center_code', user.center]);
         });
     });
+  }
 
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
  
-  logout() {
-    this.authService.logout();
-    this.navCtrl.setRoot(LoginPage);
-  }
-
   add() {
   	this.navCtrl.setRoot(HomePage);
   }
@@ -99,8 +110,8 @@ export class IndentPage {
       }
     }
     this.indented_students.splice(s,1);
-    for(var i = 0; i < this.students.length; i++) {
-      if(this.students[i] === student) delete this.students[i].indented;
+    for(var k = 0; k < this.students.length; k++) {
+      if(this.students[k] === student) delete this.students[k].indented;
     }
     this.subtractAmount(student);
   }
@@ -183,7 +194,34 @@ export class IndentPage {
     this.payment_mode = "online";
   }
 
+  reset() {
+      this.indented_students = [];
+      this.confirm_indent = false;
+      this.total_amount = 0;
+      this.payment_mode = "";
+      this.payment_date = moment();
+      this.bank_name = "";
+      this.transaction_no = "";
+      this.cheque_no = "";
+      this.students_amount = [];
+
+      this.studentService.getStudents().then((data) => {
+        this.students = _.filter(data, function(o) { 
+          return (o.status == 'confirmed' && !o.is_Indented); 
+        });
+        this.storage.get('user').then((user) => {
+          this.students = _.filter(this.students, function(o) { 
+            return (o.center == user.center); 
+          });
+          this.students = _.sortBy(this.students, 'enquiry_date');
+        });
+      }, (err) => {
+          console.log("not allowed");
+      });
+  }
+
   confirmIndent() {
+    this.loader.present();
     let indentation = {
       total_amount: this.total_amount,
       payment_mode: this.payment_mode,
@@ -213,22 +251,25 @@ export class IndentPage {
     }
 
     this.indentationService.createIndentation(indentation).then((result) => {
-      console.log(result);
+        this.loader.dismiss();
+        this.reset();
+        this.presentToast('Indentation successfull');
     }, (err) => {
+        this.loader.dismiss();
+        this.presentToast('Error! Please try again.');
     });
 
-    for(var is = 0; is < this.indented_students.length; is++) {
-      this.indented_students[is].status = "indented";
-      this.indented_students[is].is_Indented = true;
-      delete this.indented_students[is].indented;
+    for(var ik = 0; ik < this.indented_students.length; ik++) {
+      this.indented_students[ik].status = "indented";
+      this.indented_students[ik].is_Indented = true;
+      delete this.indented_students[ik].indented;
 
-      this.studentService.updateStudent(this.indented_students[is]).then((result) => {
+      this.studentService.updateStudent(this.indented_students[ik]).then((result) => {
         console.log('student data saved successfully');
       }, (err) => {
         console.log('student data saving failed');
       });
-    }
-  
+    } 
   }
  
 }

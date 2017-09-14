@@ -15,12 +15,9 @@ export class Students {
   }
  
   getStudents(){
- 
     return new Promise((resolve, reject) => {
- 
       let headers = new Headers();
       headers.append('Authorization', this.authService.token);
- 
       this.http.get(this.url+'api/students', {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
@@ -29,14 +26,14 @@ export class Students {
           reject(err);
         });
     });
- 
   }
  
   createStudent(student){
-    this.storage.get('user').then((user) => {
-      student.center = user.center;
-      student.counsellor = user.email;
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+      this.storage.get('user').then((user) => {
+        student.center = user.center;
+        student.counsellor = user.email;
+
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', this.authService.token);
@@ -49,27 +46,20 @@ export class Students {
             reject(err);
           });
       });
-
     });
-    return null; 
   }
  
   updateStudent(student){
- 
     return new Promise((resolve, reject) => {
- 
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
- 
         this.http.put(this.url+'api/students/' + student._id, student, {headers: headers})
           .subscribe((res) => {
             resolve(res);
           }, (err) => {
               reject(err);
           });    
- 
     });
- 
   }
  
 }

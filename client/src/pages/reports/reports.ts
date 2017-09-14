@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
-import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
-import { ConfirmPage } from '../confirm/confirm';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
@@ -31,6 +29,7 @@ export class ReportsPage {
   public searchType: String;
   public searchByDates: String;
   public fileTransfer: TransferObject = this.transfer.create();
+  public loader: any;
 
   constructor(
   		public navParams: NavParams,
@@ -39,7 +38,7 @@ export class ReportsPage {
 	    public modalCtrl: ModalController, 
 	    public alertCtrl: AlertController, 
 	    public authService: Auth, 
-	    public loadingCtrl: LoadingController,
+	    public loading: LoadingController,
 	    public storage: Storage,
 	    public calendarCtrl: CalendarController,
 	    private transfer: Transfer, 
@@ -48,6 +47,9 @@ export class ReportsPage {
 	) { }
 
   ionViewDidLoad() {
+  	this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
     this.studentService.getStudents().then((data) => {
       this.storage.get('user').then((user) => {
 	    if(user.role != "admin"){

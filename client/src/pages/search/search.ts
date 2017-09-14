@@ -7,18 +7,10 @@ import {
     App,
     MenuController 
 } from 'ionic-angular';
-
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
-
-import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { ConfirmPage } from '../confirm/confirm';
-import { SignupPage } from '../signup/signup';
-import { CenterPage } from '../center/center';
-import { IndentPage } from '../indent/indent';
-import { ReportsPage } from '../reports/reports';
-
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
  
@@ -26,6 +18,7 @@ import { Storage } from '@ionic/storage';
   selector: 'search-page',
   templateUrl: './search.html'
 })
+
 export class SearchPage {
 
   public students: any;
@@ -34,6 +27,7 @@ export class SearchPage {
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
   myInput: string;
+  public loader: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -42,11 +36,10 @@ export class SearchPage {
     public alertCtrl: AlertController, 
     public authService: Auth, 
     public menu: MenuController,
-    public loadingCtrl: LoadingController,
+    public loading: LoadingController,
     public storage: Storage,
     public app: App
   ) {
-      menu.enable(true);
       this.storage.get('user').then((user) => {
               if(user.role === "counsellor")  this.isCounsellor = true;
          else if(user.role === "admin")  this.isAdmin = true;
@@ -56,6 +49,9 @@ export class SearchPage {
   }
  
   ionViewDidLoad() {
+    this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
     this.studentService.getStudents().then((data) => {
       data = _.filter(data, function(o) { 
         return (o.status == 'enquiry' && !o.is_Confirmed); 
@@ -88,11 +84,6 @@ export class SearchPage {
     if(this.myInput === "") this.students = this.studentsList;
   }
  
-  logout() {
-    this.authService.logout();
-    this.navCtrl.setRoot(LoginPage);
-  }
-
   add() {
   	this.navCtrl.setRoot(HomePage);
   }
@@ -102,20 +93,4 @@ export class SearchPage {
     this.navCtrl.setRoot(ConfirmPage);
   }
 
-  openSignupPage() {
-    this.navCtrl.setRoot(SignupPage);
-  }
-
-  openCenterPage() {
-    this.navCtrl.setRoot(CenterPage);
-  }
-
-  openReportsPage() {
-    this.navCtrl.setRoot(ReportsPage);
-  }
-
-  openIndentPage() {
-    this.navCtrl.setRoot(IndentPage);
-  }
- 
 }

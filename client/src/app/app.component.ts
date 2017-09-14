@@ -14,7 +14,7 @@ import { ReportsPage } from '../pages/reports/reports';
 
 // Services
 import { Auth } from '../providers/auth/auth';
- 
+
 @Component({
   templateUrl: './app.html'
 })

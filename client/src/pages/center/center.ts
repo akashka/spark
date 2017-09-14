@@ -11,20 +11,14 @@ import {
     MenuController
   } from 'ionic-angular';
 import * as _ from 'lodash'
-
-//Pages
 import { HomePage } from '../home/home';
-import { LoginPage } from '../login/login';
-import { ReportsPage } from '../reports/reports';
-import { SearchPage } from '../search/search';
-import { SignupPage } from '../signup/signup';
-
 import { Center } from '../../providers/center/center';
 
 @Component({
   selector: 'center-page',
   templateUrl: './center.html',
 })
+
 export class CenterPage {
 
   // Variables to be saved in DB for Centers
@@ -34,7 +28,6 @@ export class CenterPage {
   center_email: string;
   center_address: string;
   active: Boolean = true;
-  loading;
   centers: any;
   btnText: string = "Save";
   myInput: string;
@@ -60,11 +53,12 @@ export class CenterPage {
     mid_term: 0,
     early_start: 0
   };
+  public loader: any;
 
   constructor(
   			public navCtrl: NavController, 
   			public centerService: Center, 
-  			public loadingCtrl: LoadingController,
+  			public loading: LoadingController,
         public app: App,
         public menu: MenuController,
         public modalCtrl: ModalController, 
@@ -72,16 +66,18 @@ export class CenterPage {
         public actionSheetCtrl: ActionSheetController,
         public toastCtrl: ToastController,
         public platform: Platform
-	) {
-      menu.enable(true);
-  }
+	) { }
 
   ionViewDidLoad() {
+    this.loader = this.loading.create({
+      content: 'Please wait...',
+    });
   	this.getCenters()
   }
 
   // Function to save new center
   save(){
+    this.loader.present();
     let center = {
       center_name: this.center_name,
 		  center_code: this.center_code,
@@ -95,13 +91,18 @@ export class CenterPage {
       ukg: this.ukg
     };
     this.centerService.createCenter(center).then((result) => {
-      console.log(result);
+      this.reset();
+      this.loader.dismiss();
+      this.presentToast('Center data saved successfully');
     }, (err) => {
+        this.loader.dismiss();
+        this.presentToast('Error! Please try again.');
     });
   }
 
   // Function to update existing center
   update(){
+    this.loader.present();
     let center = {
           center_name: this.center_name,
     		  center_code: this.center_code,
@@ -116,9 +117,54 @@ export class CenterPage {
           _id: this.center_id
     };
     this.centerService.updateCenter(center).then((result) => {
-      console.log(result);
+      this.reset();
+      this.loader.dismiss();
+      this.presentToast('Center data saved successfully');
     }, (err) => {
+        this.loader.dismiss();
+        this.presentToast('Error! Please try again.');
     });
+  }
+
+  reset() {
+    this.center_name = "";
+    this.center_code = "";
+    this.center_phoneno = "";
+    this.center_email = "";
+    this.center_address = "";
+    this.active = true;
+    this.btnText = "Save";
+    this.myInput = "";
+    this.center_id = "";
+    this.playgroup = {
+      annual: 0,
+      mid_term: 0,
+      early_start: 0
+    };
+    this.nursery = {
+      annual: 0,
+      mid_term: 0,
+      early_start: 0
+    };
+    this.lkg = {
+      annual: 0,
+      mid_term: 0,
+      early_start: 0
+    };
+    this.ukg = {
+      annual: 0,
+      mid_term: 0,
+      early_start: 0
+    };
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 
   // Function to get list of all the centers
@@ -264,15 +310,6 @@ export class CenterPage {
       if(temp.length > 2) str += temp[2];
     }
     this.center_code = str.toUpperCase();
-  }
-
-  // Function to open Pages
-  openSignupPage() {
-    this.navCtrl.setRoot(SignupPage);
-  }
-
-  openReportsPage() {
-    this.navCtrl.setRoot(ReportsPage);
   }
 
   openHomePage() {
