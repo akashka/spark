@@ -117,9 +117,9 @@ export class LoginPage {
         };
         if(this.loginForm.valid) {
             this.authService.login(credentials).then((result) => {
-                this.loading.dismiss();
-                console.log(result);
-                this.navCtrl.setRoot(HomePage);
+                  this.loading.dismiss();
+                  console.log(result);
+                  this.navCtrl.setRoot(HomePage);
             }, (err) => {
                 this.errorMessage = "Authentication Failed!"
                 this.loading.dismiss();

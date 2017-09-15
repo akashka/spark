@@ -25,6 +25,9 @@ export class MyApp {
   public isAdmin: Boolean = false;
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
+  public showMenu: Boolean = false;
+
+  userSubscription;
 
   @ViewChild(Nav) nav: Nav;
  
@@ -34,13 +37,25 @@ export class MyApp {
       Splashscreen.hide();
     });
 
-    this.storage.get('user').then((user) => {
-            if(user.role === "counsellor")  this.isCounsellor = true;
-        else if(user.role === "admin")  this.isAdmin = true;
-        else if(user.role === "centerAdmin")  this.isCenterAdmin = true;
-        else this.isCounsellor = true;
-    }); 
-  
+    this.userSubscription = Auth.userChanged.subscribe(
+      (user) => this.getData(user)
+    );
+  }
+
+  getData(user) {
+        if(user) {
+          if(user.role === "counsellor") {
+            this.isCounsellor = true;
+          }
+          else if(user.role === "admin") {
+            this.isAdmin = true;
+          } 
+          else if(user.role === "centerAdmin") {
+            this.isCenterAdmin = true;
+          } else {
+            this.isCounsellor = true;
+          }
+        }
   }
 
   go_to_home(){

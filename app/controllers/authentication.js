@@ -36,22 +36,29 @@ exports.getUsers = function(req, res, next) {
 function setUserInfo(request){
     console.log("Setting User Info for " + request.email);
     return {
-        _id: request._id,
+        active: request.active,
         email: request.email,
         role: request.role,
         center: request.center,
         name: request.name,
-        active: request.active
+        _id: request._id
     };
 }
  
 exports.login = function(req, res, next){
     console.log("Logging in for user " + req.user.email);
     var userInfo = setUserInfo(req.user);
-    res.status(200).json({
-        token: 'JWT ' + generateToken(userInfo),
-        user: userInfo
-    });
+    if(req.user.active){
+        res.status(200).json({
+            token: 'JWT ' + generateToken(userInfo),
+            user: userInfo
+        });
+    } else {
+        res.status(200).json({
+            token: '',
+            user: {}
+        });
+    }
 }
 
 exports.forgotPassword = function(req, res, next){
@@ -151,9 +158,6 @@ exports.update = function(req, res, next){
 
     if(!email){
         return res.status(422).send({error: 'You must enter an email address'});
-    }
-    if(!password){
-        return res.status(422).send({error: 'You must enter a password'});
     }
     User.findOne({email: email}, function(err, existingUser){
         if(err){

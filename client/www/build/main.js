@@ -246,13 +246,10 @@ LoginPage = __decorate([
             ])
         ]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_network_network__["a" /* Networks */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_network_network__["a" /* Networks */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_network_network__["a" /* Networks */]) === "function" && _e || Object])
 ], LoginPage);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=login.js.map
 
 /***/ }),
@@ -341,6 +338,7 @@ var CenterPage = (function () {
         };
         this.centerService.createCenter(center).then(function (result) {
             _this.reset();
+            _this.getCenters();
             _this.loader.dismiss();
             _this.presentToast('Center data saved successfully');
         }, function (err) {
@@ -367,7 +365,9 @@ var CenterPage = (function () {
         };
         this.centerService.updateCenter(center).then(function (result) {
             _this.reset();
+            _this.getCenters();
             _this.loader.dismiss();
+            _this.mySelect = null;
             _this.presentToast('Center data saved successfully');
         }, function (err) {
             _this.loader.dismiss();
@@ -1235,8 +1235,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var Auth = (function () {
-    //url = "http://localhost:8080/";
+var Auth = Auth_1 = (function () {
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
@@ -1247,6 +1246,7 @@ var Auth = (function () {
         return new Promise(function (resolve, reject) {
             //Load token if exists
             _this.storage.get('token').then(function (value) {
+                Auth_1.userChanged.next(true);
                 _this.token = value;
                 var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
                 headers.append('Authorization', _this.token);
@@ -1298,8 +1298,12 @@ var Auth = (function () {
                 .subscribe(function (res) {
                 var data = res.json();
                 _this.token = data.token;
-                _this.storage.set('token', data.token);
-                _this.storage.set('user', data.user);
+                if (data.user) {
+                    _this.storage.set('token', data.token);
+                    _this.storage.set('user', data.user).then(function (res) {
+                        Auth_1.userChanged.next(data.user);
+                    });
+                }
                 resolve(data);
                 resolve(res.json());
             }, function (err) {
@@ -1337,14 +1341,19 @@ var Auth = (function () {
     };
     Auth.prototype.logout = function () {
         this.storage.set('token', '');
+        this.storage.set('user', {});
+        Auth_1.userChanged.next(true);
     };
     return Auth;
 }());
-Auth = __decorate([
+//url = "http://localhost:8080/";
+Auth.userChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+Auth = Auth_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === "function" && _b || Object])
 ], Auth);
 
+var Auth_1, _a, _b;
 //# sourceMappingURL=auth.js.map
 
 /***/ }),
@@ -1568,10 +1577,10 @@ var HomePage = (function () {
         this.loader = this.loading.create({
             content: 'Please wait...',
         });
-        this.authService.searchUser().then(function (users) {
+        this.storage.get('user').then(function (users) {
             _this.users = users;
             _this.centerService.searchCenter().then(function (centers) {
-                _this.userCenter = __WEBPACK_IMPORTED_MODULE_3_lodash__["find"](centers, ['center_code', _this.users[0].center]);
+                _this.userCenter = __WEBPACK_IMPORTED_MODULE_3_lodash__["find"](centers, ['center_code', _this.users.center]);
                 _this.studentService.getStudents().then(function (data) {
                     var student = __WEBPACK_IMPORTED_MODULE_3_lodash__["filter"](data, ['center', _this.userCenter.center_code]);
                     var student_ids = _this.userCenter.center_code;
@@ -2365,11 +2374,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
             __WEBPACK_IMPORTED_MODULE_7_ion2_calendar__["b" /* CalendarModule */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["a" /* IonicStorageModule */].forRoot(__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* MyApp */]),
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* MyApp */], {}, {
-                links: [
-                    { loadChildren: '../pages/reports/reports.module#ReportsPageModule', name: 'ReportsPage', segment: 'reports', priority: 'low', defaultHistory: [] }
-                ]
-            })
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* MyApp */])
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicApp */]],
         entryComponents: [
@@ -2451,21 +2456,29 @@ var MyApp = (function () {
         this.isAdmin = false;
         this.isCenterAdmin = false;
         this.isCounsellor = false;
+        this.showMenu = false;
         platform.ready().then(function () {
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["c" /* StatusBar */].styleDefault();
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["b" /* Splashscreen */].hide();
         });
-        this.storage.get('user').then(function (user) {
-            if (user.role === "counsellor")
-                _this.isCounsellor = true;
-            else if (user.role === "admin")
-                _this.isAdmin = true;
-            else if (user.role === "centerAdmin")
-                _this.isCenterAdmin = true;
-            else
-                _this.isCounsellor = true;
-        });
+        this.userSubscription = __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__["a" /* Auth */].userChanged.subscribe(function (user) { return _this.getData(user); });
     }
+    MyApp.prototype.getData = function (user) {
+        if (user) {
+            if (user.role === "counsellor") {
+                this.isCounsellor = true;
+            }
+            else if (user.role === "admin") {
+                this.isAdmin = true;
+            }
+            else if (user.role === "centerAdmin") {
+                this.isCenterAdmin = true;
+            }
+            else {
+                this.isCounsellor = true;
+            }
+        }
+    };
     MyApp.prototype.go_to_home = function () {
         this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */]);
     };
@@ -2492,14 +2505,15 @@ var MyApp = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */]) === "function" && _a || Object)
 ], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/app/app.html"*/'<ion-menu side="left" [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>        \n    <ion-content>\n        <ion-list>\n        	<ion-item *ngIf="isAdmin" (click)="go_to_center()" menuClose>\n                Centers\n            </ion-item>\n            <ion-item *ngIf="isAdmin" (click)="go_to_signup()" menuClose>\n                Users\n            </ion-item>\n            <ion-item (click)="go_to_home()" menuClose>\n                Enquiry\n            </ion-item>\n            <ion-item (click)="go_to_search()" menuClose>\n                Confirm\n            </ion-item>\n            <ion-item *ngIf="!isCounsellor" (click)="go_to_indent()" menuClose>\n                Indentations\n            </ion-item>\n            <ion-item (click)="go_to_reports()" menuClose>\n                Reports\n            </ion-item>\n            <ion-item (click)="go_to_login()" menuClose>\n                SignOut\n            </ion-item>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" id="nav" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__["a" /* Auth */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__["a" /* Auth */]) === "function" && _d || Object])
 ], MyApp);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -2975,6 +2989,9 @@ var SignupPage = (function () {
         var _this = this;
         this.centers = [];
         this.centerService.searchCenter().then(function (result) {
+            result = __WEBPACK_IMPORTED_MODULE_4_lodash__["filter"](result, function (o) {
+                return (o.active == true);
+            });
             _this.centers = result;
             _this.storage.get('user').then(function (user) {
                 if (user.role != "admin") {
@@ -3014,6 +3031,7 @@ var SignupPage = (function () {
             this.authService.createAccount(details).then(function (result) {
                 _this.loader.dismiss();
                 _this.reset();
+                _this.getUsers();
                 _this.presentToast('User data saved successfully');
             }, function (err) {
                 _this.loader.dismiss();
@@ -3035,6 +3053,9 @@ var SignupPage = (function () {
         this.authService.updateAccount(details).then(function (result) {
             _this.reset();
             _this.loader.dismiss();
+            _this.getUsers();
+            _this.mySelect = null;
+            _this.myInput = '';
             _this.presentToast('User data saved successfully');
         }, function (err) {
             _this.loader.dismiss();

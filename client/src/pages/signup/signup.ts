@@ -88,6 +88,9 @@ export class SignupPage {
   getCenters() {
     this.centers = [];
     this.centerService.searchCenter().then((result) => {
+      result = _.filter(result, function(o) { 
+          return (o.active == true); 
+      });
       this.centers = result;
       this.storage.get('user').then((user) => {
           if(user.role != "admin") {
@@ -127,6 +130,7 @@ export class SignupPage {
       this.authService.createAccount(details).then((result) => {
           this.loader.dismiss();
           this.reset();
+          this.getUsers();
           this.presentToast('User data saved successfully');
       }, (err) => {
           this.loader.dismiss();
@@ -148,6 +152,9 @@ export class SignupPage {
     this.authService.updateAccount(details).then((result) => {
         this.reset();
         this.loader.dismiss();
+        this.getUsers();
+        this.mySelect = null;
+        this.myInput = '';
         this.presentToast('User data saved successfully');
     }, (err) => {
         this.loader.dismiss();

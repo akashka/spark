@@ -75,7 +75,7 @@ sendMail = function(indentation) {
     var stringTemplate = fs.readFileSync(path.join(__dirname, '../helpers') + '/admin_indentation.html', "utf8");
      stringTemplate = stringTemplate.replace('{{total_amount}}', indentation.total_amount);
      stringTemplate = stringTemplate.replace('{{payment_mode}}', indentation.payment_mode);
-     stringTemplate = stringTemplate.replace('{{payment_date}}', indentation.payment_date);
+     stringTemplate = stringTemplate.replace('{{payment_date}}', moment(indentation.payment_date).format("DD-MMM-YYYY"));
      stringTemplate = stringTemplate.replace('{{bank_name}}', indentation.bank_name);
      stringTemplate = stringTemplate.replace('{{cheque_no}}', indentation.cheque_no);
      stringTemplate = stringTemplate.replace('{{center_code}}', indentation.center_code);
@@ -101,7 +101,7 @@ sendSms = function(indentation) {
     var messageData = "";
     messageData = "Indentation from " + indentation.center_code + 
         ", Total Amount: " + indentation.total_amount + 
-        ", Payment Date: " + indentation.payment_date +
+        ", Payment Date: " + moment(indentation.payment_date).format("DD-MMM-YYYY") +
         ", Payment Mode: " + indentation.payment_mode +
         ", Bank: " + indentation.bank_name +
         ", Cheque No: " + indentation.cheque_no +

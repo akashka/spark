@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
@@ -10,6 +10,8 @@ export class Auth {
   url = "https://spark-olw.herokuapp.com/";
   //url = "http://localhost:8080/";
 
+  public static userChanged: EventEmitter<boolean> = new EventEmitter();
+
   constructor(public http: Http, public storage: Storage) {
  
   }
@@ -18,6 +20,7 @@ export class Auth {
     return new Promise((resolve, reject) => {
         //Load token if exists
         this.storage.get('token').then((value) => {
+            Auth.userChanged.next(true);
             this.token = value;
             let headers = new Headers();
             headers.append('Authorization', this.token);
@@ -69,8 +72,12 @@ export class Auth {
           .subscribe(res => {
             let data = res.json();
             this.token = data.token;
-            this.storage.set('token', data.token);
-            this.storage.set('user', data.user);
+            if(data.user){
+              this.storage.set('token', data.token);
+              this.storage.set('user', data.user).then((res) => {
+                Auth.userChanged.next(data.user);
+              });
+            }
             resolve(data);
             resolve(res.json());
           }, (err) => {
@@ -109,6 +116,8 @@ export class Auth {
  
   logout(){
     this.storage.set('token', '');
+    this.storage.set('user', {});
+    Auth.userChanged.next(true);
   }
  
 }

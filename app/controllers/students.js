@@ -109,7 +109,7 @@ sendAdminMail = function(student, action) {
      stringTemplate = stringTemplate.replace('{{parent_name}}', student.parent_name);
      stringTemplate = stringTemplate.replace('{{student_name}}', student.name);
      stringTemplate = stringTemplate.replace('{{phone_no}}', student.phone_number);
-     stringTemplate = stringTemplate.replace('{{student_dob}}', student.dob);
+     stringTemplate = stringTemplate.replace('{{student_dob}}', moment(student.dob).format("DD-MMM-YYYY"));
      stringTemplate = stringTemplate.replace('{{student_class}}', student.class_group);
      stringTemplate = stringTemplate.replace('{{locality}}', student.locality);
      stringTemplate = stringTemplate.replace('{{email}}', student.email_id);
@@ -124,7 +124,7 @@ sendAdminMail = function(student, action) {
      stringTemplate = stringTemplate.replace('{{parent_name}}', student.parent_name);
      stringTemplate = stringTemplate.replace('{{student_name}}', student.name);
      stringTemplate = stringTemplate.replace('{{phone_no}}', student.phone_number);
-     stringTemplate = stringTemplate.replace('{{student_dob}}', student.dob);
+     stringTemplate = stringTemplate.replace('{{student_dob}}', moment(student.dob).format("DD-MMM-YYYY"));
      stringTemplate = stringTemplate.replace('{{student_class}}', student.class_group);
      stringTemplate = stringTemplate.replace('{{locality}}', student.locality);
      stringTemplate = stringTemplate.replace('{{email}}', student.email_id);
@@ -188,7 +188,7 @@ sendAdminSms = function(student, action) {
                 ", Phone: " + student.phone_number +
                 ", Gender: " + student.gender +
                 ", Class: " + student.class_group +
-                ", DOB: " + student.dob +
+                ", DOB: " + moment(student.dob).format("DD-MMM-YYYY") +
                 ", Parent: " + student.parent_name;
     } else if(action == "confirmed"){
       messageData = "CONFIRMATION AT " + student.center + 

@@ -137,10 +137,10 @@ export class HomePage {
       content: 'Please wait...',
     });
 
-    this.authService.searchUser().then((users) => {
+    this.storage.get('user').then((users) => {
       this.users = users;
       this.centerService.searchCenter().then((centers) => {
-        this.userCenter = _.find(centers, ['center_code', this.users[0].center]);
+        this.userCenter = _.find(centers, ['center_code', this.users.center]);
         this.studentService.getStudents().then((data) => {
           var student = _.filter(data, ['center', this.userCenter.center_code]);
           var student_ids = this.userCenter.center_code;

@@ -72,7 +72,7 @@ export class CenterPage {
     this.loader = this.loading.create({
       content: 'Please wait...',
     });
-  	this.getCenters()
+  	this.getCenters();
   }
 
   // Function to save new center
@@ -92,6 +92,7 @@ export class CenterPage {
     };
     this.centerService.createCenter(center).then((result) => {
       this.reset();
+      this.getCenters();
       this.loader.dismiss();
       this.presentToast('Center data saved successfully');
     }, (err) => {
@@ -118,7 +119,9 @@ export class CenterPage {
     };
     this.centerService.updateCenter(center).then((result) => {
       this.reset();
+      this.getCenters();
       this.loader.dismiss();
+      this.mySelect = null;
       this.presentToast('Center data saved successfully');
     }, (err) => {
         this.loader.dismiss();
