@@ -1,4 +1,5 @@
 var Student = require('../models/student');
+var Center = require('../models/center');
 var moment = require('moment');
 var nodemailer = require('nodemailer');
 var fs = require('fs');
@@ -8,8 +9,10 @@ var curl = require('curlrequest');
 var sgMail = require('@sendgrid/mail');
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
-var adminNumber = "7259596963";
-var adminEmail = "akash.ka01@gmail.com";
+//var adminNumber = ["9845012849", "9845679966"];
+var adminNumber = ["7259596963", "7259596963"];
+//var adminEmail = "admissions@little-wonders.in";
+var adminEmail = "akash.ka01@gmail.in";
 var senderID = "LILWON";
 
 var apiKey = "SG";
@@ -201,13 +204,28 @@ sendAdminSms = function(student, action) {
                 ", Uniform: " + student.uniform_size;
     }
 
-    var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + adminNumber + "&sender=" + senderID;
-    curl.request(formData, 
-      function optionalCallback(err, body) {
-      if (err) {
-        return console.error('Sending SMS to admin failed: ', err);
-      }
-      console.log('Successfully sent SMS to admin');
+    for(var i = 0; i < adminNumber.length; i++) {
+      var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + adminNumber[i] + "&sender=" + senderID;
+      curl.request(formData, 
+        function optionalCallback(err, body) {
+        if (err) {
+          return console.error('Sending SMS to admin failed: ', err);
+        }
+        console.log('Successfully sent SMS to admin');
+      });
+    }
+
+    var query = {center_code: student.center};
+    Center.findOne(query).exec(function(err, center) {
+        if (err) { res.send(err); }
+        var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + center.phoneno + "&sender=" + senderID;
+        curl.request(formData, 
+          function optionalCallback(err, body) {
+          if (err) {
+            return console.error('Sending SMS to center failed: ', err);
+          }
+          console.log('Successfully sent SMS to center');
+        });
     });
 }
 
@@ -216,15 +234,12 @@ sendParentSms = function(student, action) {
 
     var messageData = "";
     if(action == "enquiry") {
-      messageData = "Thank you for inquiring about our Preschool. " +
+      messageData = "Thank you for enquiring about our Preschool. " +
           "We offer child friendly curriculum with bright, creative and safe environment for your child. " +
-          "It’s a preschool like home, near home for your little ones. " +
+          "It/’s a preschool like home, near home for your little ones. " +
           "For more details you can log on to www.little-wonders.in";
     } else if(action == "confirmed"){
-      messageData = "Thank you for your child admission in our Preschool. " +
-          "We offer child friendly curriculum with bright, creative and safe environment for your child. " +
-          "It’s a preschool like home, near home for your little ones. " +
-          "For more details you can log on to www.little-wonders.in";
+      messageData = "Thank you for enrolling your child in our Preschool. "
     }
 
     var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + student.phone_number + "&sender=" + senderID;

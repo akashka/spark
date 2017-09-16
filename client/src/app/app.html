@@ -6,10 +6,10 @@
     </ion-header>        
     <ion-content>
         <ion-list>
-        	<ion-item *ngIf="isAdmin" (click)="go_to_center()" menuClose>
+        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>
                 Centers
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_signup()" menuClose>
+            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>
                 Users
             </ion-item>
             <ion-item (click)="go_to_home()" menuClose>
@@ -18,7 +18,7 @@
             <ion-item (click)="go_to_search()" menuClose>
                 Confirm
             </ion-item>
-            <ion-item *ngIf="!isCounsellor" (click)="go_to_indent()" menuClose>
+            <ion-item [hidden]="isCounsellor" (click)="go_to_indent()" menuClose>
                 Indentations
             </ion-item>
             <ion-item (click)="go_to_reports()" menuClose>

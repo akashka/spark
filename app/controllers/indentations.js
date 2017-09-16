@@ -1,12 +1,15 @@
 var Indentation = require('../models/indentation');
+var Center = require('../models/center');
 var sgMail = require('@sendgrid/mail');
 var curl = require('curlrequest');
 var fs = require('fs');
 var path = require("path");
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
-var adminNumber = "7259596963";
-var adminEmail = "akash.ka01@gmail.com";
+//var adminNumber = ["9845012849", "9845679966"];
+var adminNumber = ["7259596963", "7259596963"];
+//var adminEmail = "admissions@little-wonders.in";
+var adminEmail = "akash.ka01@gmail.in";
 var senderID = "LILWON";
 
 var apiKey = "SG";
@@ -98,8 +101,7 @@ sendMail = function(indentation) {
 sendSms = function(indentation) {
     console.log("Sending Indentation SMS");
 
-    var messageData = "";
-    messageData = "Indentation from " + indentation.center_code + 
+    var messageData = "Indentation from " + indentation.center_code + 
         ", Total Amount: " + indentation.total_amount + 
         ", Payment Date: " + moment(indentation.payment_date).format("DD-MMM-YYYY") +
         ", Payment Mode: " + indentation.payment_mode +
@@ -108,12 +110,27 @@ sendSms = function(indentation) {
         ", Transaction No: " + indentation.transaction_no +
         ", Counsellor: " + indentation.email;
 
-    var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + adminNumber + "&sender=" + senderID;
-    curl.request(formData, 
-      function optionalCallback(err, body) {
-      if (err) {
-        return console.error('Sending Indentation SMS failed: ', err);
-      }
-      console.log('Successfully sent Indentation SMS');
+    for(var i = 0; i < adminNumber.length; i++) {
+      var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + adminNumber[i] + "&sender=" + senderID;
+      curl.request(formData, 
+        function optionalCallback(err, body) {
+        if (err) {
+          return console.error('Sending Indentation SMS failed: ', err);
+        }
+        console.log('Successfully sent Indentation SMS');
+      });
+    }
+
+    var query = {center_code: indentation.center_code};
+    Center.findOne(query).exec(function(err, center) {
+        if (err) { res.send(err); }
+        var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + center.phoneno + "&sender=" + senderID;
+        curl.request(formData, 
+          function optionalCallback(err, body) {
+          if (err) {
+            return console.error('Sending Indentation SMS to center failed: ', err);
+          }
+          console.log('Successfully sent Indentation SMS to center');
+        });
     });
 }

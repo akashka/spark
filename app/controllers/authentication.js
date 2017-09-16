@@ -48,17 +48,10 @@ function setUserInfo(request){
 exports.login = function(req, res, next){
     console.log("Logging in for user " + req.user.email);
     var userInfo = setUserInfo(req.user);
-    if(req.user.active){
         res.status(200).json({
             token: 'JWT ' + generateToken(userInfo),
             user: userInfo
         });
-    } else {
-        res.status(200).json({
-            token: '',
-            user: {}
-        });
-    }
 }
 
 exports.forgotPassword = function(req, res, next){
