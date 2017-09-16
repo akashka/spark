@@ -48,10 +48,10 @@ function setUserInfo(request){
 exports.login = function(req, res, next){
     console.log("Logging in for user " + req.user.email);
     var userInfo = setUserInfo(req.user);
-        res.status(200).json({
-            token: 'JWT ' + generateToken(userInfo),
-            user: userInfo
-        });
+    res.status(200).json({
+        token: 'JWT ' + generateToken(userInfo),
+        user: userInfo
+    });
 }
 
 exports.forgotPassword = function(req, res, next){
@@ -160,13 +160,17 @@ exports.update = function(req, res, next){
         var id = existingUser._id;
         delete existingUser._id;
 
+        console.log(password);
+
         bcrypt.hash(password, 10, function(err, hash) {
             existingUser.email = email;
-            if(existingUser.password != "") existingUser.password = hash;
+            if(req.body.password != "") existingUser.password = hash;
             existingUser.role = role;
             existingUser.center = center;
             existingUser.name = name;
             existingUser.active = active;
+
+            console.log(existingUser);
 
             User.findOneAndUpdate( {_id:id}, existingUser, {upsert: true, new: true}, function(err, user){
                 if(err){

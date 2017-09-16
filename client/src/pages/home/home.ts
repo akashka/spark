@@ -144,7 +144,7 @@ export class HomePage {
         this.studentService.getStudents().then((data) => {
           var student = _.filter(data, ['center', this.userCenter.center_code]);
           var student_ids = this.userCenter.center_code;
-          student_ids += student ? (student.length > 0 ? student.length : 1) : 0;
+          student_ids += student ? (student.length > 0 ? student.length : 0) : 0;
           this.studentForm.controls['student_id'].setValue(student_ids);
         }, (err) => {
             console.log("not allowed");

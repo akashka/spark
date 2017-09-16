@@ -22,7 +22,12 @@ var localLogin = new LocalStrategy(localOptions, function(email, password, done)
         if(!user){
             return done(null, false, {error: 'Login failed. Please try again.'});
         }
+
  
+        if(!user.active){
+            return done(null, false, {error: 'User is inactive.'});
+        }
+
         user.comparePassword(password, function(err, isMatch){
  
             if(err){

@@ -20,10 +20,12 @@ export class Auth {
     return new Promise((resolve, reject) => {
         //Load token if exists
         this.storage.get('token').then((value) => {
-            Auth.userChanged.next(true);
             this.token = value;
             let headers = new Headers();
             headers.append('Authorization', this.token);
+            this.storage.get('user').then((user) => {
+              Auth.userChanged.next(user);
+            });
             this.http.get(this.url + 'api/auth/protected', {headers: headers})
                 .subscribe(res => {
                     resolve(res);

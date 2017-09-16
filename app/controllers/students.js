@@ -9,10 +9,10 @@ var curl = require('curlrequest');
 var sgMail = require('@sendgrid/mail');
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
-//var adminNumber = ["9845012849", "9845679966"];
-var adminNumber = ["7259596963", "7259596963"];
-//var adminEmail = "admissions@little-wonders.in";
-var adminEmail = "akash.ka01@gmail.in";
+var adminNumber = ["9845012849", "9845679966"];
+//var adminNumber = ["7259596963", "7259596963"];
+var adminEmail = "admissions@little-wonders.in";
+//var adminEmail = "akash.ka01@gmail.in";
 var senderID = "LILWON";
 
 var apiKey = "SG";
@@ -236,7 +236,7 @@ sendParentSms = function(student, action) {
     if(action == "enquiry") {
       messageData = "Thank you for enquiring about our Preschool. " +
           "We offer child friendly curriculum with bright, creative and safe environment for your child. " +
-          "It/’s a preschool like home, near home for your little ones. " +
+          "It%27s a preschool like home, near home for your little ones. " +
           "For more details you can log on to www.little-wonders.in";
     } else if(action == "confirmed"){
       messageData = "Thank you for enrolling your child in our Preschool. "

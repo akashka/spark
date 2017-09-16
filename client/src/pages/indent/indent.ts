@@ -31,7 +31,7 @@ export class IndentPage {
 
   public total_amount: number = 0;
   public payment_mode;
-  public payment_date = moment();
+  public payment_date = moment().format("YYYY-MM-DD");
   public bank_name;
   public transaction_no;
   public cheque_no;
@@ -39,6 +39,7 @@ export class IndentPage {
   public center_code;
   public students_amount = [];
   public loader: any;
+  public today_date = moment().format("YYYY-MM-DD");
 
   constructor(
     public navCtrl: NavController, 
@@ -94,6 +95,7 @@ export class IndentPage {
   }
 
   indent(student) {
+  console.log(this.today_date);
   	this.indented_students.push(student);
     for(var i = 0; i < this.students.length; i++) {
       if(this.students[i] === student) this.students[i].indented = true;
@@ -199,7 +201,7 @@ export class IndentPage {
       this.confirm_indent = false;
       this.total_amount = 0;
       this.payment_mode = "";
-      this.payment_date = moment();
+      this.payment_date = moment().format("YYYY-MM-DD");
       this.bank_name = "";
       this.transaction_no = "";
       this.cheque_no = "";

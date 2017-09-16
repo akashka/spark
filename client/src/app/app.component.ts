@@ -54,6 +54,7 @@ export class MyApp {
             this.isCenterAdmin = true;
           } else {
             this.isCounsellor = true;
+            this.isAdmin = false;
           }
         }
   }

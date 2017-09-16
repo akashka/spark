@@ -20,14 +20,16 @@ var UserSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin','centeradmin','counsellor'],
-        default: 'counsellor'
+        default: 'counsellor',
+        required: true
     },
     center: {
         type: String,
         required: true
     },
     active: {
-        type: Boolean
+        type: Boolean,
+        required: true
     }
  
 }, {
