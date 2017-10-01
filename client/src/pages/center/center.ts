@@ -28,6 +28,7 @@ export class CenterPage {
   center_email: string;
   center_address: string;
   active: Boolean = true;
+  cash: Boolean = false;
   centers: any;
   btnText: string = "Save";
   myInput: string;
@@ -84,7 +85,8 @@ export class CenterPage {
 		  center_phoneno: this.center_phoneno,
 		  center_email: this.center_email,
 		  center_address: this.center_address,
-		  active: this.active,
+      active: this.active,
+		  cash: this.cash,
       playgroup: this.playgroup,
       nursery: this.nursery,
       lkg: this.lkg,
@@ -110,7 +112,8 @@ export class CenterPage {
     		  center_phoneno: this.center_phoneno,
     		  center_email: this.center_email,
     		  center_address: this.center_address,
-    		  active: this.active,
+          active: this.active,
+    		  cash: this.cash,
           playgroup: this.playgroup,
           nursery: this.nursery,
           lkg: this.lkg,
@@ -136,6 +139,7 @@ export class CenterPage {
     this.center_email = "";
     this.center_address = "";
     this.active = true;
+    this.cash = false;
     this.btnText = "Save";
     this.myInput = "";
     this.center_id = "";
@@ -197,7 +201,8 @@ export class CenterPage {
   	  this.center_phoneno = result[0].center_phoneno;
   	  this.center_email = result[0].center_email;
   	  this.center_address = result[0].center_address;
-  	  this.active = result[0].active;
+      this.active = result[0].active;
+  	  this.cash = result[0].cash;
       this.playgroup = result[0].playgroup;
       this.nursery = result[0].nursery;
       this.lkg = result[0].lkg;
@@ -212,6 +217,7 @@ export class CenterPage {
       this.center_email = "";
       this.center_address = "";
       this.active = true;
+      this.cash = false;
       this.center_id = "";
       this.playgroup = {
         annual: 0,
@@ -249,6 +255,7 @@ export class CenterPage {
       this.center_email = result[0].center_email;
       this.center_address = result[0].center_address;
       this.active = result[0].active;
+      this.cash = result[0].cash;
       this.center_id = result[0]._id;
       this.playgroup = result[0].playgroup;
       this.nursery = result[0].nursery;
@@ -263,6 +270,7 @@ export class CenterPage {
       this.center_email = "";
       this.center_address = "";
       this.active = true;
+      this.cash = false;
       this.center_id = "";
       this.playgroup = {
         annual: 0,

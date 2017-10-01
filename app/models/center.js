@@ -42,7 +42,10 @@ var CenterSchema = new mongoose.Schema({
     ukg: {
         type: Object,
         required: true
-    }
+    },
+    cash: {
+        type: Boolean,
+    },
 
 }, {
     timestamps: true

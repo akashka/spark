@@ -28,6 +28,7 @@ export class IndentPage {
   public indented_students = [];
   public user_center;
   public confirm_indent: boolean = false;
+  public isCash: boolean = false;
 
   public total_amount: number = 0;
   public payment_mode;
@@ -77,6 +78,7 @@ export class IndentPage {
             this.email = user.email;
             this.center_code = user.center;
             this.user_center = _.find(centers, ['center_code', user.center]);
+            this.isCash = this.user_center.cash;
         });
     });
   }
