@@ -26,6 +26,7 @@ export class MyApp {
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
   public showMenu: Boolean = false;
+  public userCenter: String = "";
 
   userSubscription;
 
@@ -56,6 +57,7 @@ export class MyApp {
             this.isCounsellor = true;
             this.isAdmin = false;
           }
+          this.userCenter = user.center;
         }
   }
 

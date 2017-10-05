@@ -496,9 +496,8 @@ var CenterPage = (function () {
     CenterPage.prototype.onSelectChange = function () {
         var result = [];
         for (var i = 0; i < this.centers.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_name, this.mySelect)) {
+            if (this.centers[i].center_name == this.mySelect)
                 result.push(this.centers[i]);
-            }
         }
         if (result && result.length === 1) {
             this.center_name = result[0].center_name;
@@ -1581,8 +1580,10 @@ var HomePage = (function () {
         this.storage.get('user').then(function (user) {
             if (user.role === "counsellor")
                 _this.isCounsellor = true;
-            else if (user.role === "admin")
+            else if (user.role === "admin") {
                 _this.isAdmin = true;
+                _this.openReportsPage();
+            }
             else if (user.role === "centerAdmin")
                 _this.isCenterAdmin = true;
             else
@@ -2478,6 +2479,7 @@ var MyApp = (function () {
         this.isCenterAdmin = false;
         this.isCounsellor = false;
         this.showMenu = false;
+        this.userCenter = "";
         platform.ready().then(function () {
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["c" /* StatusBar */].styleDefault();
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["b" /* Splashscreen */].hide();
@@ -2499,6 +2501,7 @@ var MyApp = (function () {
                 this.isCounsellor = true;
                 this.isAdmin = false;
             }
+            this.userCenter = user.center;
         }
     };
     MyApp.prototype.go_to_home = function () {
@@ -2530,7 +2533,7 @@ __decorate([
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
 ], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/app/app.html"*/'<ion-menu side="left" [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>        \n    <ion-content>\n        <ion-list>\n        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>\n                Centers\n            </ion-item>\n            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>\n                Users\n            </ion-item>\n            <ion-item (click)="go_to_home()" menuClose>\n                Enquiry\n            </ion-item>\n            <ion-item (click)="go_to_search()" menuClose>\n                Confirm\n            </ion-item>\n            <ion-item (click)="go_to_indent()" menuClose>\n                Indentations\n            </ion-item>\n            <ion-item (click)="go_to_reports()" menuClose>\n                Reports\n            </ion-item>\n            <ion-item (click)="go_to_login()" menuClose>\n                SignOut\n            </ion-item>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" id="nav" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/app/app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/app/app.html"*/'<ion-menu side="left" [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>        \n    <ion-content>\n        <ion-list>\n        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>\n                Centers\n            </ion-item>\n            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>\n                Users\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_home()" menuClose>\n                Enquiry\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_search()" menuClose>\n                Confirm\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_indent()" menuClose>\n                Indentations\n            </ion-item>\n            <ion-item (click)="go_to_reports()" menuClose>\n                Reports\n            </ion-item>\n            <ion-item (click)="go_to_login()" menuClose>\n                SignOut\n            </ion-item>\n            <h1 style="bottom: 10%;position: absolute;padding: 10px;">\n                Logged in from {{userCenter}}\n            </h1>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" id="nav" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/app/app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_11__providers_auth_auth__["a" /* Auth */]])
 ], MyApp);
@@ -3121,9 +3124,8 @@ var SignupPage = (function () {
     SignupPage.prototype.onSelectChange = function () {
         var result = [];
         for (var i = 0; i < this.users.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_4_lodash__["includes"](this.users[i].name, this.mySelect)) {
+            if (this.users[i].name == this.mySelect)
                 result.push(this.users[i]);
-            }
         }
         if (result && result.length === 1) {
             this.existingUser = true;

@@ -198,9 +198,9 @@ export class SignupPage {
   // Function to search for a User dynamically based on select
   onSelectChange() {
     var result = [];
-    
+
     for(var i = 0; i < this.users.length; i++) {
-      if (_.includes(this.users[i].name, this.mySelect)) { result.push(this.users[i]); } 
+      if(this.users[i].name == this.mySelect) result.push(this.users[i]);
     }
 
     if(result && result.length === 1) {

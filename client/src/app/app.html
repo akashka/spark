@@ -12,13 +12,13 @@
             <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>
                 Users
             </ion-item>
-            <ion-item (click)="go_to_home()" menuClose>
+            <ion-item [hidden]=isAdmin (click)="go_to_home()" menuClose>
                 Enquiry
             </ion-item>
-            <ion-item (click)="go_to_search()" menuClose>
+            <ion-item [hidden]=isAdmin (click)="go_to_search()" menuClose>
                 Confirm
             </ion-item>
-            <ion-item (click)="go_to_indent()" menuClose>
+            <ion-item [hidden]=isAdmin (click)="go_to_indent()" menuClose>
                 Indentations
             </ion-item>
             <ion-item (click)="go_to_reports()" menuClose>
@@ -27,6 +27,9 @@
             <ion-item (click)="go_to_login()" menuClose>
                 SignOut
             </ion-item>
+            <h1 style="bottom: 10%;position: absolute;padding: 10px;">
+                Logged in from {{userCenter}}
+            </h1>
         </ion-list>
     </ion-content>
 </ion-menu>

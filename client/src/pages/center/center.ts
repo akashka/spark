@@ -245,7 +245,7 @@ export class CenterPage {
   onSelectChange() {
     var result = [];
     for(var i = 0; i < this.centers.length; i++) {
-      if (_.includes(this.centers[i].center_name, this.mySelect)) { result.push(this.centers[i]); } 
+      if (this.centers[i].center_name == this.mySelect) result.push(this.centers[i]) 
     }
 
     if(result && result.length === 1) {

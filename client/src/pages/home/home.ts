@@ -126,7 +126,10 @@ export class HomePage {
 
       this.storage.get('user').then((user) => {
               if(user.role === "counsellor")  this.isCounsellor = true;
-         else if(user.role === "admin")  this.isAdmin = true;
+         else if(user.role === "admin")  {
+              this.isAdmin = true;
+              this.openReportsPage();
+          }
          else if(user.role === "centerAdmin")  this.isCenterAdmin = true;
          else this.isCounsellor = true;
       }); 

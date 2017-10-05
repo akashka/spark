@@ -239,7 +239,7 @@ sendParentSms = function(student, action) {
           "It%27s a preschool like home, near home for your little ones. " +
           "For more details you can log on to www.little-wonders.in";
     } else if(action == "confirmed"){
-      messageData = "Thank you for enrolling your child in our Preschool. "
+      messageData = "Welcome to Our Little Wonderz, We will assure you the best. For more details kindly check your mail."
     }
 
     var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + student.phone_number + "&sender=" + senderID;

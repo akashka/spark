@@ -25517,7 +25517,7 @@ ion-navbar.toolbar {
 
 .ios .login-page #cloud-layer, .md .login-page #cloud-layer {
   background-image: url("../assets/images/sky_background.jpg");
-  background-size: cover;
+  background-size: inherit;
   width: 100%;
   height: 100%;
 }
