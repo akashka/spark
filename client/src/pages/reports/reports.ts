@@ -30,6 +30,10 @@ export class ReportsPage {
   public searchByDates: String;
   public fileTransfer: TransferObject = this.transfer.create();
   public loader: any;
+  public buttonStyleToday: String = "button-option";
+  public buttonStyleWeek: String = "button-option";
+  public buttonStyleMonth: String = "button-option";
+  public buttonStyleRange: String = "button-option";
 
   constructor(
   		public navParams: NavParams,
@@ -59,6 +63,7 @@ export class ReportsPage {
         }
         this.students = (_.sortBy(data, 'enquiry_date')).reverse();
       });
+	  this.setAll();
     }, (err) => {
         console.log("not allowed");
     });
@@ -69,11 +74,17 @@ export class ReportsPage {
   	this.endDate = endDate;
   	if(this.searchType === 'enquiry') {
 	  	this.reports = _.filter(this.students, function(o) { 
-	      return (moment(o.enquiryDate) >= startDate && moment(o.enquiryDate) <= endDate); 
+	      return (moment(o.enquiry_date) >= startDate && moment(o.enquiry_date) <= endDate); 
+	    });
+	    this.reports = _.filter(this.reports, function(o) { 
+	      return (!o.is_Confirmed); 
 	    });
     } else if(this.searchType === 'confirmed') {
     	this.reports = _.filter(this.students, function(o) { 
 	      return (o.is_Confirmed && moment(o.confirmation_date) >= startDate && moment(o.confirmation_date) <= endDate); 
+	    });
+	    this.reports = _.filter(this.reports, function(o) { 
+	      return (o.is_Confirmed && !o.is_Indented); 
 	    });
     } else if(this.searchType === 'indented') {
     	this.reports = _.filter(this.students, function(o) { 
@@ -84,10 +95,14 @@ export class ReportsPage {
 	      return ((moment(o.enquiryDate) >= startDate && moment(o.enquiryDate) <= endDate) || (o.is_Confirmed && moment(o.confirmation_date) >= startDate && moment(o.confirmation_date) <= endDate) || (o.is_Indented && moment(o.indentation_date) >= startDate && moment(o.indentation_date) <= endDate)); 
 	    });
     }
-    console.log(this.reports);
   }
 
   searchToday() {
+  	this.buttonStyleToday = "button-active";
+  	this.buttonStyleWeek = "button-option";
+  	this.buttonStyleMonth = "button-option";
+  	this.buttonStyleRange = "button-option";
+
   	this.searchByDates = "today";
   	var startDate = moment().subtract(1, 'day');
   	var endDate = moment();
@@ -95,6 +110,11 @@ export class ReportsPage {
   }
 
   searchWeek() {
+  	this.buttonStyleToday = "button-option";
+  	this.buttonStyleWeek = "button-active";
+  	this.buttonStyleMonth = "button-option";
+  	this.buttonStyleRange = "button-option";
+
   	this.searchByDates = "week";
   	var startDate = moment().subtract(7, 'day');
   	var endDate = moment();
@@ -102,13 +122,23 @@ export class ReportsPage {
   }
 
   searchMonth() {
+  	this.buttonStyleToday = "button-option";
+  	this.buttonStyleWeek = "button-option";
+  	this.buttonStyleMonth = "button-active";
+  	this.buttonStyleRange = "button-option";
+
   	this.searchByDates = "month";
-  	var startDate = moment().subtract(7, 'day');
+  	var startDate = moment().subtract(30, 'day');
   	var endDate = moment();
   	this.search(startDate, endDate);
   }
 
   searchDates(res) {
+  	this.buttonStyleToday = "button-option";
+  	this.buttonStyleWeek = "button-option";
+  	this.buttonStyleMonth = "button-option";
+  	this.buttonStyleRange = "button-active";
+
   	this.searchByDates = "dates";
   	var startDate = moment(res.from);
   	var endDate = moment(res.to);

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
+import { Students } from '../../providers/students/students';
  import { 
       NavController, 
       NavParams, 
@@ -36,11 +37,13 @@ export class SignupPage {
   btnText: String = "Save";
   existingUser: Boolean = false;
   public loader: any;
+  public isUserDeletable: Boolean = false;
 
   constructor(
         public navCtrl: NavController, 
         public navParams: NavParams, 
         public centerService: Center, 
+        public studentService: Students, 
         public authService: Auth, 
         public loading: LoadingController,
         public app: App,
@@ -73,6 +76,7 @@ export class SignupPage {
       this.mySelect = "";
       this.btnText = "Save";
       this.existingUser = false;
+      this.isUserDeletable = false;
   }
 
   private presentToast(text) {
@@ -182,6 +186,17 @@ export class SignupPage {
       this.active = result[0].active;
       this._id = result[0]._id;
       this.btnText = "Update";
+      this.isUserDeletable = false;
+
+      this.studentService.getStudents().then((data) => {
+          data = _.filter(data, function(o) { 
+            return (o.counsellor == this.email); 
+          });
+          if(!data) this.isUserDeletable = true;
+      }, (err) => {
+          console.log("not allowed");
+      });
+
     }
     else {
       this.existingUser = false;
@@ -192,6 +207,7 @@ export class SignupPage {
       this.name = "";
       this.center = "";
       this.active = true;
+      this.isUserDeletable = false;
     }
   }
 
@@ -214,6 +230,18 @@ export class SignupPage {
       this.active = result[0].active;
       this._id = result[0]._id;
       this.btnText = "Update";
+      this.isUserDeletable = false;
+
+      this.studentService.getStudents().then((data) => {
+          var student = [];
+          student = _.filter(data, function(o) { 
+            return (o.counsellor == result[0].email); 
+          });
+          if(student.length <= 0) this.isUserDeletable = true;
+      }, (err) => {
+          console.log("not allowed");
+      });
+
     }
     else {
       this.existingUser = false;
@@ -224,6 +252,7 @@ export class SignupPage {
       this.name = "";
       this.center = "";
       this.active = true;
+      this.isUserDeletable = false;
     }
   }
 
@@ -247,6 +276,24 @@ export class SignupPage {
 
   openHomePage() {
     this.navCtrl.setRoot(HomePage);
+  }
+
+  delete() {
+    this.loader.present();
+    let details = {
+      email: this.email,
+    };
+    this.authService.deleteAccount(details).then((result) => {
+        this.reset();
+        this.loader.dismiss();
+        this.getUsers();
+        this.mySelect = null;
+        this.myInput = '';
+        this.presentToast('User delete successfully');
+    }, (err) => {
+        this.loader.dismiss();
+        this.presentToast('Error! Please try again.');
+    });
   }
  
 }

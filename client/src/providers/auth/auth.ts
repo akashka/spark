@@ -121,5 +121,20 @@ export class Auth {
     this.storage.set('user', {});
     Auth.userChanged.next(true);
   }
+
+  deleteAccount(details){
+    return new Promise((resolve, reject) => {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        this.http.post(this.url+'api/auth/delete', JSON.stringify(details), {headers: headers})
+          .subscribe(res => {
+            let data = res.json();
+            this.token = data.token;
+            resolve(data);
+          }, (err) => {
+            reject(err);
+          });
+    });
+  }
  
 }

@@ -17,10 +17,10 @@
 <ion-content>
 
 	  <div class="button-bar">
-        <a class="button button-option" (click)="searchToday()">Day</a>
-        <a class="button button-option" (click)="searchWeek()">Week</a>
-        <a class="button button-option" (click)="searchMonth()">Month</a>
-        <a class="button button-option" (click)="dateRange()">Dates</a>
+        <a class="button {{buttonStyleToday}}" (click)="searchToday()">Day</a>
+        <a class="button {{buttonStyleWeek}}" (click)="searchWeek()">Week</a>
+        <a class="button {{buttonStyleMonth}}" (click)="searchMonth()">Month</a>
+        <a class="button {{buttonStyleRange}}" (click)="dateRange()">Dates</a>
     </div>
 
     <div class="button-bar">

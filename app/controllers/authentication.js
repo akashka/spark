@@ -187,6 +187,30 @@ exports.update = function(req, res, next){
         
     });
 }
+
+exports.delete = function(req, res, next){
+    var email = req.body.email;
+
+    if(!email){
+        return res.status(422).send({error: 'You must enter an email address'});
+    }
+
+    User.findOne({email: email}, function(err, existingUser){
+        if(err){
+            return next(err);
+        }
+
+        User.deleteOne({email: email}, function(err, userInfo) {
+            if (err) throw err;
+            console.log("1 document deleted");
+            res.status(201).json({
+                token: 'JWT ' + generateToken(userInfo),
+                user: userInfo
+            })
+        });
+        
+    });
+}
  
 exports.roleAuthorization = function(roles){
  

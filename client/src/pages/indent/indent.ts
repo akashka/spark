@@ -184,6 +184,7 @@ export class IndentPage {
 
   indentStudents() {
     this.confirm_indent = !this.confirm_indent;
+    this.setCheque();
   }
 
   setCash() {
