@@ -28,6 +28,7 @@ import { SignupPage } from '../signup/signup';
 import { CenterPage } from '../center/center';
 import { IndentPage } from '../indent/indent';
 import { ReportsPage } from '../reports/reports';
+import { DispatchPage } from '../dispatch/dispatch';
 
 // Files Images
 import { File } from '@ionic-native/file';
@@ -66,6 +67,8 @@ export class HomePage {
 
   public class_group: any;
   public isAdmin: Boolean = false;
+  public isCurrentYear: Boolean = true;
+  public isDispatcher: Boolean = false;
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
 
@@ -113,7 +116,9 @@ export class HomePage {
         alternate_contact: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')])],
 
         locality: ['', Validators.compose([Validators.required])],
-        
+
+        study_year: ['', Validators.compose([Validators.required])],
+
         center: [''],
         counsellor: [''],
         today_age: [''],
@@ -130,6 +135,10 @@ export class HomePage {
               this.isAdmin = true;
               this.openReportsPage();
           }
+          else if(user.role === "dispatcher")  {
+              this.isDispatcher = true;
+              this.openDispatcherPage();
+          }
          else if(user.role === "centerAdmin")  this.isCenterAdmin = true;
          else this.isCounsellor = true;
       }); 
@@ -139,6 +148,9 @@ export class HomePage {
     this.loader = this.loading.create({
       content: 'Please wait...',
     });
+
+    this.studentForm.controls['study_year'].setValue("2017-18");
+    this.onYearChange();
 
     this.storage.get('user').then((users) => {
       this.users = users;
@@ -173,6 +185,7 @@ export class HomePage {
         this.studentForm.controls['class_group'].setValue('');
         this.studentForm.controls['photo'].setValue('');
         this.studentForm.controls['dob'].setValue('');
+        this.studentForm.controls['study_year'].setValue("2017-18");
         this.today_age_years = '';
         this.today_age_months = '';
         this.today_age_days= '';
@@ -210,6 +223,11 @@ export class HomePage {
     this.studentForm.value.name = this.studentForm.value.name.toUpperCase();
   }
 
+  onYearChange = () => {
+    this.isCurrentYear = (this.studentForm.value.study_year == "2017-18") ? true : false;
+    if(this.studentForm.value.dob != '') this.onDobChange();
+  }
+
   onDobChange = () => {
     var dob = this.studentForm.value.dob;
     var now = new Date();
@@ -224,13 +242,18 @@ export class HomePage {
     this.today_age_months = this.studentForm.value.today_age.months;
     this.today_age_days = this.studentForm.value.today_age.days;
 
-    this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + (this.studentForm.value.month_date.getYear() + 1900);
+    var tempYear = this.studentForm.value.month_date.getYear();
+    if(!this.isCurrentYear) tempYear += 1;
+    this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + ( tempYear + 1900);
     
     this.studentForm.value.month_age.years += 1900;
     this.month_age_years = this.studentForm.value.month_age.years;
     this.month_age_months = this.studentForm.value.month_age.months;
     this.month_age_days = this.studentForm.value.month_age.days;
     
+    if(!this.isCurrentYear) this.month_age_years += 1;
+    if(!this.isCurrentYear) this.studentForm.value.month_age.years += 1;
+
     this.class_group = this.calculateClass(this.studentForm.value.month_age);
     this.studentForm.controls['class_group'].setValue(this.class_group);
   }
@@ -431,6 +454,10 @@ export class HomePage {
 
   openIndentPage() {
     this.navCtrl.setRoot(IndentPage);
+  }
+
+  openDispatcherPage() {
+    this.navCtrl.setRoot(DispatchPage);
   }
 
 };

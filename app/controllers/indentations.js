@@ -1,4 +1,5 @@
 var Indentation = require('../models/indentation');
+var Student = require('../models/student');
 var Center = require('../models/center');
 var sgMail = require('@sendgrid/mail');
 var curl = require('curlrequest');
@@ -37,6 +38,7 @@ exports.getIndentations = function(req, res, next) {
 exports.createIndentation = function(req, res, next) {
     console.log("New Indentation received");
     var indentation = req.body;
+    indentation.status = "open";
     Indentation.create(indentation, function(err, indentation) {
         if (err) { 
             console.log("Error in creating Indentation");
@@ -50,13 +52,47 @@ exports.createIndentation = function(req, res, next) {
 }
  
 exports.updateIndentation = function(req, res, next) {
+    console.log(" Indentation confirmation received");
+    var currentTime = new Date();
     var indentation = req.body;
+    var id = req.body._id;
     delete indentation._id;
-    
-    Indentation.findOneAndUpdate(req.body._id, indentation, {upsert: true, new: true}, function(err, indentation) {
-        if (err) return res.send(err);
+
+    indentation.status = "closed";
+    for(var i = 0; i < indentation.students_amount.length; i++){
+      if(!indentation.students_amount[i].is_dispatched) indentation.status = "partial"; 
+    }
+    indentation.deliveryTime.push(currentTime);
+
+    Indentation.findOneAndUpdate( {_id: id}, indentation, {upsert: true, new: true}, function(err, indentation) {
+        if (err) {
+          console.log("Error in updating Indentation: " + err);
+          return res.send(err);
+        }
+        console.log("Successfully updated Indentation");
+        sendUpdateMail(indentation);
+        sendUpdateSms(indentation);
         res.json(indentation);
-    });
+    }); 
+
+    for(var i = 0; i < indentation.students_amount.length; i++){
+      if(indentation.students_amount[i].is_dispatched) {
+
+        var query = {student_id: indentation.students_amount[i].student_id};
+        Student.findOne(query).exec(function(err, student) {
+            student.is_Delivered = true;
+            student.delivery_date = new Date();
+            var id = student._id;
+            delete student._id;
+
+            Student.findOneAndUpdate( {_id: id}, student, {upsert: true, new: true}, function(err, stu) {
+                console.log("Successfully updated Indentation for Student");
+            }); 
+        });
+
+      }
+    }
+
 }
 
 sendMail = function(indentation) {
@@ -134,4 +170,14 @@ sendSms = function(indentation) {
           console.log('Successfully sent Indentation SMS to center');
         });
     });
+}
+
+sendUpdateMail = function(indentation) {
+
+
+}
+
+sendUpdateSms = function(indentation) {
+
+
 }

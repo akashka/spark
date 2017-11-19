@@ -19,6 +19,18 @@
     <ion-list no-lines>
 
       <form [formGroup]="studentForm">
+
+        <!-- Year of Joining of the student -->
+        <ion-list radio-group formControlName="study_year" (ionChange)="onYearChange()">
+          <ion-item style="width: 50%; float: left; background: darkslategrey;">
+            <ion-label>May 2017 - April 2018</ion-label>
+            <ion-radio value="2017-18"></ion-radio>
+          </ion-item>
+          <ion-item style="width: 50%; float: left; background: darkslategrey;">
+            <ion-label>May 2018 - April 2019</ion-label>
+            <ion-radio value="2018-19"></ion-radio>
+          </ion-item>
+        </ion-list>
  
         <!-- Name of the student -->
         <ion-item>
@@ -56,6 +68,20 @@
         <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">
           Please select valid date
         </p>
+
+        <ion-item>
+            <h2>Age as of Today - 
+            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>
+        </ion-item>
+
+        <ion-item>
+            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>
+        </ion-item>
+
+        <ion-item>
+            <h2>Class - 
+            <span class="numbering">{{ class_group }}</span></h2>
+        </ion-item>
 
         <!-- Name of the Parent -->
         <ion-item>
@@ -102,20 +128,6 @@
         <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">
           Please enter a valid locality
         </p>
-
-        <ion-item>
-            <h2>Age as of Today - 
-            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>
-        </ion-item>
-
-        <ion-item>
-            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>
-        </ion-item>
-
-        <ion-item>
-            <h2>Class - 
-            <span class="numbering">{{ class_group }}</span></h2>
-        </ion-item>
 
         <ion-toolbar color="primary" class="upload_button">
           <ion-buttons>

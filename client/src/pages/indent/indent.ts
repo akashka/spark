@@ -250,7 +250,8 @@ export class IndentPage {
             class_type: this.indented_students[is].class_type,
             uniform_size: this.indented_students[is].uniform_size,
             shoe_size: this.indented_students[is].shoe_size,
-            amount: this.findAmount(this.indented_students[is].class_group, this.indented_students[is].class_type)
+            amount: this.findAmount(this.indented_students[is].class_group, this.indented_students[is].class_type),
+            is_dispatched: false
         };
         indentation.students_amount.push(tempis);
     }

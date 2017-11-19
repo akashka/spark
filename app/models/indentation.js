@@ -31,6 +31,13 @@ var IndentationSchema = new mongoose.Schema({
     cheque_no: {
         type: String
     },
+    deliveryTime: {
+        type: Array
+    },
+    status: {
+        type: String,
+        required: true
+    },
     students_amount: {
         type: Object
     }

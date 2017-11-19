@@ -55,7 +55,9 @@ exports.createStudent = function(req, res, next){
         counsellor: req.body.counsellor,
         class_group: req.body.class_group,
         photo: req.body.photo,
-        enquiry_date: currentTime
+        enquiry_date: currentTime,
+        is_Delivered: false,
+        study_year: req.body.study_year
     };
 
     Student.create(student, function(err, student) { 
@@ -79,6 +81,7 @@ exports.updateStudent = function(req, res, next){
     var id = req.body._id;
     if(student.status == "confirmed") student.confirmation_date = currentTime;
     else if (student.status == "indented") student.indentation_date = currentTime;
+    student.is_Delivered = false;
     delete student._id;
     delete student.student_id;
     delete student.email_id;
@@ -113,7 +116,7 @@ sendAdminMail = function(student, action) {
      stringTemplate = stringTemplate.replace('{{student_name}}', student.name);
      stringTemplate = stringTemplate.replace('{{phone_no}}', student.phone_number);
      stringTemplate = stringTemplate.replace('{{student_dob}}', moment(student.dob).format("DD-MMM-YYYY"));
-     stringTemplate = stringTemplate.replace('{{student_class}}', student.class_group);
+     stringTemplate = stringTemplate.replace('{{student_class}}', student.class_group + " - " + student.study_year);
      stringTemplate = stringTemplate.replace('{{locality}}', student.locality);
      stringTemplate = stringTemplate.replace('{{email}}', student.email_id);
      stringTemplate = stringTemplate.replace('{{center_code}}', student.center);
@@ -128,7 +131,7 @@ sendAdminMail = function(student, action) {
      stringTemplate = stringTemplate.replace('{{student_name}}', student.name);
      stringTemplate = stringTemplate.replace('{{phone_no}}', student.phone_number);
      stringTemplate = stringTemplate.replace('{{student_dob}}', moment(student.dob).format("DD-MMM-YYYY"));
-     stringTemplate = stringTemplate.replace('{{student_class}}', student.class_group);
+     stringTemplate = stringTemplate.replace('{{student_class}}', student.class_group + " - " + student.study_year);
      stringTemplate = stringTemplate.replace('{{locality}}', student.locality);
      stringTemplate = stringTemplate.replace('{{email}}', student.email_id);
      stringTemplate = stringTemplate.replace('{{center_code}}', student.center);
@@ -192,6 +195,7 @@ sendAdminSms = function(student, action) {
                 ", Gender: " + student.gender +
                 ", Class: " + student.class_group +
                 ", DOB: " + moment(student.dob).format("DD-MMM-YYYY") +
+                ", Year: " + student.study_year +
                 ", Parent: " + student.parent_name;
     } else if(action == "confirmed"){
       messageData = "CONFIRMATION AT " + student.center + 
@@ -201,6 +205,7 @@ sendAdminSms = function(student, action) {
                 ", Class: " + student.class_group +
                 ", Type: " + student.class_type +
                 ", Shoe: " + student.shoe_size +
+                ", Year: " + student.study_year +
                 ", Uniform: " + student.uniform_size;
     }
 

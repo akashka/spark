@@ -11,6 +11,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { CenterPage } from '../pages/center/center';
 import { IndentPage } from '../pages/indent/indent';
 import { ReportsPage } from '../pages/reports/reports';
+import { DispatchPage } from '../pages/dispatch/dispatch';
 
 // Services
 import { Auth } from '../providers/auth/auth';
@@ -25,6 +26,7 @@ export class MyApp {
   public isAdmin: Boolean = false;
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
+  public isDispatcher: Boolean = false;
   public showMenu: Boolean = false;
   public userCenter: String = "";
 
@@ -32,7 +34,7 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
  
-  constructor(platform: Platform, public storage: Storage, public authService: Auth, ) {
+  constructor(platform: Platform, public storage: Storage, public authService: Auth) {
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
@@ -47,13 +49,23 @@ export class MyApp {
         if(user) {
           if(user.role === "counsellor") {
             this.isCounsellor = true;
+            this.isDispatcher = false;
+            this.isAdmin = false;
           }
+          else if(user.role === "dispatcher") {
+            this.isDispatcher = true;
+            this.isCounsellor = false;
+            this.isAdmin = false;
+          } 
           else if(user.role === "admin") {
             this.isAdmin = true;
+            this.isCounsellor = false;
+            this.isDispatcher = false;
           } 
           else if(user.role === "centerAdmin") {
             this.isCenterAdmin = true;
-          } else {
+          }
+          else {
             this.isCounsellor = true;
             this.isAdmin = false;
           }
@@ -88,6 +100,10 @@ export class MyApp {
 
   go_to_reports(){
     this.nav.setRoot(ReportsPage);  
+  }
+
+  go_to_dispatch(){
+    this.nav.setRoot(DispatchPage);  
   }
 
 }

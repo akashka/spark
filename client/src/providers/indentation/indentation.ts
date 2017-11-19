@@ -48,7 +48,7 @@ export class Indentation {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
-        this.http.put(this.url+'api/indentations', JSON.stringify(indentation), {headers: headers})
+        this.http.put(this.url+'api/indentations/' + indentation._id, indentation, {headers: headers})
           .map(res => res.json())
           .subscribe((res) => {
             resolve(res);
@@ -57,5 +57,5 @@ export class Indentation {
           });    
     });
   }
- 
+
 }

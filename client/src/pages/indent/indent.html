@@ -27,6 +27,8 @@
           <div class="col_left indent_left">
             <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>
             <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
+            <br/>
+            <h2 *ngIf="student.study_year != '2017-18'" style="color: red;"> You cannot indent this, admission is for 2018-19 </h2>
           </div>
           <div class="col_right indent_right">
             <h1>{{student.name}}</h1>
@@ -34,10 +36,11 @@
             <h3 *ngIf="student.gender !== 'Male'"> D/O {{student.parent_name}}</h3>
             <h2>{{student.class_group}}</h2>
             <h2><ion-icon name="clock"></ion-icon> {{student.confirmation_date | date: 'dd/MMM/yyyy'}} </h2>
+            <h2><ion-icon name="book"></ion-icon> {{student.study_year}} </h2>
           </div>
         </button>
      
-        <ion-item-options side="right">
+        <ion-item-options side="right" *ngIf="student.study_year == '2017-18'">
           <button ion-button color="info" (click)="indent(student)" *ngIf="!student.indented">
             <ion-icon name="redo"></ion-icon>
             Indent

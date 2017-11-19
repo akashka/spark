@@ -55,6 +55,10 @@ var StudentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    study_year: {
+        type: String,
+        required: true
+    },
     photo: {},
     enquiry_date: {},
     class_type: {
@@ -76,8 +80,14 @@ var StudentSchema = new mongoose.Schema({
         default: false,
         required: true
     },
+    is_Delivered: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
     confirmation_date: {},
-    indentation_date: {}
+    indentation_date: {},
+    delivery_date: {}
 
 }, {
     timestamps: true
