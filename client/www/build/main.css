@@ -25374,6 +25374,10 @@ ion-navbar.toolbar {
   color: blue;
 }
 
+.ios ion-list, .md ion-list {
+  padding-bottom: 0px !important;
+}
+
 .indent_results {
   height: 110px;
 }
