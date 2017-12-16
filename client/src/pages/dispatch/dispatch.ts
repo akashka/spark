@@ -30,7 +30,10 @@ export class DispatchPage {
   public list_of_students: any = [];
   public confirm_dispatch: boolean = false;
   public loader: any;
-
+  public show_button: any = 0;
+  public msg: string = "";
+  public showModal: boolean = false;
+  public this_student : any;
 
   constructor(
     public navCtrl: NavController, 
@@ -78,24 +81,61 @@ export class DispatchPage {
   }
 
   dispatch(student) {
+      this.show_button++;
       for(var i = 0; i < this.list_of_students.length; i++) {
-          if(this.list_of_students[i].student_id == student.student_id)
+          if(this.list_of_students[i].student_id == student.student_id) {
             this.list_of_students[i].is_dispatched = true;
+            this.list_of_students[i].is_partial = false;
+          }
       }
       for(var i = 0; i < this.selected_indentation.students_amount.length; i++) {
-          if(this.selected_indentation.students_amount[i].student_id == student.student_id)
+          if(this.selected_indentation.students_amount[i].student_id == student.student_id) {
             this.selected_indentation.students_amount[i].is_dispatched = true;
+            this.selected_indentation.students_amount[i].is_partial = false;
+          }
       }
+  }
+
+  partialDispatch(student){
+      this.show_button++;
+      for(var i = 0; i < this.list_of_students.length; i++) {
+          if(this.list_of_students[i].student_id == student.student_id) {
+            this.list_of_students[i].is_dispatched = true;
+            this.list_of_students[i].is_partial = true;
+          }
+      }
+      for(var i = 0; i < this.selected_indentation.students_amount.length; i++) {
+          if(this.selected_indentation.students_amount[i].student_id == student.student_id) {
+            this.selected_indentation.students_amount[i].is_dispatched = true;
+            this.selected_indentation.students_amount[i].is_partial = true;
+          }
+      }
+  }
+
+  partial(student) {
+    this.this_student = student;
+    this.showModal = true;
   }
  
   undispatch(student) {
+      this.show_button--;
       for(var i = 0; i < this.list_of_students.length; i++) {
-          if(this.list_of_students[i].student_id == student.student_id)
+          if(this.list_of_students[i].student_id == student.student_id){
             this.list_of_students[i].is_dispatched = false;
+            this.list_of_students[i].is_partial = true;
+            if(this.list_of_students[i].remarks != undefined && this.list_of_students[i].remarks.length > 0)
+                this.list_of_students[i].remarks.pop();
+                this.list_of_students[i].is_partial = false;   
+          }
       }
       for(var i = 0; i < this.selected_indentation.students_amount.length; i++) {
-          if(this.selected_indentation.students_amount[i].student_id == student.student_id)
+          if(this.selected_indentation.students_amount[i].student_id == student.student_id){
             this.selected_indentation.students_amount[i].is_dispatched = false;
+            this.selected_indentation.students_amount[i].is_partial = true;
+            if(this.selected_indentation.students_amount[i].remarks != undefined && this.selected_indentation.students_amount[i].remarks.length > 0)
+                this.selected_indentation.students_amount[i].remarks.pop();
+                this.selected_indentation.students_amount[i].is_partial = false;   
+          }
       }
   }
 
@@ -110,6 +150,10 @@ export class DispatchPage {
 
   confirmIndentStudents() {
     this.loader.present();
+    for(var i = 0; i < this.selected_indentation.students_amount.length; i++) {
+        if(this.selected_indentation.students_amount[i].is_partial == true)
+          this.selected_indentation.students_amount[i].is_dispatched = false;
+    }
     this.indentationService.updateIndentation(this.selected_indentation).then((result) => {
         this.loader.dismiss();
         this.presentToast('Dispatch Data saved successfully');
@@ -118,6 +162,20 @@ export class DispatchPage {
         this.loader.dismiss();
         this.presentToast('Error! Please try again.');
     });
+  }
+
+  closeModal() {
+    this.this_student = null;
+    this.showModal = false;
+  }
+
+  submitModal() {
+    if(this.this_student.remarks != undefined && this.this_student.remarks.length > 0)
+        this.this_student.remarks.push(this.msg);
+    else
+        this.this_student.remarks = [this.msg];
+    this.partialDispatch(this.this_student);
+    this.showModal = false;
   }
  
 }

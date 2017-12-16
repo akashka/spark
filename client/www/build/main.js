@@ -6,8 +6,8 @@ webpackJsonp([1],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Networks; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(246);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,16 +68,277 @@ Networks = __decorate([
 
 /***/ }),
 
-/***/ 146:
+/***/ 143:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__search_search__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_path__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(146);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+// Providers
+
+
+
+// Pages
+
+// Files Images
+
+
+
+var ConfirmPage = (function () {
+    function ConfirmPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loading, formBuilder, camera, file, filePath, actionSheetCtrl, toastCtrl, platform, app, menu, centerService, storage) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.studentService = studentService;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.loading = loading;
+        this.formBuilder = formBuilder;
+        this.camera = camera;
+        this.file = file;
+        this.filePath = filePath;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.toastCtrl = toastCtrl;
+        this.platform = platform;
+        this.app = app;
+        this.menu = menu;
+        this.centerService = centerService;
+        this.storage = storage;
+        this.submitAttempt = false;
+        this.confirmStudent = function () {
+            _this.submitAttempt = true;
+            if (_this.confirmForm.valid) {
+                _this.loader.present();
+                _this.student.class_group = _this.confirmForm.value.class_group;
+                _this.student.status = "confirmed";
+                _this.student.is_Confirmed = true;
+                if (_this.student.photo === null)
+                    _this.student.photo = _this.confirmForm.value.photo;
+                _this.student.class_type = _this.confirmForm.value.class_type;
+                _this.student.uniform_size = _this.confirmForm.value.uniform_size;
+                _this.student.shoe_size = _this.confirmForm.value.shoe_size;
+                _this.studentService.updateStudent(_this.student).then(function (result) {
+                    _this.loader.dismiss();
+                    _this.presentToast('student data saved successfully');
+                    _this.goBack();
+                }, function (err) {
+                    _this.loader.dismiss();
+                    _this.presentToast('Error! Please try again.');
+                });
+            }
+        };
+        this.takePhoto = function () {
+            var actionSheet = _this.actionSheetCtrl.create({
+                title: 'Select Image Source',
+                buttons: [
+                    {
+                        text: 'Load from Library',
+                        handler: function () {
+                            _this.takePicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
+                        }
+                    },
+                    {
+                        text: 'Use Camera',
+                        handler: function () {
+                            _this.takePicture(_this.camera.PictureSourceType.CAMERA);
+                        }
+                    },
+                    {
+                        text: 'Cancel',
+                        role: 'cancel'
+                    }
+                ]
+            });
+            actionSheet.present();
+        };
+        this.confirmForm = formBuilder.group({
+            class_group: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            student_id: [''],
+            class_type: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            uniform_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            shoe_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            photo: [''],
+            needUniform: true,
+            needShoe: true
+        });
+    }
+    ConfirmPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.loader = this.loading.create({
+            content: 'Please wait...',
+        });
+        this.storage.get('confirmed_student').then(function (student) {
+            _this.student = student;
+            _this.confirmForm.controls['class_group'].setValue(student.class_group);
+            _this.confirmForm.controls['student_id'].setValue(student.student_id);
+            _this.confirmForm.controls['photo'].setValue(student.photo);
+        });
+    };
+    ConfirmPage.prototype.onUniformChange = function () {
+        if (this.confirmForm.value.needUniform)
+            this.confirmForm.controls['uniform_size'].setValue('');
+        else
+            this.confirmForm.controls['uniform_size'].setValue('NA');
+    };
+    ConfirmPage.prototype.onShoeChange = function () {
+        if (this.confirmForm.value.needShoe)
+            this.confirmForm.controls['shoe_size'].setValue('');
+        else
+            this.confirmForm.controls['shoe_size'].setValue('NA');
+    };
+    // Photos
+    ConfirmPage.prototype.createFileName = function () {
+        var d = new Date(), n = d.getTime(), newFileName = n + ".jpg";
+        return newFileName;
+    };
+    // Copy the image to a local folder
+    ConfirmPage.prototype.copyFileToLocalDir = function (namePath, currentName, newFileName) {
+        var _this = this;
+        this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
+            _this.lastImage = newFileName;
+        }, function (error) {
+            _this.presentToast('Error while storing file.');
+        });
+    };
+    ConfirmPage.prototype.presentToast = function (text) {
+        var toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
+    // Always get the accurate path to your apps folder
+    ConfirmPage.prototype.pathForImage = function (img) {
+        if (img === null) {
+            return '';
+        }
+        else {
+            return cordova.file.dataDirectory + img;
+        }
+    };
+    ConfirmPage.prototype.uploadImage = function () {
+        // File for Upload
+        var targetPath = this.pathForImage(this.lastImage);
+        // File name only
+        var filename = this.lastImage;
+        var path = targetPath + filename;
+        this.getFileContentAsBase64(path, function (base64Image) {
+            this.confirmForm.photo = base64Image;
+        });
+    };
+    ConfirmPage.prototype.getFileContentAsBase64 = function (path, callback) {
+        window.resolveLocalFileSystemURL(path, gotFile, fail);
+        function fail(e) {
+            alert('Cannot found requested file');
+        }
+        function gotFile(fileEntry) {
+            fileEntry.file(function (file) {
+                var reader = new FileReader();
+                reader.onloadend = function (e) {
+                    var content = this.result;
+                    callback(content);
+                };
+                // The most important point, use the readAsDatURL Method from the file plugin
+                reader.readAsDataURL(file);
+            });
+        }
+    };
+    ConfirmPage.prototype.takePicture = function (sourceType) {
+        var _this = this;
+        // Create options for the Camera Dialog
+        var options = {
+            quality: 100,
+            sourceType: sourceType,
+            saveToPhotoAlbum: false,
+            correctOrientation: true
+        };
+        // Get the data of an image
+        this.camera.getPicture(options).then(function (imagePath) {
+            // Special handling for Android library
+            if (_this.platform.is('android') && sourceType === _this.camera.PictureSourceType.PHOTOLIBRARY) {
+                _this.filePath.resolveNativePath(imagePath)
+                    .then(function (filePath) {
+                    var correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+                    var currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+                    _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+                });
+            }
+            else {
+                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+                _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+            }
+        }, function (err) {
+            _this.presentToast('Error while selecting image.');
+        });
+    };
+    ConfirmPage.prototype.goBack = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__search_search__["a" /* SearchPage */]);
+    };
+    return ConfirmPage;
+}());
+ConfirmPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'confirm-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-buttons start>\n    <button ion-button icon-only (click)="goBack()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n \n    <div class="booking_card" *ngIf="student != null">\n        <h3>{{student.name}} \n          <span> \n            <h5 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h5>\n            <h5 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h5>\n          </span>\n        </h3>\n        <h4><ion-icon name="mail"></ion-icon> {{student.email_id}}</h4>\n        <h4><ion-icon name="call"></ion-icon> {{student.phone_number}} </h4>\n        <h4><ion-icon name="locate"></ion-icon> {{student.locality}}</h4>\n    </div>\n\n    <ion-list no-lines>\n\n      <form [formGroup]="confirmForm">\n \n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_group.valid  && (confirmForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_type.valid  && (confirmForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <ion-item>\n          <ion-label>Uniform</ion-label>\n          <ion-toggle formControlName="needUniform" (ionChange)="onUniformChange()" checked="true" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- uniform_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needUniform">\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.uniform_size.valid  && (confirmForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <ion-item>\n          <ion-label>Shoe</ion-label>\n          <ion-toggle formControlName="needShoe" checked="true" (ionChange)="onShoeChange()" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- shoe_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needShoe">\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.shoe_size.valid  && (confirmForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="takePhoto()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n \n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */],
+        __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__["a" /* File */],
+        __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_path__["a" /* FilePath */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_6__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]])
+], ConfirmPage);
+
+;
+//# sourceMappingURL=confirm.js.map
+
+/***/ }),
+
+/***/ 147:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CenterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(49);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -418,21 +679,21 @@ CenterPage = __decorate([
 
 /***/ }),
 
-/***/ 147:
+/***/ 148:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndentPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -741,17 +1002,17 @@ IndentPage = __decorate([
 
 /***/ }),
 
-/***/ 148:
+/***/ 149:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Indentation; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -829,25 +1090,25 @@ Indentation = __decorate([
 
 /***/ }),
 
-/***/ 149:
+/***/ 150:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReportsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__ = __webpack_require__(519);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__ = __webpack_require__(521);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__ = __webpack_require__(843);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__ = __webpack_require__(844);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1140,30 +1401,40 @@ ReportsPage = __decorate([
         selector: 'page-reports',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    Reports\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n	  <div class="button-bar">\n        <a class="button {{buttonStyleToday}}" (click)="searchToday()">Day</a>\n        <a class="button {{buttonStyleWeek}}" (click)="searchWeek()">Week</a>\n        <a class="button {{buttonStyleMonth}}" (click)="searchMonth()">Month</a>\n        <a class="button {{buttonStyleRange}}" (click)="dateRange()">Dates</a>\n    </div>\n\n    <div class="button-bar">\n        <a class="button button-energized" (click)="setEnquiry()">Enq.</a>\n        <a class="button button-assertive" (click)="setConfirmed()">Conf.</a>\n        <a class="button button-positive" (click)="setIndented()">Ind.</a>\n        <a class="button button-simple" (click)="setAll()">All</a>\n    </div>\n\n    <div class="filters" *ngIf="showFilters">\n        <ion-select interface="popover" placeholder="Select Center" [(ngModel)]="selectedCenter" (ionChange)="searchCenter()" class="search-ic">\n          <ion-option *ngFor="let center of centers" [value]="center">{{center}}</ion-option>\n        </ion-select>\n\n        <ion-select interface="popover" placeholder="Select User" [(ngModel)]="selectedUser" (ionChange)="searchUser()" class="search-ic">\n          <ion-option *ngFor="let user of users" [value]="user">{{user}}</ion-option>\n        </ion-select>\n\n        <button (click)="clearFilter()" ion-button class="btn-danger clear-btn">Clear</button>\n    </div>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />\n    <h1 *ngIf="reports && !reports.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <p *ngIf="reports && reports.length" class="result-number"> {{reports.length}} {{searchType}} results found for {{startDate | date: \'dd/MMM/yyyy\'}} - {{endDate | date: \'dd/MMM/yyyy\'}}</p>\n\n  	<table class="rwd-table">\n  	  <tr>\n  	    <th>ID</th>\n  	    <th>Name</th>\n  	    <th>Parent</th>\n  	    <th>Phone</th>\n  	    <th>DOB</th>\n  	    <th>Email</th>\n  	    <th>Gender</th>\n        <th>Class</th>\n  	    <th>Year</th>\n  	  </tr>\n  	  <tr *ngFor="let report of reports" class="{{report.status}}">\n  	    <td data-th="ID">{{report.student_id}}</td>\n  	    <td data-th="Name">{{report.name}}</td>\n  	    <td data-th="Parent">{{report.parent_name}}</td>\n  	    <td data-th="Phone">{{report.phone_number}}</td>\n  	    <td data-th="DOB">{{report.dob | date: \'dd/MMM/yyyy\'}}</td>\n  	    <td data-th="Email">{{report.email_id}}</td>\n  	    <td data-th="Gender">{{report.gender}}</td>\n        <td data-th="Year">{{report.study_year}}</td>\n  	  </tr>\n  	</table>\n\n    <div class="gm_drawer_footer_wrapper" *ngIf="reports && reports.length">\n      <button (click)="downloadReport()" ion-button class="btn-info">Download</button>\n      <button (click)="mailReport()" ion-button class="btn-info">Send Mail</button>\n    </div>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/,
         providers: [__WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["b" /* TransferObject */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]) === "function" && _m || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */],
+        __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */],
+        __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */],
+        __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]])
 ], ReportsPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 //# sourceMappingURL=reports.js.map
 
 /***/ }),
 
-/***/ 151:
+/***/ 152:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DispatchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1198,6 +1469,9 @@ var DispatchPage = (function () {
         this.indentations = [];
         this.list_of_students = [];
         this.confirm_dispatch = false;
+        this.show_button = 0;
+        this.msg = "";
+        this.showModal = false;
     }
     DispatchPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -1228,23 +1502,58 @@ var DispatchPage = (function () {
         });
     };
     DispatchPage.prototype.dispatch = function (student) {
+        this.show_button++;
         for (var i = 0; i < this.list_of_students.length; i++) {
-            if (this.list_of_students[i].student_id == student.student_id)
+            if (this.list_of_students[i].student_id == student.student_id) {
                 this.list_of_students[i].is_dispatched = true;
+                this.list_of_students[i].is_partial = false;
+            }
         }
         for (var i = 0; i < this.selected_indentation.students_amount.length; i++) {
-            if (this.selected_indentation.students_amount[i].student_id == student.student_id)
+            if (this.selected_indentation.students_amount[i].student_id == student.student_id) {
                 this.selected_indentation.students_amount[i].is_dispatched = true;
+                this.selected_indentation.students_amount[i].is_partial = false;
+            }
         }
     };
-    DispatchPage.prototype.undispatch = function (student) {
+    DispatchPage.prototype.partialDispatch = function (student) {
+        this.show_button++;
         for (var i = 0; i < this.list_of_students.length; i++) {
-            if (this.list_of_students[i].student_id == student.student_id)
-                this.list_of_students[i].is_dispatched = false;
+            if (this.list_of_students[i].student_id == student.student_id) {
+                this.list_of_students[i].is_dispatched = true;
+                this.list_of_students[i].is_partial = true;
+            }
         }
         for (var i = 0; i < this.selected_indentation.students_amount.length; i++) {
-            if (this.selected_indentation.students_amount[i].student_id == student.student_id)
+            if (this.selected_indentation.students_amount[i].student_id == student.student_id) {
+                this.selected_indentation.students_amount[i].is_dispatched = true;
+                this.selected_indentation.students_amount[i].is_partial = true;
+            }
+        }
+    };
+    DispatchPage.prototype.partial = function (student) {
+        this.this_student = student;
+        this.showModal = true;
+    };
+    DispatchPage.prototype.undispatch = function (student) {
+        this.show_button--;
+        for (var i = 0; i < this.list_of_students.length; i++) {
+            if (this.list_of_students[i].student_id == student.student_id) {
+                this.list_of_students[i].is_dispatched = false;
+                this.list_of_students[i].is_partial = true;
+                if (this.list_of_students[i].remarks != undefined && this.list_of_students[i].remarks.length > 0)
+                    this.list_of_students[i].remarks.pop();
+                this.list_of_students[i].is_partial = false;
+            }
+        }
+        for (var i = 0; i < this.selected_indentation.students_amount.length; i++) {
+            if (this.selected_indentation.students_amount[i].student_id == student.student_id) {
                 this.selected_indentation.students_amount[i].is_dispatched = false;
+                this.selected_indentation.students_amount[i].is_partial = true;
+                if (this.selected_indentation.students_amount[i].remarks != undefined && this.selected_indentation.students_amount[i].remarks.length > 0)
+                    this.selected_indentation.students_amount[i].remarks.pop();
+                this.selected_indentation.students_amount[i].is_partial = false;
+            }
         }
     };
     DispatchPage.prototype.logout = function () {
@@ -1257,6 +1566,10 @@ var DispatchPage = (function () {
     DispatchPage.prototype.confirmIndentStudents = function () {
         var _this = this;
         this.loader.present();
+        for (var i = 0; i < this.selected_indentation.students_amount.length; i++) {
+            if (this.selected_indentation.students_amount[i].is_partial == true)
+                this.selected_indentation.students_amount[i].is_dispatched = false;
+        }
         this.indentationService.updateIndentation(this.selected_indentation).then(function (result) {
             _this.loader.dismiss();
             _this.presentToast('Dispatch Data saved successfully');
@@ -1266,29 +1579,33 @@ var DispatchPage = (function () {
             _this.presentToast('Error! Please try again.');
         });
     };
+    DispatchPage.prototype.closeModal = function () {
+        this.this_student = null;
+        this.showModal = false;
+    };
+    DispatchPage.prototype.submitModal = function () {
+        if (this.this_student.remarks != undefined && this.this_student.remarks.length > 0)
+            this.this_student.remarks.push(this.msg);
+        else
+            this.this_student.remarks = [this.msg];
+        this.partialDispatch(this.this_student);
+        this.showModal = false;
+    };
     return DispatchPage;
 }());
 DispatchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'dispatch-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/dispatch/dispatch.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <!-- <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons> -->\n  <ion-title>\n    SPARK\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="logout()"><ion-icon name="log-out"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!indentations.length" />\n  <h1 *ngIf="!indentations.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <ion-list *ngIf="!confirm_dispatch && indentations.length">\n \n    <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results">\n     \n        <button ion-item>\n          <div class="">\n            <h1>{{indentation.center_code}} ({{indentation.students_amount.length}} Students)</h1>\n            <h2>Paid {{indentation.total_amount}} by {{indentation.payment_mode}} on {{indentation.payment_date | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{indentation.bank_name}} - {{indentation.transaction_no}} - {{indentation.cheque_no}}</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="selectDispatch(indentation)">\n            <ion-icon name="redo"></ion-icon>\n            Dispatch\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n\n  <ion-list *ngIf="confirm_dispatch">\n \n    <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results">\n     \n        <button ion-item>\n          <div class="">\n            <h1>{{student.student_name}} ({{student.phone_number}})</h1>\n            <h2>{{student.gender}}</h2>\n            <h2> Type: {{student.class_type}},   Group: {{student.class_group}} </h2>\n            <h2> Shoe: {{student.shoe_size}},   Uniform: {{student.uniform_size}} </h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="dispatch(student)" *ngIf="!student.is_dispatched">\n            <ion-icon name="redo"></ion-icon>\n            Indent\n          </button>\n          <button ion-button color="danger" (click)="undispatch(student)" *ngIf="student.is_dispatched">\n            <ion-icon name="undo"></ion-icon>\n            UnIndent\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="reset()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmIndentStudents()" ion-button class="btn-success">Dispatch</button>\n    </div>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/dispatch/dispatch.html"*/
+        selector: 'dispatch-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/dispatch/dispatch.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <!-- <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons> -->\n  <ion-title>\n    SPARK\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="logout()"><ion-icon name="log-out"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!indentations.length" />\n  <h1 *ngIf="!indentations.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <div *ngIf="!showModal">\n    <ion-list *ngIf="!confirm_dispatch && indentations.length">\n   \n      <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results">\n       \n          <button ion-item>\n            <div class="">\n              <h1>{{indentation.center_code}} ({{indentation.students_amount.length}} Students)</h1>\n              <h2>Amount - {{indentation.total_amount}} </h2>\n              <h2>Payment Mode - {{indentation.payment_mode}} </h2>\n              <h2> Payment Date - {{indentation.payment_date | date: \'dd/MMM/yyyy\'}} </h2>\n              <h2> Bank - {{indentation.bank_name}} </h2>\n              <h2>Transacton No - {{indentation.transaction_no}} </h2>\n              <h2>Cheque No - {{indentation.cheque_no}}</h2>\n            </div>\n          </button>\n       \n          <ion-item-options side="right">\n            <button ion-button color="info" (click)="selectDispatch(indentation)">\n              <ion-icon name="redo"></ion-icon>\n              Dispatch\n            </button>\n          </ion-item-options>\n      </ion-item-sliding>\n\n    </ion-list>\n\n    <ion-list *ngIf="confirm_dispatch">\n   \n      <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results">\n       \n          <button ion-item>\n            <div class="">\n              <h1> {{student.student_name}} </h1> \n              <h2> Phone No: {{student.phone_number}} </h2>\n              <h2> Gender: {{student.gender}} </h2>\n              <h2> Type: {{student.class_type}} </h2>\n              <h2> Group: {{student.class_group}} </h2>\n              <h2> Shoe: {{student.shoe_size}} </h2> \n              <h2> Uniform: {{student.uniform_size}} </h2>\n            </div>\n          </button>\n       \n          <ion-item-options side="right">\n            <button ion-button color="secondary" (click)="partial(student)" *ngIf="!student.is_dispatched">\n              <ion-icon name="redo"></ion-icon>\n              Partial\n            </button>\n            <button ion-button color="info" (click)="dispatch(student)" *ngIf="!student.is_dispatched">\n              <ion-icon name="redo"></ion-icon>\n              Dispatch\n            </button>\n            <button ion-button color="danger" (click)="undispatch(student)" *ngIf="student.is_dispatched">\n              <ion-icon name="undo"></ion-icon>\n              Undispatch\n            </button>\n          </ion-item-options>\n      </ion-item-sliding>\n\n      <div class="gm_drawer_footer_wrapper">\n        <button (click)="reset()" ion-button class="btn-danger">Cancel</button>\n        <button (click)="confirmIndentStudents()" ion-button class="btn-success" [disabled]="show_button <= 0">Dispatch</button>\n      </div>\n\n    </ion-list>\n  </div>\n\n  <ion-list *ngIf="showModal">\n   \n      <ion-item>\n          Enter message for this Partial Dispatch\n      </ion-item>\n\n      <ion-item>\n          <ion-textarea [(ngModel)]="msg"></ion-textarea>\n      </ion-item>\n\n      <div class="gm_drawer_footer_wrapper">\n        <button (click)="closeModal()" ion-button class="btn-danger">Cancel</button>\n        <button (click)="submitModal()" ion-button class="btn-success">Submit</button>\n      </div>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/dispatch/dispatch.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _k || Object])
 ], DispatchPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 //# sourceMappingURL=dispatch.js.map
 
 /***/ }),
 
-/***/ 162:
+/***/ 163:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -1297,16 +1614,16 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 162;
+webpackEmptyAsyncContext.id = 163;
 
 /***/ }),
 
-/***/ 205:
+/***/ 206:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/reports/reports.module": [
-		847,
+		848,
 		0
 	]
 };
@@ -1322,18 +1639,18 @@ webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
 module.exports = webpackAsyncContext;
-webpackAsyncContext.id = 205;
+webpackAsyncContext.id = 206;
 
 /***/ }),
 
-/***/ 26:
+/***/ 25:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Auth; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1489,33 +1806,33 @@ var Auth_1;
 
 /***/ }),
 
-/***/ 37:
+/***/ 32:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_center_center__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_network_network__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__search_search__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__login_login__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__signup_signup__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__center_center__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__indent_indent__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__reports_reports__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__dispatch_dispatch__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__center_center__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__indent_indent__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__reports_reports__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__dispatch_dispatch__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_path__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_camera__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_file_path__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_camera__ = __webpack_require__(146);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1922,17 +2239,17 @@ HomePage = __decorate([
 
 /***/ }),
 
-/***/ 44:
+/***/ 38:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Students; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2019,10 +2336,10 @@ Students = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Center; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2100,22 +2417,20 @@ Center = __decorate([
 
 /***/ }),
 
-/***/ 517:
+/***/ 522:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PromotionPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__search_search__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_path__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2129,245 +2444,151 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// Providers
 
 
 
-// Pages
 
-// Files Images
-
-
-
-var ConfirmPage = (function () {
-    function ConfirmPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loading, formBuilder, camera, file, filePath, actionSheetCtrl, toastCtrl, platform, app, menu, centerService, storage) {
+var PromotionPage = (function () {
+    function PromotionPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, menu, loading, storage, app) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.studentService = studentService;
         this.modalCtrl = modalCtrl;
         this.alertCtrl = alertCtrl;
         this.authService = authService;
-        this.loading = loading;
-        this.formBuilder = formBuilder;
-        this.camera = camera;
-        this.file = file;
-        this.filePath = filePath;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.toastCtrl = toastCtrl;
-        this.platform = platform;
-        this.app = app;
         this.menu = menu;
-        this.centerService = centerService;
+        this.loading = loading;
         this.storage = storage;
-        this.submitAttempt = false;
-        this.confirmStudent = function () {
-            _this.submitAttempt = true;
-            if (_this.confirmForm.valid) {
-                _this.loader.present();
-                _this.student.class_group = _this.confirmForm.value.class_group;
-                _this.student.status = "confirmed";
-                _this.student.is_Confirmed = true;
-                if (_this.student.photo === null)
-                    _this.student.photo = _this.confirmForm.value.photo;
-                _this.student.class_type = _this.confirmForm.value.class_type;
-                _this.student.uniform_size = _this.confirmForm.value.uniform_size;
-                _this.student.shoe_size = _this.confirmForm.value.shoe_size;
-                _this.studentService.updateStudent(_this.student).then(function (result) {
-                    _this.loader.dismiss();
-                    _this.presentToast('student data saved successfully');
-                    _this.goBack();
-                }, function (err) {
-                    _this.loader.dismiss();
-                    _this.presentToast('Error! Please try again.');
-                });
-            }
-        };
-        this.takePhoto = function () {
-            var actionSheet = _this.actionSheetCtrl.create({
-                title: 'Select Image Source',
-                buttons: [
-                    {
-                        text: 'Load from Library',
-                        handler: function () {
-                            _this.takePicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
-                        }
-                    },
-                    {
-                        text: 'Use Camera',
-                        handler: function () {
-                            _this.takePicture(_this.camera.PictureSourceType.CAMERA);
-                        }
-                    },
-                    {
-                        text: 'Cancel',
-                        role: 'cancel'
-                    }
-                ]
-            });
-            actionSheet.present();
-        };
-        this.confirmForm = formBuilder.group({
-            class_group: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            student_id: [''],
-            class_type: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            uniform_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            shoe_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            photo: [''],
-            needUniform: true,
-            needShoe: true
+        this.app = app;
+        this.isAdmin = false;
+        this.isCenterAdmin = false;
+        this.isCounsellor = false;
+        this.storage.get('user').then(function (user) {
+            if (user.role === "counsellor")
+                _this.isCounsellor = true;
+            else if (user.role === "admin")
+                _this.isAdmin = true;
+            else if (user.role === "centerAdmin")
+                _this.isCenterAdmin = true;
+            else
+                _this.isCounsellor = true;
         });
     }
-    ConfirmPage.prototype.ionViewDidLoad = function () {
+    PromotionPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this.loader = this.loading.create({
             content: 'Please wait...',
         });
-        this.storage.get('confirmed_student').then(function (student) {
-            _this.student = student;
-            _this.confirmForm.controls['class_group'].setValue(student.class_group);
-            _this.confirmForm.controls['student_id'].setValue(student.student_id);
-            _this.confirmForm.controls['photo'].setValue(student.photo);
-        });
-    };
-    ConfirmPage.prototype.onUniformChange = function () {
-        if (this.confirmForm.value.needUniform)
-            this.confirmForm.controls['uniform_size'].setValue('');
-        else
-            this.confirmForm.controls['uniform_size'].setValue('NA');
-    };
-    ConfirmPage.prototype.onShoeChange = function () {
-        if (this.confirmForm.value.needShoe)
-            this.confirmForm.controls['shoe_size'].setValue('');
-        else
-            this.confirmForm.controls['shoe_size'].setValue('NA');
-    };
-    // Photos
-    ConfirmPage.prototype.createFileName = function () {
-        var d = new Date(), n = d.getTime(), newFileName = n + ".jpg";
-        return newFileName;
-    };
-    // Copy the image to a local folder
-    ConfirmPage.prototype.copyFileToLocalDir = function (namePath, currentName, newFileName) {
-        var _this = this;
-        this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
-            _this.lastImage = newFileName;
-        }, function (error) {
-            _this.presentToast('Error while storing file.');
-        });
-    };
-    ConfirmPage.prototype.presentToast = function (text) {
-        var toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    };
-    // Always get the accurate path to your apps folder
-    ConfirmPage.prototype.pathForImage = function (img) {
-        if (img === null) {
-            return '';
-        }
-        else {
-            return cordova.file.dataDirectory + img;
-        }
-    };
-    ConfirmPage.prototype.uploadImage = function () {
-        // File for Upload
-        var targetPath = this.pathForImage(this.lastImage);
-        // File name only
-        var filename = this.lastImage;
-        var path = targetPath + filename;
-        this.getFileContentAsBase64(path, function (base64Image) {
-            this.confirmForm.photo = base64Image;
-        });
-    };
-    ConfirmPage.prototype.getFileContentAsBase64 = function (path, callback) {
-        window.resolveLocalFileSystemURL(path, gotFile, fail);
-        function fail(e) {
-            alert('Cannot found requested file');
-        }
-        function gotFile(fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-                reader.onloadend = function (e) {
-                    var content = this.result;
-                    callback(content);
-                };
-                // The most important point, use the readAsDatURL Method from the file plugin
-                reader.readAsDataURL(file);
+        this.studentService.getStudents().then(function (data) {
+            data = __WEBPACK_IMPORTED_MODULE_6_lodash__["filter"](data, function (o) {
+                return (o.status == 'indented' && o.is_Indented);
             });
-        }
-    };
-    ConfirmPage.prototype.takePicture = function (sourceType) {
-        var _this = this;
-        // Create options for the Camera Dialog
-        var options = {
-            quality: 100,
-            sourceType: sourceType,
-            saveToPhotoAlbum: false,
-            correctOrientation: true
-        };
-        // Get the data of an image
-        this.camera.getPicture(options).then(function (imagePath) {
-            // Special handling for Android library
-            if (_this.platform.is('android') && sourceType === _this.camera.PictureSourceType.PHOTOLIBRARY) {
-                _this.filePath.resolveNativePath(imagePath)
-                    .then(function (filePath) {
-                    var correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-                    var currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-                    _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+            _this.storage.get('user').then(function (user) {
+                data = __WEBPACK_IMPORTED_MODULE_6_lodash__["filter"](data, function (o) {
+                    return (o.center == user.center);
                 });
-            }
-            else {
-                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-                _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
-            }
+                _this.students = (__WEBPACK_IMPORTED_MODULE_6_lodash__["sortBy"](data, 'indentation_date')).reverse();
+                _this.studentsList = (__WEBPACK_IMPORTED_MODULE_6_lodash__["sortBy"](data, 'indentation_date')).reverse();
+            });
         }, function (err) {
-            _this.presentToast('Error while selecting image.');
+            console.log("not allowed");
         });
     };
-    ConfirmPage.prototype.goBack = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__search_search__["a" /* SearchPage */]);
+    // Function to search for a student dynamically based on an input
+    PromotionPage.prototype.search = function () {
+        var result = [];
+        for (var i = 0; i < this.studentsList.length; i++) {
+            if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].name, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].alternate_contact, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].class_group, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].email_id, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].locality, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].parent_name, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+        }
+        this.students = result;
+        if (this.myInput === "")
+            this.students = this.studentsList;
     };
-    return ConfirmPage;
+    PromotionPage.prototype.add = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__home_home__["a" /* HomePage */]);
+    };
+    PromotionPage.prototype.update = function (student) {
+        student.is_Indented = false;
+        student.is_Confirmed = false;
+        student.is_Delivered = false;
+        student.confirmation_date = null;
+        student.indentation_date = null;
+        student.delivery_date = null;
+        if (student.class_group === 'UKG') {
+            student.class_group = 'UKG';
+        }
+        if (student.class_group === 'LKG') {
+            student.class_group = 'UKG';
+        }
+        if (student.class_group === 'Nursery') {
+            student.class_group = 'LKG';
+        }
+        if (student.class_group === 'Play Group') {
+            student.class_group = 'Nursery';
+        }
+        if (student.study_year === '2019-20') {
+            student.study_year = '2020-21';
+        }
+        if (student.study_year === '2018-19') {
+            student.study_year = '2019-20';
+        }
+        if (student.study_year === '2017-18') {
+            student.study_year = '2018-19';
+        }
+        if (student.study_year === '2016-17') {
+            student.study_year = '2017-18';
+        }
+        this.storage.set('confirmed_student', student);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__confirm_confirm__["a" /* ConfirmPage */]);
+    };
+    return PromotionPage;
 }());
-ConfirmPage = __decorate([
+PromotionPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'confirm-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-buttons start>\n    <button ion-button icon-only (click)="goBack()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n \n    <div class="booking_card" *ngIf="student != null">\n        <h3>{{student.name}} \n          <span> \n            <h5 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h5>\n            <h5 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h5>\n          </span>\n        </h3>\n        <h4><ion-icon name="mail"></ion-icon> {{student.email_id}}</h4>\n        <h4><ion-icon name="call"></ion-icon> {{student.phone_number}} </h4>\n        <h4><ion-icon name="locate"></ion-icon> {{student.locality}}</h4>\n    </div>\n\n    <ion-list no-lines>\n\n      <form [formGroup]="confirmForm">\n \n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_group.valid  && (confirmForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_type.valid  && (confirmForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <ion-item>\n          <ion-label>Uniform</ion-label>\n          <ion-toggle formControlName="needUniform" (ionChange)="onUniformChange()" checked="true" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- uniform_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needUniform">\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.uniform_size.valid  && (confirmForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <ion-item>\n          <ion-label>Shoe</ion-label>\n          <ion-toggle formControlName="needShoe" checked="true" (ionChange)="onShoeChange()" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- shoe_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needShoe">\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.shoe_size.valid  && (confirmForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="takePhoto()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n \n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/confirm/confirm.html"*/
+        selector: 'promotion-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/promotion/promotion.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    PROMOTION\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <div class="search-row search-full" *ngIf="students && students.length">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>\n            <h2><ion-icon name="call"></ion-icon> {{student.phone_number}} </h2>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}} ({{student.study_year}})</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="update(student)">\n            <ion-icon name="redo"></ion-icon>\n            Confirm\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/promotion/promotion.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__["a" /* Camera */],
-        __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__["a" /* File */],
-        __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_path__["a" /* FilePath */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_6__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]])
-], ConfirmPage);
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]])
+], PromotionPage);
 
-;
-//# sourceMappingURL=confirm.js.map
+//# sourceMappingURL=promotion.js.map
 
 /***/ }),
 
-/***/ 522:
+/***/ 523:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(523);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(527);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(524);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(528);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2375,37 +2596,38 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 527:
+/***/ 528:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__(564);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__(565);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser_animations__ = __webpack_require__(844);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser_animations__ = __webpack_require__(845);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ion2_calendar__ = __webpack_require__(519);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_signup_signup__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_search_search__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_reports_reports__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__ = __webpack_require__(517);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_center_center__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_dispatch_dispatch__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_auth_auth__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_center_center__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_indentation_indentation__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_network_network__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_file__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_transfer__ = __webpack_require__(521);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_path__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_camera__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_reports_reports__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_center_center__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_dispatch_dispatch__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_promotion_promotion__ = __webpack_require__(522);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_auth_auth__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_center_center__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_indentation_indentation__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_network_network__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_file__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_transfer__ = __webpack_require__(521);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_file_path__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_camera__ = __webpack_require__(146);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2421,6 +2643,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 // Pages
+
 
 
 
@@ -2458,7 +2681,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__["a" /* ConfirmPage */],
             __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__["a" /* IndentPage */],
             __WEBPACK_IMPORTED_MODULE_15__pages_center_center__["a" /* CenterPage */],
-            __WEBPACK_IMPORTED_MODULE_16__pages_dispatch_dispatch__["a" /* DispatchPage */]
+            __WEBPACK_IMPORTED_MODULE_16__pages_dispatch_dispatch__["a" /* DispatchPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_promotion_promotion__["a" /* PromotionPage */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_4__angular_platform_browser__["a" /* BrowserModule */],
@@ -2483,19 +2707,20 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__pages_confirm_confirm__["a" /* ConfirmPage */],
             __WEBPACK_IMPORTED_MODULE_14__pages_indent_indent__["a" /* IndentPage */],
             __WEBPACK_IMPORTED_MODULE_15__pages_center_center__["a" /* CenterPage */],
-            __WEBPACK_IMPORTED_MODULE_16__pages_dispatch_dispatch__["a" /* DispatchPage */]
+            __WEBPACK_IMPORTED_MODULE_16__pages_dispatch_dispatch__["a" /* DispatchPage */],
+            __WEBPACK_IMPORTED_MODULE_17__pages_promotion_promotion__["a" /* PromotionPage */]
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["a" /* IonicStorageModule */],
-            __WEBPACK_IMPORTED_MODULE_17__providers_students_students__["a" /* Students */],
-            __WEBPACK_IMPORTED_MODULE_18__providers_auth_auth__["a" /* Auth */],
-            __WEBPACK_IMPORTED_MODULE_19__providers_center_center__["a" /* Center */],
-            __WEBPACK_IMPORTED_MODULE_21__providers_network_network__["a" /* Networks */],
-            __WEBPACK_IMPORTED_MODULE_20__providers_indentation_indentation__["a" /* Indentation */],
-            __WEBPACK_IMPORTED_MODULE_22__ionic_native_file__["a" /* File */],
-            __WEBPACK_IMPORTED_MODULE_23__ionic_native_transfer__["a" /* Transfer */],
-            __WEBPACK_IMPORTED_MODULE_25__ionic_native_camera__["a" /* Camera */],
-            __WEBPACK_IMPORTED_MODULE_24__ionic_native_file_path__["a" /* FilePath */]
+            __WEBPACK_IMPORTED_MODULE_18__providers_students_students__["a" /* Students */],
+            __WEBPACK_IMPORTED_MODULE_19__providers_auth_auth__["a" /* Auth */],
+            __WEBPACK_IMPORTED_MODULE_20__providers_center_center__["a" /* Center */],
+            __WEBPACK_IMPORTED_MODULE_22__providers_network_network__["a" /* Networks */],
+            __WEBPACK_IMPORTED_MODULE_21__providers_indentation_indentation__["a" /* Indentation */],
+            __WEBPACK_IMPORTED_MODULE_23__ionic_native_file__["a" /* File */],
+            __WEBPACK_IMPORTED_MODULE_24__ionic_native_transfer__["a" /* Transfer */],
+            __WEBPACK_IMPORTED_MODULE_26__ionic_native_camera__["a" /* Camera */],
+            __WEBPACK_IMPORTED_MODULE_25__ionic_native_file_path__["a" /* FilePath */]
         ]
     })
 ], AppModule);
@@ -2504,24 +2729,25 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 564:
+/***/ 565:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_search_search__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_signup_signup__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_center_center__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_indent_indent__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_reports_reports__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dispatch_dispatch__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_center_center__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_indent_indent__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_reports_reports__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_dispatch_dispatch__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_promotion_promotion__ = __webpack_require__(522);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_auth_auth__ = __webpack_require__(25);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2536,6 +2762,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 // Pages
+
 
 
 
@@ -2562,7 +2789,7 @@ var MyApp = (function () {
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["c" /* StatusBar */].styleDefault();
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["b" /* Splashscreen */].hide();
         });
-        this.userSubscription = __WEBPACK_IMPORTED_MODULE_12__providers_auth_auth__["a" /* Auth */].userChanged.subscribe(function (user) { return _this.getData(user); });
+        this.userSubscription = __WEBPACK_IMPORTED_MODULE_13__providers_auth_auth__["a" /* Auth */].userChanged.subscribe(function (user) { return _this.getData(user); });
     }
     MyApp.prototype.getData = function (user) {
         if (user) {
@@ -2616,6 +2843,9 @@ var MyApp = (function () {
     MyApp.prototype.go_to_dispatch = function () {
         this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_11__pages_dispatch_dispatch__["a" /* DispatchPage */]);
     };
+    MyApp.prototype.go_to_promotion = function () {
+        this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_12__pages_promotion_promotion__["a" /* PromotionPage */]);
+    };
     return MyApp;
 }());
 __decorate([
@@ -2623,249 +2853,249 @@ __decorate([
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* Nav */])
 ], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/app/app.html"*/'<ion-menu side="left" [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>        \n    <ion-content>\n        <ion-list>\n        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>\n                Centers\n            </ion-item>\n            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>\n                Users\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_home()" menuClose>\n                Enquiry\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_search()" menuClose>\n                Confirm\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_indent()" menuClose>\n                Indentations\n            </ion-item>\n            <!-- <ion-item [hidden]=!isAdmin (click)="go_to_dispatch()" menuClose>\n                Dispatch\n            </ion-item> -->\n            <ion-item (click)="go_to_reports()" menuClose>\n                Reports\n            </ion-item>\n            <ion-item (click)="go_to_login()" menuClose>\n                SignOut\n            </ion-item>\n            <h1 style="bottom: 10%;position: absolute;padding: 10px;">\n                Logged in from {{userCenter}}\n            </h1>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" id="nav" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/app/app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/app/app.html"*/'<ion-menu side="left" [content]="content">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>        \n    <ion-content>\n        <ion-list>\n        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>\n                Centers\n            </ion-item>\n            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>\n                Users\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_home()" menuClose>\n                Enquiry\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_search()" menuClose>\n                Confirm\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_indent()" menuClose>\n                Indentations\n            </ion-item>\n            <ion-item [hidden]=isAdmin (click)="go_to_promotion()" menuClose>\n                Promotions\n            </ion-item>\n            <!-- <ion-item [hidden]=!isAdmin (click)="go_to_dispatch()" menuClose>\n                Dispatch\n            </ion-item> -->\n            <ion-item (click)="go_to_reports()" menuClose>\n                Reports\n            </ion-item>\n            <ion-item (click)="go_to_login()" menuClose>\n                SignOut\n            </ion-item>\n            <h1 style="bottom: 10%;position: absolute;padding: 10px;">\n                Logged in from {{userCenter}}\n            </h1>\n        </ion-list>\n    </ion-content>\n</ion-menu>\n\n<ion-nav [root]="rootPage" id="nav" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_12__providers_auth_auth__["a" /* Auth */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_13__providers_auth_auth__["a" /* Auth */]])
 ], MyApp);
 
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
 
-/***/ 838:
+/***/ 839:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 402,
-	"./af.js": 402,
-	"./ar": 403,
-	"./ar-dz": 404,
-	"./ar-dz.js": 404,
-	"./ar-kw": 405,
-	"./ar-kw.js": 405,
-	"./ar-ly": 406,
-	"./ar-ly.js": 406,
-	"./ar-ma": 407,
-	"./ar-ma.js": 407,
-	"./ar-sa": 408,
-	"./ar-sa.js": 408,
-	"./ar-tn": 409,
-	"./ar-tn.js": 409,
-	"./ar.js": 403,
-	"./az": 410,
-	"./az.js": 410,
-	"./be": 411,
-	"./be.js": 411,
-	"./bg": 412,
-	"./bg.js": 412,
-	"./bn": 413,
-	"./bn.js": 413,
-	"./bo": 414,
-	"./bo.js": 414,
-	"./br": 415,
-	"./br.js": 415,
-	"./bs": 416,
-	"./bs.js": 416,
-	"./ca": 417,
-	"./ca.js": 417,
-	"./cs": 418,
-	"./cs.js": 418,
-	"./cv": 419,
-	"./cv.js": 419,
-	"./cy": 420,
-	"./cy.js": 420,
-	"./da": 421,
-	"./da.js": 421,
-	"./de": 422,
-	"./de-at": 423,
-	"./de-at.js": 423,
-	"./de-ch": 424,
-	"./de-ch.js": 424,
-	"./de.js": 422,
-	"./dv": 425,
-	"./dv.js": 425,
-	"./el": 426,
-	"./el.js": 426,
-	"./en-au": 427,
-	"./en-au.js": 427,
-	"./en-ca": 428,
-	"./en-ca.js": 428,
-	"./en-gb": 429,
-	"./en-gb.js": 429,
-	"./en-ie": 430,
-	"./en-ie.js": 430,
-	"./en-nz": 431,
-	"./en-nz.js": 431,
-	"./eo": 432,
-	"./eo.js": 432,
-	"./es": 433,
-	"./es-do": 434,
-	"./es-do.js": 434,
-	"./es.js": 433,
-	"./et": 435,
-	"./et.js": 435,
-	"./eu": 436,
-	"./eu.js": 436,
-	"./fa": 437,
-	"./fa.js": 437,
-	"./fi": 438,
-	"./fi.js": 438,
-	"./fo": 439,
-	"./fo.js": 439,
-	"./fr": 440,
-	"./fr-ca": 441,
-	"./fr-ca.js": 441,
-	"./fr-ch": 442,
-	"./fr-ch.js": 442,
-	"./fr.js": 440,
-	"./fy": 443,
-	"./fy.js": 443,
-	"./gd": 444,
-	"./gd.js": 444,
-	"./gl": 445,
-	"./gl.js": 445,
-	"./gom-latn": 446,
-	"./gom-latn.js": 446,
-	"./he": 447,
-	"./he.js": 447,
-	"./hi": 448,
-	"./hi.js": 448,
-	"./hr": 449,
-	"./hr.js": 449,
-	"./hu": 450,
-	"./hu.js": 450,
-	"./hy-am": 451,
-	"./hy-am.js": 451,
-	"./id": 452,
-	"./id.js": 452,
-	"./is": 453,
-	"./is.js": 453,
-	"./it": 454,
-	"./it.js": 454,
-	"./ja": 455,
-	"./ja.js": 455,
-	"./jv": 456,
-	"./jv.js": 456,
-	"./ka": 457,
-	"./ka.js": 457,
-	"./kk": 458,
-	"./kk.js": 458,
-	"./km": 459,
-	"./km.js": 459,
-	"./kn": 460,
-	"./kn.js": 460,
-	"./ko": 461,
-	"./ko.js": 461,
-	"./ky": 462,
-	"./ky.js": 462,
-	"./lb": 463,
-	"./lb.js": 463,
-	"./lo": 464,
-	"./lo.js": 464,
-	"./lt": 465,
-	"./lt.js": 465,
-	"./lv": 466,
-	"./lv.js": 466,
-	"./me": 467,
-	"./me.js": 467,
-	"./mi": 468,
-	"./mi.js": 468,
-	"./mk": 469,
-	"./mk.js": 469,
-	"./ml": 470,
-	"./ml.js": 470,
-	"./mr": 471,
-	"./mr.js": 471,
-	"./ms": 472,
-	"./ms-my": 473,
-	"./ms-my.js": 473,
-	"./ms.js": 472,
-	"./my": 474,
-	"./my.js": 474,
-	"./nb": 475,
-	"./nb.js": 475,
-	"./ne": 476,
-	"./ne.js": 476,
-	"./nl": 477,
-	"./nl-be": 478,
-	"./nl-be.js": 478,
-	"./nl.js": 477,
-	"./nn": 479,
-	"./nn.js": 479,
-	"./pa-in": 480,
-	"./pa-in.js": 480,
-	"./pl": 481,
-	"./pl.js": 481,
-	"./pt": 482,
-	"./pt-br": 483,
-	"./pt-br.js": 483,
-	"./pt.js": 482,
-	"./ro": 484,
-	"./ro.js": 484,
-	"./ru": 485,
-	"./ru.js": 485,
-	"./sd": 486,
-	"./sd.js": 486,
-	"./se": 487,
-	"./se.js": 487,
-	"./si": 488,
-	"./si.js": 488,
-	"./sk": 489,
-	"./sk.js": 489,
-	"./sl": 490,
-	"./sl.js": 490,
-	"./sq": 491,
-	"./sq.js": 491,
-	"./sr": 492,
-	"./sr-cyrl": 493,
-	"./sr-cyrl.js": 493,
-	"./sr.js": 492,
-	"./ss": 494,
-	"./ss.js": 494,
-	"./sv": 495,
-	"./sv.js": 495,
-	"./sw": 496,
-	"./sw.js": 496,
-	"./ta": 497,
-	"./ta.js": 497,
-	"./te": 498,
-	"./te.js": 498,
-	"./tet": 499,
-	"./tet.js": 499,
-	"./th": 500,
-	"./th.js": 500,
-	"./tl-ph": 501,
-	"./tl-ph.js": 501,
-	"./tlh": 502,
-	"./tlh.js": 502,
-	"./tr": 503,
-	"./tr.js": 503,
-	"./tzl": 504,
-	"./tzl.js": 504,
-	"./tzm": 505,
-	"./tzm-latn": 506,
-	"./tzm-latn.js": 506,
-	"./tzm.js": 505,
-	"./uk": 507,
-	"./uk.js": 507,
-	"./ur": 508,
-	"./ur.js": 508,
-	"./uz": 509,
-	"./uz-latn": 510,
-	"./uz-latn.js": 510,
-	"./uz.js": 509,
-	"./vi": 511,
-	"./vi.js": 511,
-	"./x-pseudo": 512,
-	"./x-pseudo.js": 512,
-	"./yo": 513,
-	"./yo.js": 513,
-	"./zh-cn": 514,
-	"./zh-cn.js": 514,
-	"./zh-hk": 515,
-	"./zh-hk.js": 515,
-	"./zh-tw": 516,
-	"./zh-tw.js": 516
+	"./af": 403,
+	"./af.js": 403,
+	"./ar": 404,
+	"./ar-dz": 405,
+	"./ar-dz.js": 405,
+	"./ar-kw": 406,
+	"./ar-kw.js": 406,
+	"./ar-ly": 407,
+	"./ar-ly.js": 407,
+	"./ar-ma": 408,
+	"./ar-ma.js": 408,
+	"./ar-sa": 409,
+	"./ar-sa.js": 409,
+	"./ar-tn": 410,
+	"./ar-tn.js": 410,
+	"./ar.js": 404,
+	"./az": 411,
+	"./az.js": 411,
+	"./be": 412,
+	"./be.js": 412,
+	"./bg": 413,
+	"./bg.js": 413,
+	"./bn": 414,
+	"./bn.js": 414,
+	"./bo": 415,
+	"./bo.js": 415,
+	"./br": 416,
+	"./br.js": 416,
+	"./bs": 417,
+	"./bs.js": 417,
+	"./ca": 418,
+	"./ca.js": 418,
+	"./cs": 419,
+	"./cs.js": 419,
+	"./cv": 420,
+	"./cv.js": 420,
+	"./cy": 421,
+	"./cy.js": 421,
+	"./da": 422,
+	"./da.js": 422,
+	"./de": 423,
+	"./de-at": 424,
+	"./de-at.js": 424,
+	"./de-ch": 425,
+	"./de-ch.js": 425,
+	"./de.js": 423,
+	"./dv": 426,
+	"./dv.js": 426,
+	"./el": 427,
+	"./el.js": 427,
+	"./en-au": 428,
+	"./en-au.js": 428,
+	"./en-ca": 429,
+	"./en-ca.js": 429,
+	"./en-gb": 430,
+	"./en-gb.js": 430,
+	"./en-ie": 431,
+	"./en-ie.js": 431,
+	"./en-nz": 432,
+	"./en-nz.js": 432,
+	"./eo": 433,
+	"./eo.js": 433,
+	"./es": 434,
+	"./es-do": 435,
+	"./es-do.js": 435,
+	"./es.js": 434,
+	"./et": 436,
+	"./et.js": 436,
+	"./eu": 437,
+	"./eu.js": 437,
+	"./fa": 438,
+	"./fa.js": 438,
+	"./fi": 439,
+	"./fi.js": 439,
+	"./fo": 440,
+	"./fo.js": 440,
+	"./fr": 441,
+	"./fr-ca": 442,
+	"./fr-ca.js": 442,
+	"./fr-ch": 443,
+	"./fr-ch.js": 443,
+	"./fr.js": 441,
+	"./fy": 444,
+	"./fy.js": 444,
+	"./gd": 445,
+	"./gd.js": 445,
+	"./gl": 446,
+	"./gl.js": 446,
+	"./gom-latn": 447,
+	"./gom-latn.js": 447,
+	"./he": 448,
+	"./he.js": 448,
+	"./hi": 449,
+	"./hi.js": 449,
+	"./hr": 450,
+	"./hr.js": 450,
+	"./hu": 451,
+	"./hu.js": 451,
+	"./hy-am": 452,
+	"./hy-am.js": 452,
+	"./id": 453,
+	"./id.js": 453,
+	"./is": 454,
+	"./is.js": 454,
+	"./it": 455,
+	"./it.js": 455,
+	"./ja": 456,
+	"./ja.js": 456,
+	"./jv": 457,
+	"./jv.js": 457,
+	"./ka": 458,
+	"./ka.js": 458,
+	"./kk": 459,
+	"./kk.js": 459,
+	"./km": 460,
+	"./km.js": 460,
+	"./kn": 461,
+	"./kn.js": 461,
+	"./ko": 462,
+	"./ko.js": 462,
+	"./ky": 463,
+	"./ky.js": 463,
+	"./lb": 464,
+	"./lb.js": 464,
+	"./lo": 465,
+	"./lo.js": 465,
+	"./lt": 466,
+	"./lt.js": 466,
+	"./lv": 467,
+	"./lv.js": 467,
+	"./me": 468,
+	"./me.js": 468,
+	"./mi": 469,
+	"./mi.js": 469,
+	"./mk": 470,
+	"./mk.js": 470,
+	"./ml": 471,
+	"./ml.js": 471,
+	"./mr": 472,
+	"./mr.js": 472,
+	"./ms": 473,
+	"./ms-my": 474,
+	"./ms-my.js": 474,
+	"./ms.js": 473,
+	"./my": 475,
+	"./my.js": 475,
+	"./nb": 476,
+	"./nb.js": 476,
+	"./ne": 477,
+	"./ne.js": 477,
+	"./nl": 478,
+	"./nl-be": 479,
+	"./nl-be.js": 479,
+	"./nl.js": 478,
+	"./nn": 480,
+	"./nn.js": 480,
+	"./pa-in": 481,
+	"./pa-in.js": 481,
+	"./pl": 482,
+	"./pl.js": 482,
+	"./pt": 483,
+	"./pt-br": 484,
+	"./pt-br.js": 484,
+	"./pt.js": 483,
+	"./ro": 485,
+	"./ro.js": 485,
+	"./ru": 486,
+	"./ru.js": 486,
+	"./sd": 487,
+	"./sd.js": 487,
+	"./se": 488,
+	"./se.js": 488,
+	"./si": 489,
+	"./si.js": 489,
+	"./sk": 490,
+	"./sk.js": 490,
+	"./sl": 491,
+	"./sl.js": 491,
+	"./sq": 492,
+	"./sq.js": 492,
+	"./sr": 493,
+	"./sr-cyrl": 494,
+	"./sr-cyrl.js": 494,
+	"./sr.js": 493,
+	"./ss": 495,
+	"./ss.js": 495,
+	"./sv": 496,
+	"./sv.js": 496,
+	"./sw": 497,
+	"./sw.js": 497,
+	"./ta": 498,
+	"./ta.js": 498,
+	"./te": 499,
+	"./te.js": 499,
+	"./tet": 500,
+	"./tet.js": 500,
+	"./th": 501,
+	"./th.js": 501,
+	"./tl-ph": 502,
+	"./tl-ph.js": 502,
+	"./tlh": 503,
+	"./tlh.js": 503,
+	"./tr": 504,
+	"./tr.js": 504,
+	"./tzl": 505,
+	"./tzl.js": 505,
+	"./tzm": 506,
+	"./tzm-latn": 507,
+	"./tzm-latn.js": 507,
+	"./tzm.js": 506,
+	"./uk": 508,
+	"./uk.js": 508,
+	"./ur": 509,
+	"./ur.js": 509,
+	"./uz": 510,
+	"./uz-latn": 511,
+	"./uz-latn.js": 511,
+	"./uz.js": 510,
+	"./vi": 512,
+	"./vi.js": 512,
+	"./x-pseudo": 513,
+	"./x-pseudo.js": 513,
+	"./yo": 514,
+	"./yo.js": 514,
+	"./zh-cn": 515,
+	"./zh-cn.js": 515,
+	"./zh-hk": 516,
+	"./zh-hk.js": 516,
+	"./zh-tw": 517,
+	"./zh-tw.js": 517
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -2881,7 +3111,7 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 838;
+webpackContext.id = 839;
 
 /***/ }),
 
@@ -2891,14 +3121,14 @@ webpackContext.id = 838;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(517);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(24);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3026,11 +3256,11 @@ SearchPage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_network_network__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(91);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3227,14 +3457,14 @@ LoginPage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_center_center__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_students_students__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_students_students__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(32);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3535,5 +3765,5 @@ SignupPage = __decorate([
 
 /***/ })
 
-},[522]);
+},[523]);
 //# sourceMappingURL=main.js.map

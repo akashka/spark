@@ -25280,6 +25280,10 @@ ion-navbar.toolbar {
   color: #488aff;
 }
 
+textarea.text-input {
+  min-height: 100px;
+}
+
 .ios, .md {
   background-image: url("../assets/images/15549a14589707.5628669c64769.png");
   background-size: cover;
@@ -25567,6 +25571,104 @@ ion-navbar.toolbar {
   color: red;
 }
 
+.ios .toolbar-background, .md .toolbar-background {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #00556f;
+  height: 50px;
+  color: #fff;
+}
+
+.ios ion-content, .md ion-content {
+  background-color: white;
+}
+
+.ios .results_list_mobile, .md .results_list_mobile {
+  padding: 0;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+}
+
+.ios ion-item-sliding, .md ion-item-sliding {
+  display: inline-block;
+  width: 100%;
+  padding: 0 2%;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  -webkit-box-shadow: 0 2px 10px -3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px -3px rgba(0, 0, 0, 0.3);
+}
+
+.ios ion-item-sliding .item, .md ion-item-sliding .item {
+  padding-left: 0;
+}
+
+.ios .col_left, .md .col_left {
+  float: left;
+  width: 40%;
+  padding-top: 5px;
+}
+
+.ios .col_right, .md .col_right {
+  float: right;
+  width: 58%;
+  position: relative;
+  height: 155px;
+}
+
+.ios h1, .md h1 {
+  margin: 0;
+  color: #00556f;
+  margin-top: 4px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.ios h2, .md h2 {
+  color: rgba(0, 0, 0, 0.7);
+  margin: 0;
+  font-weight: 500;
+}
+
+.ios .bg_hotel, .md .bg_hotel {
+  width: 100%;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  position: relative;
+  margin-top: 10px;
+  padding-top: 20px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: middle;
+}
+
+.ios .confirmedStudent, .md .confirmedStudent {
+  background-color: lightgrey;
+}
+
+.ios .col_right ion-icon, .md .col_right ion-icon {
+  color: #488aff;
+}
+
+.ios .emozi, .md .emozi {
+  padding: 50px;
+}
+
+.ios .no_record, .md .no_record {
+  text-align: center;
+}
+
+.ios .search-full .searchbar-md, .md .search-full .searchbar-md {
+  width: 100%;
+}
+
 page-reports .button-bar {
   display: table;
   width: 100%;
@@ -25834,6 +25936,7 @@ page-reports .indented {
   display: inline-block;
   width: 100%;
   background-color: #fff;
+  height: 100%;
 }
 
 .ios ion-item-sliding, .md ion-item-sliding {

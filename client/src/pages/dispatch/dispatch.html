@@ -19,57 +19,87 @@
   <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!indentations.length" />
   <h1 *ngIf="!indentations.length" class="no_record"> NO RECORDS FOUND </h1>
 
-  <ion-list *ngIf="!confirm_dispatch && indentations.length">
- 
-    <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results">
-     
-        <button ion-item>
-          <div class="">
-            <h1>{{indentation.center_code}} ({{indentation.students_amount.length}} Students)</h1>
-            <h2>Paid {{indentation.total_amount}} by {{indentation.payment_mode}} on {{indentation.payment_date | date: 'dd/MMM/yyyy'}} </h2>
-            <h2>{{indentation.bank_name}} - {{indentation.transaction_no}} - {{indentation.cheque_no}}</h2>
-          </div>
-        </button>
-     
-        <ion-item-options side="right">
-          <button ion-button color="info" (click)="selectDispatch(indentation)">
-            <ion-icon name="redo"></ion-icon>
-            Dispatch
+  <div *ngIf="!showModal">
+    <ion-list *ngIf="!confirm_dispatch && indentations.length">
+   
+      <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results">
+       
+          <button ion-item>
+            <div class="">
+              <h1>{{indentation.center_code}} ({{indentation.students_amount.length}} Students)</h1>
+              <h2>Amount - {{indentation.total_amount}} </h2>
+              <h2>Payment Mode - {{indentation.payment_mode}} </h2>
+              <h2> Payment Date - {{indentation.payment_date | date: 'dd/MMM/yyyy'}} </h2>
+              <h2> Bank - {{indentation.bank_name}} </h2>
+              <h2>Transacton No - {{indentation.transaction_no}} </h2>
+              <h2>Cheque No - {{indentation.cheque_no}}</h2>
+            </div>
           </button>
-        </ion-item-options>
-    </ion-item-sliding>
+       
+          <ion-item-options side="right">
+            <button ion-button color="info" (click)="selectDispatch(indentation)">
+              <ion-icon name="redo"></ion-icon>
+              Dispatch
+            </button>
+          </ion-item-options>
+      </ion-item-sliding>
 
-  </ion-list>
+    </ion-list>
 
-  <ion-list *ngIf="confirm_dispatch">
- 
-    <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results">
-     
-        <button ion-item>
-          <div class="">
-            <h1>{{student.student_name}} ({{student.phone_number}})</h1>
-            <h2>{{student.gender}}</h2>
-            <h2> Type: {{student.class_type}},   Group: {{student.class_group}} </h2>
-            <h2> Shoe: {{student.shoe_size}},   Uniform: {{student.uniform_size}} </h2>
-          </div>
-        </button>
-     
-        <ion-item-options side="right">
-          <button ion-button color="info" (click)="dispatch(student)" *ngIf="!student.is_dispatched">
-            <ion-icon name="redo"></ion-icon>
-            Indent
+    <ion-list *ngIf="confirm_dispatch">
+   
+      <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results">
+       
+          <button ion-item>
+            <div class="">
+              <h1> {{student.student_name}} </h1> 
+              <h2> Phone No: {{student.phone_number}} </h2>
+              <h2> Gender: {{student.gender}} </h2>
+              <h2> Type: {{student.class_type}} </h2>
+              <h2> Group: {{student.class_group}} </h2>
+              <h2> Shoe: {{student.shoe_size}} </h2> 
+              <h2> Uniform: {{student.uniform_size}} </h2>
+            </div>
           </button>
-          <button ion-button color="danger" (click)="undispatch(student)" *ngIf="student.is_dispatched">
-            <ion-icon name="undo"></ion-icon>
-            UnIndent
-          </button>
-        </ion-item-options>
-    </ion-item-sliding>
+       
+          <ion-item-options side="right">
+            <button ion-button color="secondary" (click)="partial(student)" *ngIf="!student.is_dispatched">
+              <ion-icon name="redo"></ion-icon>
+              Partial
+            </button>
+            <button ion-button color="info" (click)="dispatch(student)" *ngIf="!student.is_dispatched">
+              <ion-icon name="redo"></ion-icon>
+              Dispatch
+            </button>
+            <button ion-button color="danger" (click)="undispatch(student)" *ngIf="student.is_dispatched">
+              <ion-icon name="undo"></ion-icon>
+              Undispatch
+            </button>
+          </ion-item-options>
+      </ion-item-sliding>
 
-    <div class="gm_drawer_footer_wrapper">
-      <button (click)="reset()" ion-button class="btn-danger">Cancel</button>
-      <button (click)="confirmIndentStudents()" ion-button class="btn-success">Dispatch</button>
-    </div>
+      <div class="gm_drawer_footer_wrapper">
+        <button (click)="reset()" ion-button class="btn-danger">Cancel</button>
+        <button (click)="confirmIndentStudents()" ion-button class="btn-success" [disabled]="show_button <= 0">Dispatch</button>
+      </div>
+
+    </ion-list>
+  </div>
+
+  <ion-list *ngIf="showModal">
+   
+      <ion-item>
+          Enter message for this Partial Dispatch
+      </ion-item>
+
+      <ion-item>
+          <ion-textarea [(ngModel)]="msg"></ion-textarea>
+      </ion-item>
+
+      <div class="gm_drawer_footer_wrapper">
+        <button (click)="closeModal()" ion-button class="btn-danger">Cancel</button>
+        <button (click)="submitModal()" ion-button class="btn-success">Submit</button>
+      </div>
 
   </ion-list>
 

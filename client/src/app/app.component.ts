@@ -12,6 +12,7 @@ import { CenterPage } from '../pages/center/center';
 import { IndentPage } from '../pages/indent/indent';
 import { ReportsPage } from '../pages/reports/reports';
 import { DispatchPage } from '../pages/dispatch/dispatch';
+import { PromotionPage } from '../pages/promotion/promotion';
 
 // Services
 import { Auth } from '../providers/auth/auth';
@@ -104,6 +105,10 @@ export class MyApp {
 
   go_to_dispatch(){
     this.nav.setRoot(DispatchPage);  
+  }
+
+  go_to_promotion(){
+    this.nav.setRoot(PromotionPage);  
   }
 
 }
