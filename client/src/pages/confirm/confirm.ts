@@ -74,7 +74,9 @@ export class ConfirmPage {
         class_type: ['', Validators.compose([Validators.required])],
         uniform_size: ['', Validators.compose([Validators.required])],
         shoe_size: ['', Validators.compose([Validators.required])],
-        photo: ['']
+        photo: [''],
+        needUniform: true,
+        needShoe: true
       });
   }
  
@@ -113,6 +115,20 @@ export class ConfirmPage {
       });
     }
   };
+
+  onUniformChange() {
+    if(this.confirmForm.value.needUniform)
+      this.confirmForm.controls['uniform_size'].setValue('');
+    else
+      this.confirmForm.controls['uniform_size'].setValue('NA');
+  }
+
+  onShoeChange() {
+    if(this.confirmForm.value.needShoe)
+      this.confirmForm.controls['shoe_size'].setValue('');
+    else
+      this.confirmForm.controls['shoe_size'].setValue('NA');
+  }
 
   // Photos
   private createFileName() {

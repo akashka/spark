@@ -60,6 +60,11 @@ export class SignupPage {
     this.getUsers();
   }
 
+  // Function to make email small letters on change
+  onEmailChange() {
+    this.email = this.email.toLowerCase();
+  }
+
   reset() {
       this.existingUser = false;
       this.role = "";

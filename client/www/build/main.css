@@ -25785,6 +25785,37 @@ page-reports .indented {
   color: #dd5;
 }
 
+.filters .search-ic {
+  margin: 0;
+  margin-left: 0 !important;
+  width: 35% !important;
+}
+
+.filters .select-text {
+  display: inline !important;
+  position: relative;
+  font-size: 14px;
+  font-weight: bolder;
+  color: #f99f01;
+  vertical-align: -webkit-baseline-middle;
+}
+
+.filters .select-icon {
+  margin: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: relative !important;
+  display: inline !important;
+  vertical-align: -webkit-baseline-middle;
+}
+
+.filters .clear-btn {
+  margin: 0;
+  width: 28%;
+  float: right;
+  height: 33px;
+}
+
 .ios .toolbar-background, .md .toolbar-background {
   position: fixed;
   top: 0;

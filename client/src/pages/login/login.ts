@@ -86,14 +86,28 @@ export class LoginPage {
         }
 
         this.loginForm = formBuilder.group({
-          email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Validators.required])],
+          email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), Validators.required])],
           password: ['', Validators.compose([Validators.required])],
         });
         this.forgotPasswordForm = formBuilder.group({
-          email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), Validators.required])]
+          email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), Validators.required])]
+        });
+
+        this.loginForm.valueChanges.subscribe(data => {
+          this.loginForm.setValue({
+            email: (data.email).toLowerCase(),
+            password: data.password
+          },
+          {emitEvent: false});
+        });
+
+        this.forgotPasswordForm.valueChanges.subscribe(data => {
+          this.forgotPasswordForm.setValue({
+            email: (data.email).toLowerCase()
+          },
+          {emitEvent: false});
         });
     }
-
  
     ionViewDidLoad() {
         this.showLoader();

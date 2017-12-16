@@ -44,7 +44,7 @@
  
                 <ion-item *ngIf="!existingUser">
                     <ion-label><ion-icon name="mail"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="email" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>
+                    <ion-input [(ngModel)]="email" (ionChange)="onEmailChange()" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>
                 </ion-item>
 
                 <ion-item *ngIf="existingUser">

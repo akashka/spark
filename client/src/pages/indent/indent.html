@@ -60,7 +60,7 @@
             <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>
         </p>
       </div>
-      <button (click)="indentStudents()" ion-button class="btn-success">Indent</button>
+      <button (click)="indentStudents()" [disabled]="!indented_students || !indented_students.length" ion-button class="btn-success">Indent</button>
     </div>
 
   </ion-list>

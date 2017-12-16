@@ -61,8 +61,13 @@
           Please select Class Group
         </p>
 
-        <!-- uniform_size of the student -->
         <ion-item>
+          <ion-label>Uniform</ion-label>
+          <ion-toggle formControlName="needUniform" (ionChange)="onUniformChange()" checked="true" class="toggle-large"></ion-toggle>
+        </ion-item>
+
+        <!-- uniform_size of the student -->
+        <ion-item *ngIf="confirmForm.value.needUniform">
             <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>
             <ion-select formControlName="uniform_size" interface="popover">
               <ion-option value="18">18</ion-option>
@@ -80,8 +85,13 @@
           Please select Uniform Size
         </p>
 
-        <!-- shoe_size of the student -->
         <ion-item>
+          <ion-label>Shoe</ion-label>
+          <ion-toggle formControlName="needShoe" checked="true" (ionChange)="onShoeChange()" class="toggle-large"></ion-toggle>
+        </ion-item>
+
+        <!-- shoe_size of the student -->
+        <ion-item *ngIf="confirmForm.value.needShoe">
             <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>
             <ion-select formControlName="shoe_size" interface="popover">
               <ion-option value="6">6</ion-option>

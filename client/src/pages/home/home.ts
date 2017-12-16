@@ -223,6 +223,10 @@ export class HomePage {
     this.studentForm.value.name = this.studentForm.value.name.toUpperCase();
   }
 
+  onEmailChange = () => {
+    this.studentForm.value.email_id = this.studentForm.value.email_id.toLowerCase();
+  }
+
   onYearChange = () => {
     this.isCurrentYear = (this.studentForm.value.study_year == "2017-18") ? true : false;
     if(this.studentForm.value.dob != '') this.onDobChange();

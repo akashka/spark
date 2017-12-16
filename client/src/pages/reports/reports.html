@@ -30,6 +30,18 @@
         <a class="button button-simple" (click)="setAll()">All</a>
     </div>
 
+    <div class="filters" *ngIf="showFilters">
+        <ion-select interface="popover" placeholder="Select Center" [(ngModel)]="selectedCenter" (ionChange)="searchCenter()" class="search-ic">
+          <ion-option *ngFor="let center of centers" [value]="center">{{center}}</ion-option>
+        </ion-select>
+
+        <ion-select interface="popover" placeholder="Select User" [(ngModel)]="selectedUser" (ionChange)="searchUser()" class="search-ic">
+          <ion-option *ngFor="let user of users" [value]="user">{{user}}</ion-option>
+        </ion-select>
+
+        <button (click)="clearFilter()" ion-button class="btn-danger clear-btn">Clear</button>
+    </div>
+
   <ion-list>
  
     <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />
@@ -46,7 +58,8 @@
   	    <th>DOB</th>
   	    <th>Email</th>
   	    <th>Gender</th>
-  	    <th>Class</th>
+        <th>Class</th>
+  	    <th>Year</th>
   	  </tr>
   	  <tr *ngFor="let report of reports" class="{{report.status}}">
   	    <td data-th="ID">{{report.student_id}}</td>
@@ -56,7 +69,7 @@
   	    <td data-th="DOB">{{report.dob | date: 'dd/MMM/yyyy'}}</td>
   	    <td data-th="Email">{{report.email_id}}</td>
   	    <td data-th="Gender">{{report.gender}}</td>
-  	    <td data-th="Class">{{report.class_group}}</td>
+        <td data-th="Year">{{report.study_year}}</td>
   	  </tr>
   	</table>
 

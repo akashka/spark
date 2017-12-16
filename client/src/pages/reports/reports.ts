@@ -23,6 +23,9 @@ import { EmailComposer } from '@ionic-native/email-composer';
 export class ReportsPage {
 
   public students: any;
+  public allStudents: any;
+  public centers: any;
+  public users: any;
   public reports: any;
   public startDate: Date;
   public endDate: Date;
@@ -34,6 +37,10 @@ export class ReportsPage {
   public buttonStyleWeek: String = "button-option";
   public buttonStyleMonth: String = "button-option";
   public buttonStyleRange: String = "button-option";
+  public showFilters: Boolean = false; 
+  public loop: Boolean = false;
+  public selectedCenter: String;
+  public selectedUser: String;
 
   constructor(
   		public navParams: NavParams,
@@ -56,12 +63,17 @@ export class ReportsPage {
     });
     this.studentService.getStudents().then((data) => {
       this.storage.get('user').then((user) => {
-	    if(user.role != "admin"){
+	      if(user.role != "admin"){
 	        data = _.filter(data, function(o) { 
 	          return (o.center == user.center); 
 	        });
         }
+        else {
+          this.showFilters = true;
+        }
         this.students = (_.sortBy(data, 'enquiry_date')).reverse();
+        this.centers = _.uniq(_.map(this.students, 'center'));
+        this.users = _.uniq(_.map(this.students, 'counsellor'));
       });
 	  this.setAll();
     }, (err) => {
@@ -70,6 +82,7 @@ export class ReportsPage {
   }
 
   search(startDate, endDate) {
+    this.loop = false;
   	this.startDate = startDate;
   	this.endDate = endDate;
   	if(this.searchType === 'enquiry') {
@@ -95,6 +108,38 @@ export class ReportsPage {
 	      return ((moment(o.enquiryDate) >= startDate && moment(o.enquiryDate) <= endDate) || (o.is_Confirmed && moment(o.confirmation_date) >= startDate && moment(o.confirmation_date) <= endDate) || (o.is_Indented && moment(o.indentation_date) >= startDate && moment(o.indentation_date) <= endDate)); 
 	    });
     }
+  }
+
+  searchCenter() {
+    if(!this.loop) {
+      this.allStudents = this.reports;
+      this.loop = true;
+    }
+    var selectedCenter = this.selectedCenter;
+    this.reports = _.filter(this.allStudents, function(o) { 
+        return (o.center == selectedCenter)
+    }); 
+  }
+
+  searchUser() {
+    if(!this.loop) {
+      this.allStudents = this.reports;
+      this.loop = true;
+    }
+    var selectedUser = this.selectedUser;
+    this.reports = _.filter(this.allStudents, function(o) { 
+        return (o.counsellor == selectedUser)
+    }); 
+  }
+
+  clearFilter() {
+    if(!this.loop) {
+      this.allStudents = this.reports;
+      this.loop = true;
+    }
+    this.reports = this.allStudents;
+    this.selectedUser = null;
+    this.selectedCenter = null;
   }
 
   searchToday() {
@@ -166,19 +211,20 @@ export class ReportsPage {
   }
 
   searchOnChange() {
+    this.loop = false;
   	if(this.searchByDates === "dates") {
   		var res = {
   			from: this.startDate,
   			to: this.endDate
   		};
   		this.searchDates(res);
-	} else if (this.searchByDates === "month") this.searchMonth();
-	else if (this.searchByDates === "week") this.searchWeek();
-	else this.searchToday();
+  	} else if (this.searchByDates === "month") this.searchMonth();
+  	else if (this.searchByDates === "week") this.searchWeek();
+  	else this.searchToday();
   }
 
   	//Function to covert object to csv format
-  	convertToCSV(objArray) {
+  convertToCSV(objArray) {
 		var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 		var str = '';
 		for (var i = 0; i < array.length; i++) {
@@ -194,7 +240,7 @@ export class ReportsPage {
 
 	downloadReport() {
 		var url = this.convertToCSV(this.reports);
-	    this.fileTransfer.download(url, this.file.dataDirectory + 'reports.csv').then((entry) => {
+	  this.fileTransfer.download(url, this.file.dataDirectory + 'reports.csv').then((entry) => {
 		    console.log('download complete: ' + entry.toURL());
 		}, (error) => {
 		    console.log(error);
@@ -231,6 +277,7 @@ export class ReportsPage {
 	    }
 	    str += '</tbody>'
 	    str += '</table>';
+      console.log(str);
 	    return str;
 	}
 
@@ -238,9 +285,9 @@ export class ReportsPage {
 				this.storage.get('user').then((user) => {
 					let email = {
 					  to: user.email,
-					  attachments: [],
+					  attachments: [this.convertToCSV(this.reports)],
 					  subject: 'Reports',
-					  body: this.convertJsonToHtml(this.reports),
+					  body: 'Please find the attachment',
 					  isHtml: true
 					};
 					this.emailComposer.open(email);

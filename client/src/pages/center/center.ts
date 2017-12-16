@@ -184,6 +184,11 @@ export class CenterPage {
     });
   }
 
+  // Function to make email small letters on change
+  onEmailChange() {
+    this.center_email = this.center_email.toLowerCase();
+  }
+
   // Function to search for a center dynamically based on an input
   search() {
   	var result = [];
