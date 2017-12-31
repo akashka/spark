@@ -41,6 +41,7 @@ module.exports = function(app){
     studentRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.getStudents);
     studentRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.createStudent);
     studentRoutes.put('/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.updateStudent);
+    studentRoutes.put('/sendReportsMail/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.sendReportsMail);
  
     // Center Routes
     apiRoutes.use('/centers', centerRoutes); 

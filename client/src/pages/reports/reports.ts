@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
@@ -54,8 +54,26 @@ export class ReportsPage {
 	    public calendarCtrl: CalendarController,
 	    private transfer: Transfer, 
 	    private file: File,
-	    private emailComposer: EmailComposer
-	) { }
+	    private emailComposer: EmailComposer,
+      public toastCtrl: ToastController
+	) { 
+      storageDirectory: string = '';
+      // make sure this is on a device, not an emulation (e.g. chrome tools device mode)
+      if(!this.platform.is('cordova')) {
+        return false;
+      }
+
+      if (this.platform.is('ios')) {
+        this.storageDirectory = cordova.file.documentsDirectory;
+      }
+      else if(this.platform.is('android')) {
+        this.storageDirectory = cordova.file.dataDirectory;
+      }
+      else {
+        // exit otherwise, but you could add further types here e.g. Windows
+        return false;
+      }
+  }
 
   ionViewDidLoad() {
   	this.loader = this.loading.create({
@@ -240,9 +258,11 @@ export class ReportsPage {
 
 	downloadReport() {
 		var url = this.convertToCSV(this.reports);
-	  this.fileTransfer.download(url, this.file.dataDirectory + 'reports.csv').then((entry) => {
+	  this.fileTransfer.download(url, this.storageDirectory + 'reports.csv').then((entry) => {
 		    console.log('download complete: ' + entry.toURL());
+        this.presentToast('Successfully Downloaded report');              
 		}, (error) => {
+        this.presentToast('Error in Downloading report');              
 		    console.log(error);
 		});
 	}
@@ -283,14 +303,11 @@ export class ReportsPage {
 
 	mailReport() {
 				this.storage.get('user').then((user) => {
-					let email = {
-					  to: user.email,
-					  attachments: [this.convertToCSV(this.reports)],
-					  subject: 'Reports',
-					  body: 'Please find the attachment',
-					  isHtml: true
-					};
-					this.emailComposer.open(email);
+            this.studentService.sendReportsMail(user.email).then((data) => {
+                this.presentToast('Successfully mailed to your id');              
+            }, (err) => {
+                this.presentToast('Error while sending mail');
+            });
 				});
 	}
 
@@ -310,5 +327,14 @@ export class ReportsPage {
 	close() {
 		this.navCtrl.setRoot(HomePage);
 	}
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
 
 }

@@ -1,5 +1,6 @@
 var Student = require('../models/student');
 var Center = require('../models/center');
+var User = require('../models/user');
 var moment = require('moment');
 var nodemailer = require('nodemailer');
 var fs = require('fs');
@@ -7,6 +8,9 @@ var path = require("path");
 var request = require('request-promise');
 var curl = require('curlrequest');
 var sgMail = require('@sendgrid/mail');
+var _ = require('lodash-node');
+var json2csv = require('json2csv');
+var base64 = require('base-64');
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
 var adminNumber = ["9845012849", "9845679966"];
@@ -255,4 +259,72 @@ sendParentSms = function(student, action) {
       }
       console.log('Successfully sent SMS to parent');
     });
+}
+
+exports.sendReportsMail = function(req, res, next){
+  console.log('Sending report mail to ' + req.body.email_id);
+  var query = {email: req.body.email_id};
+  User.findOne(query).exec(function(err, user) {
+      if (err) { res.send(err); }
+      Student.find(function(err, students) {
+          if (err) { res.send(err); }
+          if(user.role == 'centeradmin' || user.role == 'counsellor') {
+              students = _.filter(students, function(o) { 
+                  return (o.center == user.center); 
+              }); 
+          }
+          var stud = [];
+          var fields = ['student_id','name','email_id','phone_number','gender',
+'dob','parent_name','alternate_contact','locality','status','center','counsellor',
+'class_group','enquiry_date','is_Indented','is_confirmed','class_type','uniform_size',
+'shoe_size','confirmation_date','indentation_date','is_Delivered','study_year','delivery_date'];
+          for(var i = 0; i < students.length; i++) {
+            stud[i] = {
+              student_id: students[i].student_id,
+              name: students[i].name,
+              email_id: students[i].email_id,
+              phone_number: students[i].phone_number,
+              gender: students[i].gender,
+              dob: students[i].dob,
+              parent_name: students[i].parent_name,
+              alternate_contact: students[i].alternate_contact,
+              locality: students[i].locality,
+              status: students[i].status,
+              center: students[i].center,
+              counsellor: students[i].counsellor,
+              class_group: students[i].class_group,
+              enquiry_date: students[i].enquiry_date,
+              is_Indented: students[i].is_Indented,
+              is_confirmed: students[i].is_confirmed,
+              class_type: students[i].class_type,
+              uniform_size: students[i].uniform_size,
+              shoe_size: students[i].shoe_size,
+              confirmation_date: students[i].confirmation_date,
+              indentation_date: students[i].indentation_date,
+              is_Delivered: students[i].is_Delivered,
+              study_year: students[i].study_year,
+              delivery_date: students[i].delivery_date
+            }
+          }
+          var csv = json2csv({ data: stud, fields: fields });
+          var mailOptions = {
+            to: user.email,
+            from: 'info@little-wonders.in',
+            subject: "Reports",
+            html: "Attached is the report.",
+            attachments: [{
+                filename: 'report.csv',
+                content: base64.encode(csv)
+            }]
+          };
+
+          sgMail.send(mailOptions, function(err) {
+            if(err) console.log(err.response.body);
+          });
+
+          res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+          res.set('Content-Type', 'text/csv');
+          res.status(200).send(csv);
+      });
+  }); 
 }

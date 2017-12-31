@@ -1028,12 +1028,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Indentation = (function () {
-    //url = "http://localhost:8080/";
     function Indentation(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     // Function to get list of al the Indentations
     Indentation.prototype.searchIndentation = function () {
@@ -1083,9 +1083,10 @@ var Indentation = (function () {
 }());
 Indentation = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Indentation);
 
+var _a, _b, _c;
 //# sourceMappingURL=indentation.js.map
 
 /***/ }),
@@ -1131,7 +1132,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ReportsPage = (function () {
-    function ReportsPage(navParams, navCtrl, studentService, modalCtrl, alertCtrl, authService, loading, storage, calendarCtrl, transfer, file, emailComposer) {
+    function ReportsPage(navParams, navCtrl, studentService, modalCtrl, alertCtrl, authService, loading, storage, calendarCtrl, transfer, file, emailComposer, toastCtrl) {
         this.navParams = navParams;
         this.navCtrl = navCtrl;
         this.studentService = studentService;
@@ -1144,6 +1145,7 @@ var ReportsPage = (function () {
         this.transfer = transfer;
         this.file = file;
         this.emailComposer = emailComposer;
+        this.toastCtrl = toastCtrl;
         this.fileTransfer = this.transfer.create();
         this.buttonStyleToday = "button-option";
         this.buttonStyleWeek = "button-option";
@@ -1367,14 +1369,11 @@ var ReportsPage = (function () {
     ReportsPage.prototype.mailReport = function () {
         var _this = this;
         this.storage.get('user').then(function (user) {
-            var email = {
-                to: user.email,
-                attachments: [_this.convertToCSV(_this.reports)],
-                subject: 'Reports',
-                body: 'Please find the attachment',
-                isHtml: true
-            };
-            _this.emailComposer.open(email);
+            _this.studentService.sendReportsMail(user.email).then(function (data) {
+                _this.presentToast('Successfully mailed to your id');
+            }, function (err) {
+                _this.presentToast('Error while sending mail');
+            });
         });
     };
     ReportsPage.prototype.dateRange = function () {
@@ -1393,6 +1392,14 @@ var ReportsPage = (function () {
     ReportsPage.prototype.close = function () {
         this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__home_home__["a" /* HomePage */]);
     };
+    ReportsPage.prototype.presentToast = function (text) {
+        var toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
     return ReportsPage;
 }());
 ReportsPage = __decorate([
@@ -1401,20 +1408,10 @@ ReportsPage = __decorate([
         selector: 'page-reports',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    Reports\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n	  <div class="button-bar">\n        <a class="button {{buttonStyleToday}}" (click)="searchToday()">Day</a>\n        <a class="button {{buttonStyleWeek}}" (click)="searchWeek()">Week</a>\n        <a class="button {{buttonStyleMonth}}" (click)="searchMonth()">Month</a>\n        <a class="button {{buttonStyleRange}}" (click)="dateRange()">Dates</a>\n    </div>\n\n    <div class="button-bar">\n        <a class="button button-energized" (click)="setEnquiry()">Enq.</a>\n        <a class="button button-assertive" (click)="setConfirmed()">Conf.</a>\n        <a class="button button-positive" (click)="setIndented()">Ind.</a>\n        <a class="button button-simple" (click)="setAll()">All</a>\n    </div>\n\n    <div class="filters" *ngIf="showFilters">\n        <ion-select interface="popover" placeholder="Select Center" [(ngModel)]="selectedCenter" (ionChange)="searchCenter()" class="search-ic">\n          <ion-option *ngFor="let center of centers" [value]="center">{{center}}</ion-option>\n        </ion-select>\n\n        <ion-select interface="popover" placeholder="Select User" [(ngModel)]="selectedUser" (ionChange)="searchUser()" class="search-ic">\n          <ion-option *ngFor="let user of users" [value]="user">{{user}}</ion-option>\n        </ion-select>\n\n        <button (click)="clearFilter()" ion-button class="btn-danger clear-btn">Clear</button>\n    </div>\n\n  <ion-list>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="reports && !reports.length" />\n    <h1 *ngIf="reports && !reports.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <p *ngIf="reports && reports.length" class="result-number"> {{reports.length}} {{searchType}} results found for {{startDate | date: \'dd/MMM/yyyy\'}} - {{endDate | date: \'dd/MMM/yyyy\'}}</p>\n\n  	<table class="rwd-table">\n  	  <tr>\n  	    <th>ID</th>\n  	    <th>Name</th>\n  	    <th>Parent</th>\n  	    <th>Phone</th>\n  	    <th>DOB</th>\n  	    <th>Email</th>\n  	    <th>Gender</th>\n        <th>Class</th>\n  	    <th>Year</th>\n  	  </tr>\n  	  <tr *ngFor="let report of reports" class="{{report.status}}">\n  	    <td data-th="ID">{{report.student_id}}</td>\n  	    <td data-th="Name">{{report.name}}</td>\n  	    <td data-th="Parent">{{report.parent_name}}</td>\n  	    <td data-th="Phone">{{report.phone_number}}</td>\n  	    <td data-th="DOB">{{report.dob | date: \'dd/MMM/yyyy\'}}</td>\n  	    <td data-th="Email">{{report.email_id}}</td>\n  	    <td data-th="Gender">{{report.gender}}</td>\n        <td data-th="Year">{{report.study_year}}</td>\n  	  </tr>\n  	</table>\n\n    <div class="gm_drawer_footer_wrapper" *ngIf="reports && reports.length">\n      <button (click)="downloadReport()" ion-button class="btn-info">Download</button>\n      <button (click)="mailReport()" ion-button class="btn-info">Send Mail</button>\n    </div>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/reports/reports.html"*/,
         providers: [__WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */], __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["b" /* TransferObject */], __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */], __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */],
-        __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */],
-        __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */],
-        __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8_ion2_calendar_dist__["a" /* CalendarController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_transfer__["a" /* Transfer */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_file__["a" /* File */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__ionic_native_email_composer__["a" /* EmailComposer */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _o || Object])
 ], ReportsPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 //# sourceMappingURL=reports.js.map
 
 /***/ }),
@@ -1597,10 +1594,18 @@ DispatchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'dispatch-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/dispatch/dispatch.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <!-- <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons> -->\n  <ion-title>\n    SPARK\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="logout()"><ion-icon name="log-out"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!indentations.length" />\n  <h1 *ngIf="!indentations.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <div *ngIf="!showModal">\n    <ion-list *ngIf="!confirm_dispatch && indentations.length">\n   \n      <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results">\n       \n          <button ion-item>\n            <div class="">\n              <h1>{{indentation.center_code}} ({{indentation.students_amount.length}} Students)</h1>\n              <h2>Amount - {{indentation.total_amount}} </h2>\n              <h2>Payment Mode - {{indentation.payment_mode}} </h2>\n              <h2> Payment Date - {{indentation.payment_date | date: \'dd/MMM/yyyy\'}} </h2>\n              <h2> Bank - {{indentation.bank_name}} </h2>\n              <h2>Transacton No - {{indentation.transaction_no}} </h2>\n              <h2>Cheque No - {{indentation.cheque_no}}</h2>\n            </div>\n          </button>\n       \n          <ion-item-options side="right">\n            <button ion-button color="info" (click)="selectDispatch(indentation)">\n              <ion-icon name="redo"></ion-icon>\n              Dispatch\n            </button>\n          </ion-item-options>\n      </ion-item-sliding>\n\n    </ion-list>\n\n    <ion-list *ngIf="confirm_dispatch">\n   \n      <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results">\n       \n          <button ion-item>\n            <div class="">\n              <h1> {{student.student_name}} </h1> \n              <h2> Phone No: {{student.phone_number}} </h2>\n              <h2> Gender: {{student.gender}} </h2>\n              <h2> Type: {{student.class_type}} </h2>\n              <h2> Group: {{student.class_group}} </h2>\n              <h2> Shoe: {{student.shoe_size}} </h2> \n              <h2> Uniform: {{student.uniform_size}} </h2>\n            </div>\n          </button>\n       \n          <ion-item-options side="right">\n            <button ion-button color="secondary" (click)="partial(student)" *ngIf="!student.is_dispatched">\n              <ion-icon name="redo"></ion-icon>\n              Partial\n            </button>\n            <button ion-button color="info" (click)="dispatch(student)" *ngIf="!student.is_dispatched">\n              <ion-icon name="redo"></ion-icon>\n              Dispatch\n            </button>\n            <button ion-button color="danger" (click)="undispatch(student)" *ngIf="student.is_dispatched">\n              <ion-icon name="undo"></ion-icon>\n              Undispatch\n            </button>\n          </ion-item-options>\n      </ion-item-sliding>\n\n      <div class="gm_drawer_footer_wrapper">\n        <button (click)="reset()" ion-button class="btn-danger">Cancel</button>\n        <button (click)="confirmIndentStudents()" ion-button class="btn-success" [disabled]="show_button <= 0">Dispatch</button>\n      </div>\n\n    </ion-list>\n  </div>\n\n  <ion-list *ngIf="showModal">\n   \n      <ion-item>\n          Enter message for this Partial Dispatch\n      </ion-item>\n\n      <ion-item>\n          <ion-textarea [(ngModel)]="msg"></ion-textarea>\n      </ion-item>\n\n      <div class="gm_drawer_footer_wrapper">\n        <button (click)="closeModal()" ion-button class="btn-danger">Cancel</button>\n        <button (click)="submitModal()" ion-button class="btn-success">Submit</button>\n      </div>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/dispatch/dispatch.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _k || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__["a" /* Indentation */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]])
 ], DispatchPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 //# sourceMappingURL=dispatch.js.map
 
 /***/ }),
@@ -1670,7 +1675,8 @@ var Auth = Auth_1 = (function () {
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Auth.prototype.checkAuthentication = function () {
         var _this = this;
@@ -1794,14 +1800,13 @@ var Auth = Auth_1 = (function () {
     };
     return Auth;
 }());
-//url = "http://localhost:8080/";
 Auth.userChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
 Auth = Auth_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === "function" && _b || Object])
 ], Auth);
 
-var Auth_1;
+var Auth_1, _a, _b;
 //# sourceMappingURL=auth.js.map
 
 /***/ }),
@@ -2265,12 +2270,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Students = (function () {
-    //url = "http://localhost:8080/";
     function Students(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Students.prototype.getStudents = function () {
         var _this = this;
@@ -2318,13 +2323,27 @@ var Students = (function () {
             });
         });
     };
+    Students.prototype.sendReportsMail = function (email_id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Authorization', _this.authService.token);
+            _this.http.put(_this.url + 'api/students/sendReportsMail/' + email_id, { email_id: email_id }, { headers: headers })
+                .subscribe(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
     return Students;
 }());
 Students = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Students);
 
+var _a, _b, _c;
 //# sourceMappingURL=students.js.map
 
 /***/ }),
@@ -2355,12 +2374,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Center = (function () {
-    //url = "http://localhost:8080/";
     function Center(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        //url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     // Function to get list of al the centers
     Center.prototype.searchCenter = function () {
@@ -2410,9 +2429,10 @@ var Center = (function () {
 }());
 Center = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Center);
 
+var _a, _b, _c;
 //# sourceMappingURL=center.js.map
 
 /***/ }),
