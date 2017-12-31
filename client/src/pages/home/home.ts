@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { 
     NavController, 
     ModalController, 
@@ -47,7 +47,7 @@ declare var window: Window;
   templateUrl: './home.html'
 })
 export class HomePage {
-
+  @ViewChild('fileInput') fileInput;
   studentForm: FormGroup;
   public submitAttempt: Boolean = false;
   public lastImage: any;
@@ -462,6 +462,39 @@ export class HomePage {
 
   openDispatcherPage() {
     this.navCtrl.setRoot(DispatchPage);
+  }
+
+  getPicture() {
+    if (Camera['installed']()) {
+      this.camera.getPicture({
+        quality: 1,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        targetWidth: 10,
+        targetHeight: 10
+      }).then((data) => {
+        this.studentForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
+      }, (err) => {
+        alert('Unable to take photo');
+      })
+    } else {
+      this.fileInput.nativeElement.click();
+    }
+  }
+
+  processWebImage(event) {
+    let reader = new FileReader();
+    reader.onload = (readerEvent) => {
+
+      let imageData = (readerEvent.target as any).result;
+      this.studentForm.patchValue({ 'photo': imageData });
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    console.log(this.studentForm.controls['photo'].value);
+  }
+
+  getProfileImageStyle() {
+    return ('url(' + this.studentForm.controls['photo'].value + ')');
   }
 
 };

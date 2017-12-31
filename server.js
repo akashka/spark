@@ -14,8 +14,12 @@ console.log(databaseConfig);
 app.listen(process.env.PORT || 8080);
 console.log("App listening on port 8080");
  
-app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies
-app.use(bodyParser.json()); // Send JSON responses
+app.use(bodyParser.urlencoded({ 
+	parameterLimit: 10000000,
+    limit: '5000mb',
+    extended: true 
+})); // Parses urlencoded bodies
+app.use(bodyParser.json({limit: '5000mb'})); // Send JSON responses
 app.use(logger('dev')); // Log requests to API using morgan
 app.use(cors());
  

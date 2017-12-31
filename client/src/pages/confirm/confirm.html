@@ -111,9 +111,10 @@
 
         <ion-toolbar color="primary" class="upload_button">
           <ion-buttons>
-            <button ion-button icon-left (click)="takePhoto()">
+            <button ion-button icon-left (click)="getPicture()">
               <ion-icon name="camera"></ion-icon>Select Image
             </button>
+            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />
           </ion-buttons>
         </ion-toolbar>
 

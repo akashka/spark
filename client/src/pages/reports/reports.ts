@@ -56,24 +56,7 @@ export class ReportsPage {
 	    private file: File,
 	    private emailComposer: EmailComposer,
       public toastCtrl: ToastController
-	) { 
-      storageDirectory: string = '';
-      // make sure this is on a device, not an emulation (e.g. chrome tools device mode)
-      if(!this.platform.is('cordova')) {
-        return false;
-      }
-
-      if (this.platform.is('ios')) {
-        this.storageDirectory = cordova.file.documentsDirectory;
-      }
-      else if(this.platform.is('android')) {
-        this.storageDirectory = cordova.file.dataDirectory;
-      }
-      else {
-        // exit otherwise, but you could add further types here e.g. Windows
-        return false;
-      }
-  }
+	) { }
 
   ionViewDidLoad() {
   	this.loader = this.loading.create({
@@ -258,11 +241,9 @@ export class ReportsPage {
 
 	downloadReport() {
 		var url = this.convertToCSV(this.reports);
-	  this.fileTransfer.download(url, this.storageDirectory + 'reports.csv').then((entry) => {
+	  this.fileTransfer.download(url, this.file.dataDirectory + 'reports.csv').then((entry) => {
 		    console.log('download complete: ' + entry.toURL());
-        this.presentToast('Successfully Downloaded report');              
 		}, (error) => {
-        this.presentToast('Error in Downloading report');              
 		    console.log(error);
 		});
 	}

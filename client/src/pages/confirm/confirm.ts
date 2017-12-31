@@ -256,4 +256,38 @@ export class ConfirmPage {
     this.navCtrl.setRoot(SearchPage);
   }
 
+  getPicture() {
+    if (Camera['installed']()) {
+      this.camera.getPicture({
+        quality: 1,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        targetWidth: 10,
+        targetHeight: 10
+      }).then((data) => {
+        this.confirmForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
+      }, (err) => {
+        alert('Unable to take photo');
+      })
+    } else {
+      this.fileInput.nativeElement.click();
+    }
+  }
+
+  processWebImage(event) {
+    let reader = new FileReader();
+    reader.onload = (readerEvent) => {
+
+      let imageData = (readerEvent.target as any).result;
+      this.confirmForm.patchValue({ 'photo': imageData });
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+    console.log(this.confirmForm.controls['photo'].value);
+  }
+
+  getProfileImageStyle() {
+    return ('url(' + this.confirmForm.controls['photo'].value + ')');
+  }
+
+
 };
