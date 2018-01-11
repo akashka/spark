@@ -29,6 +29,7 @@ import { CenterPage } from '../center/center';
 import { IndentPage } from '../indent/indent';
 import { ReportsPage } from '../reports/reports';
 import { DispatchPage } from '../dispatch/dispatch';
+import { ConfirmPage } from '../confirm/confirm';
 
 // Files Images
 import { File } from '@ionic-native/file';
@@ -54,6 +55,8 @@ export class HomePage {
   public centers: any;
   public userCenter: any;
   public users: any;
+  public studentsList: any;
+  public matchingStudent: any;
 
   public today_age_years: any;
   public today_age_months: any;
@@ -71,6 +74,7 @@ export class HomePage {
   public isDispatcher: Boolean = false;
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
+  public isMatching: Boolean = false;
 
   public loader: any;
 
@@ -141,7 +145,13 @@ export class HomePage {
           }
          else if(user.role === "centerAdmin")  this.isCenterAdmin = true;
          else this.isCounsellor = true;
-      }); 
+      });
+
+      this.studentService.getStudents().then((data) => {
+        this.studentsList = data;
+      }, (err) => {
+          console.log("not allowed");
+      });
   }
  
   ionViewDidLoad() {
@@ -170,6 +180,8 @@ export class HomePage {
     }, (err) => {
       console.log(err);
     });
+
+
   }
 
   resetStudent() {
@@ -225,6 +237,11 @@ export class HomePage {
 
   onEmailChange = () => {
     this.studentForm.value.email_id = this.studentForm.value.email_id.toLowerCase();
+    this.checkMatching();
+  }
+
+  onPhoneChange = () => {
+    this.checkMatching();
   }
 
   onYearChange = () => {
@@ -260,6 +277,8 @@ export class HomePage {
 
     this.class_group = this.calculateClass(this.studentForm.value.month_age);
     this.studentForm.controls['class_group'].setValue(this.class_group);
+
+    this.checkMatching();
   }
 
   public getAge = (birthday, tillday) => {
@@ -495,6 +514,96 @@ export class HomePage {
 
   getProfileImageStyle() {
     return ('url(' + this.studentForm.controls['photo'].value + ')');
+  }
+
+  findDuplicates(data) {
+    let result = [];
+    data.forEach(function(element, index) {
+      // Find if there is a duplicate or not
+      if (data.indexOf(element, index + 1) > -1) {
+        // Find if the element is already in the result array or not
+        if (result.indexOf(element) === -1) {
+          result.push(element);
+        }
+      }
+    });
+    return result;
+  }
+
+  showConfirm(stu) {
+    let msg = 'Name: ' + stu.name + '<br/> Email: ' + stu.email_id + "<br/> Phone: " + stu.phone_number + "<br/> Gender: " + stu.gender + "<br/> Parent: " + stu.parent_name + "<br/>Center: " + stu.center + "<br/> Confirm same student?";
+    let confirm = this.alertCtrl.create({
+      title: 'Similar Enquiry',
+      message: msg,
+      buttons: [
+        {
+          text: 'Yes! Confirm',
+          handler: () => {
+            this.storage.set('confirmed_student', stu);
+            this.navCtrl.setRoot(ConfirmPage);
+          }
+        },
+        {
+          text: 'No! Enquire',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  checkMatching() {
+    var list = [];
+    this.isMatching = false;
+    this.matchingStudent = null; 
+    if(this.studentForm.controls['dob'].value != ''){
+        for(var i = 0; i < this.studentsList.length; i++) {
+          if(moment(this.studentsList[i].dob).isSame(moment(this.studentForm.controls['dob'].value), 'day') && moment(this.studentsList[i].dob).isSame(moment(this.studentForm.controls['dob'].value), 'month') && moment(this.studentsList[i].dob).isSame(moment(this.studentForm.controls['dob'].value), 'year')) {
+            list.push(this.studentsList[i]);            
+          }
+        }
+    }
+    if(this.studentForm.controls['email_id'].value != ''){
+        for(var i = 0; i < this.studentsList.length; i++) {
+          if(this.studentsList[i].email_id == this.studentForm.controls['email_id'].value) {
+            list.push(this.studentsList[i]);
+          }
+        }
+    }
+    if(this.studentForm.controls['phone_number'].value != ''){
+        for(var i = 0; i < this.studentsList.length; i++) {
+          if(this.studentsList[i].phone_number == this.studentForm.controls['phone_number'].value) {
+            list.push(this.studentsList[i]);
+          }
+        }
+        for(var i = 0; i < this.studentsList.length; i++) {
+          if(this.studentsList[i].alternate_contact == this.studentForm.controls['phone_number'].value) {
+            list.push(this.studentsList[i]);
+          }
+        }
+    }
+    if(this.studentForm.controls['alternate_contact'].value != ''){
+        for(var i = 0; i < this.studentsList.length; i++) {
+          if(this.studentsList[i].phone_number == this.studentForm.controls['alternate_contact'].value) {
+            list.push(this.studentsList[i]);
+          }
+        }
+        for(var i = 0; i < this.studentsList.length; i++) {
+          if(this.studentsList[i].alternate_contact == this.studentForm.controls['alternate_contact'].value) {
+            list.push(this.studentsList[i]);
+          }
+        }
+    }
+    if(list.length > 0) {
+      var resu = this.findDuplicates(list);
+      if(resu.length > 0){
+        this.isMatching = true;
+        this.matchingStudent = resu[0]; 
+        this.showConfirm(this.matchingStudent);
+      }
+    }
   }
 
 };

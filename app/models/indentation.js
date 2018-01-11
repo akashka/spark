@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
  
 var IndentationSchema = new mongoose.Schema({
-
+    num: {
+        type: String,
+        required: true
+    }
     email: {
         type: String,
         required: true

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { 
     NavController, 
     ModalController, 
@@ -39,6 +39,7 @@ declare var window: Window;
 })
 
 export class ConfirmPage {
+  @ViewChild('fileInput') fileInput;
 
   confirmForm: FormGroup;
   public submitAttempt: Boolean = false;
@@ -69,6 +70,7 @@ export class ConfirmPage {
     public storage: Storage
   ) { 
       this.confirmForm = formBuilder.group({
+        study_year: ['', Validators.compose([Validators.required])],
         class_group: ['', Validators.compose([Validators.required])],
         student_id: [''],
         class_type: ['', Validators.compose([Validators.required])],
@@ -86,6 +88,7 @@ export class ConfirmPage {
     });
     this.storage.get('confirmed_student').then((student) => {
       this.student = student;
+      this.confirmForm.controls['study_year'].setValue(student.study_year);
       this.confirmForm.controls['class_group'].setValue(student.class_group);
       this.confirmForm.controls['student_id'].setValue(student.student_id);
       this.confirmForm.controls['photo'].setValue(student.photo);
@@ -97,6 +100,7 @@ export class ConfirmPage {
 
     if(this.confirmForm.valid) {
       this.loader.present();
+      this.student.study_year = this.confirmForm.value.study_year;
       this.student.class_group = this.confirmForm.value.class_group;
       this.student.status = "confirmed";
       this.student.is_Confirmed = true;
@@ -289,5 +293,28 @@ export class ConfirmPage {
     return ('url(' + this.confirmForm.controls['photo'].value + ')');
   }
 
+  onYearChange() {
+    if(this.confirmForm.controls['study_year'].value == '2018-19'){
+      if(this.confirmForm.controls['class_group'].value == "Play Group")
+        this.confirmForm.controls['class_group'].setValue('Nursery');
+      else if(this.confirmForm.controls['class_group'].value == "Nursery")
+        this.confirmForm.controls['class_group'].setValue('LKG');
+      else if(this.confirmForm.controls['class_group'].value == "LKG")
+        this.confirmForm.controls['class_group'].setValue('UKG');
+      else if(this.confirmForm.controls['class_group'].value == "UKG")
+        this.confirmForm.controls['class_group'].setValue('UKG');
+      else this.confirmForm.controls['class_group'].setValue('Play Group');
+    } else {
+      if(this.confirmForm.controls['class_group'].value == "Play Group")
+        this.confirmForm.controls['class_group'].setValue('Play Group');
+      else if(this.confirmForm.controls['class_group'].value == "Nursery")
+        this.confirmForm.controls['class_group'].setValue('Play Group');
+      else if(this.confirmForm.controls['class_group'].value == "LKG")
+        this.confirmForm.controls['class_group'].setValue('Nursery');
+      else if(this.confirmForm.controls['class_group'].value == "UKG")
+        this.confirmForm.controls['class_group'].setValue('LKG');
+      else this.confirmForm.controls['class_group'].setValue('UKG');
+    }
+  }
 
 };

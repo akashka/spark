@@ -177,5 +177,14 @@ export class DispatchPage {
     this.partialDispatch(this.this_student);
     this.showModal = false;
   }
+
+  findClass(ind) {
+    var is_partial = false;
+    for(var i = 0; i < ind.students_amount.length; i++) {
+      if(ind.students_amount[i].is_partial) is_partial = true;
+    }
+    if(is_partial) return "partial-dispatch";
+    return "complete-dispatch";
+  }
  
 }

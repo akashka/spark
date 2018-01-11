@@ -39,15 +39,23 @@ exports.createIndentation = function(req, res, next) {
     console.log("New Indentation received");
     var indentation = req.body;
     indentation.status = "open";
-    Indentation.create(indentation, function(err, indentation) {
+
+    Indentation.find(function(err, indentations) {
         if (err) { 
-            console.log("Error in creating Indentation");
+            console.log("Error in getting list of Indentations");
             return res.send(err); 
         }
-        sendMail(indentation);
-        sendSms(indentation);
+        indentation.num = "IND" + indentations.length;
+        Indentation.create(indentation, function(err, indentation) {
+          if (err) { 
+              console.log("Error in creating Indentation");
+              return res.send(err); 
+          }
+          sendMail(indentation);
+          sendSms(indentation);
 
-        res.json(indentation);
+          res.json(indentation);
+        });
     });
 }
  
@@ -118,7 +126,7 @@ sendMail = function(indentation) {
      stringTemplate = stringTemplate.replace('{{payment_date}}', moment(indentation.payment_date).format("DD-MMM-YYYY"));
      stringTemplate = stringTemplate.replace('{{bank_name}}', indentation.bank_name);
      stringTemplate = stringTemplate.replace('{{cheque_no}}', indentation.cheque_no);
-     stringTemplate = stringTemplate.replace('{{center_code}}', indentation.center_code);
+     stringTemplate = stringTemplate.replace('{{center_code}}', indentation.center_code + "(" + indentation.num + ")");
      stringTemplate = stringTemplate.replace('{{counsellor}}', indentation.email_id);
      stringTemplate = stringTemplate.replace('{{transaction_no}}', indentation.transaction_no);
      stringTemplate = stringTemplate.replace('{{amt}}', amt);
@@ -139,6 +147,7 @@ sendSms = function(indentation) {
     console.log("Sending Indentation SMS");
 
     var messageData = "Indentation from " + indentation.center_code + 
+        ", Indent Num: " + indentation.num + 
         ", Total Amount: " + indentation.total_amount + 
         ", Payment Date: " + moment(indentation.payment_date).format("DD-MMM-YYYY") +
         ", Payment Mode: " + indentation.payment_mode +
@@ -178,6 +187,26 @@ sendUpdateMail = function(indentation) {
 }
 
 sendUpdateSms = function(indentation) {
+    console.log("Sending Dispatch SMS");
 
+    var messageData = "Dispatch for " + indentation.center_code + " with Indent num: " +
+     indentation.num + " done. Status: " + indentation.status + ". ";
+    for(var i = 0; i < indentation.students_amount.length; i++) {
+      if(indentation.students_amount[i].is_dispatched) 
+        messageData += indentation.students_amount[i].student_name + " - Full. ";
+      else if(indentation.students_amount[i].is_partial)
+        messageData += indentation.students_amount[i].student_name + " - Partial. ";
+    }
+
+    for(var i = 0; i < adminNumber.length; i++) {
+      var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + adminNumber[i] + "&sender=" + senderID;
+      curl.request(formData, 
+        function optionalCallback(err, body) {
+        if (err) {
+          return console.error('Sending Dispatch SMS failed: ', err);
+        }
+        console.log('Successfully sent Dispatch SMS');
+      });
+    }
 
 }

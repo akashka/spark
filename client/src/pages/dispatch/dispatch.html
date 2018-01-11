@@ -22,11 +22,11 @@
   <div *ngIf="!showModal">
     <ion-list *ngIf="!confirm_dispatch && indentations.length">
    
-      <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results">
+      <ion-item-sliding *ngFor="let indentation of indentations" class="results_list_mobile indent_results {{findClass(indentation)}}" style="height: 100%">
        
           <button ion-item>
-            <div class="">
-              <h1>{{indentation.center_code}} ({{indentation.students_amount.length}} Students)</h1>
+            <div>
+              <h1>{{indentation.num}} ({{indentation.center_code}})</h1>
               <h2>Amount - {{indentation.total_amount}} </h2>
               <h2>Payment Mode - {{indentation.payment_mode}} </h2>
               <h2> Payment Date - {{indentation.payment_date | date: 'dd/MMM/yyyy'}} </h2>
@@ -48,7 +48,7 @@
 
     <ion-list *ngIf="confirm_dispatch">
    
-      <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results">
+      <ion-item-sliding *ngFor="let student of list_of_students" class="results_list_mobile indent_results" style="height: 100%">
        
           <button ion-item>
             <div class="">

@@ -22,11 +22,11 @@
 
         <!-- Year of Joining of the student -->
         <ion-list radio-group formControlName="study_year" (ionChange)="onYearChange()">
-          <ion-item style="width: 50%; float: left; background: darkslategrey;">
+          <ion-item style="width: 50%; float: left; background: #f4f4f4;font-weight: bolder;color: #e62626;">
             <ion-label>May 2017 - April 2018</ion-label>
             <ion-radio value="2017-18"></ion-radio>
           </ion-item>
-          <ion-item style="width: 50%; float: left; background: darkslategrey;">
+          <ion-item style="width: 50%; float: left; background: #f4f4f4;font-weight: bolder;color: #e62626;">
             <ion-label>May 2018 - April 2019</ion-label>
             <ion-radio value="2018-19"></ion-radio>
           </ion-item>
@@ -104,7 +104,7 @@
  
         <ion-item>
             <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>
-            <ion-input type="text" formControlName="phone_number"></ion-input>
+            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>
         </ion-item>
 
         <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">
@@ -113,7 +113,7 @@
 
         <ion-item>
             <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>
-            <ion-input type="text" formControlName="alternate_contact"></ion-input>
+            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>
         </ion-item>
 
         <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">

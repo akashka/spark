@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { Students } from '../../providers/students/students';
+import { Center } from '../../providers/center/center';
 import { Auth } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 import * as _ from 'lodash'
@@ -41,11 +42,13 @@ export class ReportsPage {
   public loop: Boolean = false;
   public selectedCenter: String;
   public selectedUser: String;
+  public centerList: any;
 
   constructor(
   		public navParams: NavParams,
   		public navCtrl: NavController, 
-	    public studentService: Students, 
+      public studentService: Students, 
+	    public centerService: Center, 
 	    public modalCtrl: ModalController, 
 	    public alertCtrl: AlertController, 
 	    public authService: Auth, 
@@ -76,7 +79,12 @@ export class ReportsPage {
         this.centers = _.uniq(_.map(this.students, 'center'));
         this.users = _.uniq(_.map(this.students, 'counsellor'));
       });
-	  this.setAll();
+	    this.setAll();
+    }, (err) => {
+        console.log("not allowed");
+    });
+    this.centerService.searchCenter().then((data) => {
+      this.centerList = data;
     }, (err) => {
         console.log("not allowed");
     });
@@ -141,6 +149,11 @@ export class ReportsPage {
     this.reports = this.allStudents;
     this.selectedUser = null;
     this.selectedCenter = null;
+  }
+
+  searchFilter() {
+    if(this.selectedCenter) this.searchCenter();
+    if(this.selectedUser) this.searchUser();
   }
 
   searchToday() {
@@ -297,7 +310,8 @@ export class ReportsPage {
 	      isRadio: false,
 	      from: new Date(2017, 1 - 1, 1),
 	      to: new Date(),
-	      weekdaysTitle: "Su_Mo_Tu_We_Th_Fr_Sa".split("_")
+	      weekdaysTitle: "Su_Mo_Tu_We_Th_Fr_Sa".split("_"),
+        	defaultDate: new Date()
 	    })
 	      .then( (res:any) => { 
 	      	this.searchDates(res);
@@ -316,6 +330,12 @@ export class ReportsPage {
       position: 'top'
     });
     toast.present();
+  }
+
+  findCenter(cen) {
+    for(var i = 0; i < this.centerList.length; i++) {
+      if(this.centerList[i].center_code == cen) return this.centerList[i].center_name;
+    }
   }
 
 }

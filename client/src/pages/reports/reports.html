@@ -31,15 +31,16 @@
     </div>
 
     <div class="filters" *ngIf="showFilters">
-        <ion-select interface="popover" placeholder="Select Center" [(ngModel)]="selectedCenter" (ionChange)="searchCenter()" class="search-ic">
+        <ion-select interface="popover" placeholder="Select Center" [(ngModel)]="selectedCenter" class="search-ic search-user">
           <ion-option *ngFor="let center of centers" [value]="center">{{center}}</ion-option>
         </ion-select>
 
-        <ion-select interface="popover" placeholder="Select User" [(ngModel)]="selectedUser" (ionChange)="searchUser()" class="search-ic">
+        <ion-select interface="popover" placeholder="Select User" [(ngModel)]="selectedUser" class="search-ic search-user">
           <ion-option *ngFor="let user of users" [value]="user">{{user}}</ion-option>
         </ion-select>
 
-        <button (click)="clearFilter()" ion-button class="btn-danger clear-btn">Clear</button>
+        <button (click)="searchFilter()" ion-button class="btn-info clear-btn" style="width:21%">Search</button>
+        <button (click)="clearFilter()" ion-button class="btn-danger clear-btn" style="width:16%; margin-right: 1%;">clear</button>
     </div>
 
   <ion-list>
@@ -51,7 +52,7 @@
 
   	<table class="rwd-table">
   	  <tr>
-  	    <th>ID</th>
+  	    <th>Center</th>
   	    <th>Name</th>
   	    <th>Parent</th>
   	    <th>Phone</th>
@@ -62,7 +63,7 @@
   	    <th>Year</th>
   	  </tr>
   	  <tr *ngFor="let report of reports" class="{{report.status}}">
-  	    <td data-th="ID">{{report.student_id}}</td>
+  	    <td data-th="Center">{{findCenter(report.center)}}</td>
   	    <td data-th="Name">{{report.name}}</td>
   	    <td data-th="Parent">{{report.parent_name}}</td>
   	    <td data-th="Phone">{{report.phone_number}}</td>

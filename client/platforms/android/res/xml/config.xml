@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.olw.spark" version="0.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.olw.spark" version="0.3.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
@@ -40,7 +40,7 @@
     <name>OLW Spark</name>
     <description>Enquiry App for Our Little Wonders</description>
     <author email="akash.ka01@gmail.com" href="http://little-wonders.in">Akash Agarwal</author>
-    <content original-src="index.html" src="http://192.168.0.9:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
