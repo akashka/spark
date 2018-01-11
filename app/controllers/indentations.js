@@ -174,10 +174,10 @@ sendSms = function(indentation) {
 
 sendUpdateMail = function(indentation) {
 
-
+  // send mail
 }
 
 sendUpdateSms = function(indentation) {
 
-
+  // send sms
 }
