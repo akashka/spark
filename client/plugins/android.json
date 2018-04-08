@@ -18,6 +18,9 @@
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "io.ionic.starter"
+        },
+        "mx.ferreyra.callnumber": {
+            "PACKAGE_NAME": "com.olw.spark"
         }
     },
     "dependent_plugins": {

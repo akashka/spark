@@ -24,10 +24,10 @@
     </div>
 
     <div class="button-bar">
-        <a class="button button-energized" (click)="setEnquiry()">Enq.</a>
-        <a class="button button-assertive" (click)="setConfirmed()">Conf.</a>
-        <a class="button button-positive" (click)="setIndented()">Ind.</a>
-        <a class="button button-simple" (click)="setAll()">All</a>
+        <a class="button button-energized {{btn_enq}}" (click)="setEnquiry()">Enq.</a>
+        <a class="button button-assertive {{btn_astv}}" (click)="setConfirmed()">Conf.</a>
+        <a class="button button-positive {{btn_indt}}" (click)="setIndented()">Ind.</a>
+        <a class="button button-simple {{btn_all}}" (click)="setAll()">All</a>
     </div>
 
     <div class="filters" *ngIf="showFilters">

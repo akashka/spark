@@ -51,6 +51,7 @@ export class HomePage {
   @ViewChild('fileInput') fileInput;
   studentForm: FormGroup;
   public submitAttempt: Boolean = false;
+  public counter: Boolean = false;
   public lastImage: any;
   public centers: any;
   public userCenter: any;
@@ -159,7 +160,7 @@ export class HomePage {
       content: 'Please wait...',
     });
 
-    this.studentForm.controls['study_year'].setValue("2017-18");
+    this.studentForm.controls['study_year'].setValue("2018-19");
     this.onYearChange();
 
     this.storage.get('user').then((users) => {
@@ -197,7 +198,7 @@ export class HomePage {
         this.studentForm.controls['class_group'].setValue('');
         this.studentForm.controls['photo'].setValue('');
         this.studentForm.controls['dob'].setValue('');
-        this.studentForm.controls['study_year'].setValue("2017-18");
+        this.studentForm.controls['study_year'].setValue("2018-19");
         this.today_age_years = '';
         this.today_age_months = '';
         this.today_age_days= '';
@@ -245,7 +246,7 @@ export class HomePage {
   }
 
   onYearChange = () => {
-    this.isCurrentYear = (this.studentForm.value.study_year == "2017-18") ? true : false;
+    this.isCurrentYear = (this.studentForm.value.study_year == "2018-19") ? true : false;
     if(this.studentForm.value.dob != '') this.onDobChange();
   }
 
@@ -255,6 +256,8 @@ export class HomePage {
     this.studentForm.value.today_age = this.getAge(dob, now);
     now.setDate(1);
     now.setMonth(5);
+    var nowDate = new Date();
+    if(nowDate.getMonth() < 8) now.setFullYear(now.getFullYear() - 1);
     this.studentForm.value.month_age = this.getAge(dob, now);
     this.studentForm.value.month_date = now;
 
@@ -598,8 +601,9 @@ export class HomePage {
     }
     if(list.length > 0) {
       var resu = this.findDuplicates(list);
-      if(resu.length > 0){
+      if(resu.length > 0 && !this.counter){
         this.isMatching = true;
+        this.counter = true;
         this.matchingStudent = resu[0]; 
         this.showConfirm(this.matchingStudent);
       }

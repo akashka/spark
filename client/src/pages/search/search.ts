@@ -13,7 +13,8 @@ import { HomePage } from '../home/home';
 import { ConfirmPage } from '../confirm/confirm';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
- 
+import { CallNumber } from '@ionic-native/call-number';
+
 @Component({
   selector: 'search-page',
   templateUrl: './search.html'
@@ -38,7 +39,8 @@ export class SearchPage {
     public menu: MenuController,
     public loading: LoadingController,
     public storage: Storage,
-    public app: App
+    public app: App,
+    public CallNumber: CallNumber
   ) {
       this.storage.get('user').then((user) => {
               if(user.role === "counsellor")  this.isCounsellor = true;
@@ -86,6 +88,12 @@ export class SearchPage {
  
   add() {
   	this.navCtrl.setRoot(HomePage);
+  }
+
+  callNumber(num) {
+      this.CallNumber.callNumber(num, false)
+        .then(() => console.log('Launched dialer!'))
+        .catch(() => console.log('Error launching dialer'));
   }
 
   update(student) {

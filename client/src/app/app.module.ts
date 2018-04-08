@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from "ion2-calendar";
+import { CallNumber } from '@ionic-native/call-number';
 
 // Pages
 import { HomePage } from '../pages/home/home';
@@ -78,7 +79,8 @@ import { Camera } from '@ionic-native/camera';
     File,
     Transfer,
     Camera,
-    FilePath
+    FilePath,
+    CallNumber
   ]
 })
 export class AppModule {}

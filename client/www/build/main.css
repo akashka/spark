@@ -25716,6 +25716,11 @@ page-reports .button-simple {
   color: white;
 }
 
+page-reports .button-optioni {
+  background: olive;
+  color: white;
+}
+
 page-reports .button-option:active {
   background: olive;
   color: white;

@@ -43,6 +43,10 @@ export class ReportsPage {
   public selectedCenter: String;
   public selectedUser: String;
   public centerList: any;
+  public btn_enq: String = "";
+  public btn_astv: String = "";
+  public btn_indt: String = "";
+  public btn_all: String = "";
 
   constructor(
   		public navParams: NavParams,
@@ -206,21 +210,37 @@ export class ReportsPage {
 
   setEnquiry() {
   		this.searchType = "enquiry";
+      this.btn_enq = "button-optioni";
+      this.btn_astv = "";
+      this.btn_indt = "";
+      this.btn_all = "";
   		this.searchOnChange();
   }
 
   setConfirmed() {
   		this.searchType = "confirmed";
+      this.btn_enq = "";
+      this.btn_astv = "button-optioni";
+      this.btn_indt = "";
+      this.btn_all = "";
   		this.searchOnChange();
   }
 
   setIndented() {
   		this.searchType = "indented";
+      this.btn_enq = "";
+      this.btn_astv = "";
+      this.btn_indt = "button-optioni";
+      this.btn_all = "";
   		this.searchOnChange();
   }
 
   setAll() {
   		this.searchType = "";
+      this.btn_enq = "";
+      this.btn_astv = "";
+      this.btn_indt = "button-optioni";
+      this.btn_all = "";
   		this.searchOnChange();
   }
 

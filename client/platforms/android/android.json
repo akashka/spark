@@ -47,6 +47,10 @@
                         {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"CallNumber\"><param name=\"android-package\" value=\"mx.ferreyra.callnumber.CFCallNumber\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -60,6 +64,14 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.CALL_PHONE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-feature android:name=\"android.hardware.telephony\" android:required=\"false\" />",
                             "count": 1
                         }
                     ],
@@ -123,6 +135,9 @@
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "io.ionic.starter"
+        },
+        "mx.ferreyra.callnumber": {
+            "PACKAGE_NAME": "com.olw.spark"
         }
     },
     "dependent_plugins": {},
@@ -382,6 +397,14 @@
             "clobbers": [
                 "Connection"
             ]
+        },
+        {
+            "id": "mx.ferreyra.callnumber.CallNumber",
+            "file": "plugins/mx.ferreyra.callnumber/www/CallNumber.js",
+            "pluginId": "mx.ferreyra.callnumber",
+            "clobbers": [
+                "call"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -396,6 +419,7 @@
         "cordova-plugin-whitelist": "1.3.1",
         "ionic-plugin-keyboard": "2.2.1",
         "cordova.plugins.diagnostic": "3.6.7",
-        "cordova-plugin-network-information": "1.3.3"
+        "cordova-plugin-network-information": "1.3.3",
+        "mx.ferreyra.callnumber": "0.0.2"
     }
 }

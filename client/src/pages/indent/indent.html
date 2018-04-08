@@ -21,14 +21,14 @@
 
   <ion-list *ngIf="!confirm_indent && students && students.length">
  
-    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results">
+    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results" style="height:100%;">
      
         <button ion-item>
           <div class="col_left indent_left">
             <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>
             <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
             <br/>
-            <h2 *ngIf="student.study_year != '2017-18'" style="color: red;"> You cannot indent this, admission is for 2018-19 </h2>
+            <h2 *ngIf="student.study_year != '2018-19'" style="color: red;"> You cannot indent this, admission is not for 2018-19 </h2>
           </div>
           <div class="col_right indent_right">
             <h1>{{student.name}}</h1>
@@ -40,7 +40,7 @@
           </div>
         </button>
      
-        <ion-item-options side="right" *ngIf="student.study_year == '2017-18'">
+        <ion-item-options side="right" *ngIf="student.study_year == '2018-19'">
           <button ion-button color="info" (click)="indent(student)" *ngIf="!student.indented">
             <ion-icon name="redo"></ion-icon>
             Indent
@@ -48,6 +48,13 @@
           <button ion-button color="danger" (click)="unindent(student)" *ngIf="student.indented">
             <ion-icon name="undo"></ion-icon>
             UnIndent
+          </button>
+        </ion-item-options>
+
+        <ion-item-options side="left">
+          <button ion-button color="secondary" (click)="callNumber(student.phone_number)">
+            <ion-icon name="call"></ion-icon>
+            Contact
           </button>
         </ion-item-options>
     </ion-item-sliding>

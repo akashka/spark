@@ -6,6 +6,7 @@ import {
       LoadingController,
       ToastController
 } from 'ionic-angular';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
@@ -52,7 +53,8 @@ export class IndentPage {
     public storage: Storage,
     public centerService: Center,
     public indentationService: Indentation,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public CallNumber: CallNumber
   ) { }
  
   ionViewDidLoad() {
@@ -223,6 +225,12 @@ export class IndentPage {
       }, (err) => {
           console.log("not allowed");
       });
+  }
+
+  callNumber(num) {
+      this.CallNumber.callNumber(num, false)
+        .then(() => console.log('Launched dialer!'))
+        .catch(() => console.log('Error launching dialer'));
   }
 
   confirmIndent() {
