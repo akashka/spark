@@ -268,9 +268,9 @@ export class HomePage {
 
     var tempYear = this.studentForm.value.month_date.getYear();
     if(!this.isCurrentYear) tempYear += 1;
-    this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + ( tempYear + 1900);
+    this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + ( tempYear + 1901);
     
-    this.studentForm.value.month_age.years += 1900;
+    this.studentForm.value.month_age.years += 1901;
     this.month_age_years = this.studentForm.value.month_age.years;
     this.month_age_months = this.studentForm.value.month_age.months;
     this.month_age_days = this.studentForm.value.month_age.days;

@@ -16,6 +16,15 @@
  
 <ion-content>
 
+  <div class="search-row search-full" *ngIf="!confirm_indent">
+      <ion-searchbar
+          [(ngModel)]="myInput"
+          (animated)="true"
+          (placeholder)="Search"
+          (ionInput)="search()"
+      ></ion-searchbar>
+  </div>
+
   <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />
   <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>
 

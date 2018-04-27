@@ -321,7 +321,10 @@ export class ReportsPage {
                 this.presentToast('Successfully mailed to your id');              
             }, (err) => {
                 this.presentToast('Error while sending mail');
-            });
+						});
+						if(user.role == "admin"){
+								this.studentService.sendIndentationReport(user.email).then((data) => {}, (err) => {});
+						}
 				});
 	}
 

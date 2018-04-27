@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 export class Students {
 
   url = "https://spark-olw.herokuapp.com/";
-  //url = "http://localhost:8080/";
+  // url = "http://localhost:8080/";
  
   constructor(public http: Http, public authService: Auth, public storage: Storage) {
  
@@ -77,6 +77,19 @@ export class Students {
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
         this.http.put(this.url+'api/students/sendReportsMail/' + email_id, {email_id}, {headers: headers})
+          .subscribe((res) => {
+            resolve(res);
+          }, (err) => {
+              reject(err);
+          });    
+    });
+  }
+
+  sendIndentationReport(email_id) {
+    return new Promise((resolve, reject) => {
+        let headers = new Headers();
+        headers.append('Authorization', this.authService.token);
+        this.http.put(this.url+'api/students/sendIndentationReport/' + email_id, {email_id}, {headers: headers})
           .subscribe((res) => {
             resolve(res);
           }, (err) => {

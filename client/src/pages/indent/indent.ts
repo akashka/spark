@@ -26,10 +26,12 @@ import * as moment from 'moment';
 export class IndentPage {
 
   public students: any;
+  public studentsList: any;
   public indented_students = [];
   public user_center;
   public confirm_indent: boolean = false;
   public isCash: boolean = false;
+  public myInput: string;
 
   public total_amount: number = 0;
   public payment_mode;
@@ -42,6 +44,7 @@ export class IndentPage {
   public students_amount = [];
   public loader: any;
   public today_date = moment().format("YYYY-MM-DD");
+
 
   constructor(
     public navCtrl: NavController, 
@@ -70,6 +73,7 @@ export class IndentPage {
           return (o.center == user.center); 
         });
         this.students = _.sortBy(this.students, 'enquiry_date');
+        this.studentsList = _.sortBy(this.students, 'enquiry_date');
       });
     }, (err) => {
         console.log("not allowed");
@@ -231,6 +235,22 @@ export class IndentPage {
       this.CallNumber.callNumber(num, false)
         .then(() => console.log('Launched dialer!'))
         .catch(() => console.log('Error launching dialer'));
+  }
+
+  // Function to search for a student dynamically based on an input
+  search() {
+    var result = [];
+    for(var i = 0; i < this.studentsList.length; i++) {
+      if (_.includes(this.studentsList[i].name.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      else if (_.includes(this.studentsList[i].alternate_contact, this.myInput)) { result.push(this.studentsList[i]); } 
+      else if (_.includes(this.studentsList[i].class_group.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      else if (_.includes(this.studentsList[i].email_id.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      else if (_.includes(this.studentsList[i].locality.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      else if (_.includes(this.studentsList[i].parent_name.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      else if (_.includes(this.studentsList[i].phone_number, this.myInput)) { result.push(this.studentsList[i]); } 
+    }
+    this.students = result;
+    if(this.myInput === "") this.students = this.studentsList;
   }
 
   confirmIndent() {

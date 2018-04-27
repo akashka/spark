@@ -73,7 +73,7 @@ export class ConfirmPage {
         study_year: ['', Validators.compose([Validators.required])],
         class_group: ['', Validators.compose([Validators.required])],
         student_id: [''],
-        class_type: ['', Validators.compose([Validators.required])],
+        class_type: ['Annual', Validators.compose([Validators.required])],
         uniform_size: ['', Validators.compose([Validators.required])],
         shoe_size: ['', Validators.compose([Validators.required])],
         photo: [''],

@@ -8,6 +8,3 @@ ionic cordova build --prod --release android
 
 
 an1973il#
-
-
-Indentation update SMS & Email

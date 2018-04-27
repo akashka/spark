@@ -1,4 +1,5 @@
 var Student = require('../models/student');
+var Indentation = require('../models/indentation');
 var Center = require('../models/center');
 var User = require('../models/user');
 var moment = require('moment');
@@ -261,63 +262,48 @@ sendParentSms = function(student, action) {
     });
 }
 
-exports.sendReportsMail = function(req, res, next){
-  console.log('Sending report mail to ' + req.body.email_id);
-  var query = {email: req.body.email_id};
-  User.findOne(query).exec(function(err, user) {
-      if (err) { res.send(err); }
-      Student.find(function(err, students) {
+exports.sendIndentationReport = function(req, res, next) {
+      var query = {email: req.body.email_id};
+      console.log("Sending Indentation Report");
+      Indentation.find(function(err, students) {
           if (err) { res.send(err); }
-          if(user.role == 'centeradmin' || user.role == 'counsellor') {
-              students = _.filter(students, function(o) { 
-                  return (o.center == user.center); 
-              }); 
-          }
           var stud = [];
-          var fields = ['student_id','name','email_id','phone_number','gender',
-'dob','parent_name','alternate_contact','locality','status','center','counsellor',
-'class_group','enquiry_date','is_Indented','is_confirmed','class_type','uniform_size',
-'shoe_size','confirmation_date','indentation_date','is_Delivered','study_year','delivery_date'];
+          var fields = ['total_amount','payment_mode','payment_date','bank_name','email',
+'center_code','status','num','amount','shoe_size','uniform_size','class_type',
+'gender','phone_number','student_name','student_id'];
           for(var i = 0; i < students.length; i++) {
-            stud[i] = {
-              student_id: students[i].student_id,
-              name: students[i].name,
-              email_id: students[i].email_id,
-              phone_number: students[i].phone_number,
-              gender: students[i].gender,
-              dob: students[i].dob,
-              parent_name: students[i].parent_name,
-              alternate_contact: students[i].alternate_contact,
-              locality: students[i].locality,
-              status: students[i].status,
-              center: students[i].center,
-              counsellor: students[i].counsellor,
-              class_group: students[i].class_group,
-              enquiry_date: students[i].enquiry_date,
-              is_Indented: students[i].is_Indented,
-              is_confirmed: students[i].is_confirmed,
-              class_type: students[i].class_type,
-              uniform_size: students[i].uniform_size,
-              shoe_size: students[i].shoe_size,
-              confirmation_date: students[i].confirmation_date,
-              indentation_date: students[i].indentation_date,
-              is_Delivered: students[i].is_Delivered,
-              study_year: students[i].study_year,
-              delivery_date: students[i].delivery_date
+            for(var j = 0; j < students[i].students_amount.length; j++) {
+              stud[stud.length] = {
+                  total_amount: students[i].total_amount,
+                  payment_mode: students[i].payment_mode,
+                  payment_date: students[i].payment_date,
+                  bank_name: students[i].bank_name,
+                  email: students[i].email,
+                  center_code: students[i].center_code,
+                  status: students[i].status,
+                  num: students[i].num,
+                  amount: students[i].students_amount[j].shoe_size,
+                  shoe_size: students[i].students_amount[j].shoe_size,
+                  uniform_size: students[i].students_amount[j].uniform_size,
+                  class_type: students[i].students_amount[j].class_type,
+                  gender: students[i].students_amount[j].gender,
+                  phone_number: students[i].students_amount[j].phone_number,
+                  student_name: students[i].students_amount[j].student_name,
+                  student_id: students[i].students_amount[j].student_id
+              }
             }
           }
           var csv = json2csv({ data: stud, fields: fields });
           var mailOptions = {
-            to: user.email,
+            to: req.body.email_id,
             from: 'info@little-wonders.in',
-            subject: "Reports",
-            html: "Attached is the report.",
+            subject: "Indentation Reports",
+            html: "Attached is the indentation report.",
             attachments: [{
-                filename: 'report.csv',
+                filename: 'indentation_report.csv',
                 content: base64.encode(csv)
             }]
           };
-
           sgMail.send(mailOptions, function(err) {
             if(err) console.log(err.response.body);
           });
@@ -325,6 +311,85 @@ exports.sendReportsMail = function(req, res, next){
           res.setHeader('Content-disposition', 'attachment; filename=data.csv');
           res.set('Content-Type', 'text/csv');
           res.status(200).send(csv);
+      });
+}
+
+exports.sendReportsMail = function(req, res, next){
+  console.log('Sending report mail to ' + req.body.email_id);
+  var query = {email: req.body.email_id};
+  User.findOne(query).exec(function(err, user) {
+      if (err) { res.send(err); }
+        Student.find(function(err, students) {
+              Indentation.find(function(err, indentation) {
+                  if (err) { res.send(err); }
+                  if(user.role == 'centeradmin' || user.role == 'counsellor') {
+                      students = _.filter(students, function(o) { 
+                          return (o.center == user.center); 
+                      }); 
+                  }
+                  var stud = [];
+                  var fields = ['student_id','name','email_id','phone_number','gender',
+        'dob','parent_name','alternate_contact','locality','status','center','counsellor',
+        'class_group','enquiry_date','is_Indented','is_confirmed','class_type','uniform_size',
+        'shoe_size','confirmation_date','indentation_date','is_Delivered','study_year','delivery_date', 'indentation_number'];
+                  for(var i = 0; i < students.length; i++) {
+
+                    var ind_num = "";
+                    for(var d=0; d<indentation.length; d++){
+                      for(var k=0; k<indentation[d].students_amount.length; k++) {
+                        if(indentation[d].students_amount[k].student_id === students[i].student_id) 
+                          ind_num = indentation[d].num;
+                      }
+                    }
+
+                    stud[i] = {
+                      student_id: students[i].student_id,
+                      name: students[i].name,
+                      email_id: students[i].email_id,
+                      phone_number: students[i].phone_number,
+                      gender: students[i].gender,
+                      dob: students[i].dob,
+                      parent_name: students[i].parent_name,
+                      alternate_contact: students[i].alternate_contact,
+                      locality: students[i].locality,
+                      status: students[i].status,
+                      center: students[i].center,
+                      counsellor: students[i].counsellor,
+                      class_group: students[i].class_group,
+                      enquiry_date: students[i].enquiry_date,
+                      is_Indented: (students[i].is_Indented) ? "Indented" : "Not Indented",
+                      is_confirmed: (students[i].is_Confirmed) ? "Confirmed" : "Not Confirmed",
+                      class_type: students[i].class_type,
+                      uniform_size: students[i].uniform_size,
+                      shoe_size: students[i].shoe_size,
+                      confirmation_date: students[i].confirmation_date,
+                      indentation_date: students[i].indentation_date,
+                      is_Delivered: (students[i].is_Delivered) ? "Delivered" : "Not Delivered",
+                      study_year: students[i].study_year,
+                      delivery_date: students[i].delivery_date,
+                      indentation_number: ind_num
+                    }
+                  }
+                  var csv = json2csv({ data: stud, fields: fields });
+                  var mailOptions = {
+                    to: user.email,
+                    from: 'info@little-wonders.in',
+                    subject: "Reports",
+                    html: "Attached is the report.",
+                    attachments: [{
+                        filename: 'report.csv',
+                        content: base64.encode(csv)
+                    }]
+                  };
+
+                  sgMail.send(mailOptions, function(err) {
+                    if(err) console.log(err.response.body);
+                  });
+
+                  res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+                  res.set('Content-Type', 'text/csv');
+                  res.status(200).send(csv);
+              });
       });
   }); 
 }
