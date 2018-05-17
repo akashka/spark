@@ -269,8 +269,8 @@ exports.sendIndentationReport = function(req, res, next) {
           if (err) { res.send(err); }
           var stud = [];
           var fields = ['total_amount','payment_mode','payment_date','bank_name','email',
-'center_code','status','num','amount','shoe_size','uniform_size','class_type',
-'gender','phone_number','student_name','student_id'];
+'center_code','status','num','amount','shoe_size','uniform_size','class_type', 'Class Group',
+'gender','phone_number','student_name','student_id', 'Dispatch Status', 'Old Delivery', 'Remarks'];
           for(var i = 0; i < students.length; i++) {
             for(var j = 0; j < students[i].students_amount.length; j++) {
               stud[stud.length] = {
@@ -282,14 +282,18 @@ exports.sendIndentationReport = function(req, res, next) {
                   center_code: students[i].center_code,
                   status: students[i].status,
                   num: students[i].num,
-                  amount: students[i].students_amount[j].shoe_size,
+                  amount: students[i].students_amount[j].amount,
                   shoe_size: students[i].students_amount[j].shoe_size,
                   uniform_size: students[i].students_amount[j].uniform_size,
                   class_type: students[i].students_amount[j].class_type,
+                  class_group: students[i].students_amount[j].class_group,
                   gender: students[i].students_amount[j].gender,
                   phone_number: students[i].students_amount[j].phone_number,
                   student_name: students[i].students_amount[j].student_name,
-                  student_id: students[i].students_amount[j].student_id
+                  student_id: students[i].students_amount[j].student_id,
+                  dispatch_status: students[i].students_amount[j].status,
+                  old_delivery: students[i].students_amount[j].deliveryTime,
+                  remarks: students[i].students_amount[j].remarks
               }
             }
           }
