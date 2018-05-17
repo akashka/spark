@@ -269,8 +269,8 @@ exports.sendIndentationReport = function(req, res, next) {
           if (err) { res.send(err); }
           var stud = [];
           var fields = ['total_amount','payment_mode','payment_date','bank_name','email',
-'center_code','status','num','amount','shoe_size','uniform_size','class_type', 'Class Group',
-'gender','phone_number','student_name','student_id', 'Dispatch Status', 'Old Delivery', 'Remarks'];
+'center_code','status','num','amount','shoe_size','uniform_size','class_type', 'class_group',
+'gender','phone_number','student_name','student_id', 'dispatch_status', 'old_delivery', 'remarks'];
           for(var i = 0; i < students.length; i++) {
             for(var j = 0; j < students[i].students_amount.length; j++) {
               stud[stud.length] = {
