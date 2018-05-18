@@ -21,13 +21,13 @@ var adminEmail = "admissions@little-wonders.in";
 var senderID = "LILWON";
 
 var apiKey = "SG";
-apiKey += ".Jy";
-apiKey += "-SHrC";
-apiKey += "-TOmdhaQO";
-apiKey += "_WEApA";
-apiKey += ".LybA2o2680TaJN3qyr";
-apiKey += "_b8XPISnq";
-apiKey += "_R0fjXb1pq9tLYM4";
+apiKey += ".j";
+apiKey += "-8tJ1";
+apiKey += "XzR1ChOGIX";
+apiKey += "EA";
+apiKey += ".Fvc8A";
+apiKey += "-MQwQnB1EH1LFzn5M4bS";
+apiKey += "157Hyv5oAcmW96MVhU";
 sgMail.setApiKey(apiKey);
 
 exports.getStudents = function(req, res, next){
