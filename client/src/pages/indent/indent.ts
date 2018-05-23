@@ -241,12 +241,12 @@ export class IndentPage {
   search() {
     var result = [];
     for(var i = 0; i < this.studentsList.length; i++) {
-      if (_.includes(this.studentsList[i].name.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
       else if (_.includes(this.studentsList[i].alternate_contact, this.myInput)) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].class_group.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].email_id.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].locality.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].parent_name.toUpperCase(), this.myInput.toUpperCase())) { result.push(this.studentsList[i]); } 
+      else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
       else if (_.includes(this.studentsList[i].phone_number, this.myInput)) { result.push(this.studentsList[i]); } 
     }
     this.students = result;

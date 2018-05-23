@@ -194,10 +194,10 @@ export class CenterPage {
   	var result = [];
   	
     for(var i = 0; i < this.centers.length; i++) {
-      if (_.includes(this.centers[i].center_name, this.myInput)) { result.push(this.centers[i]); } 
-      else if (_.includes(this.centers[i].center_code, this.myInput)) { result.push(this.centers[i]); } 
+      if (this.centers[i].center_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); } 
+      else if (this.centers[i].center_code.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); } 
       else if (_.includes(this.centers[i].center_phoneno, this.myInput)) { result.push(this.centers[i]); } 
-      else if (_.includes(this.centers[i].center_email, this.myInput)) { result.push(this.centers[i]); } 
+      else if (this.centers[i].center_email.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); } 
     }
 
   	if(result && result.length === 1) {

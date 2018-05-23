@@ -50,7 +50,7 @@
           </div>
         </button>
      
-        <ion-item-options side="right">
+        <ion-item-options side="right" *ngIf="student.class_group != 'UKG'">
           <button ion-button color="info" (click)="update(student)">
             <ion-icon name="redo"></ion-icon>
             Confirm

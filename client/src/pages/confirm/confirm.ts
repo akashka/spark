@@ -108,6 +108,11 @@ export class ConfirmPage {
       this.student.class_type = this.confirmForm.value.class_type;
       this.student.uniform_size = this.confirmForm.value.uniform_size;
       this.student.shoe_size = this.confirmForm.value.shoe_size;
+      this.student.is_Delivered = false;
+      this.student.is_Indented = false;
+      this.student.confirmation_date = null;
+      this.student.indentation_date = null;
+      this.student.delivery_date = null;
 
       this.studentService.updateStudent(this.student).then((result) => {
         this.loader.dismiss();

@@ -176,8 +176,8 @@ export class SignupPage {
     var result = [];
     
     for(var i = 0; i < this.users.length; i++) {
-      if (_.includes(this.users[i].name, this.myInput)) { result.push(this.users[i]); } 
-      else if (_.includes(this.users[i].email, this.myInput)) { result.push(this.users[i]); } 
+      if (this.users[i].name.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) { result.push(this.users[i]); } 
+      else if (this.users[i].email.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) { result.push(this.users[i]); } 
     }
 
     if(result && result.length === 1) {

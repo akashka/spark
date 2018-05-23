@@ -62,7 +62,12 @@ exports.createStudent = function(req, res, next){
         photo: req.body.photo,
         enquiry_date: currentTime,
         is_Delivered: false,
-        study_year: req.body.study_year
+        study_year: req.body.study_year,
+        is_Indented: false,
+        is_Confirmed: false,
+        confirmation_date: null,
+        indentation_date: null,
+        delivery_date: null
     };
 
     Student.create(student, function(err, student) { 

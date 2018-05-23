@@ -249,16 +249,16 @@ var CenterPage = (function () {
     CenterPage.prototype.search = function () {
         var result = [];
         for (var i = 0; i < this.centers.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_name, this.myInput)) {
+            if (this.centers[i].center_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.centers[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_code, this.myInput)) {
+            else if (this.centers[i].center_code.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.centers[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_phoneno, this.myInput)) {
                 result.push(this.centers[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_2_lodash__["includes"](this.centers[i].center_email, this.myInput)) {
+            else if (this.centers[i].center_email.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.centers[i]);
             }
         }
@@ -683,22 +683,22 @@ var IndentPage = (function () {
     IndentPage.prototype.search = function () {
         var result = [];
         for (var i = 0; i < this.studentsList.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].name.toUpperCase(), this.myInput.toUpperCase())) {
+            if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].alternate_contact, this.myInput)) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].class_group.toUpperCase(), this.myInput.toUpperCase())) {
+            else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].email_id.toUpperCase(), this.myInput.toUpperCase())) {
+            else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].locality.toUpperCase(), this.myInput.toUpperCase())) {
+            else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].parent_name.toUpperCase(), this.myInput.toUpperCase())) {
+            else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_8_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
@@ -2525,22 +2525,22 @@ var PromotionPage = (function () {
     PromotionPage.prototype.search = function () {
         var result = [];
         for (var i = 0; i < this.studentsList.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].name, this.myInput)) {
+            if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].alternate_contact, this.myInput)) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].class_group, this.myInput)) {
+            else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].email_id, this.myInput)) {
+            else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].locality, this.myInput)) {
+            else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].parent_name, this.myInput)) {
+            else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
@@ -2636,7 +2636,7 @@ var PromotionPage = (function () {
 }());
 PromotionPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'promotion-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/promotion/promotion.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    PROMOTION\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list>\n\n    <div class="search-row search-full">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>\n            <h2><ion-icon name="call"></ion-icon> {{student.phone_number}} </h2>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}} ({{student.study_year}})</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="info" (click)="update(student)">\n            <ion-icon name="redo"></ion-icon>\n            Confirm\n          </button>\n        </ion-item-options>\n\n        <ion-item-options side="left">\n          <button ion-button color="secondary" (click)="callNumber(student.phone_number)">\n            <ion-icon name="call"></ion-icon>\n            Contact\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/promotion/promotion.html"*/
+        selector: 'promotion-page',template:/*ion-inline-start:"/home/nabeel/Code/spark/client/src/pages/promotion/promotion.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    PROMOTION\n  </ion-title>\n  <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list>\n\n    <div class="search-row search-full">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>\n            <h2><ion-icon name="call"></ion-icon> {{student.phone_number}} </h2>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}} ({{student.study_year}})</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right" *ngIf="student.class_group != \'UKG\'">\n          <button ion-button color="info" (click)="update(student)">\n            <ion-icon name="redo"></ion-icon>\n            Confirm\n          </button>\n        </ion-item-options>\n\n        <ion-item-options side="left">\n          <button ion-button color="secondary" (click)="callNumber(student.phone_number)">\n            <ion-icon name="call"></ion-icon>\n            Contact\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/home/nabeel/Code/spark/client/src/pages/promotion/promotion.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
@@ -3274,22 +3274,22 @@ var SearchPage = (function () {
     SearchPage.prototype.search = function () {
         var result = [];
         for (var i = 0; i < this.studentsList.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].name, this.myInput)) {
+            if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].alternate_contact, this.myInput)) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].class_group, this.myInput)) {
+            else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].email_id, this.myInput)) {
+            else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].locality, this.myInput)) {
+            else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].parent_name, this.myInput)) {
+            else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) {
                 result.push(this.studentsList[i]);
             }
             else if (__WEBPACK_IMPORTED_MODULE_6_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
@@ -3407,6 +3407,11 @@ var ConfirmPage = (function () {
                 _this.student.class_type = _this.confirmForm.value.class_type;
                 _this.student.uniform_size = _this.confirmForm.value.uniform_size;
                 _this.student.shoe_size = _this.confirmForm.value.shoe_size;
+                _this.student.is_Delivered = false;
+                _this.student.is_Indented = false;
+                _this.student.confirmation_date = null;
+                _this.student.indentation_date = null;
+                _this.student.delivery_date = null;
                 _this.studentService.updateStudent(_this.student).then(function (result) {
                     _this.loader.dismiss();
                     _this.presentToast('student data saved successfully');
@@ -4030,10 +4035,10 @@ var SignupPage = (function () {
         var _this = this;
         var result = [];
         for (var i = 0; i < this.users.length; i++) {
-            if (__WEBPACK_IMPORTED_MODULE_5_lodash__["includes"](this.users[i].name, this.myInput)) {
+            if (this.users[i].name.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) {
                 result.push(this.users[i]);
             }
-            else if (__WEBPACK_IMPORTED_MODULE_5_lodash__["includes"](this.users[i].email, this.myInput)) {
+            else if (this.users[i].email.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) {
                 result.push(this.users[i]);
             }
         }
