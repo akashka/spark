@@ -19,6 +19,8 @@ import { IndentPage } from '../pages/indent/indent';
 import { CenterPage } from '../pages/center/center';
 import { DispatchPage } from '../pages/dispatch/dispatch';
 import { PromotionPage } from '../pages/promotion/promotion';
+import { AdmineditPage } from '../pages/adminedit/adminedit';
+import { DeletestudentPage } from '../pages/deletestudent/deletestudent';
 
 // Providers
 import { Students } from '../providers/students/students';
@@ -45,7 +47,9 @@ import { Camera } from '@ionic-native/camera';
     IndentPage,
     CenterPage,
     DispatchPage,
-    PromotionPage
+    PromotionPage,
+    AdmineditPage,
+    DeletestudentPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,9 @@ import { Camera } from '@ionic-native/camera';
     IndentPage,
     CenterPage,
     DispatchPage,
-    PromotionPage
+    PromotionPage,
+    AdmineditPage,
+    DeletestudentPage
   ],
   providers: [
     IonicStorageModule,

@@ -113,6 +113,8 @@ export class ConfirmPage {
       this.student.confirmation_date = null;
       this.student.indentation_date = null;
       this.student.delivery_date = null;
+      this.student.is_Active = true;
+      this.student.admin_edit = false;
 
       this.studentService.updateStudent(this.student).then((result) => {
         this.loader.dismiss();

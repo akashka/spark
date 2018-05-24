@@ -13,6 +13,8 @@ import { IndentPage } from '../pages/indent/indent';
 import { ReportsPage } from '../pages/reports/reports';
 import { DispatchPage } from '../pages/dispatch/dispatch';
 import { PromotionPage } from '../pages/promotion/promotion';
+import { AdmineditPage } from '../pages/adminedit/adminedit';
+import { DeletestudentPage } from '../pages/deletestudent/deletestudent';
 
 // Services
 import { Auth } from '../providers/auth/auth';
@@ -109,6 +111,14 @@ export class MyApp {
 
   go_to_promotion(){
     this.nav.setRoot(PromotionPage);  
+  }
+
+  go_to_adminedit(){
+    this.nav.setRoot(AdmineditPage);  
+  }
+
+  go_to_deletestudent(){
+    this.nav.setRoot(DeletestudentPage);  
   }
 
 }

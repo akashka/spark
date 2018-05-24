@@ -148,7 +148,7 @@ export class HomePage {
          else this.isCounsellor = true;
       });
 
-      this.studentService.getStudents().then((data) => {
+      this.studentService.getAllStudents().then((data) => {
         this.studentsList = data;
       }, (err) => {
           console.log("not allowed");
@@ -167,7 +167,7 @@ export class HomePage {
       this.users = users;
       this.centerService.searchCenter().then((centers) => {
         this.userCenter = _.find(centers, ['center_code', this.users.center]);
-        this.studentService.getStudents().then((data) => {
+        this.studentService.getAllStudents().then((data) => {
           var student = _.filter(data, ['center', this.userCenter.center_code]);
           var student_ids = this.userCenter.center_code;
           student_ids += student ? (student.length > 0 ? student.length : 0) : 0;

@@ -32,7 +32,33 @@ sgMail.setApiKey(apiKey);
 
 exports.getStudents = function(req, res, next){
     console.log("Getting Students list");
+    var query = { is_Active: true };
+    Student.find(query, function(err, students) {
+        if (err){
+            console.log("Error in getting students list: " + err);
+            res.send(err);
+        }
+        console.log("Students list successfully received");
+        res.json(students);
+    });
+}
+
+exports.getAllStudents = function(req, res, next){
+    console.log("Getting Students list");
     Student.find(function(err, students) {
+        if (err){
+            console.log("Error in getting students list: " + err);
+            res.send(err);
+        }
+        console.log("Students list successfully received");
+        res.json(students);
+    });
+}
+
+exports.getInactiveStudents = function(req, res, next){
+    console.log("Getting Inactive Students list");
+    var query = { is_Active: false };
+    Student.find(query, function(err, students) {
         if (err){
             console.log("Error in getting students list: " + err);
             res.send(err);
@@ -67,7 +93,9 @@ exports.createStudent = function(req, res, next){
         is_Confirmed: false,
         confirmation_date: null,
         indentation_date: null,
-        delivery_date: null
+        delivery_date: null,
+        is_Active: true,
+        admin_edit: false
     };
 
     Student.create(student, function(err, student) { 
@@ -89,12 +117,15 @@ exports.updateStudent = function(req, res, next){
     var currentTime = new Date();
     var student = req.body;
     var id = req.body._id;
-    if(student.status == "confirmed") student.confirmation_date = currentTime;
-    else if (student.status == "indented") student.indentation_date = currentTime;
-    student.is_Delivered = false;
+
+    if(student.admin_edit) {
+      if(student.status == "confirmed") student.confirmation_date = currentTime;
+      else if (student.status == "indented") student.indentation_date = currentTime;
+      student.is_Delivered = false;
+    }
+
     delete student._id;
     delete student.student_id;
-    delete student.email_id;
 
     Student.findOneAndUpdate( {_id: id}, student, {upsert: true, new: true}, function(err, student) {
         if (err) {
@@ -102,7 +133,7 @@ exports.updateStudent = function(req, res, next){
           return res.send(err);
         }
         console.log("Successfully updated Student");
-        if(student.status == "confirmed") {
+        if(student.status == "confirmed" && student.admin_edit == false) {
            sendAdminMail(student, "confirmed");
            sendAdminSms(student, "confirmed");
            sendParentMail(student, "confirmed");

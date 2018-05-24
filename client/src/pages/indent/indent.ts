@@ -296,6 +296,7 @@ export class IndentPage {
     for(var ik = 0; ik < this.indented_students.length; ik++) {
       this.indented_students[ik].status = "indented";
       this.indented_students[ik].is_Indented = true;
+      this.indented_students[ik].admin_edit = false;
       delete this.indented_students[ik].indented;
 
       this.studentService.updateStudent(this.indented_students[ik]).then((result) => {

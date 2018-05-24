@@ -27,6 +27,34 @@ export class Students {
         });
     });
   }
+
+  getInactiveStudents(){
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Authorization', this.authService.token);
+      this.http.get(this.url+'api/students/inactiveStudents', {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  getAllStudents(){
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Authorization', this.authService.token);
+      this.http.get(this.url+'api/students/allStudents', {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
  
   createStudent(student){
     return new Promise((resolve, reject) => {

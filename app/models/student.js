@@ -85,6 +85,15 @@ var StudentSchema = new mongoose.Schema({
         default: false,
         required: true
     },
+    is_Active: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    admin_edit: {
+        type: Boolean,
+        default: false,
+    },
     confirmation_date: {},
     indentation_date: {},
     delivery_date: {}

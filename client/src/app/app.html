@@ -30,6 +30,12 @@
             <ion-item (click)="go_to_reports()" menuClose>
                 Reports
             </ion-item>
+            <ion-item [hidden]=!isAdmin (click)="go_to_adminedit()" menuClose>
+                Edit Student (Admin)
+            </ion-item>
+            <ion-item [hidden]=!isAdmin (click)="go_to_deletestudent()" menuClose>
+                Restore Student (Admin)
+            </ion-item>
             <ion-item (click)="go_to_login()" menuClose>
                 SignOut
             </ion-item>
