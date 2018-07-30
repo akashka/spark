@@ -118,7 +118,7 @@ exports.updateStudent = function(req, res, next){
     var student = req.body;
     var id = req.body._id;
 
-    if(student.admin_edit) {
+    if(!student.admin_edit) {
       if(student.status == "confirmed") student.confirmation_date = currentTime;
       else if (student.status == "indented") student.indentation_date = currentTime;
       student.is_Delivered = false;
