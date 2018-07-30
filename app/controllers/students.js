@@ -126,6 +126,7 @@ exports.updateStudent = function(req, res, next){
 
     delete student._id;
     delete student.student_id;
+    delete student.__v;
 
     Student.findOneAndUpdate( {_id: id}, student, {upsert: true, new: true}, function(err, student) {
         if (err) {
