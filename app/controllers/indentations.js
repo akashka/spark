@@ -85,6 +85,7 @@ exports.updateIndentation = function(req, res, next) {
     var indentation = req.body;
     var id = req.body._id;
     delete indentation._id;
+    delete indentation.__v;
 
     indentation.status = "closed";
     for(var i = 0; i < indentation.students_amount.length; i++){
@@ -112,6 +113,7 @@ exports.updateIndentation = function(req, res, next) {
             student.delivery_date = new Date();
             var id = student._id;
             delete student._id;
+            delete student.__v;
 
             Student.findOneAndUpdate( {_id: id}, student, {upsert: true, new: true}, function(err, stu) {
                 console.log("Successfully updated Indentation for Student");
