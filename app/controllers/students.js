@@ -32,7 +32,7 @@ sgMail.setApiKey(apiKey);
 
 exports.getStudents = function(req, res, next){
     console.log("Getting Students list");
-    var query = { is_Active: true };
+    var query = { is_Active: true, deleted: false };
     Student.find(query, function(err, students) {
         if (err){
             console.log("Error in getting students list: " + err);
@@ -57,7 +57,7 @@ exports.getAllStudents = function(req, res, next){
 
 exports.getInactiveStudents = function(req, res, next){
     console.log("Getting Inactive Students list");
-    var query = { is_Active: false };
+    var query = { is_Active: false, deleted: false};
     Student.find(query, function(err, students) {
         if (err){
             console.log("Error in getting students list: " + err);
@@ -95,7 +95,8 @@ exports.createStudent = function(req, res, next){
         indentation_date: null,
         delivery_date: null,
         is_Active: true,
-        admin_edit: false
+        admin_edit: false,
+        deleted: false
     };
 
     Student.create(student, function(err, student) { 
@@ -360,6 +361,9 @@ exports.sendReportsMail = function(req, res, next){
       if (err) { res.send(err); }
         Student.find(function(err, students) {
               Indentation.find(function(err, indentation) {
+                  students = _.filter(students, function(o) { 
+                          return (o.is_Active && !o.deleted); 
+                  }); 
                   if (err) { res.send(err); }
                   if(user.role == 'centeradmin' || user.role == 'counsellor') {
                       students = _.filter(students, function(o) { 

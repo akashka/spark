@@ -24,7 +24,8 @@
        
                     <ion-item>
                       <ion-label><ion-icon name="lock"></ion-icon></ion-label>
-                      <ion-input required formControlName="password" placeholder="password" type="password"></ion-input>
+                      <ion-input required formControlName="password" placeholder="password" [type]="passwordType"></ion-input>
+                      <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()' style="z-index:9999999;"></ion-icon>
                     </ion-item>
 
                     <p *ngIf="!loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)" class="errorMessage">

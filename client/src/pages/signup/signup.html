@@ -76,7 +76,7 @@
                     <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>
                 </ion-item>
  
-                <ion-list radio-group [(ngModel)]="role">
+                <ion-list radio-group [(ngModel)]="role" style="margin-bottom: 120px;">
                   <ion-item>
                     <ion-label>Center</ion-label>
                     <ion-radio value="counsellor" checked></ion-radio>
@@ -93,7 +93,7 @@
  
             </ion-list>
  
-            <button ion-button (click)="delete()" *ngIf="isUserDeletable" class="delete-button">Delete User</button>
+            <button ion-button (click)="delete()" *ngIf="isUserDeletable" class="delete-button" style="position: fixed;">Delete User</button>
 
             <button ion-button (click)="save()" *ngIf="btnText == 'Save'" class="continue-button">{{ btnText }}</button>
             <button ion-button (click)="update()" *ngIf="btnText != 'Save'" class="continue-button">{{ btnText }}</button>

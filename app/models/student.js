@@ -87,12 +87,17 @@ var StudentSchema = new mongoose.Schema({
     },
     is_Active: {
         type: Boolean,
+        default: true,
+        required: true
+    },
+    deleted: {
+        type: Boolean,
         default: false,
         required: true
     },
     admin_edit: {
         type: Boolean,
-        default: false,
+        default: false
     },
     confirmation_date: {},
     indentation_date: {},

@@ -9,6 +9,7 @@ import {
     ToastController
 } from 'ionic-angular';
 import { Students } from '../../providers/students/students';
+import { Center } from '../../providers/center/center';
 import { Auth } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 import { ConfirmPage } from '../confirm/confirm';
@@ -33,12 +34,16 @@ export class AdmineditPage {
   myInput: string;
   public loader: any;
   public showListing: Boolean = true;
+  public selectedCenter: Boolean = false;
   studentForm: FormGroup;
   public student: any;
+  public centers: any;
+  public inCenter: any;
 
   constructor(
     public navCtrl: NavController, 
     public studentService: Students, 
+    public centerService: Center, 
     public modalCtrl: ModalController, 
     public alertCtrl: AlertController, 
     public authService: Auth, 
@@ -92,6 +97,13 @@ export class AdmineditPage {
     this.loader = this.loading.create({
       content: 'Please wait...',
     });
+
+    this.centerService.searchCenter().then((data) => {
+      this.centers = data;
+    }, (err) => {
+        console.log("not allowed");
+    });
+
     this.studentService.getStudents().then((data) => {
       this.studentsList = data;
       this.students = data;
@@ -102,18 +114,18 @@ export class AdmineditPage {
 
   // Function to search for a student dynamically based on an input
   search() {
+    this.selectCenter(this.inCenter);
     var result = [];
-    for(var i = 0; i < this.studentsList.length; i++) {
-      if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].alternate_contact, this.myInput)) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].phone_number, this.myInput)) { result.push(this.studentsList[i]); } 
+    for(var i = 0; i < this.students.length; i++) {
+      if (this.students[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      else if (_.includes(this.students[i].alternate_contact, this.myInput)) { result.push(this.students[i]); } 
+      else if (this.students[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      else if (this.students[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      else if (this.students[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      else if (this.students[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      else if (_.includes(this.students[i].phone_number, this.myInput)) { result.push(this.students[i]); } 
     }
-    this.students = result;
-    if(this.myInput === "") this.students = this.studentsList;
+    if(this.myInput != "") this.students = result;
   }
  
   add() {
@@ -158,7 +170,7 @@ export class AdmineditPage {
                 student.is_Active = false;
                 student.admin_edit = true;
                 this.studentService.updateStudent(student).then((result) => {
-                  this.presentToast('student data saved successfully');
+                  this.presentToast('student deleted successfully');
                   this.goBack();
                 }, (err) => {
                   this.loader.dismiss();
@@ -172,13 +184,9 @@ export class AdmineditPage {
   }
 
   goBack() {
-      this.studentService.getStudents().then((data) => {
-        this.studentsList = data;
-        this.students = data;
-      }, (err) => {
-        console.log("not allowed");
-      });
+      this.selectedCenter = true;
       this.showListing = true;
+      this.myInput = "";      
   }
 
   edit(student) {
@@ -235,5 +243,18 @@ export class AdmineditPage {
       });
     }
   };
+
+  selectCenter(center) {
+      this.inCenter = center;
+      this.selectedCenter = true;
+      this.students = _.filter(this.studentsList, function(o) { 
+                          return (o.center == center.center_code); 
+      }); 
+  }
+
+  reselectCenter() {
+      this.selectedCenter = false;    
+      this.myInput = "";
+  }
 
 }

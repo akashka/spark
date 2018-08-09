@@ -16,7 +16,7 @@
 
 <ion-content>
 
-  <ion-list *ngIf="showListing">
+  <ion-list *ngIf="showListing && selectedCenter">
 
     <div class="search-row search-full">
         <ion-searchbar
@@ -69,6 +69,16 @@
         </ion-item-options>
 
     </ion-item-sliding>
+
+  </ion-list>
+
+
+  <ion-list *ngIf="showListing && !selectedCenter" style="margin-bottom:50px;">
+        
+    <ion-item *ngFor="let center of centers" class="results_list_mobile" (click)="selectCenter(center)">
+            <h1>{{center.center_name}}</h1>
+            <h4>{{center.center_address}}</h4>
+    </ion-item>
 
   </ion-list>
 
@@ -238,5 +248,8 @@
     <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>
   </div>
 
+  <div class="gm_drawer_footer_wrapper" *ngIf="showListing && selectedCenter">
+    <button (click)="reselectCenter()" ion-button class="btn-danger" style="width:100%;">Cancel</button>
+  </div>
 
 </ion-content>

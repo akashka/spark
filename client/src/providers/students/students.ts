@@ -80,8 +80,8 @@ export class Students {
   updateStudent(student){
     return new Promise((resolve, reject) => {
       this.storage.get('user').then((user) => {
-        if(student.center != user.center) {
-          student.student_id = user.center + student.student_id.slice(3);
+        if(student.center != user.center && !student.admin_edit) {
+          // student.student_id = user.center + student.student_id.slice(3);
           student.center = user.center;
           student.counsellor = user.email;
         }

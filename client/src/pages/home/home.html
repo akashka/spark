@@ -122,12 +122,18 @@
 
         <ion-item>
             <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>
-            <ion-input type="text" formControlName="locality"></ion-input>
+            <ion-input type="text" formControlName="locality" (ionChange)="onLocalityChange($event)"></ion-input>
         </ion-item>
 
         <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">
           Please enter a valid locality
         </p>
+
+        <ion-list>
+          <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description)">
+            <ion-label>{{loc.description}}</ion-label>
+          </ion-item>
+        </ion-list>
 
         <ion-toolbar color="primary" class="upload_button">
           <ion-buttons>

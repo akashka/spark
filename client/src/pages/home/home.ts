@@ -14,6 +14,7 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
+import { Http, Headers } from '@angular/http';
 
 // Providers
 import { Students } from '../../providers/students/students';
@@ -79,6 +80,8 @@ export class HomePage {
 
   public loader: any;
 
+  public locationOptions: Array<Object> = [];
+
   constructor(
     public navCtrl: NavController, 
     public studentService: Students, 
@@ -97,7 +100,8 @@ export class HomePage {
     public centerService: Center,
     public networkService: Networks,
     public storage: Storage,
-    public loading: LoadingController
+    public loading: LoadingController,
+    public http: Http
   ) {
 
       if (this.networkService.noConnection()) {
@@ -608,6 +612,23 @@ export class HomePage {
         this.showConfirm(this.matchingStudent);
       }
     }
+  }
+
+  onLocalityChange($event) {
+      this.locationOptions = [];
+      if($event._value.length > 4) { 
+          var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + $event._value + 
+              "&types=geocode&key=AIzaSyDxiToPCcr2LL1EC_vkzYtBiQO_9kbIfqs";
+          this.http.get(url)
+              .subscribe(res => {
+                let data = res.json();
+                this.locationOptions = data.predictions;
+              }, (err) => { });
+      }
+  }
+
+  onLocSelect(description) {
+    this.studentForm.controls['locality'].setValue(description);
   }
 
 };

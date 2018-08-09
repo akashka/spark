@@ -28,7 +28,7 @@
   <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />
   <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>
 
-  <ion-list *ngIf="!confirm_indent && students && students.length">
+  <ion-list *ngIf="!confirm_indent && students && students.length" style="margin-bottom: 50px;">
  
     <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results" style="height:100%;">
      
@@ -81,7 +81,7 @@
 
   </ion-list>
 
-  <ion-list *ngIf="confirm_indent">
+  <ion-list *ngIf="confirm_indent" style="margin-bottom: 50px;">
 
     <div class="button-bar" *ngIf="isCash">
         <a class="button button-positive button-indent" (click)="setCash()">Cash</a>

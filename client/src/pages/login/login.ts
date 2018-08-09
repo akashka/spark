@@ -72,6 +72,8 @@ export class LoginPage {
     errorMessage: string = "";
     submitAttempt: Boolean = false;
     isForgotPassword: Boolean = false;
+    passwordType: string = 'password';
+    passwordIcon: string = 'eye-off';
 
     constructor(
       public navCtrl: NavController, 
@@ -184,6 +186,11 @@ export class LoginPage {
 
     forgotPassword(){
       this.isForgotPassword = !this.isForgotPassword; 
+    }
+
+    hideShowPassword() {
+        this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+        this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
     }
  
 }

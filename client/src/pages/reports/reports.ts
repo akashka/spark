@@ -47,6 +47,7 @@ export class ReportsPage {
   public btn_astv: String = "";
   public btn_indt: String = "";
   public btn_all: String = "";
+  public loading: any;
 
   constructor(
   		public navParams: NavParams,
@@ -56,17 +57,17 @@ export class ReportsPage {
 	    public modalCtrl: ModalController, 
 	    public alertCtrl: AlertController, 
 	    public authService: Auth, 
-	    public loading: LoadingController,
+	    public loadingCtrl: LoadingController,
 	    public storage: Storage,
 	    public calendarCtrl: CalendarController,
 	    private transfer: Transfer, 
 	    private file: File,
 	    private emailComposer: EmailComposer,
-      public toastCtrl: ToastController
+			public toastCtrl: ToastController,
 	) { }
 
   ionViewDidLoad() {
-  	this.loader = this.loading.create({
+  	this.loader = this.loadingCtrl.create({
       content: 'Please wait...',
     });
     this.studentService.getStudents().then((data) => {
@@ -239,8 +240,8 @@ export class ReportsPage {
   		this.searchType = "";
       this.btn_enq = "";
       this.btn_astv = "";
-      this.btn_indt = "button-optioni";
-      this.btn_all = "";
+      this.btn_indt = "";
+      this.btn_all = "button-optioni";
   		this.searchOnChange();
   }
 
@@ -359,6 +360,15 @@ export class ReportsPage {
     for(var i = 0; i < this.centerList.length; i++) {
       if(this.centerList[i].center_code == cen) return this.centerList[i].center_name;
     }
+	}
+	
+	showLoader(){
+        this.loading = this.loadingCtrl.create({
+            dismissOnPageChange: true,
+            spinner: 'hide',
+            content: '<div class="ion-spinner"></div><br><div class="loading">Loading...</div>'
+        });
+        this.loading.present();
   }
 
 }

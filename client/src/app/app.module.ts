@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule } from "ion2-calendar";
 import { CallNumber } from '@ionic-native/call-number';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 // Pages
 import { HomePage } from '../pages/home/home';
@@ -56,6 +57,7 @@ import { Camera } from '@ionic-native/camera';
     HttpModule,
     BrowserAnimationsModule,
     CalendarModule,
+    GooglePlaceModule,
     IonicStorageModule.forRoot(MyApp),
     IonicModule.forRoot(MyApp)
   ],
