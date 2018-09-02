@@ -1,0 +1,70 @@
+{
+  "_from": "cordova-uxcam",
+  "_id": "cordova-uxcam@2.3.7",
+  "_inBundle": false,
+  "_integrity": "sha512-9bW2WZFeFLP/qSeEMUyBjhsDzoa6c8Fugu4H/5viXqFXM9K4RQV2dMuK4Ons+OW51ZcjoDkviUY3fRmKcTM7hg==",
+  "_location": "/cordova-uxcam",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-uxcam",
+    "name": "cordova-uxcam",
+    "escapedName": "cordova-uxcam",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-uxcam/-/cordova-uxcam-2.3.7.tgz",
+  "_shasum": "d35d4295c5d628435d2cfba7cdb2d471e7333b4f",
+  "_spec": "cordova-uxcam",
+  "_where": "/home/nabeel/Code/spark/client/node_modules",
+  "author": {
+    "name": "UXCam Inc."
+  },
+  "bugs": {
+    "url": "https://github.com/uxcam/cordova-uxcam/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "com.uxcam.cordova.plugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "cordova_name": "UXCam",
+  "dependencies": {
+    "npm": "^5.7.1"
+  },
+  "deprecated": false,
+  "description": "Cordova plugin for UXCam - enables the recording of your applications screen",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "homepage": "https://github.com/uxcam/cordova-uxcam#readme",
+  "keywords": [
+    "UXCam",
+    "Analytics",
+    "Screen capture",
+    "screen recording"
+  ],
+  "license": "Commercial",
+  "name": "cordova-uxcam",
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uxcam/cordova-uxcam.git"
+  },
+  "version": "2.3.7"
+}

@@ -21,6 +21,12 @@
         },
         "mx.ferreyra.callnumber": {
             "PACKAGE_NAME": "com.olw.spark"
+        },
+        "cordova-uxcam": {
+            "PACKAGE_NAME": "com.olw.spark"
+        },
+        "cordova-plugin-appsee": {
+            "PACKAGE_NAME": "com.olw.spark"
         }
     },
     "dependent_plugins": {

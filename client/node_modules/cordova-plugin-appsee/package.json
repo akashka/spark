@@ -1,0 +1,49 @@
+{
+  "_from": "cordova-plugin-appsee",
+  "_id": "cordova-plugin-appsee@2.4.11",
+  "_inBundle": false,
+  "_integrity": "sha512-kRtoEpYjAm3gAInwbw9pJ4nWYYP8toISVZadOsPQkiujEiaYb7gVDrUpDxjQZEyPywi9AlfhrvWfLksd58vdsw==",
+  "_location": "/cordova-plugin-appsee",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-appsee",
+    "name": "cordova-plugin-appsee",
+    "escapedName": "cordova-plugin-appsee",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-appsee/-/cordova-plugin-appsee-2.4.11.tgz",
+  "_shasum": "0139188f53636933ae9ed69cf2d401b2080a3b9b",
+  "_spec": "cordova-plugin-appsee",
+  "_where": "/home/nabeel/Code/spark/client/node_modules",
+  "author": {
+    "name": "Appsee"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-appsee",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Appsee Mobile Analytics",
+  "keywords": [
+    "analytics",
+    "appsee",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "Commercial",
+  "name": "cordova-plugin-appsee",
+  "version": "2.4.11"
+}

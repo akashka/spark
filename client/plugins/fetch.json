@@ -46,5 +46,21 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-uxcam": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-uxcam"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-appsee": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-appsee"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -263,6 +263,22 @@ module.exports = [
         "clobbers": [
             "call"
         ]
+    },
+    {
+        "id": "cordova-uxcam.UXCam",
+        "file": "plugins/cordova-uxcam/www/UXCam.js",
+        "pluginId": "cordova-uxcam",
+        "clobbers": [
+            "UXCam"
+        ]
+    },
+    {
+        "id": "cordova-plugin-appsee.Appsee",
+        "file": "plugins/cordova-plugin-appsee/www/Appsee.js",
+        "pluginId": "cordova-plugin-appsee",
+        "clobbers": [
+            "Appsee"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -280,7 +296,9 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "cordova.plugins.diagnostic": "3.6.7",
     "cordova-plugin-network-information": "1.3.3",
-    "mx.ferreyra.callnumber": "0.0.2"
+    "mx.ferreyra.callnumber": "0.0.2",
+    "cordova-uxcam": "2.3.7",
+    "cordova-plugin-appsee": "2.4.11"
 };
 // BOTTOM OF METADATA
 });

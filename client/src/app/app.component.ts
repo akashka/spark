@@ -19,6 +19,9 @@ import { DeletestudentPage } from '../pages/deletestudent/deletestudent';
 // Services
 import { Auth } from '../providers/auth/auth';
 
+declare let UXCam:any;
+// declare let Appsee:any;
+
 @Component({
   templateUrl: './app.html'
 })
@@ -41,6 +44,8 @@ export class MyApp {
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
+      UXCam.startWithKey("aa8ede0f536a221");
+      // Appsee.start("27c08c727c964643b9a1ce1137da2bea");
     });
 
     this.userSubscription = Auth.userChanged.subscribe(

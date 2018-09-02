@@ -407,7 +407,7 @@ exports.sendReportsMail = function(req, res, next){
                       shoe_size: students[i].shoe_size,
                       confirmation_date: students[i].confirmation_date,
                       indentation_date: students[i].indentation_date,
-                      is_Delivered: (students[i].is_Delivered) ? "Delivered" : "Not Delivered",
+                      is_Delivered: (students[i].is_Delivered == true) ? "Delivered" : "Not Delivered",
                       study_year: students[i].study_year,
                       delivery_date: students[i].delivery_date,
                       indentation_number: ind_num

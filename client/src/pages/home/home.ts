@@ -38,6 +38,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
 declare var cordova: any;
+declare let Appsee:any;
 
 interface Window {
     resolveLocalFileSystemURL: any;
@@ -157,6 +158,10 @@ export class HomePage {
       }, (err) => {
           console.log("not allowed");
       });
+  }
+
+  viewDidAppear() {
+    Appsee.startScreen("Enquiry");
   }
  
   ionViewDidLoad() {
