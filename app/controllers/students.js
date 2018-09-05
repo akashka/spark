@@ -381,7 +381,7 @@ exports.sendReportsMail = function(req, res, next){
                     for(var d=0; d<indentation.length; d++){
                       for(var k=0; k<indentation[d].students_amount.length; k++) {
                         if(indentation[d].students_amount[k].student_id === students[i].student_id) 
-                          ind_num = indentation[d].num;
+                          ind_num = indentation[d];
                       }
                     }
 
@@ -407,10 +407,10 @@ exports.sendReportsMail = function(req, res, next){
                       shoe_size: students[i].shoe_size,
                       confirmation_date: students[i].confirmation_date,
                       indentation_date: students[i].indentation_date,
-                      is_Delivered: (students[i].is_Delivered == true) ? "Delivered" : "Not Delivered",
+                      is_Delivered: (ind_num.status != 'open') ? "Delivered" : "Not Delivered",
                       study_year: students[i].study_year,
                       delivery_date: students[i].delivery_date,
-                      indentation_number: ind_num
+                      indentation_number: ind_num.num
                     }
                   }
                   var csv = json2csv({ data: stud, fields: fields });
