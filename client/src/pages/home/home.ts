@@ -266,7 +266,7 @@ export class HomePage {
     now.setDate(1);
     now.setMonth(5);
     var nowDate = new Date();
-    if(nowDate.getMonth() < 8) now.setFullYear(now.getFullYear() - 1);
+    if(nowDate.getMonth() < 12) now.setFullYear(now.getFullYear() - 1);
     this.studentForm.value.month_age = this.getAge(dob, now);
     this.studentForm.value.month_date = now;
 

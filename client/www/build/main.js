@@ -863,9 +863,10 @@ var Indentation = (function () {
 }());
 Indentation = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Indentation);
 
+var _a, _b, _c;
 //# sourceMappingURL=indentation.js.map
 
 /***/ }),
@@ -1626,7 +1627,8 @@ var Auth = Auth_1 = (function () {
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        // url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Auth.prototype.checkAuthentication = function () {
         var _this = this;
@@ -1750,14 +1752,13 @@ var Auth = Auth_1 = (function () {
     };
     return Auth;
 }());
-// url = "http://localhost:8080/";
 Auth.userChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
 Auth = Auth_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === "function" && _b || Object])
 ], Auth);
 
-var Auth_1;
+var Auth_1, _a, _b;
 //# sourceMappingURL=auth.js.map
 
 /***/ }),
@@ -1897,7 +1898,7 @@ var HomePage = (function () {
             now.setDate(1);
             now.setMonth(5);
             var nowDate = new Date();
-            if (nowDate.getMonth() < 8)
+            if (nowDate.getMonth() < 12)
                 now.setFullYear(now.getFullYear() - 1);
             _this.studentForm.value.month_age = _this.getAge(dob, now);
             _this.studentForm.value.month_date = now;
@@ -2505,9 +2506,10 @@ var Students = (function () {
 }());
 Students = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Students);
 
+var _a, _b, _c;
 //# sourceMappingURL=students.js.map
 
 /***/ }),
@@ -2593,9 +2595,10 @@ var Center = (function () {
 }());
 Center = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__auth_auth__["a" /* Auth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _c || Object])
 ], Center);
 
+var _a, _b, _c;
 //# sourceMappingURL=center.js.map
 
 /***/ }),
@@ -3471,7 +3474,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 // Services
 
-// declare let Appsee:any;
 var MyApp = (function () {
     function MyApp(platform, storage, authService) {
         var _this = this;
@@ -3487,8 +3489,6 @@ var MyApp = (function () {
         platform.ready().then(function () {
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["c" /* StatusBar */].styleDefault();
             __WEBPACK_IMPORTED_MODULE_2_ionic_native__["b" /* Splashscreen */].hide();
-            UXCam.startWithKey("aa8ede0f536a221");
-            // Appsee.start("27c08c727c964643b9a1ce1137da2bea");
         });
         this.userSubscription = __WEBPACK_IMPORTED_MODULE_15__providers_auth_auth__["a" /* Auth */].userChanged.subscribe(function (user) { return _this.getData(user); });
     }
@@ -3687,7 +3687,7 @@ var ConfirmPage = (function () {
             study_year: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
             class_group: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
             student_id: [''],
-            class_type: ['Annual', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            class_type: ['Mid-term', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
             uniform_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
             shoe_size: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
             photo: [''],
