@@ -7,8 +7,8 @@ import 'rxjs/add/operator/map';
 export class Auth {
  
   public token: any;
-  // url = "https://spark-olw.herokuapp.com/";
-  url = "http://localhost:8080/";
+  url = "https://spark-olw.herokuapp.com/";
+  // url = "http://localhost:8080/";
 
   public static userChanged: EventEmitter<boolean> = new EventEmitter();
 
