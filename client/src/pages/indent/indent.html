@@ -68,17 +68,6 @@
         </ion-item-options>
     </ion-item-sliding>
 
-    <div class="gm_drawer_footer_wrapper">
-      <div class="amt_button">
-        <p class="total_left"> 
-            <em> &#8377; {{ total_amount }} </em>
-            <br/>
-            <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>
-        </p>
-      </div>
-      <button (click)="indentStudents()" [disabled]="!indented_students || !indented_students.length" ion-button class="btn-success">Indent</button>
-    </div>
-
   </ion-list>
 
   <ion-list *ngIf="confirm_indent" style="margin-bottom: 50px;">
@@ -121,13 +110,25 @@
         </ion-item>
 
     </ion-list>
-
-
-    <div class="gm_drawer_footer_wrapper">
-      <button (click)="indentStudents()" ion-button class="btn-danger">Go Back</button>
-      <button (click)="confirmIndent()" ion-button class="btn-success">Confirm</button>
-    </div>
-
+    
   </ion-list>
 
 </ion-content>
+
+<ion-footer>
+    <div class="gm_drawer_footer_wrapper" *ngIf="!confirm_indent && students && students.length">
+      <div class="amt_button">
+        <p class="total_left"> 
+            <em> &#8377; {{ total_amount }} </em>
+            <br/>
+            <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>
+        </p>
+      </div>
+      <button (click)="indentStudents()" [disabled]="!indented_students || !indented_students.length" ion-button class="btn-success">Indent</button>
+    </div>
+
+    <div class="gm_drawer_footer_wrapper" *ngIf="confirm_indent">
+      <button (click)="indentStudents()" ion-button class="btn-danger">Go Back</button>
+      <button (click)="confirmIndent()" ion-button class="btn-success">Confirm</button>
+    </div>
+</ion-footer>

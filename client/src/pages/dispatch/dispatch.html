@@ -99,12 +99,13 @@
           </ion-item-options>
       </ion-item-sliding>
 
-      <div class="gm_drawer_footer_wrapper">
+          </ion-list>
+  </div>
+</ion-content>
+    
+<ion-footer>
+    <div class="gm_drawer_footer_wrapper">
         <button (click)="reset()" ion-button class="btn-danger">Cancel</button>
         <button (click)="confirmIndentStudents()" ion-button class="btn-success" [disabled]="show_button <= 0">Dispatch</button>
-      </div>
-
-    </ion-list>
-  </div>
-
-</ion-content>
+    </div>
+</ion-footer>

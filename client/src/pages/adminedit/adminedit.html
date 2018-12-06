@@ -242,7 +242,9 @@
       </form>
  
   </ion-list>
+</ion-content>
 
+<ion-footer>
   <div class="gm_drawer_footer_wrapper" *ngIf="!showListing">
     <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>
     <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>
@@ -251,5 +253,4 @@
   <div class="gm_drawer_footer_wrapper" *ngIf="showListing && selectedCenter">
     <button (click)="reselectCenter()" ion-button class="btn-danger" style="width:100%;">Cancel</button>
   </div>
-
-</ion-content>
+</ion-footer>

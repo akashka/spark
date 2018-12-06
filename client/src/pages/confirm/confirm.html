@@ -136,10 +136,11 @@
     </ion-list>
 
     <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
- 
+</ion-content>
+
+<ion-footer>
     <div class="gm_drawer_footer_wrapper">
       <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>
       <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>
     </div>
-
-</ion-content>
+</ion-footer>
