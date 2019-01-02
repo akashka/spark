@@ -56,7 +56,7 @@ export class PromotionPage {
     });
     this.studentService.getStudents().then((data) => {
       data = _.filter(data, function(o) { 
-        return (o.status == 'indented' && o.is_Indented && o.study_year == '2017-18'); 
+        return (o.status == 'indented' && o.is_Indented && o.study_year == '2018-19'); 
       });
       this.storage.get('user').then((user) => {
         data = _.filter(data, function(o) { 

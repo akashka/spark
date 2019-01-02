@@ -73,7 +73,7 @@ export class ConfirmPage {
         study_year: ['', Validators.compose([Validators.required])],
         class_group: ['', Validators.compose([Validators.required])],
         student_id: [''],
-        class_type: ['Mid-term', Validators.compose([Validators.required])],
+        class_type: ['Annual', Validators.compose([Validators.required])],
         uniform_size: ['', Validators.compose([Validators.required])],
         shoe_size: ['', Validators.compose([Validators.required])],
         photo: [''],
@@ -92,6 +92,7 @@ export class ConfirmPage {
       this.confirmForm.controls['class_group'].setValue(student.class_group);
       this.confirmForm.controls['student_id'].setValue(student.student_id);
       this.confirmForm.controls['photo'].setValue(student.photo);
+      if(student.study_year == '2019-20') this.confirmForm.controls['class_type'].setValue('Early start');
     });
   }
 
@@ -104,7 +105,7 @@ export class ConfirmPage {
       this.student.class_group = this.confirmForm.value.class_group;
       this.student.status = "confirmed";
       this.student.is_Confirmed = true;
-      if(this.student.photo === null) this.student.photo = this.confirmForm.value.photo;
+      this.student.photo = this.confirmForm.value.photo;
       this.student.class_type = this.confirmForm.value.class_type;
       this.student.uniform_size = this.confirmForm.value.uniform_size;
       this.student.shoe_size = this.confirmForm.value.shoe_size;
@@ -301,7 +302,7 @@ export class ConfirmPage {
   }
 
   onYearChange() {
-    if(this.confirmForm.controls['study_year'].value == '2018-19'){
+    if(this.confirmForm.controls['study_year'].value == '2019-20'){
       if(this.confirmForm.controls['class_group'].value == "Play Group")
         this.confirmForm.controls['class_group'].setValue('Nursery');
       else if(this.confirmForm.controls['class_group'].value == "Nursery")
