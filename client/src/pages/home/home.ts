@@ -169,7 +169,7 @@ export class HomePage {
       content: 'Please wait...',
     });
 
-    this.studentForm.controls['study_year'].setValue("2018-19");
+    this.studentForm.controls['study_year'].setValue("2019-20");
     this.onYearChange();
 
     this.storage.get('user').then((users) => {
@@ -207,7 +207,7 @@ export class HomePage {
         this.studentForm.controls['class_group'].setValue('');
         this.studentForm.controls['photo'].setValue('');
         this.studentForm.controls['dob'].setValue('');
-        this.studentForm.controls['study_year'].setValue("2018-19");
+        this.studentForm.controls['study_year'].setValue("2019-20");
         this.today_age_years = '';
         this.today_age_months = '';
         this.today_age_days= '';
@@ -255,7 +255,7 @@ export class HomePage {
   }
 
   onYearChange = () => {
-    this.isCurrentYear = (this.studentForm.value.study_year == "2018-19") ? true : false;
+    this.isCurrentYear = (this.studentForm.value.study_year == "2019-20") ? true : false;
     if(this.studentForm.value.dob != '') this.onDobChange();
   }
 
@@ -276,7 +276,7 @@ export class HomePage {
     this.today_age_days = this.studentForm.value.today_age.days;
 
     var tempYear = this.studentForm.value.month_date.getYear();
-    if(!this.isCurrentYear) tempYear += 1;
+    if(!this.isCurrentYear) tempYear -= 1;
     this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + ( tempYear + 1901);
     
     this.studentForm.value.month_age.years += 1901;
@@ -284,8 +284,8 @@ export class HomePage {
     this.month_age_months = this.studentForm.value.month_age.months;
     this.month_age_days = this.studentForm.value.month_age.days;
     
-    if(!this.isCurrentYear) this.month_age_years += 1;
-    if(!this.isCurrentYear) this.studentForm.value.month_age.years += 1;
+    if(!this.isCurrentYear) this.month_age_years -= 1;
+    if(!this.isCurrentYear) this.studentForm.value.month_age.years -= 1;
 
     this.class_group = this.calculateClass(this.studentForm.value.month_age);
     this.studentForm.controls['class_group'].setValue(this.class_group);

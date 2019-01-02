@@ -12,6 +12,7 @@ var sgMail = require('@sendgrid/mail');
 var _ = require('lodash-node');
 var json2csv = require('json2csv');
 var base64 = require('base-64');
+var AWS = require('aws-sdk')
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
 var adminNumber = ["9845012849", "9845679966"];
@@ -38,6 +39,40 @@ apiKey += "_R0fjXb1pq9tLYM4";
 // apiKey += "D4gd4zpY7a5HR7";
 // apiKey += "Up9jmE0AENHKO09A";
 sgMail.setApiKey(apiKey);
+
+// Image S3
+const BUCKET_NAME = 'olwapp';
+const IAM_USER_KEY = 'AKIAJ5YI3ULII2UU4HWA';
+const IAM_USER_SECRET1 = 'V717KGCwHmm';
+const IAM_USER_SECRET2 = 'AZ2FzCAaMV3DAJ';
+const IAM_USER_SECRET3 = 'OSskeDj1nw9XI5h';
+
+function uploadToS3(file_name, file) {
+    console.log("Uploading File to S3 " + file_name);
+    var buf = new Buffer(file.replace(/^data:image\/\w+;base64,/, ""),'base64')
+    let s3bucket = new AWS.S3({
+        accessKeyId: IAM_USER_KEY,
+        secretAccessKey: IAM_USER_SECRET1+IAM_USER_SECRET2+IAM_USER_SECRET3,
+        Bucket: BUCKET_NAME
+    });
+    console.log(s3bucket);
+    s3bucket.createBucket(function () {
+        var params = {
+            Bucket: BUCKET_NAME,
+            Key: file_name,
+            Body: buf,
+            ContentEncoding: 'base64'
+            // ContentType: 'image/jpeg'
+        };
+        s3bucket.upload(params, function (err, data) {
+            if (err) {
+                console.log('error in callback');
+                console.log(err);
+            }
+            console.log('success');
+        });
+    });
+}
 
 exports.getStudents = function(req, res, next){
     console.log("Getting Students list");
@@ -79,6 +114,11 @@ exports.getInactiveStudents = function(req, res, next){
  
 exports.createStudent = function(req, res, next){
     console.log("New Student enquiry received for: " + req.body.name);
+
+    if(req.body.photo) {
+      uploadToS3(req.body.student_id, req.body.photo);
+    }
+
     var currentTime = new Date();
     var student = {
         student_id: req.body.student_id,
@@ -94,7 +134,7 @@ exports.createStudent = function(req, res, next){
         center: req.body.center,
         counsellor: req.body.counsellor,
         class_group: req.body.class_group,
-        photo: req.body.photo,
+        photo: (req.body.photo ? ('https://s3.ap-south-1.amazonaws.com/olwapp/' + req.body.student_id) : ''),
         enquiry_date: currentTime,
         is_Delivered: false,
         study_year: req.body.study_year,
@@ -124,8 +164,18 @@ exports.createStudent = function(req, res, next){
  
 exports.updateStudent = function(req, res, next){
     console.log(req.body.status + " Student enquiry received for: " + req.body.name);
+
+    console.log(req.body);
+    if(req.body.photo && req.body.photo.indexOf('s3.ap-south-1.amazonaws.com') == -1) {
+      uploadToS3(req.body.student_id, req.body.photo);
+    }
+
     var currentTime = new Date();
     var student = req.body;
+    student.photo = (req.body.photo ? (
+          req.body.photo.indexOf('s3.ap-south-1.amazonaws.com') == -1 ? 
+              ('https://s3.ap-south-1.amazonaws.com/olwapp/' + req.body.student_id) : req.body.photo) 
+          : '');
     var id = req.body._id;
 
     if(!student.admin_edit) {
