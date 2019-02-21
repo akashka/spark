@@ -2,6 +2,7 @@ var AuthenticationController = require('./controllers/authentication'),
     StudentController = require('./controllers/students'),  
     CenterController = require('./controllers/centers'),  
     IndentationController = require('./controllers/indentations'),  
+    MiscController = require('./controllers/misc'),
     express = require('express'),
     passportService = require('../config/passport'),
     passport = require('passport');

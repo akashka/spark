@@ -26,6 +26,7 @@
     "lodash-node": "^3.10.2",
     "mongoose": "^4.6.3",
     "morgan": "^1.7.0",
+    "node-cron": "^2.0.3",
     "nodemailer": "^4.0.1",
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0",
