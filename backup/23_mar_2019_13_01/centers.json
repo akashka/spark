@@ -1,0 +1,426 @@
+{
+	"_id" : ObjectId("59a56367734d1d7ab9eb8145"),
+	"active" : true,
+	"center_address" : "Bangalore, India",
+	"center_code" : "HEO",
+	"center_email" : "akash.ka01@gmail.com",
+	"center_name" : "Head Office",
+	"center_phoneno" : "7259596963",
+	"lkg" : {
+		"early_start" : "1000",
+		"mid_term" : "0",
+		"annual" : "5000"
+	},
+	"nursery" : {
+		"early_start" : "3000",
+		"mid_term" : "1009",
+		"annual" : "2000"
+	},
+	"playgroup" : {
+		"early_start" : "3000",
+		"mid_term" : "2000",
+		"annual" : "1000"
+	},
+	"ukg" : {
+		"early_start" : "1",
+		"mid_term" : "125",
+		"annual" : "999999"
+	},
+	"updatedAt" : ISODate("2017-10-02T01:19:50.446+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d8919f676f3b001225a4c9"),
+	"active" : true,
+	"cash" : true,
+	"center_address" : "BADRAPA LAYOUT",
+	"center_code" : "TAT",
+	"center_email" : "uzma@little-wonders.in",
+	"center_name" : "TATANAGAR",
+	"center_phoneno" : "9886886657",
+	"createdAt" : ISODate("2017-10-07T14:04:39.460+05:30"),
+	"lkg" : {
+		"early_start" : "1800",
+		"mid_term" : "5000",
+		"annual" : "6500"
+	},
+	"nursery" : {
+		"early_start" : "1800",
+		"mid_term" : "4500",
+		"annual" : "5750"
+	},
+	"playgroup" : {
+		"early_start" : "1200",
+		"mid_term" : "3500",
+		"annual" : "4500"
+	},
+	"ukg" : {
+		"early_start" : "1800",
+		"mid_term" : "5000",
+		"annual" : "6500"
+	},
+	"updatedAt" : ISODate("2019-03-21T23:26:58.396+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d89d4a676f3b001225a4cd"),
+	"active" : true,
+	"cash" : false,
+	"center_address" : "MYSORE VIJAYNAGAR 2ND STAGE",
+	"center_code" : "MYV",
+	"center_email" : "annanya@little-wonders.in",
+	"center_name" : "MYSORE VIJAYNAGAR",
+	"center_phoneno" : "9880000068",
+	"createdAt" : ISODate("2017-10-07T14:54:26.222+05:30"),
+	"lkg" : {
+		"early_start" : "1800",
+		"mid_term" : "5000",
+		"annual" : "6500"
+	},
+	"nursery" : {
+		"early_start" : "1800",
+		"mid_term" : "4500",
+		"annual" : "5750"
+	},
+	"playgroup" : {
+		"early_start" : "1200",
+		"mid_term" : "3500",
+		"annual" : "4500"
+	},
+	"ukg" : {
+		"early_start" : "1800",
+		"mid_term" : "5000",
+		"annual" : "6500"
+	},
+	"updatedAt" : ISODate("2019-03-21T23:25:09.261+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d92161ed07dc0012434209"),
+	"active" : true,
+	"cash" : true,
+	"center_address" : "BAGALGUNTE",
+	"center_code" : "BAG",
+	"center_email" : "sunitha@little-wonders.in",
+	"center_name" : "BAGALGUNTE",
+	"center_phoneno" : "9845012849",
+	"createdAt" : ISODate("2017-10-08T00:18:01.852+05:30"),
+	"lkg" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"nursery" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"playgroup" : {
+		"early_start" : "2000",
+		"mid_term" : "6000",
+		"annual" : "8000"
+	},
+	"ukg" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"updatedAt" : ISODate("2017-10-08T00:30:41.731+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("5c421f68684ec300144fb5de"),
+	"active" : true,
+	"cash" : true,
+	"center_address" : "No 7 Ashraya appt, 12th main S M Road\n7",
+	"center_code" : "TES",
+	"center_email" : "test@test.com",
+	"center_name" : "Test",
+	"center_phoneno" : "07259596963",
+	"createdAt" : ISODate("2019-01-19T00:18:08.317+05:30"),
+	"lkg" : {
+		"early_start" : NumberInt(4000),
+		"mid_term" : NumberInt(4000),
+		"annual" : NumberInt(4000)
+	},
+	"nursery" : {
+		"early_start" : NumberInt(3000),
+		"mid_term" : NumberInt(3000),
+		"annual" : NumberInt(3000)
+	},
+	"playgroup" : {
+		"early_start" : NumberInt(2000),
+		"mid_term" : NumberInt(2000),
+		"annual" : NumberInt(2000)
+	},
+	"ukg" : {
+		"early_start" : NumberInt(5000),
+		"mid_term" : NumberInt(5000),
+		"annual" : NumberInt(5000)
+	},
+	"updatedAt" : ISODate("2019-01-25T01:40:32.287+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d923b1ed07dc001243420b"),
+	"active" : true,
+	"cash" : true,
+	"center_address" : "Hmt Nagasandra",
+	"center_code" : "HMN",
+	"center_email" : "vinod@little-wonders.in",
+	"center_name" : "HMT NAGASANDRA",
+	"center_phoneno" : "8884102849",
+	"createdAt" : ISODate("2017-10-08T00:27:53.816+05:30"),
+	"lkg" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"nursery" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"playgroup" : {
+		"early_start" : "2000",
+		"mid_term" : "6000",
+		"annual" : "8000"
+	},
+	"ukg" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"updatedAt" : ISODate("2017-11-19T20:59:37.085+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d92552ed07dc001243420e"),
+	"active" : true,
+	"cash" : true,
+	"center_address" : "JALAHALLI SM ROAD",
+	"center_code" : "JAL",
+	"center_email" : "anil@little-wonders.in",
+	"center_name" : "JALAHALLI",
+	"center_phoneno" : "8884012849",
+	"createdAt" : ISODate("2017-10-08T00:34:50.887+05:30"),
+	"lkg" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"nursery" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"playgroup" : {
+		"early_start" : "2000",
+		"mid_term" : "6000",
+		"annual" : "8000"
+	},
+	"ukg" : {
+		"early_start" : "4000",
+		"mid_term" : "7000",
+		"annual" : "10000"
+	},
+	"updatedAt" : ISODate("2017-10-08T00:38:27.723+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d92b8744e9ae0012a67fc5"),
+	"active" : true,
+	"cash" : false,
+	"center_address" : "Rajajinagar opp KLE college",
+	"center_code" : "RAJ",
+	"center_email" : "rajajinagar@little-wonders.in",
+	"center_name" : "RAJAJINAGAR",
+	"center_phoneno" : "9448455856",
+	"createdAt" : ISODate("2017-10-08T01:01:19.436+05:30"),
+	"lkg" : {
+		"early_start" : "1800",
+		"mid_term" : "6000",
+		"annual" : "7500"
+	},
+	"nursery" : {
+		"early_start" : "1800",
+		"mid_term" : "5250",
+		"annual" : "6500"
+	},
+	"playgroup" : {
+		"early_start" : "1200",
+		"mid_term" : "4200",
+		"annual" : "5200"
+	},
+	"ukg" : {
+		"early_start" : "0",
+		"mid_term" : "6000",
+		"annual" : "7500"
+	},
+	"updatedAt" : ISODate("2019-03-21T23:31:06.108+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d92d9844e9ae0012a67fc6"),
+	"active" : true,
+	"cash" : false,
+	"center_address" : "Vijaynagar Bengaluru",
+	"center_code" : "VIJ",
+	"center_email" : "amirtha@little-wonders.in",
+	"center_name" : "VIJAYNAGAR",
+	"center_phoneno" : "9538831012",
+	"createdAt" : ISODate("2017-10-08T01:10:08.060+05:30"),
+	"lkg" : {
+		"early_start" : "1800",
+		"mid_term" : "6000",
+		"annual" : "7500"
+	},
+	"nursery" : {
+		"early_start" : "1800",
+		"mid_term" : "5250",
+		"annual" : "6500"
+	},
+	"playgroup" : {
+		"early_start" : "1200",
+		"mid_term" : "4200",
+		"annual" : "5200"
+	},
+	"ukg" : {
+		"early_start" : "0",
+		"mid_term" : "6000",
+		"annual" : "7500"
+	},
+	"updatedAt" : ISODate("2019-03-21T23:32:30.819+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d92efb6011bc00121e6697"),
+	"active" : false,
+	"cash" : false,
+	"center_address" : "Anandnagar",
+	"center_code" : "ANA",
+	"center_email" : "pinky@little-wonders.in",
+	"center_name" : "ANANDNAGAR",
+	"center_phoneno" : "8548004093",
+	"createdAt" : ISODate("2017-10-08T01:16:03.290+05:30"),
+	"lkg" : {
+		"early_start" : "1500",
+		"mid_term" : "4500",
+		"annual" : "5450"
+	},
+	"nursery" : {
+		"early_start" : "1500",
+		"mid_term" : "4300",
+		"annual" : "5450"
+	},
+	"playgroup" : {
+		"early_start" : "1000",
+		"mid_term" : "3600",
+		"annual" : "4450"
+	},
+	"ukg" : {
+		"early_start" : "1500",
+		"mid_term" : "4500",
+		"annual" : "5450"
+	},
+	"updatedAt" : ISODate("2018-06-25T21:47:07.484+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("59d931216011bc00121e669b"),
+	"active" : false,
+	"cash" : true,
+	"center_address" : "Abbigere Vishweshwarya layout",
+	"center_code" : "ABB",
+	"center_email" : "charitha@little-wonders.in",
+	"center_name" : "ABBIGERE",
+	"center_phoneno" : "8904012849",
+	"createdAt" : ISODate("2017-10-08T01:25:13.145+05:30"),
+	"lkg" : {
+		"early_start" : "1800",
+		"mid_term" : "5500",
+		"annual" : "7000"
+	},
+	"nursery" : {
+		"early_start" : "1800",
+		"mid_term" : "4800",
+		"annual" : "5950"
+	},
+	"playgroup" : {
+		"early_start" : "1200",
+		"mid_term" : "3700",
+		"annual" : "4950"
+	},
+	"ukg" : {
+		"early_start" : "1800",
+		"mid_term" : "5500",
+		"annual" : "7000"
+	},
+	"updatedAt" : ISODate("2019-03-21T23:22:46.497+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("5ab0ce7d39c2dd001498a09e"),
+	"active" : true,
+	"cash" : false,
+	"center_address" : "Bellandur",
+	"center_code" : "BEL",
+	"center_email" : "veena@little-wonders.in",
+	"center_name" : "BELLANDUR",
+	"center_phoneno" : "9945293417",
+	"createdAt" : ISODate("2018-03-20T14:33:57.807+05:30"),
+	"lkg" : {
+		"early_start" : "2000",
+		"mid_term" : "6500",
+		"annual" : "7500"
+	},
+	"nursery" : {
+		"early_start" : "2000",
+		"mid_term" : "5500",
+		"annual" : "6500"
+	},
+	"playgroup" : {
+		"early_start" : "1500",
+		"mid_term" : "4500",
+		"annual" : "5500"
+	},
+	"ukg" : {
+		"early_start" : NumberInt(0),
+		"mid_term" : "6500",
+		"annual" : "7500"
+	},
+	"updatedAt" : ISODate("2019-03-21T22:48:03.053+05:30")
+},
+{
+	"__v" : NumberInt(0),
+	"_id" : ObjectId("5b112b7b2639ac00141a01d9"),
+	"active" : true,
+	"cash" : false,
+	"center_address" : "Malleshwaram",
+	"center_code" : "MAL",
+	"center_email" : "malleshwaram@little-wonders.in",
+	"center_name" : "MALLESHWARAM",
+	"center_phoneno" : "8317406098,",
+	"createdAt" : ISODate("2018-06-01T16:48:19.161+05:30"),
+	"lkg" : {
+		"early_start" : "1500",
+		"mid_term" : "4000",
+		"annual" : "5900"
+	},
+	"nursery" : {
+		"early_start" : "1500",
+		"mid_term" : "4000",
+		"annual" : "5900"
+	},
+	"playgroup" : {
+		"early_start" : "1000",
+		"mid_term" : "3500",
+		"annual" : "4500"
+	},
+	"ukg" : {
+		"early_start" : NumberInt(0),
+		"mid_term" : "4000",
+		"annual" : "5900"
+	},
+	"updatedAt" : ISODate("2018-09-17T16:21:03.626+05:30")
+},

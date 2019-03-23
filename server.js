@@ -36,5 +36,3 @@ cron.schedule('0 8 * * *', () => {
     scheduled: true,
     timezone: "Asia/Kolkata"
 });
-
-MiscController.getStats();

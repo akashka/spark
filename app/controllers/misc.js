@@ -64,7 +64,7 @@ function datecompare(date1) {
 
 exports.sendBirthdayMessage = function (req, res, next) {
     console.log("Sending out Birthday Messages if any student");
-    var query = { is_Active: true, deleted: false };
+    var query = { is_Active: true, deleted: false, is_Indented: true };
     Student.find(query, function (err, students) {
         if (err) {
             console.log("Error in getting students list: " + err);
@@ -74,6 +74,7 @@ exports.sendBirthdayMessage = function (req, res, next) {
             let list = _.filter(students, function (stu) {
                 return datecompare(stu.dob)
             });
+            console.log(list.length + " students have b'day today");
             if (list != undefined && list.length > 0) {
                 for (var l = 0; l < list.length; l++) {
                     sendBirthdaySMS(list[l]);
@@ -85,22 +86,24 @@ exports.sendBirthdayMessage = function (req, res, next) {
 }
 
 sendBirthdaySMS = function (student) {
-    console.log("Sending SMS to parent");
-    var messageData = "";
+    console.log("Sending b-day SMS");
+    var messageData = "Dear " + student.name + ", Our Little Wonders wishes you a very happy birthday. Though you are small and a cutie pie, but you are a star in our life. May god bless you and keep you safe. This wish is to tell you how much we love you. Have a funfilled happy birthday.";
     var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + student.phone_number + "&sender=" + senderID;
     curl.request(formData, function optionalCallback(err, body) {
         if (err) {
             return console.error('Sending SMS to parent failed: ', err);
         }
-        console.log('Successfully sent SMS to parent');
+        console.log('Successfully sent b-day SMS');
     });
 }
 
 sendBirthdayEmail = function (student) {
-    console.log("Sending mail to Parent");
+    console.log("Sending b-day mail");
 
     var subjectTemplate = 'Happy Birthday ' + student.name;
-    var stringTemplate = fs.readFileSync(path.join(__dirname, '../helpers') + '/birthday.html', "utf8");
+    var stringTemplate = fs.readFileSync(path.join(__dirname, '../helpers') + '/happy.html', "utf8");
+    stringTemplate = stringTemplate.replace('{{today_date}}', moment().format('dddd, DD MMMM YYYY'));
+    stringTemplate = stringTemplate.replace('{{student_name}}', student.name);
 
     var mailOptions = {
         to: student.email_id,
@@ -112,18 +115,6 @@ sendBirthdayEmail = function (student) {
 
     sgMail.send(mailOptions, function (err) {
         if (err) console.log(err);
+        console.log('Successfully sent b-day mail');
     });
 }
-
-
-/*
-    Gemerate Reports for Dashboard
-*/
-exports.getStats = function (req, res, next) {
-    console.log('Generating Report for the Dashboard');
-    var query = { is_Active: true, deleted: false };
-    Student.find(query, function (err, students) {
-        let res = _.groupBy(students, function (b) { return b.center });
-        res.json(res);
-    });
-} 
