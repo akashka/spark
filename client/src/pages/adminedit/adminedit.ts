@@ -6,7 +6,8 @@ import {
     LoadingController, 
     App,
     MenuController,
-    ToastController
+    ToastController,
+    ActionSheetController
 } from 'ionic-angular';
 import { Students } from '../../providers/students/students';
 import { Center } from '../../providers/center/center';
@@ -53,7 +54,8 @@ export class AdmineditPage {
     public app: App,
     public CallNumber: CallNumber,
     public toastCtrl: ToastController,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public actionSheetController: ActionSheetController
   ) {
       this.storage.get('user').then((user) => {
               if(user.role === "counsellor")  this.isCounsellor = true;
@@ -255,6 +257,50 @@ export class AdmineditPage {
   reselectCenter() {
       this.selectedCenter = false;    
       this.myInput = "";
+  }
+
+  async presentActionSheet(num, email) {
+    const actionSheet = await this.actionSheetController.create({
+      buttons: [
+        {
+          text: "Call",
+          icon: "call",
+          handler: () => {
+            this.callNumber(num);
+          }
+        },
+        {
+          text: "Whatsapp",
+          icon: "logo-whatsapp",
+          handler: () => {
+            window.open(("https://wa.me/91"+num), "_blank"); 
+          }
+        },
+        {
+          text: "SMS",
+          icon: "text",
+          handler: () => {
+            window.open("sms://"+num);
+          }
+        },
+        {
+          text: "Email",
+          icon: "mail",
+          handler: () => {
+            window.open("mailto://"+email);
+          }
+        },
+        {
+          text: "Cancel",
+          icon: "close",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 
 }

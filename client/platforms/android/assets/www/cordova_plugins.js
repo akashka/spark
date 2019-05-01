@@ -279,6 +279,14 @@ module.exports = [
         "clobbers": [
             "Appsee"
         ]
+    },
+    {
+        "id": "cordova-sms-plugin.Sms",
+        "file": "plugins/cordova-sms-plugin/www/sms.js",
+        "pluginId": "cordova-sms-plugin",
+        "clobbers": [
+            "window.sms"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -298,7 +306,8 @@ module.exports.metadata =
     "cordova-plugin-network-information": "1.3.3",
     "mx.ferreyra.callnumber": "0.0.2",
     "cordova-uxcam": "2.3.7",
-    "cordova-plugin-appsee": "2.4.11"
+    "cordova-plugin-appsee": "2.4.11",
+    "cordova-sms-plugin": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

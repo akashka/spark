@@ -92,7 +92,7 @@ export class ConfirmPage {
       this.confirmForm.controls['class_group'].setValue(student.class_group);
       this.confirmForm.controls['student_id'].setValue(student.student_id);
       this.confirmForm.controls['photo'].setValue(student.photo);
-      if(student.study_year == '2019-20') this.confirmForm.controls['class_type'].setValue('Early start');
+      if(student.study_year == '2020-21') this.confirmForm.controls['class_type'].setValue('Early start');
     });
   }
 
@@ -302,7 +302,7 @@ export class ConfirmPage {
   }
 
   onYearChange() {
-    if(this.confirmForm.controls['study_year'].value == '2019-20'){
+    if(this.confirmForm.controls['study_year'].value == '2020-21'){
       if(this.confirmForm.controls['class_group'].value == "Play Group")
         this.confirmForm.controls['class_group'].setValue('Nursery');
       else if(this.confirmForm.controls['class_group'].value == "Nursery")

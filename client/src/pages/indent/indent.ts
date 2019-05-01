@@ -4,7 +4,8 @@ import {
       ModalController, 
       AlertController, 
       LoadingController,
-      ToastController
+      ToastController,
+      ActionSheetController
 } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 
@@ -57,7 +58,8 @@ export class IndentPage {
     public centerService: Center,
     public indentationService: Indentation,
     public toastCtrl: ToastController,
-    public CallNumber: CallNumber
+    public CallNumber: CallNumber,
+    public actionSheetController: ActionSheetController
   ) { }
  
   ionViewDidLoad() {
@@ -305,6 +307,50 @@ export class IndentPage {
         console.log('student data saving failed');
       });
     } 
+  }
+
+  async presentActionSheet(num, email) {
+    const actionSheet = await this.actionSheetController.create({
+      buttons: [
+        {
+          text: "Call",
+          icon: "call",
+          handler: () => {
+            this.callNumber(num);
+          }
+        },
+        {
+          text: "Whatsapp",
+          icon: "logo-whatsapp",
+          handler: () => {
+            window.open(("https://wa.me/91"+num), "_blank"); 
+          }
+        },
+        {
+          text: "SMS",
+          icon: "text",
+          handler: () => {
+            window.open("sms://"+num);
+          }
+        },
+        {
+          text: "Email",
+          icon: "mail",
+          handler: () => {
+            window.open("mailto://"+email);
+          }
+        },
+        {
+          text: "Cancel",
+          icon: "close",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
  
 }

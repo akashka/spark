@@ -92,13 +92,19 @@
                 </ion-list>
  
             </ion-list>
- 
-            <button ion-button (click)="delete()" *ngIf="isUserDeletable" class="delete-button" style="position: fixed;">Delete User</button>
-
-            <button ion-button (click)="save()" *ngIf="btnText == 'Save'" class="continue-button">{{ btnText }}</button>
-            <button ion-button (click)="update()" *ngIf="btnText != 'Save'" class="continue-button">{{ btnText }}</button>
         
         </ion-col>
     </ion-row>
 
 </ion-content>
+
+<ion-footer>
+  <div class="gm_drawer_footer_wrapper"> 
+ 
+    <button ion-button (click)="delete()" *ngIf="isUserDeletable" class="delete-button" style="position: fixed;">Delete User</button>
+
+    <button ion-button (click)="save()" *ngIf="btnText == 'Save'" class="continue-button">{{ btnText }}</button>
+    <button ion-button (click)="update()" *ngIf="btnText != 'Save'" class="continue-button">{{ btnText }}</button>
+
+  </div>
+</ion-footer>
