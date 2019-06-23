@@ -159,6 +159,7 @@ exports.update = function(req, res, next){
 
         var id = existingUser._id;
         delete existingUser._id;
+        delete existingUser.__v;
 
         console.log(password);
 
