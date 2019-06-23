@@ -15,6 +15,9 @@ import { DispatchPage } from '../pages/dispatch/dispatch';
 import { PromotionPage } from '../pages/promotion/promotion';
 import { AdmineditPage } from '../pages/adminedit/adminedit';
 import { DeletestudentPage } from '../pages/deletestudent/deletestudent';
+import { IdcardrequestPage } from '../pages/idcardrequest/idcardrequest';
+import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
+import { ApproveindentPage } from '../pages/approveindent/approveindent';
 
 // Services
 import { Auth } from '../providers/auth/auth';
@@ -119,6 +122,18 @@ export class MyApp {
 
   go_to_deletestudent(){
     this.nav.setRoot(DeletestudentPage);  
+  }
+
+  go_to_idcardrequest(){
+    this.nav.setRoot(IdcardrequestPage);
+  }
+
+  go_to_idcardprint(){
+    this.nav.setRoot(IdcardprintPage);
+  }
+
+  go_to_approveindent(){
+    this.nav.setRoot(ApproveindentPage);
   }
 
 }

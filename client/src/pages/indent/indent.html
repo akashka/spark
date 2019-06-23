@@ -6,7 +6,7 @@
     </button>
   </ion-buttons>
   <ion-title>
-    SPARK
+    INDENTATION
   </ion-title>
   <ion-buttons end>
     <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>
@@ -50,7 +50,11 @@
         </button>
      
         <ion-item-options side="right" *ngIf="student.study_year == '2019-20'">
-          <button ion-button color="info" (click)="indent(student)" *ngIf="!student.indented">
+          <button ion-button color="info" (click)="edit(student)">
+            <ion-icon name="create"></ion-icon>
+            Edit
+          </button>
+          <button ion-button color="secondary" (click)="indent(student)" *ngIf="!student.indented">
             <ion-icon name="redo"></ion-icon>
             Indent
           </button>

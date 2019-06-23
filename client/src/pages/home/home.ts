@@ -160,10 +160,6 @@ export class HomePage {
       });
   }
 
-  viewDidAppear() {
-    Appsee.startScreen("Enquiry");
-  }
- 
   ionViewDidLoad() {
     this.loader = this.loading.create({
       content: 'Please wait...',

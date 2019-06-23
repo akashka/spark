@@ -274,7 +274,16 @@ export class ReportsPage {
 	}
 
 	downloadReport() {
-		var url = this.convertToCSV(this.reports);
+		var rep = [];
+		for(var r=0; r<this.reports.length; r++) {
+			rep[r] = this.reports[r];
+			Object.keys(rep[r]).forEach(function(key,index) {
+				if(rep[r][key] instanceof Date) {
+					rep[r][key] = moment(rep[r][key]).add(1, 'days').format('DD-MMM-YYYY');
+				}
+			});
+		}
+		var url = this.convertToCSV(rep);
 	  this.fileTransfer.download(url, this.file.dataDirectory + 'reports.csv').then((entry) => {
 		    console.log('download complete: ' + entry.toURL());
 		}, (error) => {

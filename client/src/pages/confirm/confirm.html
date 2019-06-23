@@ -16,16 +16,26 @@
 
 <ion-content padding class="home-page">
  
-    <div class="booking_card" *ngIf="student != null">
-        <h3>{{student.name}} 
-          <span> 
-            <h5 *ngIf="student.gender === 'Male'"> S/O {{student.parent_name}}</h5>
-            <h5 *ngIf="student.gender !== 'Male'"> D/O {{student.parent_name}}</h5>
-          </span>
-        </h3>
-        <h4><ion-icon name="mail"></ion-icon> {{student.email_id}}</h4>
-        <h4><ion-icon name="call"></ion-icon> {{student.phone_number}} </h4>
-        <h4><ion-icon name="locate"></ion-icon> {{student.locality}}</h4>
+    <div class="booking_card" style="height:200px;" *ngIf="student != null">
+          <div class="col_left">
+            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>
+            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>
+          </div>
+          <div class="col_right">
+            <h6>{{student.name}}</h6>
+            <h6 *ngIf="student.gender === 'Male'"> S/O {{student.parent_name}}</h6>
+            <h6 *ngIf="student.gender !== 'Male'"> D/O {{student.parent_name}}</h6>
+            <a (click)="presentActionSheet(student.phone_number, student.email_id)">
+              <ion-icon name="mail"></ion-icon> {{student.email_id}}
+            </a>
+            <br>
+            <a (click)="presentActionSheet(student.phone_number, student.email_id)">
+              <ion-icon name="call"></ion-icon> {{student.phone_number}} 
+            </a>
+            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->
+            <h6><ion-icon name="locate"></ion-icon> {{student.locality}}</h6>
+            <h6><ion-icon name="clock"></ion-icon> {{student.dob | date: 'dd/MMM/yyyy'}} </h6>
+          </div>
     </div>
 
     <ion-list no-lines>
@@ -125,7 +135,9 @@
         <ion-toolbar color="primary" class="upload_button">
           <ion-buttons>
             <button ion-button icon-left (click)="getPicture()">
-              <ion-icon name="camera"></ion-icon>Select Image
+              <ion-icon name="camera"></ion-icon>
+              <p *ngIf="confirmForm.controls.photo.value == ''">Select Image</p>
+              <p *ngIf="confirmForm.controls.photo.value != ''">Change Image</p>
             </button>
             <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />
           </ion-buttons>

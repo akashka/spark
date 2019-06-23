@@ -43,6 +43,11 @@ var IndentationSchema = new mongoose.Schema({
     },
     students_amount: {
         type: Object
+    },
+    is_IndentConfirmed: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 
 }, {

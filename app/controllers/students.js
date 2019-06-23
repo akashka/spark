@@ -12,7 +12,8 @@ var sgMail = require('@sendgrid/mail');
 var _ = require('lodash-node');
 var json2csv = require('json2csv');
 var base64 = require('base-64');
-var AWS = require('aws-sdk')
+var AWS = require('aws-sdk');
+var PDFImage = require("pdf-image").PDFImage;
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
 var adminNumber = ["9845012849", "9845679966"];
@@ -365,13 +366,13 @@ exports.sendIndentationReport = function (req, res, next) {
     var stud = [];
     var fields = ['total_amount', 'payment_mode', 'payment_date', 'bank_name', 'email',
       'center_code', 'status', 'num', 'amount', 'shoe_size', 'uniform_size', 'class_type', 'class_group',
-      'gender', 'phone_number', 'student_name', 'student_id', 'remarks'];
+      'gender', 'phone_number', 'student_name', 'student_id', 'remarks', 'is_IndentConfirmed'];
     for (var i = 0; i < students.length; i++) {
       for (var j = 0; j < students[i].students_amount.length; j++) {
         stud[stud.length] = {
           total_amount: students[i].total_amount,
           payment_mode: students[i].payment_mode,
-          payment_date: students[i].payment_date,
+          payment_date: moment(students[i].payment_date).format(1, 'd').format('DD-MMM-YYYY'),
           bank_name: students[i].bank_name,
           email: students[i].email,
           center_code: students[i].center_code,
@@ -386,7 +387,8 @@ exports.sendIndentationReport = function (req, res, next) {
           phone_number: students[i].students_amount[j].phone_number,
           student_name: students[i].students_amount[j].student_name,
           student_id: students[i].students_amount[j].student_id,
-          remarks: students[i].students_amount[j].remarks
+          remarks: students[i].students_amount[j].remarks,
+          is_IndentConfirmed: students[i].is_IndentConfirmed,
         }
       }
     }
@@ -431,7 +433,8 @@ exports.sendReportsMail = function (req, res, next) {
         var fields = ['student_id', 'name', 'email_id', 'phone_number', 'gender',
           'dob', 'parent_name', 'alternate_contact', 'locality', 'status', 'center', 'counsellor',
           'class_group', 'enquiry_date', 'is_Indented', 'is_confirmed', 'class_type', 'uniform_size',
-          'shoe_size', 'confirmation_date', 'indentation_date', 'is_Delivered', 'study_year', 'delivery_date', 'indentation_number'];
+          'shoe_size', 'confirmation_date', 'indentation_date', 'is_Delivered', 'study_year', 'delivery_date', 
+          'indentation_number', 'is_IndentConfirmed', 'idCardRequested', 'idCardPrinted'];
         for (var i = 0; i < students.length; i++) {
 
           var ind_num = "";
@@ -448,7 +451,7 @@ exports.sendReportsMail = function (req, res, next) {
             email_id: students[i].email_id,
             phone_number: students[i].phone_number,
             gender: students[i].gender,
-            dob: students[i].dob,
+            dob: moment(students[i].dob).add(1, 'd').format('DD-MMM-YYYY'),
             parent_name: students[i].parent_name,
             alternate_contact: students[i].alternate_contact,
             locality: students[i].locality,
@@ -456,18 +459,21 @@ exports.sendReportsMail = function (req, res, next) {
             center: students[i].center,
             counsellor: students[i].counsellor,
             class_group: students[i].class_group,
-            enquiry_date: students[i].enquiry_date,
+            enquiry_date: moment(students[i].enquiry_date).format(1, 'd').format('DD-MMM-YYYY'),
             is_Indented: (students[i].is_Indented) ? "Indented" : "Not Indented",
             is_confirmed: (students[i].is_Confirmed) ? "Confirmed" : "Not Confirmed",
             class_type: students[i].class_type,
             uniform_size: students[i].uniform_size,
             shoe_size: students[i].shoe_size,
-            confirmation_date: students[i].confirmation_date,
-            indentation_date: students[i].indentation_date,
+            confirmation_date: moment(students[i].confirmation_date).format(1, 'd').format('DD-MMM-YYYY'),
+            indentation_date: moment(students[i].indentation_date).format(1, 'd').format('DD-MMM-YYYY'),
             is_Delivered: (ind_num.status != 'open') ? "Delivered" : "Not Delivered",
             study_year: students[i].study_year,
-            delivery_date: students[i].delivery_date,
-            indentation_number: ind_num.num
+            delivery_date: moment(students[i].delivery_date).format(1, 'd').format('DD-MMM-YYYY'),
+            indentation_number: ind_num.num,
+            is_IndentConfirmed: students[i].is_IndentConfirmed,
+            idCardRequested: students[i].idCardRequested,
+            idCardPrinted: students[i].idCardPrinted
           }
         }
         var csv = json2csv({ data: stud, fields: fields });
@@ -491,5 +497,35 @@ exports.sendReportsMail = function (req, res, next) {
         res.status(200).send(csv);
       });
     });
+  });
+}
+
+exports.editStudent = function (req, res, next) {
+  console.log("Student details editing for: " + req.body.name);
+
+  console.log(req.body);
+  if (req.body.photo && req.body.photo.indexOf('s3.ap-south-1.amazonaws.com') == -1) {
+    uploadToS3(req.body.student_id, req.body.photo);
+  }
+
+  var currentTime = new Date();
+  var student = req.body;
+  student.photo = (req.body.photo ? (
+    req.body.photo.indexOf('s3.ap-south-1.amazonaws.com') == -1 ?
+      ('https://s3.ap-south-1.amazonaws.com/olwapp/' + req.body.student_id) : req.body.photo)
+    : '');
+  var id = req.body._id;
+
+  delete student._id;
+  delete student.student_id;
+  delete student.__v;
+
+  Student.findOneAndUpdate({ _id: id }, student, { upsert: true, new: true }, function (err, student) {
+    if (err) {
+      console.log("Error in updating Student: " + err);
+      return res.send(err);
+    }
+    console.log("Successfully updated Student");
+    res.json(student);
   });
 }

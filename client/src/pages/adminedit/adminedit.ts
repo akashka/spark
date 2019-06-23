@@ -119,12 +119,12 @@ export class AdmineditPage {
     this.selectCenter(this.inCenter);
     var result = [];
     for(var i = 0; i < this.students.length; i++) {
-      if (this.students[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
-      else if (_.includes(this.students[i].alternate_contact, this.myInput)) { result.push(this.students[i]); } 
-      else if (this.students[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
-      else if (this.students[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
-      else if (this.students[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
-      else if (this.students[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      if (this.students[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) { result.push(this.students[i]); } 
+      // else if (_.includes(this.students[i].alternate_contact, this.myInput)) { result.push(this.students[i]); } 
+      // else if (this.students[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      // else if (this.students[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      // else if (this.students[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.students[i]); } 
+      else if (this.students[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) { result.push(this.students[i]); } 
       else if (_.includes(this.students[i].phone_number, this.myInput)) { result.push(this.students[i]); } 
     }
     if(this.myInput != "") this.students = result;

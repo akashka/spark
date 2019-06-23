@@ -80,35 +80,37 @@ export class SearchPage {
       if (
         this.studentsList[i].name
           .toUpperCase()
-          .indexOf(this.myInput.toUpperCase()) >= 0
+          .indexOf(this.myInput.toUpperCase()) == 0
       ) {
         result.push(this.studentsList[i]);
-      } else if (
-        _.includes(this.studentsList[i].alternate_contact, this.myInput)
-      ) {
-        result.push(this.studentsList[i]);
-      } else if (
-        this.studentsList[i].class_group
-          .toUpperCase()
-          .indexOf(this.myInput.toUpperCase()) >= 0
-      ) {
-        result.push(this.studentsList[i]);
-      } else if (
-        this.studentsList[i].email_id
-          .toUpperCase()
-          .indexOf(this.myInput.toUpperCase()) >= 0
-      ) {
-        result.push(this.studentsList[i]);
-      } else if (
-        this.studentsList[i].locality
-          .toUpperCase()
-          .indexOf(this.myInput.toUpperCase()) >= 0
-      ) {
-        result.push(this.studentsList[i]);
-      } else if (
+      }
+      // else if (
+      //   _.includes(this.studentsList[i].alternate_contact, this.myInput)
+      // ) {
+      //   result.push(this.studentsList[i]);
+      // } else if (
+      //   this.studentsList[i].class_group
+      //     .toUpperCase()
+      //     .indexOf(this.myInput.toUpperCase()) >= 0
+      // ) {
+      //   result.push(this.studentsList[i]);
+      // } else if (
+      //   this.studentsList[i].email_id
+      //     .toUpperCase()
+      //     .indexOf(this.myInput.toUpperCase()) >= 0
+      // ) {
+      //   result.push(this.studentsList[i]);
+      // } else if (
+      //   this.studentsList[i].locality
+      //     .toUpperCase()
+      //     .indexOf(this.myInput.toUpperCase()) >= 0
+      // ) {
+      //   result.push(this.studentsList[i]);
+      // } 
+      else if (
         this.studentsList[i].parent_name
           .toUpperCase()
-          .indexOf(this.myInput.toUpperCase()) >= 0
+          .indexOf(this.myInput.toUpperCase()) == 0
       ) {
         result.push(this.studentsList[i]);
       } else if (_.includes(this.studentsList[i].phone_number, this.myInput)) {

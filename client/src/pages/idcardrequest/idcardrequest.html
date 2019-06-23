@@ -1,0 +1,73 @@
+<ion-header>
+ <ion-navbar color="secondary">
+  <ion-buttons left>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-title>
+    ID CARD REQUEST
+  </ion-title>
+  <ion-buttons end>
+    <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>
+  </ion-buttons>
+ </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="search-row search-full">
+    <ion-searchbar
+      [(ngModel)]="myInput"
+      (animated)="true"
+      (placeholder)="Search"
+      (ionInput)="search()"
+    ></ion-searchbar>
+  </div>
+
+  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!students" />
+  <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>
+
+  <ion-list *ngIf="students && students.length">
+ 
+    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results" style="height:100%;">
+     
+        <button ion-item>
+          <div class="col_left indent_left">
+            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>
+            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
+            <br/>
+            <h2 *ngIf="!student.photo" style="color: red;"> 
+              Please upload student image for printing Hall Ticket
+            </h2>
+          </div>
+          <div class="col_right indent_right">
+            <h1>{{student.name}}</h1>
+            <h3 *ngIf="student.gender === 'Male'"> S/O {{student.parent_name}}</h3>
+            <h3 *ngIf="student.gender !== 'Male'"> D/O {{student.parent_name}}</h3>
+            <h2><ion-icon name="phone"></ion-icon> {{student.phone_number}} </h2>
+            <h2>{{student.class_group}}</h2>
+          </div>
+        </button>
+     
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="edit(student)">
+            <ion-icon name="redo"></ion-icon>
+            Edit
+          </button>
+          <button ion-button color="secondary" (click)="print(student)" *ngIf="student.photo">
+            <ion-icon name="undo"></ion-icon>
+            Request ID Card
+          </button>
+        </ion-item-options>
+
+        <ion-item-options side="left">
+          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">
+            <ion-icon name="call"></ion-icon>
+            Contact
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>

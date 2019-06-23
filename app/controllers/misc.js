@@ -12,7 +12,11 @@ var sgMail = require('@sendgrid/mail');
 var _ = require('lodash-node');
 var json2csv = require('json2csv');
 var base64 = require('base-64');
-var AWS = require('aws-sdk')
+var AWS = require('aws-sdk');
+var conversion = require("phantom-html-to-pdf")();
+var htmlToImage = require('html-to-image');
+var image2base64 = require('image-to-base64');
+var PDFImage = require("pdf-image").PDFImage;
 
 var smsUrl = "http://alerts.valueleaf.com/api/v4/?api_key=A172d1e496771a5758651f00704e4ad18";
 var adminNumber = ["9845012849", "9845679966"];
@@ -118,3 +122,45 @@ sendBirthdayEmail = function (student) {
         console.log('Successfully sent b-day mail');
     });
 }
+
+/*
+        Print ID Card
+*/
+
+exports.printIdCard = function (student_id, callbacks) {
+    console.log('Printing admit card');
+    var query = { _id: student_id.student_id };
+    console.log('query: ', query);
+    Student.find(query, function (err, students) {
+        console.log('err: ', err);
+        console.log('students: ', students);
+        if (err) {
+            console.log("Error in getting student: " + err);
+            callbacks.error(err);
+        }
+        if(students && students.length > 0) {
+            var student = students[0];
+            
+            image2base64(student.photo).then(
+                (response) => {
+                    var stringTemplate = fs.readFileSync(path.join(__dirname, '../helpers') + '/idCard.xhtml', "utf8");
+                    stringTemplate = stringTemplate.replace('{{studentName}}', student.name);
+                    stringTemplate = stringTemplate.replace('{{studentClass}}', student.class_group);
+                    stringTemplate = stringTemplate.replace('{{parentName}}', student.parent_name);
+                    stringTemplate = stringTemplate.replace('{{mobileNumber}}', student.phone_number);
+                    stringTemplate = stringTemplate.replace('{{StudentImage}}', 'data:image/*;base64,'+response);
+                    conversion({ html: stringTemplate }, function (err, pdf) {
+                        callbacks.success(pdf);
+                    });
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error); //Exepection error....
+                }
+            )
+        } else {
+            callbacks.error('No student found');
+        }
+    });
+};

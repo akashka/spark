@@ -24,6 +24,15 @@
             <ion-item [hidden]=isAdmin (click)="go_to_promotion()" menuClose>
                 Promotions
             </ion-item>
+            <ion-item [hidden]=isAdmin (click)="go_to_idcardrequest()" menuClose>
+                Request ID Card
+            </ion-item>
+            <ion-item [hidden]=!isAdmin (click)="go_to_approveindent()" menuClose>
+                Approve Indentation
+            </ion-item>
+            <ion-item [hidden]=!isAdmin (click)="go_to_idcardprint()" menuClose>
+                Print ID Card
+            </ion-item>
             <!-- <ion-item [hidden]=!isAdmin (click)="go_to_dispatch()" menuClose>
                 Dispatch
             </ion-item> -->

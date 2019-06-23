@@ -98,7 +98,7 @@ exports.forgotPassword = function(req, res, next){
         }
     });
 }
- 
+
 exports.register = function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;
@@ -159,6 +159,7 @@ exports.update = function(req, res, next){
 
         var id = existingUser._id;
         delete existingUser._id;
+        delete existingUser.__v;
 
         console.log(password);
 
@@ -170,10 +171,20 @@ exports.update = function(req, res, next){
             existingUser.name = name;
             existingUser.active = active;
 
-            console.log(existingUser);
+            var eUser = {
+                updatedAt: existingUser.updatedAt,
+                createdAt: existingUser.createdAt,
+                email: existingUser.email,
+                password: existingUser.password,
+                center: existingUser.center,
+                name: existingUser.name,
+                active: existingUser.active,
+                role: existingUser.role
+            };
 
-            User.findOneAndUpdate( {_id:id}, existingUser, {upsert: true, new: true}, function(err, user){
-                if(err){
+            console.log(eUser);
+
+            User.findOneAndUpdate( {_id:id}, eUser, {upsert: true, new: true}, function(err, user){                if(err){
                     return next(err);
                 }
                 var userInfo = setUserInfo(user);

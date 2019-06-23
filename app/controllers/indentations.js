@@ -252,3 +252,22 @@ sendUpdateSms = function (indentation) {
   }
 
 }
+
+exports.approveIndentation = function (req, res, next) {
+  console.log(" Indentation approved by admin");
+  var indentation = req.body;
+  var id = req.body._id;
+  delete indentation._id;
+  delete indentation.__v;
+
+  Indentation.findOneAndUpdate({ _id: id }, indentation, { upsert: true, new: true }, function (err, indentation) {
+    if (err) {
+      console.log("Error in approving Indentation: " + err);
+      return res.send(err);
+    }
+    console.log("Successfully approved Indentation");
+    // sendUpdateMail(indentation);
+    // sendUpdateSms(indentation);
+    res.json(indentation);
+  });
+}
