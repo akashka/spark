@@ -2062,7 +2062,8 @@ var Auth = Auth_1 = (function () {
     function Auth(http, storage) {
         this.http = http;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        // url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Auth.prototype.checkAuthentication = function () {
         var _this = this;
@@ -2186,7 +2187,6 @@ var Auth = Auth_1 = (function () {
     };
     return Auth;
 }());
-// url = "http://localhost:8080/";
 Auth.userChanged = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
 Auth = Auth_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
@@ -2844,12 +2844,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Students = (function () {
-    // url = "http://localhost:8080/";
     function Students(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        // url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     Students.prototype.getStudents = function () {
         var _this = this;
@@ -3012,12 +3012,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Center = (function () {
-    // url = "http://localhost:8080/";
     function Center(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        // url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     // Function to get list of al the centers
     Center.prototype.searchCenter = function () {
@@ -4955,12 +4955,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var Indentation = (function () {
-    // url = "http://localhost:8080/";
     function Indentation(http, authService, storage) {
         this.http = http;
         this.authService = authService;
         this.storage = storage;
-        this.url = "https://spark-olw.herokuapp.com/";
+        // url = "https://spark-olw.herokuapp.com/";
+        this.url = "http://localhost:8080/";
     }
     // Function to get list of al the Indentations
     Indentation.prototype.searchIndentation = function () {
