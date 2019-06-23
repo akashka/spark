@@ -172,10 +172,21 @@ exports.update = function(req, res, next){
             existingUser.active = active;
             delete existingUser.__v;
             delete existingUser._id;
+            
+            var eUser = {
+                updatedAt: existingUser.updatedAt,
+                createdAt: existingUser.createdAt,
+                email: existingUser.email,
+                password: existingUser.password,
+                center: existingUser.center,
+                name: existingUser.name,
+                active: existingUser.active,
+                role: existingUser.role
+            };
 
-            console.log(existingUser);
+            console.log(eUser);
 
-            User.findOneAndUpdate( {_id:id}, existingUser, {upsert: true, new: true}, function(err, user){
+            User.findOneAndUpdate( {_id:id}, eUser, {upsert: true, new: true}, function(err, user){
                 if(err){
                     return next(err);
                 }
