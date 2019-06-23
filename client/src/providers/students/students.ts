@@ -100,6 +100,23 @@ export class Students {
     });
   }
 
+  editStudent(student){
+    return new Promise((resolve, reject) => {
+      this.storage.get('user').then((user) => {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', this.authService.token);
+
+        this.http.put(this.url+'api/students/editStudent/' + student._id, student, {headers: headers})
+          .subscribe((res) => {
+            resolve(res);
+          }, (err) => {
+              reject(err);
+          });    
+      });
+    });
+  }
+
   sendReportsMail(email_id) {
     return new Promise((resolve, reject) => {
         let headers = new Headers();

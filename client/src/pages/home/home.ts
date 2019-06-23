@@ -160,10 +160,6 @@ export class HomePage {
       });
   }
 
-  viewDidAppear() {
-    Appsee.startScreen("Enquiry");
-  }
- 
   ionViewDidLoad() {
     this.loader = this.loading.create({
       content: 'Please wait...',
@@ -276,7 +272,7 @@ export class HomePage {
     this.today_age_days = this.studentForm.value.today_age.days;
 
     var tempYear = this.studentForm.value.month_date.getYear();
-    if(!this.isCurrentYear) tempYear -= 1;
+    if(!this.isCurrentYear) tempYear += 1;
     this.month_date = this.studentForm.value.month_date.getDate() + "/June/" + ( tempYear + 1901);
     
     this.studentForm.value.month_age.years += 1901;
@@ -284,8 +280,8 @@ export class HomePage {
     this.month_age_months = this.studentForm.value.month_age.months;
     this.month_age_days = this.studentForm.value.month_age.days;
     
-    if(!this.isCurrentYear) this.month_age_years -= 1;
-    if(!this.isCurrentYear) this.studentForm.value.month_age.years -= 1;
+    if(!this.isCurrentYear) this.month_age_years += 1;
+    if(!this.isCurrentYear) this.studentForm.value.month_age.years += 1;
 
     this.class_group = this.calculateClass(this.studentForm.value.month_age);
     this.studentForm.controls['class_group'].setValue(this.class_group);

@@ -60,7 +60,7 @@ export class DispatchPage {
 
     this.indentationService.searchIndentation().then((data) => {
       this.indentations = _.filter(data, function(o) { 
-        return (o.status != 'closed'); 
+        return (o.status != 'closed');
       });
       this.allIndentations = this.indentations;
     }, (err) => {
@@ -235,10 +235,10 @@ export class DispatchPage {
   searchStudent() {
     var result = [];
     for(var i = 0; i < this.all_list_of_students.length; i++) {
-      if (this.all_list_of_students[i].class_type.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
-      else if (this.all_list_of_students[i].class_group.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
-      else if (this.all_list_of_students[i].gender.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
-      else if (this.all_list_of_students[i].student_name.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
+      // if (this.all_list_of_students[i].class_type.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
+      // else if (this.all_list_of_students[i].class_group.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
+      // else if (this.all_list_of_students[i].gender.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
+      if (this.all_list_of_students[i].student_name.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) == 0) { result.push(this.all_list_of_students[i]); } 
       else if (_.includes(this.all_list_of_students[i].phone_number, this.myInputStudent)) { result.push(this.all_list_of_students[i]); } 
       else if (this.all_list_of_students[i].student_id.toUpperCase().indexOf(this.myInputStudent.toUpperCase()) >= 0) { result.push(this.all_list_of_students[i]); } 
     }

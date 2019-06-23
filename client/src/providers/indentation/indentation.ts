@@ -58,4 +58,18 @@ export class Indentation {
     });
   }
 
+  approveIndentation(indentation){
+    return new Promise((resolve, reject) => {
+        let headers = new Headers();
+        headers.append('Authorization', this.authService.token);
+        this.http.put(this.url+'api/indentations/approve/' + indentation._id, indentation, {headers: headers})
+          .map(res => res.json())
+          .subscribe((res) => {
+            resolve(res);
+          }, (err) => {
+            reject(err);
+          });    
+    });
+  }
+
 }

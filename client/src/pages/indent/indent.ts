@@ -4,7 +4,8 @@ import {
       ModalController, 
       AlertController, 
       LoadingController,
-      ToastController
+      ToastController,
+      ActionSheetController
 } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 
@@ -13,6 +14,7 @@ import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
 import { Indentation } from '../../providers/indentation/indentation';
 import { HomePage } from '../home/home';
+import { EditstudentPage } from '../editstudent/editstudent';
 
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
@@ -57,7 +59,8 @@ export class IndentPage {
     public centerService: Center,
     public indentationService: Indentation,
     public toastCtrl: ToastController,
-    public CallNumber: CallNumber
+    public CallNumber: CallNumber,
+    public actionSheetController: ActionSheetController
   ) { }
  
   ionViewDidLoad() {
@@ -100,6 +103,11 @@ export class IndentPage {
  
   add() {
   	this.navCtrl.setRoot(HomePage);
+  }
+
+  edit(student) {
+    this.storage.set('edit_student', student._id);
+    this.navCtrl.setRoot(EditstudentPage);
   }
 
   indent(student) {
@@ -241,12 +249,12 @@ export class IndentPage {
   search() {
     var result = [];
     for(var i = 0; i < this.studentsList.length; i++) {
-      if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (_.includes(this.studentsList[i].alternate_contact, this.myInput)) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
-      else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) { result.push(this.studentsList[i]); } 
+      // else if (_.includes(this.studentsList[i].alternate_contact, this.myInput)) { result.push(this.studentsList[i]); } 
+      // else if (this.studentsList[i].class_group.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      // else if (this.studentsList[i].email_id.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      // else if (this.studentsList[i].locality.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.studentsList[i]); } 
+      else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) { result.push(this.studentsList[i]); } 
       else if (_.includes(this.studentsList[i].phone_number, this.myInput)) { result.push(this.studentsList[i]); } 
     }
     this.students = result;
@@ -305,6 +313,50 @@ export class IndentPage {
         console.log('student data saving failed');
       });
     } 
+  }
+
+  async presentActionSheet(num, email) {
+    const actionSheet = await this.actionSheetController.create({
+      buttons: [
+        {
+          text: "Call",
+          icon: "call",
+          handler: () => {
+            this.callNumber(num);
+          }
+        },
+        {
+          text: "Whatsapp",
+          icon: "logo-whatsapp",
+          handler: () => {
+            window.open(("https://wa.me/91"+num), "_blank"); 
+          }
+        },
+        {
+          text: "SMS",
+          icon: "text",
+          handler: () => {
+            window.open("sms://"+num);
+          }
+        },
+        {
+          text: "Email",
+          icon: "mail",
+          handler: () => {
+            window.open("mailto://"+email);
+          }
+        },
+        {
+          text: "Cancel",
+          icon: "close",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
  
 }

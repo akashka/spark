@@ -6,7 +6,7 @@
     </button>
   </ion-buttons>
   <ion-title>
-    SPARK
+    INDENTATION
   </ion-title>
   <ion-buttons end>
     <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>
@@ -37,7 +37,7 @@
             <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>
             <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
             <br/>
-            <h2 *ngIf="student.study_year != '2018-19'" style="color: red;"> You cannot indent this, admission is not for 2018-19 </h2>
+            <h2 *ngIf="student.study_year != '2019-20'" style="color: red;"> You cannot indent this, admission is not for 2019-20 </h2>
           </div>
           <div class="col_right indent_right">
             <h1>{{student.name}}</h1>
@@ -49,8 +49,12 @@
           </div>
         </button>
      
-        <ion-item-options side="right" *ngIf="student.study_year == '2018-19'">
-          <button ion-button color="info" (click)="indent(student)" *ngIf="!student.indented">
+        <ion-item-options side="right" *ngIf="student.study_year == '2019-20'">
+          <button ion-button color="info" (click)="edit(student)">
+            <ion-icon name="create"></ion-icon>
+            Edit
+          </button>
+          <button ion-button color="secondary" (click)="indent(student)" *ngIf="!student.indented">
             <ion-icon name="redo"></ion-icon>
             Indent
           </button>
@@ -61,7 +65,7 @@
         </ion-item-options>
 
         <ion-item-options side="left">
-          <button ion-button color="secondary" (click)="callNumber(student.phone_number)">
+          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">
             <ion-icon name="call"></ion-icon>
             Contact
           </button>

@@ -41,8 +41,13 @@
             <h1>{{student.name}}</h1>
             <h3 *ngIf="student.gender === 'Male'"> S/O {{student.parent_name}}</h3>
             <h3 *ngIf="student.gender !== 'Male'"> D/O {{student.parent_name}}</h3>
-            <h2><ion-icon name="mail"></ion-icon> {{student.email_id}}</h2>
-            <a (click)="callNumber(student.phone_number)"><ion-icon name="call"></ion-icon> {{student.phone_number}} </a>
+            <a (click)="presentActionSheet(student.phone_number, student.email_id)">
+              <ion-icon name="mail"></ion-icon> {{student.email_id}}
+            </a>
+            <br>
+            <a (click)="presentActionSheet(student.phone_number, student.email_id)">
+              <ion-icon name="call"></ion-icon> {{student.phone_number}} 
+            </a>
             <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->
             <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>
             <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: 'dd/MMM/yyyy'}} </h2>
@@ -58,7 +63,7 @@
         </ion-item-options>
 
         <ion-item-options side="left">
-          <button ion-button color="secondary" (click)="callNumber(student.phone_number)">
+          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">
             <ion-icon name="call"></ion-icon>
             Contact
           </button>

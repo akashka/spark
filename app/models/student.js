@@ -99,6 +99,21 @@ var StudentSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    is_IndentConfirmed: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    idCardRequested: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    idCardPrinted: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     confirmation_date: {},
     indentation_date: {},
     delivery_date: {}

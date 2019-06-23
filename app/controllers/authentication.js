@@ -98,7 +98,7 @@ exports.forgotPassword = function(req, res, next){
         }
     });
 }
- 
+
 exports.register = function(req, res, next){
     var email = req.body.email;
     var password = req.body.password;

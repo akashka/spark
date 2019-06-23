@@ -8,3 +8,10 @@ ionic cordova build --prod --release android
 
 
 an1973il#
+
+
+sudo ANDROID_HOME="/tools/bin" ionic cordova build --prod --release android --verbose
+
+sudo jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore OLWspark.keystore /home/akash/Code/akash/spark/client/platforms/android/build/outputs/apk/android-release-unsigned.apk OLWspark
+
+sudo zipalign -v -p 4 /home/akash/Code/akash/spark/client/platforms/android/build/outputs/apk/android-release-unsigned.apk OLWspark.apk

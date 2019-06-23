@@ -2,10 +2,14 @@ var AuthenticationController = require('./controllers/authentication'),
     StudentController = require('./controllers/students'),  
     CenterController = require('./controllers/centers'),  
     IndentationController = require('./controllers/indentations'),  
+    MiscController = require('./controllers/misc'),
     express = require('express'),
     passportService = require('../config/passport'),
-    passport = require('passport');
- 
+    passport = require('passport'),
+    path = require('path'),
+    fs = require('fs'),
+    htmlToImage = require('html-to-image');
+
 var requireAuth = passport.authenticate('jwt', {session: false}),
     requireLogin = passport.authenticate('local', {session: false});
  
@@ -23,6 +27,7 @@ module.exports = function(app){
         studentRoutes = express.Router(),
         centerRoutes = express.Router();
         indentationRoutes = express.Router();
+        miscRoutes = express.Router();
 
     // Auth Routes
     apiRoutes.use('/auth', authRoutes);
@@ -42,6 +47,7 @@ module.exports = function(app){
     studentRoutes.get('/allStudents', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.getAllStudents);
     studentRoutes.get('/inactiveStudents', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.getInactiveStudents);
     studentRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.createStudent);
+    studentRoutes.put('/editStudent/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.editStudent);
     studentRoutes.put('/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.updateStudent);
     studentRoutes.put('/sendReportsMail/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.sendReportsMail);
     studentRoutes.put('/sendIndentationReport/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.sendIndentationReport);
@@ -54,10 +60,33 @@ module.exports = function(app){
  
     // Indentation Routes
     apiRoutes.use('/indentations', indentationRoutes); 
+    indentationRoutes.put('/approve/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.approveIndentation);
     indentationRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.getIndentations);
     indentationRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.createIndentation);
     indentationRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.updateIndentation);
 
+    // Misc Routes
+    apiRoutes.use('/misc', miscRoutes);
+    miscRoutes.get('/idcard/:_id', function (req, res) {
+        MiscController.printIdCard({
+            student_id: req.params._id,
+        }, {
+            success: function (pdf) {
+                var output = fs.createWriteStream('./id_card.pdf');
+                pdf.stream.pipe(output);
+                let filename = "id_card";
+                filename = encodeURIComponent(filename) + '.pdf';
+                var file = fs.readFileSync(path.join(__dirname, '..') + '/id_card.pdf');
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
+                pdf.stream.pipe(res);
+            },
+            error: function (err) {
+                res.status(403).send(err);
+            }
+        });
+    });
+    
     // Set up routes
     app.use('/api', apiRoutes);
  

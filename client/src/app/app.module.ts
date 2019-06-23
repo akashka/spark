@@ -22,6 +22,10 @@ import { DispatchPage } from '../pages/dispatch/dispatch';
 import { PromotionPage } from '../pages/promotion/promotion';
 import { AdmineditPage } from '../pages/adminedit/adminedit';
 import { DeletestudentPage } from '../pages/deletestudent/deletestudent';
+import { ApproveindentPage } from '../pages/approveindent/approveindent';
+import { IdcardrequestPage } from '../pages/idcardrequest/idcardrequest';
+import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
+import { EditstudentPage } from '../pages/editstudent/editstudent';
 
 // Providers
 import { Students } from '../providers/students/students';
@@ -50,7 +54,11 @@ import { Camera } from '@ionic-native/camera';
     DispatchPage,
     PromotionPage,
     AdmineditPage,
-    DeletestudentPage
+    DeletestudentPage,
+    ApproveindentPage,
+    IdcardrequestPage,
+    IdcardprintPage,
+    EditstudentPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +83,11 @@ import { Camera } from '@ionic-native/camera';
     DispatchPage,
     PromotionPage,
     AdmineditPage,
-    DeletestudentPage
+    DeletestudentPage,
+    ApproveindentPage,
+    IdcardrequestPage,
+    IdcardprintPage,
+    EditstudentPage
   ],
   providers: [
     IonicStorageModule,

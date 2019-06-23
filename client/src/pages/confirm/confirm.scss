@@ -8,6 +8,12 @@
 		margin: 0;
 	}
 
-	.booking_card .h4 .ion-icon {
+	.booking_card .h6 .ion-icon {
 		color: #488aff;
+	}
+
+	.booking_card h6, .booking_card a {
+		margin-top: 0.5rem !important;
+		margin-bottom: 0.5rem;
+		font-weight: normal;
 	}
