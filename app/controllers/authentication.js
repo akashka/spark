@@ -172,7 +172,7 @@ exports.update = function(req, res, next){
             existingUser.active = active;
             delete existingUser.__v;
             delete existingUser._id;
-update
+
             console.log(existingUser);
 
             User.findOneAndUpdate( {_id:id}, existingUser, {upsert: true, new: true}, function(err, user){
