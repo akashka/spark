@@ -165,7 +165,7 @@ export class HomePage {
       content: 'Please wait...',
     });
 
-    this.studentForm.controls['study_year'].setValue("2019-20");
+    this.studentForm.controls['study_year'].setValue("2020-21");
     this.onYearChange();
 
     this.storage.get('user').then((users) => {
@@ -203,7 +203,7 @@ export class HomePage {
         this.studentForm.controls['class_group'].setValue('');
         this.studentForm.controls['photo'].setValue('');
         this.studentForm.controls['dob'].setValue('');
-        this.studentForm.controls['study_year'].setValue("2019-20");
+        this.studentForm.controls['study_year'].setValue("2020-21");
         this.today_age_years = '';
         this.today_age_months = '';
         this.today_age_days= '';
@@ -251,7 +251,7 @@ export class HomePage {
   }
 
   onYearChange = () => {
-    this.isCurrentYear = (this.studentForm.value.study_year == "2019-20") ? true : false;
+    this.isCurrentYear = (this.studentForm.value.study_year == "2020-21") ? true : false;
     if(this.studentForm.value.dob != '') this.onDobChange();
   }
 
