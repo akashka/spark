@@ -33,6 +33,7 @@
         "@ionic-native/transfer": "3.14.0",
         "@ionic/storage": "2.0.1",
         "call-number": "^1.0.1",
+        "chart.js": "^2.9.3",
         "cordova-android": "^6.2.3",
         "cordova-plugin-appsee": "^2.4.11",
         "cordova-plugin-camera": "^2.4.1",
@@ -58,6 +59,7 @@
         "ngx-google-places-autocomplete": "^2.0.1",
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
+        "swiper": "^5.2.1",
         "zone.js": "0.8.12"
     },
     "devDependencies": {
@@ -80,7 +82,8 @@
             "mx.ferreyra.callnumber": {},
             "cordova-uxcam": {},
             "cordova-plugin-appsee": {},
-            "cordova-sms-plugin": {}
+            "cordova-sms-plugin": {},
+            "cordova-plugin-camera": {}
         },
         "platforms": [
             "android"

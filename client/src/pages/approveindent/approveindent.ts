@@ -40,6 +40,9 @@ export class ApproveindentPage {
   public myInputStudent: String = "";
   public loading: any;
   public students: any = [];
+  public centers: any = [];
+  public myInput: String = '';
+  public mySelect: String = '';
 
   constructor(
     public navCtrl: NavController,
@@ -65,11 +68,17 @@ export class ApproveindentPage {
 
     this.indentationService.searchIndentation().then((data) => {
       this.indentations = _.filter(data, function (o) {
-        return (o.status == 'open' && !o.is_IndentConfirmed);
+        return (!o.is_IndentConfirmed);
       });
       this.allIndentations = this.indentations;
     }, (err) => {
       console.log("not allowed");
+    });
+
+    this.centerService.searchCenter().then((result) => {
+  		this.centers = result;
+  	}, (err) => {
+    	console.log(err);
     });
 
     this.studentService.getStudents().then((data) => {
@@ -173,6 +182,19 @@ export class ApproveindentPage {
 
   add() {
   	this.navCtrl.setRoot(HomePage);
+  }
+
+  onSelectChange() {
+    this.myInput = '';
+    if(this.mySelect === '') {      
+      this.indentations = this.allIndentations;
+    } else {
+      this.indentations = [];
+      for(var s=0; s<this.allIndentations.length; s++) {
+        if(this.allIndentations[s].center_code === this.mySelect)
+          this.indentations.push(this.allIndentations[s]);
+      }
+    }
   }
 
 }

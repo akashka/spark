@@ -1,56 +1,73 @@
 <ion-menu side="left" [content]="content">
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>Menu</ion-title>
-        </ion-toolbar>
-    </ion-header>        
     <ion-content>
+        <div class="profile-header">
+            <div class="col_left">
+                <img class="profile-photo" *ngIf="user && user.photo" src={{user.photo}} />
+                <img class="profile-photo" *ngIf="user && !user.photo" src="assets/images/avatar.png" />
+            </div>
+            <div class="col_right">
+                <h3 style="color: #f06559; font-weight: bolder;">Welcome</h3>
+                <h4 class="m-0" style="color: slateblue; font-weight: bolder;">{{user.name}}</h4>
+                <p class="m-0" style="color: slateblue; font-weight: bolder;">{{user.email}}</p>
+                <br />
+                <h6 class="m-0" style="color: mediumslateblue;">{{user.center}} - {{user.role}}</h6>
+            </div>
+            <!-- <ion-fab top start fixed>
+                <button ion-fab mini>
+                    <ion-icon name="create"></ion-icon>
+                </button>
+            </ion-fab> -->
+        </div>
         <ion-list>
-        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>
+            <ion-item (click)="go_to_home()" menuClose>
+                Home
+            </ion-item>
+            <ion-item *ngIf="isAdmin" (click)="go_to_center()" menuClose>
                 Centers
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>
+            <ion-item *ngIf="isAdmin" (click)="go_to_signup()" menuClose>
                 Users
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_home()" menuClose>
+            <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_enquiry()" menuClose>
                 Enquiry
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_search()" menuClose>
+            <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_search()" menuClose>
                 Confirm
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_indent()" menuClose>
+            <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_indent()" menuClose>
                 Indentations
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_promotion()" menuClose>
+            <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_promotion()" menuClose>
                 Promotions
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_idcardrequest()" menuClose>
+            <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_idcardrequest()" menuClose>
                 Request ID Card
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_approveindent()" menuClose>
+            <ion-item *ngIf="isAdmin" (click)="go_to_approveindent()" menuClose>
                 Approve Indentation
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_idcardprint()" menuClose>
+            <ion-item *ngIf="isAdmin" (click)="go_to_idcardprint()" menuClose>
                 Print ID Card
             </ion-item>
-            <!-- <ion-item [hidden]=!isAdmin (click)="go_to_dispatch()" menuClose>
+            <ion-item *ngIf="isDispatcher" (click)="go_to_dispatch()" menuClose>
                 Dispatch
-            </ion-item> -->
-            <ion-item (click)="go_to_reports()" menuClose>
+            </ion-item>
+            <ion-item *ngIf="isAdmin || isCenterAdmin || isCounsellor" (click)="go_to_reports()" menuClose>
                 Reports
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_adminedit()" menuClose>
+            <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_studentslist()" menuClose>
+                Admitted Students
+            </ion-item>
+            <ion-item *ngIf="isAdmin" (click)="go_to_adminedit()" menuClose>
                 Edit Student (Admin)
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_deletestudent()" menuClose>
+            <ion-item *ngIf="isAdmin" (click)="go_to_deletestudent()" menuClose>
                 Restore Student (Admin)
             </ion-item>
-            <ion-item (click)="go_to_login()" menuClose>
+            <ion-item (click)="go_to_login()" menuClose
+                style="bottom: 0; position: fixed; background-color: red; color: white;">
                 SignOut
             </ion-item>
-            <h1 style="bottom: 10%;position: absolute;padding: 10px;">
-                Logged in from {{userCenter}}
-            </h1>
         </ion-list>
     </ion-content>
 </ion-menu>

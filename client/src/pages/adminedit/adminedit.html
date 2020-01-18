@@ -95,7 +95,7 @@
         <!-- Name of the student -->
         <ion-item>
             <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>
-            <ion-input type="text" formControlName="name"></ion-input>
+            <ion-input type="text" formControlName="name" (ionChange)="onNameChange()"></ion-input>
         </ion-item>
         <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">
           Please enter a valid name
@@ -133,6 +133,15 @@
         </ion-item>
         <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">
           Please enter a valid name
+        </p>
+
+        <!-- Email Id of the Parent  -->
+        <ion-item>
+          <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>
+          <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>
+        </ion-item>
+        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">
+          Please enter a valid E-mail Id
         </p>
  
         <!-- Phone no of the Parent  -->
@@ -243,6 +252,17 @@
         </p>
 
         <br><br><br><br>
+
+        <ion-toolbar color="primary" class="upload_button">
+          <ion-buttons>
+            <button ion-button icon-left (click)="getPicture()">
+              <ion-icon name="camera"></ion-icon>
+              <p *ngIf="studentForm.controls.photo.value == ''">Select Image</p>
+              <p *ngIf="studentForm.controls.photo.value != ''">Change Image</p>
+            </button>
+            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />
+          </ion-buttons>
+        </ion-toolbar>
 
       </form>
  

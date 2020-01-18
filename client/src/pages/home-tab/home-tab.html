@@ -1,0 +1,151 @@
+<ion-content style="background:#9e9e9e1a;">
+    <div class="fixed-content">
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>MARKETING</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> {{marketingNumber}} </ion-card-title>
+                        <span class="high-class">{{marketingThisYearNumber}} this year</span>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>CONVERSION</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> {{conversionNumber}} </ion-card-title>
+                        <span [class]="checkClass(conversionNumber, marketingNumber)">+
+                            {{conversionNumber / marketingNumber * 100 | number : '1.0-0'}}% of target</span>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>STUDENTS</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> {{studentNumber}} </ion-card-title>
+                        <span [class]="checkClass(lastYearStudentNumber, studentNumber)">+
+                            {{lastYearStudentNumber / studentNumber * 100 | number : '1.0-0'}}% from last
+                            year</span>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>PENDING INDENTATIONS</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> {{pendingIndentationNumber}} </ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>STUDENTS IN CLASSES</b>
+                    </ion-card-content>
+                    <canvas #classStudentsCanvas></canvas>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>STUDENTS IN CENTERS</b>
+                    </ion-card-content>
+                    <canvas #centerStudentsCanvas></canvas>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor' || user.role == 'dispatcher'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>TOTAL INDENTATIONS</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> {{totalIndentations}} </ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>OPEN INDENTATIONS</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> {{totalOpenIndentations}} </ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>SALES</b>
+                    </ion-card-content>
+                    <ion-card-header>
+                        <ion-card-title> &#8377; {{totalIndentationsAmount | number:'.2'}} </ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>ADMISSION TYPE BREAKUP</b>
+                    </ion-card-content>
+                    <canvas #classTypeStudentsCanvas></canvas>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
+            <ion-col>
+                <ion-card>
+                    <ion-card-content>
+                        <b>BIRTHDAY TODAY</b>
+                    </ion-card-content>
+                    <ion-card-content>
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let student of todayBirthdayStudents">
+                                    <img class="profile-photo" *ngIf="student.photo" src={{student.photo}} />
+                                    <img class="profile-photo" *ngIf="!student.photo" src="assets/images/avatar.png" />
+                                    <h6>{{student.name}}</h6>
+                                    <p>{{student.center}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-card-content>
+                    <ion-card-content *ngIf="todayBirthdayStudents.length <= 0">
+                        <h5>No Birthday Found Today!</h5>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+    </div>
+</ion-content>

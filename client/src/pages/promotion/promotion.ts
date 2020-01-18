@@ -10,7 +10,7 @@ import {
 } from 'ionic-angular';
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
-import { HomePage } from '../home/home';
+import { EnquiryPage } from '../enquiry/enquiry';
 import { ConfirmPage } from '../confirm/confirm';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
@@ -89,7 +89,7 @@ export class PromotionPage {
   }
  
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.setRoot(EnquiryPage);
   }
 
   callNumber(num) {

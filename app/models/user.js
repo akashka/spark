@@ -19,8 +19,8 @@ var UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin','centeradmin','counsellor','dispatcher'],
-        default: 'counsellor',
+        enum: ['admin','centeradmin','counsellor','dispatcher','teacher','parent'],
+        default: 'parent',
         required: true
     },
     center: {
@@ -30,6 +30,27 @@ var UserSchema = new mongoose.Schema({
     active: {
         type: Boolean,
         required: true
+    },
+    phone_no: {
+        type: String
+    },
+    whatsapp_no: {
+        type: String
+    },
+    dob: {
+        type: Date
+    },
+    gender: {
+        type: String
+    },
+    photo: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    class_group: {
+        type: Array
     }
  
 }, {

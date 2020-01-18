@@ -11,6 +11,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 // Pages
 import { HomePage } from '../pages/home/home';
+import { EnquiryPage } from '../pages/enquiry/enquiry';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { SearchPage } from '../pages/search/search';
@@ -26,6 +27,11 @@ import { ApproveindentPage } from '../pages/approveindent/approveindent';
 import { IdcardrequestPage } from '../pages/idcardrequest/idcardrequest';
 import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
 import { EditstudentPage } from '../pages/editstudent/editstudent';
+import { StudentslistPage } from '../pages/studentslist/studentslist';
+
+import { HomeTab } from '../pages/home-tab/home-tab';
+import { NotificationTab } from '../pages/notification-tab/notification-tab';
+import { ProfileTab } from '../pages/profile-tab/profile-tab';
 
 // Providers
 import { Students } from '../providers/students/students';
@@ -44,6 +50,7 @@ import { Camera } from '@ionic-native/camera';
   declarations: [
     MyApp,
     HomePage,
+    EnquiryPage,
     LoginPage,
     SignupPage,
     SearchPage,
@@ -58,7 +65,11 @@ import { Camera } from '@ionic-native/camera';
     ApproveindentPage,
     IdcardrequestPage,
     IdcardprintPage,
-    EditstudentPage
+    EditstudentPage,
+    StudentslistPage,
+    HomeTab,
+    NotificationTab,
+    ProfileTab
   ],
   imports: [
     BrowserModule,
@@ -73,6 +84,7 @@ import { Camera } from '@ionic-native/camera';
   entryComponents: [
     MyApp,
     HomePage,
+    EnquiryPage,
     LoginPage,
     SignupPage,
     SearchPage,
@@ -87,7 +99,11 @@ import { Camera } from '@ionic-native/camera';
     ApproveindentPage,
     IdcardrequestPage,
     IdcardprintPage,
-    EditstudentPage
+    EditstudentPage,
+    StudentslistPage,
+    HomeTab,
+    NotificationTab,
+    ProfileTab
   ],
   providers: [
     IonicStorageModule,

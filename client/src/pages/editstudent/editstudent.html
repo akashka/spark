@@ -9,7 +9,7 @@
     EDIT STUDENT
   </ion-title>
   <ion-buttons end>
-    <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>
+    <!-- <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button> -->
   </ion-buttons>
  </ion-navbar>
 </ion-header>
@@ -22,7 +22,7 @@
         <!-- Name of the student -->
         <ion-item>
             <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>
-            <ion-input type="text" formControlName="name" [disabled]="!isEditable"></ion-input>
+            <ion-input type="text" formControlName="name" [disabled]="!isEditable" (ionChange)="onNameChange()"></ion-input>
         </ion-item>
         <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">
           Please enter a valid name

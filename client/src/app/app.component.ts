@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, ItemGroup } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 
 // Pages
 import { HomePage } from '../pages/home/home';
+import { EnquiryPage } from '../pages/enquiry/enquiry';
 import { SearchPage } from '../pages/search/search';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
@@ -18,6 +19,7 @@ import { DeletestudentPage } from '../pages/deletestudent/deletestudent';
 import { IdcardrequestPage } from '../pages/idcardrequest/idcardrequest';
 import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
 import { ApproveindentPage } from '../pages/approveindent/approveindent';
+import { StudentslistPage } from '../pages/studentslist/studentslist';
 
 // Services
 import { Auth } from '../providers/auth/auth';
@@ -33,8 +35,11 @@ export class MyApp {
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
   public isDispatcher: Boolean = false;
+  public isTeacher: Boolean = false;
+  public isParent: Boolean = false;
   public showMenu: Boolean = false;
   public userCenter: String = "";
+  public user: any = {};
 
   userSubscription;
 
@@ -57,30 +62,66 @@ export class MyApp {
             this.isCounsellor = true;
             this.isDispatcher = false;
             this.isAdmin = false;
+            this.isCenterAdmin = false;
+            this.isTeacher = false;
+            this.isParent = false;
           }
           else if(user.role === "dispatcher") {
             this.isDispatcher = true;
             this.isCounsellor = false;
             this.isAdmin = false;
+            this.isCenterAdmin = false;
+            this.isTeacher = false;
+            this.isParent = false;
           } 
           else if(user.role === "admin") {
             this.isAdmin = true;
             this.isCounsellor = false;
             this.isDispatcher = false;
+            this.isCenterAdmin = false;
+            this.isTeacher = false;
+            this.isParent = false;
           } 
           else if(user.role === "centerAdmin") {
             this.isCenterAdmin = true;
-          }
-          else {
-            this.isCounsellor = true;
             this.isAdmin = false;
+            this.isCounsellor = false;
+            this.isDispatcher = false;
+            this.isTeacher = false;
+            this.isParent = false;
+          } else if(user.role === "teacher") {
+            this.isTeacher = true;
+            this.isCenterAdmin = false;
+            this.isAdmin = false;
+            this.isCounsellor = false;
+            this.isDispatcher = false;
+            this.isParent = false;
+          } else if(user.role === "parent") {
+            this.isParent = true;
+            this.isCenterAdmin = false;
+            this.isAdmin = false;
+            this.isCounsellor = false;
+            this.isDispatcher = false;
+            this.isTeacher = false;
+          } else {
+            this.isParent = true;
+            this.isCenterAdmin = false;
+            this.isAdmin = false;
+            this.isCounsellor = false;
+            this.isDispatcher = false;
+            this.isTeacher = false;
           }
           this.userCenter = user.center;
+          this.user = user;
         }
   }
 
   go_to_home(){
     this.nav.setRoot(HomePage);  
+  }
+
+  go_to_enquiry(){
+    this.nav.setRoot(EnquiryPage);  
   }
 
   go_to_search(){
@@ -134,6 +175,10 @@ export class MyApp {
 
   go_to_approveindent(){
     this.nav.setRoot(ApproveindentPage);
+  }
+
+  go_to_studentslist() {
+    this.nav.setRoot(StudentslistPage);
   }
 
 }

@@ -1,0 +1,59 @@
+<ion-content>
+  <div class="fixed-content">
+
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveProfile()">
+      
+      <ion-list>
+
+        <ion-item>
+          <ion-label floating class="label_here">Name</ion-label>
+          <ion-input class="inputFields" type="text" formControlName="name" (keyup)="changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating class="label_here">Phone No</ion-label>
+          <ion-input class="inputFields" type="number" formControlName="phone_no" (keyup)="changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating class="label_here">Whatsapp No</ion-label>
+          <ion-input class="inputFields" type="number" formControlName="whatsapp_no" (keyup)="changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating class="label_here">Date Of Birth</ion-label>
+          <ion-datetime class="inputFields" displayFormat="DD/MMM/YYYY" formControlName="dob" (ionChange)="changedSmtng()" disabled="{{isDisabled}}"></ion-datetime>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label floating>Gender</ion-label>
+          <ion-select class="inputFields" formControlName="gender" (ionChange)="changedSmtng()" disabled="{{isDisabled}}">
+            <ion-option value="female">Female</ion-option>
+            <ion-option value="male">Male</ion-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item>
+            <ion-label floating>Address</ion-label>
+            <ion-input class="inputFields" type="text" formControlName="address" (ionChange)="onLocalityChange($event);changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+        </ion-item>
+
+        <ion-list>
+          <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description);changedSmtng()">
+            <ion-label>{{loc.description}}</ion-label>
+          </ion-item>
+        </ion-list>
+
+      </ion-list>
+
+    </form>
+  </div>
+</ion-content>
+ 
+<ion-footer no-border>
+  <ion-toolbar transparent>
+    <button ion-button full (click)="editProfile()" class="editSaveToggleBtn">
+      EDIT
+    </button>
+  </ion-toolbar>
+</ion-footer>

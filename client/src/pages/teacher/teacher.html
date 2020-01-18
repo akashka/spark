@@ -1,0 +1,129 @@
+ <ion-header>
+   <ion-navbar color="secondary">
+     <ion-buttons left>
+       <button ion-button menuToggle>
+         <ion-icon name="menu"></ion-icon>
+       </button>
+     </ion-buttons>
+     <ion-title>Teacher</ion-title>
+   </ion-navbar>
+ </ion-header>
+
+ <ion-content>
+
+   <div class="search-row">
+     <ion-searchbar [(ngModel)]="myInput" (animated)="true" (placeholder)="Search" (ionInput)="search()">
+     </ion-searchbar>
+     <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">
+       <ion-option *ngFor="let user of users" [value]="user.name">{{user.name}}</ion-option>
+     </ion-select>
+   </div>
+
+   <ion-row class="account-form">
+     <ion-col>
+       <ion-list inset>
+
+         <ion-item *ngIf="!existingUser">
+           <ion-label floating>
+             <ion-icon name="people"></ion-icon> Center*
+           </ion-label>
+           <ion-select interface="popover" [(ngModel)]="center">
+             <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>
+           </ion-select>
+         </ion-item>
+
+         <ion-item *ngIf="existingUser">
+           <ion-label floating>
+             <ion-icon name="people"></ion-icon> Center*
+           </ion-label>
+           <ion-input [(ngModel)]="center" [readonly]=true type="text"></ion-input>
+         </ion-item>
+
+         <ion-item *ngIf="!existingUser">
+           <ion-label floating>
+             <ion-icon name="mail"></ion-icon> Email*
+           </ion-label>
+           <ion-input [(ngModel)]="email" (ionChange)="onEmailChange()" (ionChange)="checkEmail()" required
+             type="email"></ion-input>
+         </ion-item>
+
+         <ion-item *ngIf="existingUser">
+           <ion-label floating>
+             <ion-icon name="mail"></ion-icon> Email*
+           </ion-label>
+           <ion-input [(ngModel)]="email" [readonly]=true type="email"></ion-input>
+         </ion-item>
+
+         <p class="error-message" *ngIf="isExisting">Email already exists</p>
+
+         <ion-item>
+           <ion-label floating>
+             <ion-icon name="person-add"></ion-icon>
+             Name*
+           </ion-label>
+           <ion-input [(ngModel)]="name"></ion-input>
+         </ion-item>
+
+         <ion-item>
+           <ion-label floating>
+             <ion-icon name="person-add"></ion-icon> Phone No
+           </ion-label>
+           <ion-input class="inputFields" type="number" [(ngModel)]="phone_no"></ion-input>
+         </ion-item>
+
+         <ion-item>
+           <ion-label floating>
+             <ion-icon name="person-add"></ion-icon> Whatsapp No
+           </ion-label>
+           <ion-input class="inputFields" type="number" [(ngModel)]="whatsapp_no">
+           </ion-input>
+         </ion-item>
+
+         <ion-item>
+           <ion-label floating>
+             <ion-icon name="person-add"></ion-icon> Date Of Birth
+           </ion-label>
+           <ion-datetime class="inputFields" displayFormat="DD/MMM/YYYY" [(ngModel)]="dob"></ion-datetime>
+         </ion-item>
+
+         <ion-item>
+           <ion-label floating>
+             <ion-icon name="person-add"></ion-icon> Gender
+           </ion-label>
+           <ion-select class="inputFields" [(ngModel)]="gender">
+             <ion-option value="female">Female</ion-option>
+             <ion-option value="male">Male</ion-option>
+           </ion-select>
+         </ion-item>
+
+         <ion-item>
+           <ion-label floating>
+             <ion-icon name="person-add"></ion-icon> Address
+           </ion-label>
+           <ion-input class="inputFields" type="text" [(ngModel)]="address" (ionChange)="onLocalityChange($event);"></ion-input>
+         </ion-item>
+
+         <ion-list>
+           <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description);">
+             <ion-label>{{loc.description}}</ion-label>
+           </ion-item>
+         </ion-list>
+
+         <ion-item>
+           <ion-label>Active</ion-label>
+           <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>
+         </ion-item>
+
+       </ion-list>
+
+     </ion-col>
+   </ion-row>
+
+ </ion-content>
+
+ <ion-footer>
+   <div class="gm_drawer_footer_wrapper">
+     <button ion-button (click)="save()" *ngIf="btnText == 'Save'" class="continue-button">{{ btnText }}</button>
+     <button ion-button (click)="update()" *ngIf="btnText != 'Save'" class="continue-button">{{ btnText }}</button>
+   </div>
+ </ion-footer>

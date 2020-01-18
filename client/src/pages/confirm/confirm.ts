@@ -269,20 +269,37 @@ export class ConfirmPage {
   }
 
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        quality: 1,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 10,
-        targetHeight: 10
-      }).then((data) => {
-        this.confirmForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.fileInput.nativeElement.click();
-    }
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Image Source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.fileInput.nativeElement.click();
+          }
+        },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.camera.getPicture({
+              quality: 1,
+              destinationType: this.camera.DestinationType.DATA_URL,
+              targetWidth: 10,
+              targetHeight: 10
+            }).then((data) => {
+              this.confirmForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
+            }, (err) => {
+              alert('Unable to take photo');
+            })
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   processWebImage(event) {

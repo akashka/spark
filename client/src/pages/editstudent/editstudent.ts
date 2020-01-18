@@ -105,7 +105,9 @@ export class EditstudentPage {
         
         uniform_size: ['', Validators.compose([Validators.required])],
         
-        shoe_size: ['', Validators.compose([Validators.required])]
+        shoe_size: ['', Validators.compose([Validators.required])],
+
+        photo: [''],
 
       });
   }
@@ -170,12 +172,25 @@ export class EditstudentPage {
     toast.present();
   }
 
+  toTitleCase(str) {
+    return str.replace(
+        /\w\S*/g,
+        function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+  }
+
   onNameChange = () => {
-    this.studentForm.value.name = this.studentForm.value.name.toUpperCase();
+    this.studentForm.value.name = this.toTitleCase(this.studentForm.value.name);
+    this.studentForm.value.name = this.studentForm.value.name.replace(/\./g,' ');
+    this.studentForm.controls['name'].setValue(this.studentForm.value.name);
   }
 
   onEmailChange = () => {
     this.studentForm.value.email_id = this.studentForm.value.email_id.toLowerCase();
+    this.studentForm.value.email_id = this.studentForm.value.email_id.replace(/\s/g,'');
+    this.studentForm.controls['email_id'].setValue(this.studentForm.value.email_id);
     this.checkMatching();
   }
 
@@ -306,6 +321,7 @@ export class EditstudentPage {
       this.student.uniform_size = this.studentForm.value.uniform_size;
       this.student.class_type = this.studentForm.value.class_type;
       this.student.shoe_size = this.studentForm.value.shoe_size;
+      this.student.photo = this.studentForm.value.photo;
 
       this.studentService.editStudent(this.student).then((result) => {
         this.loader.dismiss();
@@ -431,20 +447,37 @@ export class EditstudentPage {
   }
 
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        quality: 1,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 10,
-        targetHeight: 10
-      }).then((data) => {
-        this.studentForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.fileInput.nativeElement.click();
-    }
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Image Source',
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.fileInput.nativeElement.click();
+          }
+        },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.camera.getPicture({
+              quality: 1,
+              destinationType: this.camera.DestinationType.DATA_URL,
+              targetWidth: 10,
+              targetHeight: 10
+            }).then((data) => {
+              this.studentForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
+            }, (err) => {
+              alert('Unable to take photo');
+            })
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   processWebImage(event) {

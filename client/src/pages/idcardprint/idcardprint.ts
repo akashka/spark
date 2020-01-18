@@ -30,6 +30,8 @@ export class IdcardprintPage {
   public studentsList: any;
   public myInput: string;
   public loader: any;
+  public centers: any;
+  public mySelect: string = '';
 
   constructor(
     public navCtrl: NavController, 
@@ -54,6 +56,11 @@ export class IdcardprintPage {
   fetchData() {
     this.loader = this.loading.create({
       content: 'Please wait...',
+    });
+    this.centerService.searchCenter().then((result) => {
+  		this.centers = result;
+  	}, (err) => {
+    	console.log(err);
     });
     this.studentService.getStudents().then((data) => {
       this.students = _.filter(data, function(o) { 
@@ -186,6 +193,19 @@ export class IdcardprintPage {
 
   add() {
   	this.navCtrl.setRoot(HomePage);
+  }
+
+  onSelectChange() {
+    this.myInput = '';
+    if(this.mySelect === '') {      
+      this.students = this.studentsList;
+    } else {
+      this.students = [];
+      for(var s=0; s<this.studentsList.length; s++) {
+        if(this.studentsList[s].center === this.myInput)
+          this.students.push(this.studentsList[s]);
+      }
+    }
   }
  
 }

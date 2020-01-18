@@ -31,6 +31,8 @@ export class IdcardrequestPage {
   public studentsList: any;
   public myInput: string;
   public loader: any;
+  public classes: Array<String> = ['Play Group', 'Nursery', 'LKG', 'UKG'];
+  public mySelect: String = '';
 
   constructor(
     public navCtrl: NavController, 
@@ -131,7 +133,7 @@ export class IdcardrequestPage {
 
   edit(student) {
     this.storage.set('edit_student', student._id);
-    this.navCtrl.setRoot(EditstudentPage);
+    this.navCtrl.push(EditstudentPage);
   }
 
   // Function to search for a student dynamically based on an input
@@ -196,6 +198,19 @@ export class IdcardrequestPage {
 
   add() {
   	this.navCtrl.setRoot(HomePage);
+  }
+
+  onSelectChange() {
+    this.myInput = '';
+    if(this.mySelect === '') {      
+      this.students = this.studentsList;
+    } else {
+      this.students = [];
+      for(var s=0; s<this.studentsList.length; s++) {
+        if(this.studentsList[s].class_group === this.mySelect)
+          this.students.push(this.studentsList[s]);
+      }
+    }
   }
  
 }

@@ -97,7 +97,7 @@ export class LoginPage {
 
         this.loginForm.valueChanges.subscribe(data => {
           this.loginForm.setValue({
-            email: (data.email).toLowerCase(),
+            email: this.onEmailChange(data.email),
             password: data.password
           },
           {emitEvent: false});
@@ -105,7 +105,7 @@ export class LoginPage {
 
         this.forgotPasswordForm.valueChanges.subscribe(data => {
           this.forgotPasswordForm.setValue({
-            email: (data.email).toLowerCase()
+            email: this.onEmailChange(data.email)
           },
           {emitEvent: false});
         });
@@ -122,6 +122,12 @@ export class LoginPage {
             console.log("Not already authorized");
             this.loading.dismiss();
         });
+    }
+
+    onEmailChange(email_id) {
+      email_id = email_id.toLowerCase();
+      email_id = email_id.replace(/\s/g,'');
+      return email_id;  
     }
  
     login(){

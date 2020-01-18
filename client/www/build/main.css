@@ -25200,6 +25200,41 @@ ion-navbar.toolbar {
   }
 }
 
+.m-0 {
+  margin: 0;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.profile-header {
+  width: 100% !important;
+  height: 150px !important;
+}
+
+.profile-header:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 25%;
+  background: url("../assets/images/sky_background.jpg") !important;
+  background-position: center;
+  background-size: cover !important;
+  filter: blur(1px);
+  -moz-filter: blur(1px);
+  -webkit-filter: blur(1px);
+  -o-filter: blur(1px);
+  -webkit-transform: rotate(180deg) scaleX(-1);
+  transform: rotate(180deg) scaleX(-1);
+}
+
+.profile-header .col_left .profile-photo {
+  margin-top: 2rem;
+  margin-left: 1rem;
+  position: absolute;
+}
+
 .ios .toolbar-background, .md .toolbar-background {
   position: fixed;
   top: 0;
@@ -25721,6 +25756,161 @@ textarea.text-input {
   border-radius: 10px;
 }
 
+.ios, .md {
+  background-image: url("../assets/images/15549a14589707.5628669c64769.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.ios ion-content, .md ion-content {
+  background-color: #32db64;
+}
+
+.ios p, .md p {
+  font-size: 0.8em;
+  color: #d2d2d2;
+}
+
+.ios .swiper-slide, .md .swiper-slide {
+  display: block;
+}
+
+.ios ion-label, .ios .select-text, .md ion-label, .md .select-text {
+  margin-left: 10px;
+}
+
+.ios ion-input, .ios ion-select, .ios ion-textarea, .md ion-input, .md ion-select, .md ion-textarea {
+  background-color: #f2f2f2;
+  padding: 5px 10px;
+}
+
+.ios .invalid, .md .invalid {
+  border: 1px solid #ea6153;
+}
+
+.ios .btn-danger, .md .btn-danger {
+  color: white;
+  padding: 14px 20px;
+  background-color: #f44336;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  height: 80%;
+}
+
+.ios .btn-success, .md .btn-success {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  float: left;
+  width: 50%;
+  height: 80%;
+}
+
+.ios ion-input, .md ion-input {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.ios .gm_drawer_footer_wrapper, .md .gm_drawer_footer_wrapper {
+  width: 100%;
+  height: 50px;
+  position: fixed !important;
+  background: #fff;
+  bottom: 0 !important;
+  top: calc(100% - 50px) !important;
+  top: -o-calc(100% - 50px) !important;
+  z-index: 1;
+  -webkit-box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+.ios .scroll-content, .md .scroll-content {
+  padding: 0 !important;
+}
+
+.ios .upload_button, .md .upload_button {
+  z-index: 1 !important;
+  margin-bottom: 50px !important;
+}
+
+.ios .upload_button .toolbar-content .bar-buttons button, .md .upload_button .toolbar-content .bar-buttons button {
+  width: 100%;
+}
+
+.ios .errorMessage, .md .errorMessage {
+  color: red;
+}
+
+.ios .numbering, .md .numbering {
+  color: blue;
+}
+
+.ios .alert-md .alert-button, .md .alert-md .alert-button {
+  float: left;
+  width: 46%;
+}
+
+.ios ion-list, .md ion-list {
+  padding-bottom: 0px !important;
+}
+
+.gm_drawer_footer_wrapper {
+  width: 100%;
+  height: 50px;
+  position: fixed !important;
+  background: #fff;
+  bottom: 0 !important;
+  top: calc(100% - 50px) !important;
+  top: -o-calc(100% - 50px) !important;
+  z-index: 1;
+  -webkit-box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+.bg_student {
+  max-width: 100%;
+  height: 150px;
+  border: 1px solid #a1a1a1;
+  border-radius: 10px;
+}
+
+.low-class {
+  color: red;
+}
+
+.medium-class {
+  color: orange;
+}
+
+.high-class {
+  color: green;
+}
+
+.no-class {
+  color: white;
+}
+
+.profile-photo {
+  border-radius: 50% !important;
+  overflow: hidden;
+  height: 100px !important;
+  width: 100px !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin-left: 10%;
+}
+
+.swiper-slide {
+  width: 50% !important;
+}
+
 .indent_results {
   height: 110px;
 }
@@ -26148,6 +26338,84 @@ textarea.text-input {
 .ios .login-page .forgot-password, .md .login-page .forgot-password {
   float: right;
   color: red;
+}
+
+profile-page .profile-image-wrapper {
+  text-align: center;
+  margin: 20px 0;
+}
+
+profile-page .profile-image-wrapper .profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border: 5px solid;
+}
+
+profile-page .profile-image-wrapper .profile-image-placeholder {
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../../assets/img/advance-card-tmntr.jpg");
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  font-size: 12px;
+  border: 5px solid;
+}
+
+profile-page .profile-image-wrapper .profile-image-placeholder ion-icon {
+  font-size: 44px;
+  margin-bottom: -10px;
+  margin-top: 22px;
+}
+
+profile-page .amount {
+  background: white;
+}
+
+profile-page .userDetails {
+  color: white;
+  text-align: center;
+  font-family: "sans-serif";
+  font-weight: bold;
+  font-size: 1.6rem !important;
+  margin-bottom: 6%;
+}
+
+profile-page .full_name {
+  opacity: 0.8;
+  color: white;
+  text-align: center;
+  font-family: "sans-serif";
+  font-size: 1.7rem !important;
+  margin-bottom: -6px !important;
+}
+
+profile-page .item-block {
+  border: none;
+}
+
+profile-page .label_here {
+  color: black !important;
+  font-size: 16px !important;
+}
+
+profile-page ion-input {
+  font-size: 16px !important;
+}
+
+profile-page .list-md {
+  margin: 15px 0 16px;
+}
+
+profile-page .toolbar-background {
+  background-color: !important;
 }
 
 .ios .toolbar-background, .md .toolbar-background {
@@ -26686,5 +26954,129 @@ page-reports .indented {
   height: 5.6rem;
   font-size: 2.4rem;
   background-color: red;
+  color: white;
+}
+
+.auto_height {
+  height: auto !important;
+}
+
+.indent_results {
+  height: 110px;
+}
+
+.indent_results .label-md {
+  margin: 8px;
+}
+
+.indent_student {
+  height: 120px;
+}
+
+.indent_left {
+  width: 30%;
+}
+
+.indent_right {
+  width: 65%;
+}
+
+.total_left {
+  margin: 0;
+  line-height: normal;
+  float: left;
+  font-weight: 400;
+  font-size: 14px !important;
+  color: black !important;
+  letter-spacing: 0;
+}
+
+.amt_button {
+  width: 50%;
+  background: #fff;
+  height: 50px;
+  text-align: left;
+  padding-left: 15px;
+  padding-top: 7px;
+  float: left;
+}
+
+.total_right {
+  margin: 0;
+  line-height: normal;
+  float: right;
+  font-size: 14px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.true {
+  background: grey;
+}
+
+.button-bar {
+  display: table;
+  width: 100%;
+}
+
+.button-indent {
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 33%;
+  border: 1px solid black;
+}
+
+.button-half {
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 50%;
+  border: 1px solid black;
+}
+
+.button-positive {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 36px;
+}
+
+.button-assertive {
+  background-color: #008CBA;
+  color: white;
+}
+
+.button-energized {
+  background-color: #f44336;
+  color: white;
+}
+
+.button-simple {
+  background-color: #009688;
+  color: white;
+}
+
+.button-option:active {
+  background: olive;
+  color: white;
+}
+
+.button-option:focus {
+  background: olive;
+  color: white;
+}
+
+.button-option:visited {
+  background: olive;
   color: white;
 }

@@ -30,6 +30,9 @@
     },
     "cordova-sms-plugin": {
       "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.olw.spark"
     }
   },
   "dependent_plugins": {

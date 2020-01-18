@@ -1,0 +1,29 @@
+.low-class {
+    color: red;
+}
+
+.medium-class {
+    color: orange;
+}
+
+.high-class {
+    color: green;
+}
+
+.no-class {
+    color: white;
+}
+
+.profile-photo {
+    border-radius: 50% !important;
+    overflow: hidden;
+    height: 100px !important;
+    width: 100px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin-left: 10%;
+}
+
+.swiper-slide {
+    width: 50% !important;
+}
