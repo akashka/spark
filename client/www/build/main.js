@@ -4,14 +4,465 @@ webpackJsonp([1],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndentPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_students_students__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_center_center__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var IndentPage = (function () {
+    function IndentPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loading, storage, centerService, indentationService, toastCtrl, CallNumber, actionSheetController) {
+        this.navCtrl = navCtrl;
+        this.studentService = studentService;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.loading = loading;
+        this.storage = storage;
+        this.centerService = centerService;
+        this.indentationService = indentationService;
+        this.toastCtrl = toastCtrl;
+        this.CallNumber = CallNumber;
+        this.actionSheetController = actionSheetController;
+        this.indented_students = [];
+        this.confirm_indent = false;
+        this.isCash = false;
+        this.total_amount = 0;
+        this.payment_date = __WEBPACK_IMPORTED_MODULE_11_moment__().format("YYYY-MM-DD");
+        this.students_amount = [];
+        this.today_date = __WEBPACK_IMPORTED_MODULE_11_moment__().format("YYYY-MM-DD");
+    }
+    IndentPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.loader = this.loading.create({
+            content: 'Please wait...',
+        });
+        this.studentService.getStudents().then(function (data) {
+            _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](data, function (o) {
+                return (o.status == 'confirmed' && !o.is_Indented);
+            });
+            _this.storage.get('user').then(function (user) {
+                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](_this.students, function (o) {
+                    return (o.center == user.center);
+                });
+                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["sortBy"](_this.students, 'enquiry_date');
+                _this.studentsList = __WEBPACK_IMPORTED_MODULE_9_lodash__["sortBy"](_this.students, 'enquiry_date');
+            });
+        }, function (err) {
+            console.log("not allowed");
+        });
+        this.centerService.searchCenter().then(function (centers) {
+            _this.storage.get('user').then(function (user) {
+                _this.email = user.email;
+                _this.center_code = user.center;
+                _this.user_center = __WEBPACK_IMPORTED_MODULE_9_lodash__["find"](centers, ['center_code', user.center]);
+                _this.isCash = _this.user_center.cash;
+            });
+        });
+    };
+    IndentPage.prototype.presentToast = function (text) {
+        var toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
+    IndentPage.prototype.add = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__home_home__["a" /* HomePage */]);
+    };
+    IndentPage.prototype.edit = function (student) {
+        this.storage.set('edit_student', student._id);
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__["a" /* EditstudentPage */]);
+    };
+    IndentPage.prototype.indent = function (student) {
+        console.log(this.today_date);
+        this.indented_students.push(student);
+        for (var i = 0; i < this.students.length; i++) {
+            if (this.students[i] === student)
+                this.students[i].indented = true;
+        }
+        this.addAmount(student);
+    };
+    IndentPage.prototype.unindent = function (student) {
+        var s = -1;
+        for (var i = 0; i < this.indented_students.length; i++) {
+            if (this.indented_students[i] === student) {
+                s = i;
+                break;
+            }
+        }
+        this.indented_students.splice(s, 1);
+        for (var k = 0; k < this.students.length; k++) {
+            if (this.students[k] === student)
+                delete this.students[k].indented;
+        }
+        this.subtractAmount(student);
+    };
+    IndentPage.prototype.addAmount = function (student) {
+        if (student.class_group === 'Play Group') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.playgroup.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.playgroup.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.playgroup.early_start);
+        }
+        else if (student.class_group === 'Nursery') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.nursery.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.nursery.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.nursery.early_start);
+        }
+        else if (student.class_group === 'LKG') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.lkg.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.lkg.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.lkg.early_start);
+        }
+        else if (student.class_group === 'UKG') {
+            if (student.class_type === "Annual")
+                this.total_amount += Number(this.user_center.ukg.annual);
+            if (student.class_type === "Mid-term")
+                this.total_amount += Number(this.user_center.ukg.mid_term);
+            if (student.class_type === "Early start")
+                this.total_amount += Number(this.user_center.ukg.early_start);
+        }
+    };
+    IndentPage.prototype.subtractAmount = function (student) {
+        if (student.class_group === 'Play Group') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.playgroup.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.playgroup.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.playgroup.early_start;
+        }
+        else if (student.class_group === 'Nursery') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.nursery.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.nursery.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.nursery.early_start;
+        }
+        else if (student.class_group === 'LKG') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.lkg.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.lkg.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.lkg.early_start;
+        }
+        else if (student.class_group === 'UKG') {
+            if (student.class_type === "Annual")
+                this.total_amount -= this.user_center.ukg.annual;
+            if (student.class_type === "Mid-term")
+                this.total_amount -= this.user_center.ukg.mid_term;
+            if (student.class_type === "Early start")
+                this.total_amount -= this.user_center.ukg.early_start;
+        }
+    };
+    IndentPage.prototype.findAmount = function (cg, ct) {
+        if (cg === 'Play Group' && ct === 'Annual')
+            return (this.user_center.playgroup.annual);
+        else if (cg === 'Play Group' && ct === 'Mid-term')
+            return (this.user_center.playgroup.mid_term);
+        else if (cg === 'Play Group' && ct === 'Early start')
+            return (this.user_center.playgroup.early_start);
+        else if (cg === 'Nursery' && ct === 'Annual')
+            return (this.user_center.nursery.annual);
+        else if (cg === 'Nursery' && ct === 'Mid-term')
+            return (this.user_center.nursery.mid_term);
+        else if (cg === 'Nursery' && ct === 'Early start')
+            return (this.user_center.nursery.early_start);
+        else if (cg === 'LKG' && ct === 'Annual')
+            return (this.user_center.lkg.annual);
+        else if (cg === 'LKG' && ct === 'Mid-term')
+            return (this.user_center.lkg.mid_term);
+        else if (cg === 'LKG' && ct === 'Early start')
+            return (this.user_center.lkg.early_start);
+        else if (cg === 'UKG' && ct === 'Annual')
+            return (this.user_center.ukg.annual);
+        else if (cg === 'UKG' && ct === 'Mid-term')
+            return (this.user_center.ukg.mid_term);
+        else if (cg === 'UKG' && ct === 'Early start')
+            return (this.user_center.ukg.early_start);
+        else
+            return 0;
+    };
+    IndentPage.prototype.indentStudents = function () {
+        this.confirm_indent = !this.confirm_indent;
+        this.setCheque();
+    };
+    IndentPage.prototype.setCash = function () {
+        this.payment_mode = "cash";
+    };
+    IndentPage.prototype.setCheque = function () {
+        this.payment_mode = "cheque";
+    };
+    IndentPage.prototype.setOnline = function () {
+        this.payment_mode = "online";
+    };
+    IndentPage.prototype.reset = function () {
+        var _this = this;
+        this.indented_students = [];
+        this.confirm_indent = false;
+        this.total_amount = 0;
+        this.payment_mode = "";
+        this.payment_date = __WEBPACK_IMPORTED_MODULE_11_moment__().format("YYYY-MM-DD");
+        this.bank_name = "";
+        this.transaction_no = "";
+        this.cheque_no = "";
+        this.students_amount = [];
+        this.studentService.getStudents().then(function (data) {
+            _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](data, function (o) {
+                return (o.status == 'confirmed' && !o.is_Indented);
+            });
+            _this.storage.get('user').then(function (user) {
+                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](_this.students, function (o) {
+                    return (o.center == user.center);
+                });
+                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["sortBy"](_this.students, 'enquiry_date');
+            });
+        }, function (err) {
+            console.log("not allowed");
+        });
+    };
+    IndentPage.prototype.callNumber = function (num) {
+        this.CallNumber.callNumber(num, false)
+            .then(function () { return console.log('Launched dialer!'); })
+            .catch(function () { return console.log('Error launching dialer'); });
+    };
+    // Function to search for a student dynamically based on an input
+    IndentPage.prototype.search = function () {
+        var result = [];
+        for (var i = 0; i < this.studentsList.length; i++) {
+            if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) {
+                result.push(this.studentsList[i]);
+            }
+            else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) {
+                result.push(this.studentsList[i]);
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_9_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
+                result.push(this.studentsList[i]);
+            }
+        }
+        this.students = result;
+        if (this.myInput === "")
+            this.students = this.studentsList;
+    };
+    IndentPage.prototype.confirmIndent = function () {
+        var _this = this;
+        this.loader.present();
+        var indentation = {
+            total_amount: this.total_amount,
+            payment_mode: this.payment_mode,
+            payment_date: __WEBPACK_IMPORTED_MODULE_11_moment__(this.payment_date, "YYYY-MM-DD").toDate(),
+            bank_name: this.bank_name,
+            transaction_no: this.transaction_no,
+            cheque_no: this.cheque_no,
+            email: this.email,
+            center_code: this.center_code,
+            students_amount: []
+        };
+        for (var is = 0; is < this.indented_students.length; is++) {
+            var tempis = {
+                student_id: this.indented_students[is].student_id,
+                student_key: this.indented_students[is]._id,
+                student_name: this.indented_students[is].name,
+                phone_number: this.indented_students[is].phone_number,
+                gender: this.indented_students[is].gender,
+                class_group: this.indented_students[is].class_group,
+                class_type: this.indented_students[is].class_type,
+                uniform_size: this.indented_students[is].uniform_size,
+                shoe_size: this.indented_students[is].shoe_size,
+                amount: this.findAmount(this.indented_students[is].class_group, this.indented_students[is].class_type),
+                is_dispatched: false
+            };
+            indentation.students_amount.push(tempis);
+        }
+        this.indentationService.createIndentation(indentation).then(function (result) {
+            _this.loader.dismiss();
+            _this.reset();
+            _this.presentToast('Indentation successfull');
+        }, function (err) {
+            _this.loader.dismiss();
+            _this.presentToast('Error! Please try again.');
+        });
+        for (var ik = 0; ik < this.indented_students.length; ik++) {
+            this.indented_students[ik].status = "indented";
+            this.indented_students[ik].is_Indented = true;
+            this.indented_students[ik].admin_edit = false;
+            delete this.indented_students[ik].indented;
+            this.studentService.updateStudent(this.indented_students[ik]).then(function (result) {
+                console.log('student data saved successfully');
+            }, function (err) {
+                console.log('student data saving failed');
+            });
+        }
+    };
+    IndentPage.prototype.presentActionSheet = function (num, email) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var actionSheet;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.actionSheetController.create({
+                            buttons: [
+                                {
+                                    text: "Call",
+                                    icon: "call",
+                                    handler: function () {
+                                        _this.callNumber(num);
+                                    }
+                                },
+                                {
+                                    text: "Whatsapp",
+                                    icon: "logo-whatsapp",
+                                    handler: function () {
+                                        window.open(("https://wa.me/91" + num), "_blank");
+                                    }
+                                },
+                                {
+                                    text: "SMS",
+                                    icon: "text",
+                                    handler: function () {
+                                        window.open("sms://" + num);
+                                    }
+                                },
+                                {
+                                    text: "Email",
+                                    icon: "mail",
+                                    handler: function () {
+                                        window.open("mailto://" + email);
+                                    }
+                                },
+                                {
+                                    text: "Cancel",
+                                    icon: "close",
+                                    role: "cancel",
+                                    handler: function () {
+                                        console.log("Cancel clicked");
+                                    }
+                                }
+                            ]
+                        })];
+                    case 1:
+                        actionSheet = _a.sent();
+                        return [4 /*yield*/, actionSheet.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return IndentPage;
+}());
+IndentPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'indent-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/indent/indent.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    INDENTATION\n  </ion-title>\n  <!-- <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons> -->\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <div class="search-row search-full" *ngIf="!confirm_indent">\n      <ion-searchbar\n          [(ngModel)]="myInput"\n          (animated)="true"\n          (placeholder)="Search"\n          (ionInput)="search()"\n      ></ion-searchbar>\n  </div>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />\n  <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <ion-list *ngIf="!confirm_indent && students && students.length" style="margin-bottom: 50px;">\n \n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results" style="height:100%;">\n     \n        <button ion-item>\n          <div class="col_left indent_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>\n            <br/>\n            <h2 *ngIf="student.study_year != \'2020-21\'" style="color: red;"> You cannot indent this, admission is not for 2020-21 </h2>\n          </div>\n          <div class="col_right indent_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2>{{student.class_group}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.confirmation_date | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2><ion-icon name="book"></ion-icon> {{student.study_year}} </h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right" *ngIf="student.study_year == \'2020-21\'">\n          <button ion-button color="info" (click)="edit(student)">\n            <ion-icon name="create"></ion-icon>\n            Edit\n          </button>\n          <button ion-button color="secondary" (click)="indent(student)" *ngIf="!student.indented">\n            <ion-icon name="redo"></ion-icon>\n            Indent\n          </button>\n          <button ion-button color="danger" (click)="unindent(student)" *ngIf="student.indented">\n            <ion-icon name="undo"></ion-icon>\n            UnIndent\n          </button>\n        </ion-item-options>\n\n        <ion-item-options side="left">\n          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">\n            <ion-icon name="call"></ion-icon>\n            Contact\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n\n  <ion-list *ngIf="confirm_indent" style="margin-bottom: 50px;">\n\n    <div class="button-bar" *ngIf="isCash">\n        <a class="button button-positive button-indent" (click)="setCash()">Cash</a>\n        <a class="button button-positive button-indent" (click)="setCheque()">Cheque</a>\n        <a class="button button-positive button-indent" (click)="setOnline()">Online</a>\n    </div>\n\n    <div class="button-bar" *ngIf="!isCash">\n        <a class="button button-positive button-half" (click)="setCheque()">Cheque</a>\n        <a class="button button-positive button-half" (click)="setOnline()">Online</a>\n    </div>\n\n    <ion-list inset>\n\n        <ion-item>\n            <h3> Amount: {{ total_amount }} </h3>\n        </ion-item>\n\n        <ion-item>\n            <ion-label><ion-icon name="calendar"></ion-icon></ion-label>\n            <ion-datetime [(ngModel)]="payment_date" placeholder="Date of Payment" required displayFormat="DD/MMM/YYYY" ></ion-datetime>\n        </ion-item>\n \n        <ion-item *ngIf="payment_mode != \'cash\'">\n            <ion-label><ion-icon name="home"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="bank_name" placeholder="Name of the bank" type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'online\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="transaction_no" placeholder="Transaction No." type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'cheque\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="cheque_no" placeholder="Cheque No." type="string"></ion-input>\n        </ion-item>\n\n    </ion-list>\n    \n  </ion-list>\n\n</ion-content>\n\n<ion-footer>\n    <div class="gm_drawer_footer_wrapper" *ngIf="!confirm_indent && students && students.length">\n      <div class="amt_button">\n        <p class="total_left"> \n            <em> &#8377; {{ total_amount }} </em>\n            <br/>\n            <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>\n        </p>\n      </div>\n      <button (click)="indentStudents()" [disabled]="!indented_students || !indented_students.length" ion-button class="btn-success">Indent</button>\n    </div>\n\n    <div class="gm_drawer_footer_wrapper" *ngIf="confirm_indent">\n      <button (click)="indentStudents()" ion-button class="btn-danger">Go Back</button>\n      <button (click)="confirmIndent()" ion-button class="btn-success">Confirm</button>\n    </div>\n</ion-footer>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/indent/indent.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_10__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__["a" /* Indentation */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__["a" /* CallNumber */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]])
+], IndentPage);
+
+//# sourceMappingURL=indent.js.map
+
+/***/ }),
+
+/***/ 101:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditstudentPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_call_number__ = __webpack_require__(37);
@@ -19,8 +470,8 @@ webpackJsonp([1],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_http__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(58);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -454,7 +905,7 @@ __decorate([
 ], EditstudentPage.prototype, "fileInput", void 0);
 EditstudentPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'editstudent-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/editstudent/editstudent.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    EDIT STUDENT\n  </ion-title>\n  <ion-buttons end>\n    <!-- <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button> -->\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list no-lines>\n\n      <form [formGroup]="studentForm">\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name" [disabled]="!isEditable" (ionChange)="onNameChange()"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male" [disabled]="!isEditable"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female" [disabled]="!isEditable"></ion-radio>\n          </ion-item>\n        </ion-list>\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob" [disabled]="!isEditable"></ion-datetime>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name" [disabled]="!isEditable"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n \n        <!-- Phone no of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <!-- Alternate Contact of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n            <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n\n        <!-- Study Year of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="bookmarks"></ion-icon> Study Year*</ion-label>\n            <ion-select formControlName="study_year" interface="popover" (ionChange)="onYearChange()" disabled>\n              <ion-option value="2016-17">May 2016 - April 2017</ion-option>\n              <ion-option value="2017-18">May 2017 - April 2018</ion-option>\n              <ion-option value="2018-19">May 2018 - April 2019</ion-option>\n              <ion-option value="2019-20">May 2019 - April 2020</ion-option>\n              <ion-option value="2020-21">May 2020 - April 2021</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.study_year.valid  && (studentForm.controls.study_year.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover" disabled>\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_group.valid  && (studentForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover" disabled>\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_type.valid  && (studentForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- uniform_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover" [disabled]="!isEditable">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.uniform_size.valid  && (studentForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <!-- shoe_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover" [disabled]="!isEditable">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.shoe_size.valid  && (studentForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality" (ionChange)="onLocalityChange($event)"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n\n        <ion-list>\n          <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description)">\n            <ion-label>{{loc.description}}</ion-label>\n          </ion-item>\n        </ion-list>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>\n              <p *ngIf="student && student.photo == \'\'">Select Image</p>\n              <p *ngIf="student && student.photo != \'\'">Change Image</p>\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n  </ion-list>\n</ion-content>\n\n<ion-footer>\n  <div class="gm_drawer_footer_wrapper">\n    <button (click)="save()" ion-button class="btn-success" style="width:100%;">Submit</button>\n  </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/editstudent/editstudent.html"*/
+        selector: 'editstudent-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/editstudent/editstudent.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    EDIT STUDENT\n  </ion-title>\n  <ion-buttons end>\n    <!-- <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button> -->\n  </ion-buttons>\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list no-lines>\n\n      <form [formGroup]="studentForm">\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name" [disabled]="!isEditable" (ionChange)="onNameChange()"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male" [disabled]="!isEditable"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female" [disabled]="!isEditable"></ion-radio>\n          </ion-item>\n        </ion-list>\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob" [disabled]="!isEditable"></ion-datetime>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name" [disabled]="!isEditable"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n \n        <!-- Phone no of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <!-- Alternate Contact of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n            <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n\n        <!-- Study Year of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="bookmarks"></ion-icon> Study Year*</ion-label>\n            <ion-select formControlName="study_year" interface="popover" (ionChange)="onYearChange()" disabled>\n              <ion-option value="2018-19">May 2018 - April 2019</ion-option>\n              <ion-option value="2019-20">May 2019 - April 2020</ion-option>\n              <ion-option value="2020-21">May 2020 - April 2021</ion-option>\n              <ion-option value="2021-22">May 2021 - April 2022</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.study_year.valid  && (studentForm.controls.study_year.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover" disabled>\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_group.valid  && (studentForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover" disabled>\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_type.valid  && (studentForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- uniform_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover" [disabled]="!isEditable">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.uniform_size.valid  && (studentForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <!-- shoe_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover" [disabled]="!isEditable">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.shoe_size.valid  && (studentForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality" (ionChange)="onLocalityChange($event)"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n\n        <ion-list>\n          <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description)">\n            <ion-label>{{loc.description}}</ion-label>\n          </ion-item>\n        </ion-list>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>\n              <p *ngIf="student && student.photo == \'\'">Select Image</p>\n              <p *ngIf="student && student.photo != \'\'">Change Image</p>\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n  </ion-list>\n</ion-content>\n\n<ion-footer>\n  <div class="gm_drawer_footer_wrapper">\n    <button (click)="save()" ion-button class="btn-success" style="width:100%;">Submit</button>\n  </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/editstudent/editstudent.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
@@ -482,7 +933,7 @@ EditstudentPage = __decorate([
 
 /***/ }),
 
-/***/ 101:
+/***/ 102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -492,15 +943,15 @@ EditstudentPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ion2_calendar_dist__ = __webpack_require__(534);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_transfer__ = __webpack_require__(536);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_file__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_email_composer__ = __webpack_require__(869);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -880,7 +1331,7 @@ ReportsPage = __decorate([
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -891,9 +1342,9 @@ ReportsPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1339,626 +1790,6 @@ var Auth_1;
 
 /***/ }),
 
-/***/ 155:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EnquiryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_students_students__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_center_center__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_network_network__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__search_search__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__login_login__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__signup_signup__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__center_center__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__indent_indent__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__reports_reports__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dispatch_dispatch__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__confirm_confirm__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_file__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_file_path__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_camera__ = __webpack_require__(58);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-// Providers
-
-
-
-
-// Pages
-
-
-
-
-
-
-
-
-// Files Images
-
-
-
-var EnquiryPage = (function () {
-    function EnquiryPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, formBuilder, camera, file, filePath, actionSheetCtrl, toastCtrl, platform, app, menu, centerService, networkService, storage, loading, http) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.studentService = studentService;
-        this.modalCtrl = modalCtrl;
-        this.alertCtrl = alertCtrl;
-        this.authService = authService;
-        this.formBuilder = formBuilder;
-        this.camera = camera;
-        this.file = file;
-        this.filePath = filePath;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.toastCtrl = toastCtrl;
-        this.platform = platform;
-        this.app = app;
-        this.menu = menu;
-        this.centerService = centerService;
-        this.networkService = networkService;
-        this.storage = storage;
-        this.loading = loading;
-        this.http = http;
-        this.submitAttempt = false;
-        this.counter = false;
-        this.isAdmin = false;
-        this.isCurrentYear = true;
-        this.isDispatcher = false;
-        this.isCenterAdmin = false;
-        this.isCounsellor = false;
-        this.isMatching = false;
-        this.locationOptions = [];
-        this.addStudent = function () {
-            _this.submitAttempt = true;
-            if (_this.studentForm.valid) {
-                _this.studentForm.value.dob = __WEBPACK_IMPORTED_MODULE_5_moment__(_this.studentForm.value.dob, "YYYY-MM-DD").toDate();
-                _this.studentService.createStudent(_this.studentForm.value).then(function (result) {
-                    _this.presentToast('student data saved successfully');
-                    _this.search();
-                }, function (err) {
-                    _this.presentToast('Failed! Please try again.');
-                });
-            }
-        };
-        this.search = function () {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_11__search_search__["a" /* SearchPage */]);
-        };
-        this.logOut = function () {
-            _this.authService.logout();
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_12__login_login__["a" /* LoginPage */]);
-        };
-        this.onNameChange = function () {
-            _this.studentForm.value.name = _this.toTitleCase(_this.studentForm.value.name);
-            _this.studentForm.value.name = _this.studentForm.value.name.replace(/\./g, ' ');
-            _this.studentForm.controls['name'].setValue(_this.studentForm.value.name);
-        };
-        this.onEmailChange = function () {
-            _this.studentForm.value.email_id = _this.studentForm.value.email_id.toLowerCase();
-            _this.studentForm.value.email_id = _this.studentForm.value.email_id.replace(/\s/g, '');
-            _this.studentForm.controls['email_id'].setValue(_this.studentForm.value.email_id);
-            _this.checkMatching();
-        };
-        this.onPhoneChange = function () {
-            _this.checkMatching();
-        };
-        this.onYearChange = function () {
-            _this.isCurrentYear = (_this.studentForm.value.study_year == "2019-20") ? true : false;
-            if (_this.studentForm.value.dob != '')
-                _this.onDobChange();
-        };
-        this.onDobChange = function () {
-            var dob = _this.studentForm.value.dob;
-            var now = new Date();
-            _this.studentForm.value.today_age = _this.getAge(dob, now);
-            now.setDate(1);
-            now.setMonth(5);
-            var nowDate = new Date();
-            if (nowDate.getMonth() < 12)
-                now.setFullYear(now.getFullYear() - 1);
-            _this.studentForm.value.month_age = _this.getAge(dob, now);
-            _this.studentForm.value.month_date = now;
-            _this.studentForm.value.today_age.years += 1900;
-            _this.today_age_years = _this.studentForm.value.today_age.years;
-            _this.today_age_months = _this.studentForm.value.today_age.months;
-            _this.today_age_days = _this.studentForm.value.today_age.days;
-            var tempYear = _this.studentForm.value.month_date.getYear();
-            if (!_this.isCurrentYear)
-                tempYear += 1;
-            _this.month_date = _this.studentForm.value.month_date.getDate() + "/June/" + (tempYear + 1901);
-            _this.studentForm.value.month_age.years += 1901;
-            _this.month_age_years = _this.studentForm.value.month_age.years;
-            _this.month_age_months = _this.studentForm.value.month_age.months;
-            _this.month_age_days = _this.studentForm.value.month_age.days;
-            if (!_this.isCurrentYear)
-                _this.month_age_years += 1;
-            if (!_this.isCurrentYear)
-                _this.studentForm.value.month_age.years += 1;
-            _this.class_group = _this.calculateClass(_this.studentForm.value.month_age);
-            _this.studentForm.controls['class_group'].setValue(_this.class_group);
-            _this.checkMatching();
-        };
-        this.getAge = function (birthday, tillday) {
-            var today = new Date(tillday.getYear(), tillday.getMonth(), tillday.getDate());
-            var yearNow = today.getFullYear();
-            var monthNow = today.getMonth();
-            var dateNow = today.getDate();
-            var dob = new Date(birthday.substring(0, 4), birthday.substring(5, 7) - 1, birthday.substring(8, 10));
-            var yearDob = dob.getFullYear();
-            var monthDob = dob.getMonth();
-            var dateDob = dob.getDate();
-            var age = {};
-            var yearAge = yearNow - yearDob;
-            if (monthNow >= monthDob)
-                var monthAge = monthNow - monthDob;
-            else {
-                yearAge--;
-                var monthAge = 12 + monthNow - monthDob;
-            }
-            if (dateNow >= dateDob)
-                var dateAge = dateNow - dateDob;
-            else {
-                monthAge--;
-                var dateAge = 31 + dateNow - dateDob;
-                if (monthAge < 0) {
-                    monthAge = 11;
-                    yearAge--;
-                }
-            }
-            age = {
-                years: yearAge,
-                months: monthAge,
-                days: dateAge
-            };
-            return age;
-        };
-        this.takePhoto = function () {
-            var actionSheet = _this.actionSheetCtrl.create({
-                title: 'Select Image Source',
-                buttons: [
-                    {
-                        text: 'Load from Library',
-                        handler: function () {
-                            _this.takePicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
-                        }
-                    },
-                    {
-                        text: 'Use Camera',
-                        handler: function () {
-                            _this.takePicture(_this.camera.PictureSourceType.CAMERA);
-                        }
-                    },
-                    {
-                        text: 'Cancel',
-                        role: 'cancel'
-                    }
-                ]
-            });
-            actionSheet.present();
-        };
-        if (this.networkService.noConnection()) {
-            this.networkService.showNetworkAlert();
-        }
-        this.studentForm = formBuilder.group({
-            name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            email_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            phone_number: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern('[0-9]*'), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            gender: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            dob: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            parent_name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            alternate_contact: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern('[0-9]*')])],
-            locality: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            study_year: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            center: [''],
-            counsellor: [''],
-            today_age: [''],
-            month_date: [''],
-            month_age: [''],
-            class_group: [''],
-            photo: [''],
-            student_id: ['']
-        });
-        this.storage.get('user').then(function (user) {
-            if (user.role === "counsellor")
-                _this.isCounsellor = true;
-            else if (user.role === "admin") {
-                _this.isAdmin = true;
-                _this.openReportsPage();
-            }
-            else if (user.role === "dispatcher") {
-                _this.isDispatcher = true;
-                _this.openDispatcherPage();
-            }
-            else if (user.role === "centerAdmin")
-                _this.isCenterAdmin = true;
-            else
-                _this.isCounsellor = true;
-        });
-        this.studentService.getAllStudents().then(function (data) {
-            _this.studentsList = data;
-        }, function (err) {
-            console.log("not allowed");
-        });
-    }
-    EnquiryPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.loader = this.loading.create({
-            content: 'Please wait...',
-        });
-        this.studentForm.controls['study_year'].setValue("2019-20");
-        this.onYearChange();
-        this.storage.get('user').then(function (users) {
-            _this.users = users;
-            _this.centerService.searchCenter().then(function (centers) {
-                _this.userCenter = __WEBPACK_IMPORTED_MODULE_3_lodash__["find"](centers, ['center_code', _this.users.center]);
-                _this.studentService.getAllStudents().then(function (data) {
-                    var student = __WEBPACK_IMPORTED_MODULE_3_lodash__["filter"](data, ['center', _this.userCenter.center_code]);
-                    var student_ids = _this.userCenter.center_code;
-                    student_ids += student ? (student.length > 0 ? student.length : 0) : 0;
-                    _this.studentForm.controls['student_id'].setValue(student_ids);
-                }, function (err) {
-                    console.log("not allowed");
-                });
-            }, function (err) {
-                console.log(err);
-            });
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    EnquiryPage.prototype.resetStudent = function () {
-        this.studentForm.controls['name'].setValue('');
-        this.studentForm.controls['email_id'].setValue('');
-        this.studentForm.controls['phone_number'].setValue('');
-        this.studentForm.controls['parent_name'].setValue('');
-        this.studentForm.controls['alternate_contact'].setValue('');
-        this.studentForm.controls['locality'].setValue('');
-        this.studentForm.controls['today_age'].setValue('');
-        this.studentForm.controls['month_date'].setValue('');
-        this.studentForm.controls['month_age'].setValue('');
-        this.studentForm.controls['class_group'].setValue('');
-        this.studentForm.controls['photo'].setValue('');
-        this.studentForm.controls['dob'].setValue('');
-        this.studentForm.controls['study_year'].setValue("2019-20");
-        this.today_age_years = '';
-        this.today_age_months = '';
-        this.today_age_days = '';
-        this.month_date = '';
-        this.month_age_years = '';
-        this.month_age_months = '';
-        this.month_age_days = '';
-        this.class_group = '';
-    };
-    EnquiryPage.prototype.toTitleCase = function (str) {
-        return str.replace(/\w\S*/g, function (txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
-    };
-    EnquiryPage.prototype.calculateClass = function (birthday) {
-        var age = (birthday.years * 100) + birthday.months;
-        if (age >= 106 && age < 206)
-            return "Play Group";
-        else if (age >= 206 && age < 306)
-            return "Nursery";
-        else if (age >= 306 && age < 406)
-            return "LKG";
-        else if (age >= 406 && age < 506)
-            return "UKG";
-        return "Not eligible";
-    };
-    EnquiryPage.prototype.createFileName = function () {
-        var d = new Date(), n = d.getTime(), newFileName = n + ".jpg";
-        return newFileName;
-    };
-    // Copy the image to a local folder
-    EnquiryPage.prototype.copyFileToLocalDir = function (namePath, currentName, newFileName) {
-        var _this = this;
-        this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
-            _this.lastImage = newFileName;
-        }, function (error) {
-            _this.presentToast('Error while storing file.');
-        });
-    };
-    EnquiryPage.prototype.presentToast = function (text) {
-        var toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    };
-    // Always get the accurate path to your apps folder
-    EnquiryPage.prototype.pathForImage = function (img) {
-        if (img === null) {
-            return '';
-        }
-        else {
-            return cordova.file.dataDirectory + img;
-        }
-    };
-    EnquiryPage.prototype.uploadImage = function () {
-        // File for Upload
-        var targetPath = this.pathForImage(this.lastImage);
-        // File name only
-        var filename = this.lastImage;
-        var path = targetPath + filename;
-        this.getFileContentAsBase64(path, function (base64Image) {
-            this.studentForm.photo = base64Image;
-        });
-    };
-    EnquiryPage.prototype.getFileContentAsBase64 = function (path, callback) {
-        window.resolveLocalFileSystemURL(path, gotFile, fail);
-        function fail(e) {
-            alert('Cannot found requested file');
-        }
-        function gotFile(fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-                reader.onloadend = function (e) {
-                    var content = this.result;
-                    callback(content);
-                };
-                // The most important point, use the readAsDatURL Method from the file plugin
-                reader.readAsDataURL(file);
-            });
-        }
-    };
-    EnquiryPage.prototype.takePicture = function (sourceType) {
-        var _this = this;
-        // Create options for the Camera Dialog
-        var options = {
-            quality: 100,
-            sourceType: sourceType,
-            saveToPhotoAlbum: false,
-            correctOrientation: true
-        };
-        // Get the data of an image
-        this.camera.getPicture(options).then(function (imagePath) {
-            // Special handling for Android library
-            if (_this.platform.is('android') && sourceType === _this.camera.PictureSourceType.PHOTOLIBRARY) {
-                _this.filePath.resolveNativePath(imagePath)
-                    .then(function (filePath) {
-                    var correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-                    var currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-                    _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
-                });
-            }
-            else {
-                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-                _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
-            }
-        }, function (err) {
-            _this.presentToast(err);
-        });
-    };
-    EnquiryPage.prototype.openSignupPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_13__signup_signup__["a" /* SignupPage */]);
-    };
-    EnquiryPage.prototype.openCenterPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_14__center_center__["a" /* CenterPage */]);
-    };
-    EnquiryPage.prototype.openReportsPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_16__reports_reports__["a" /* ReportsPage */]);
-    };
-    EnquiryPage.prototype.openIndentPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_15__indent_indent__["a" /* IndentPage */]);
-    };
-    EnquiryPage.prototype.openDispatcherPage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_17__dispatch_dispatch__["a" /* DispatchPage */]);
-    };
-    EnquiryPage.prototype.getPicture = function () {
-        var _this = this;
-        var actionSheet = this.actionSheetCtrl.create({
-            title: 'Select Image Source',
-            buttons: [
-                {
-                    text: 'Load from Library',
-                    handler: function () {
-                        _this.fileInput.nativeElement.click();
-                    }
-                },
-                {
-                    text: 'Use Camera',
-                    handler: function () {
-                        _this.camera.getPicture({
-                            quality: 1,
-                            destinationType: _this.camera.DestinationType.DATA_URL,
-                            targetWidth: 10,
-                            targetHeight: 10
-                        }).then(function (data) {
-                            _this.studentForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
-                        }, function (err) {
-                            alert('Unable to take photo');
-                        });
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel'
-                }
-            ]
-        });
-        actionSheet.present();
-    };
-    EnquiryPage.prototype.processWebImage = function (event) {
-        var _this = this;
-        var reader = new FileReader();
-        reader.onload = function (readerEvent) {
-            var imageData = readerEvent.target.result;
-            _this.studentForm.patchValue({ 'photo': imageData });
-        };
-        reader.readAsDataURL(event.target.files[0]);
-        console.log(this.studentForm.controls['photo'].value);
-    };
-    EnquiryPage.prototype.getProfileImageStyle = function () {
-        return ('url(' + this.studentForm.controls['photo'].value + ')');
-    };
-    EnquiryPage.prototype.findDuplicates = function (data) {
-        var result = [];
-        data.forEach(function (element, index) {
-            // Find if there is a duplicate or not
-            if (data.indexOf(element, index + 1) > -1) {
-                // Find if the element is already in the result array or not
-                if (result.indexOf(element) === -1) {
-                    result.push(element);
-                }
-            }
-        });
-        return result;
-    };
-    EnquiryPage.prototype.showConfirm = function (stu) {
-        var _this = this;
-        var msg = 'Name: ' + stu.name + '<br/> Email: ' + stu.email_id + "<br/> Phone: " + stu.phone_number + "<br/> Gender: " + stu.gender + "<br/> Parent: " + stu.parent_name + "<br/>Center: " + stu.center + "<br/> Confirm same student?";
-        var confirm = this.alertCtrl.create({
-            title: 'Similar Enquiry',
-            message: msg,
-            buttons: [
-                {
-                    text: 'Yes! Confirm',
-                    handler: function () {
-                        _this.storage.set('confirmed_student', stu);
-                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_18__confirm_confirm__["a" /* ConfirmPage */]);
-                    }
-                },
-                {
-                    text: 'No! Enquire',
-                    handler: function () {
-                        console.log('Agree clicked');
-                    }
-                }
-            ]
-        });
-        confirm.present();
-    };
-    EnquiryPage.prototype.checkMatching = function () {
-        var list = [];
-        this.isMatching = false;
-        this.matchingStudent = null;
-        if (this.studentForm.controls['dob'].value != '') {
-            for (var i = 0; i < this.studentsList.length; i++) {
-                if (__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentsList[i].dob).isSame(__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentForm.controls['dob'].value), 'day') && __WEBPACK_IMPORTED_MODULE_5_moment__(this.studentsList[i].dob).isSame(__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentForm.controls['dob'].value), 'month') && __WEBPACK_IMPORTED_MODULE_5_moment__(this.studentsList[i].dob).isSame(__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentForm.controls['dob'].value), 'year')) {
-                    list.push(this.studentsList[i]);
-                }
-            }
-        }
-        if (this.studentForm.controls['email_id'].value != '') {
-            for (var i = 0; i < this.studentsList.length; i++) {
-                if (this.studentsList[i].email_id == this.studentForm.controls['email_id'].value) {
-                    list.push(this.studentsList[i]);
-                }
-            }
-        }
-        if (this.studentForm.controls['phone_number'].value != '') {
-            for (var i = 0; i < this.studentsList.length; i++) {
-                if (this.studentsList[i].phone_number == this.studentForm.controls['phone_number'].value) {
-                    list.push(this.studentsList[i]);
-                }
-            }
-            for (var i = 0; i < this.studentsList.length; i++) {
-                if (this.studentsList[i].alternate_contact == this.studentForm.controls['phone_number'].value) {
-                    list.push(this.studentsList[i]);
-                }
-            }
-        }
-        if (this.studentForm.controls['alternate_contact'].value != '') {
-            for (var i = 0; i < this.studentsList.length; i++) {
-                if (this.studentsList[i].phone_number == this.studentForm.controls['alternate_contact'].value) {
-                    list.push(this.studentsList[i]);
-                }
-            }
-            for (var i = 0; i < this.studentsList.length; i++) {
-                if (this.studentsList[i].alternate_contact == this.studentForm.controls['alternate_contact'].value) {
-                    list.push(this.studentsList[i]);
-                }
-            }
-        }
-        if (list.length > 0) {
-            var resu = this.findDuplicates(list);
-            if (resu.length > 0 && !this.counter) {
-                this.isMatching = true;
-                this.counter = true;
-                this.matchingStudent = resu[0];
-                this.showConfirm(this.matchingStudent);
-            }
-        }
-    };
-    EnquiryPage.prototype.onLocalityChange = function ($event) {
-        var _this = this;
-        this.locationOptions = [];
-        if ($event._value.length > 4) {
-            var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + $event._value +
-                "&types=geocode&key=AIzaSyDxiToPCcr2LL1EC_vkzYtBiQO_9kbIfqs";
-            this.http.get(url)
-                .subscribe(function (res) {
-                var data = res.json();
-                _this.locationOptions = data.predictions;
-            }, function (err) { });
-        }
-    };
-    EnquiryPage.prototype.onLocSelect = function (description) {
-        this.studentForm.controls['locality'].setValue(description);
-    };
-    return EnquiryPage;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
-    __metadata("design:type", Object)
-], EnquiryPage.prototype, "fileInput", void 0);
-EnquiryPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'enquiry-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/enquiry/enquiry.html"*/'<ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>\n      ENQUIRY\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding class="enquiry-page">\n \n    <ion-list no-lines>\n\n      <form [formGroup]="studentForm">\n\n        <!-- Year of Joining of the student -->\n        <ion-list radio-group formControlName="study_year" (ionChange)="onYearChange()">\n          <ion-item style="width: 50%; float: left; background: #f4f4f4;font-weight: bolder;color: #e62626;">\n            <ion-label>May 2019 - April 2020</ion-label>\n            <ion-radio value="2019-20"></ion-radio>\n          </ion-item>\n          <ion-item style="width: 50%; float: left; background: #f4f4f4;font-weight: bolder;color: #e62626;">\n            <ion-label>May 2020 - April 2021</ion-label>\n            <ion-radio value="2020-21"></ion-radio>\n          </ion-item>\n        </ion-list>\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name" (ionChange)="onNameChange()"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female"></ion-radio>\n          </ion-item>\n        </ion-list>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <ion-item>\n            <h2>Age as of Today - \n            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Class - \n            <span class="numbering">{{ class_group }}</span></h2>\n        </ion-item>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n            <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality" (ionChange)="onLocalityChange($event)"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n\n        <ion-list>\n          <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description)">\n            <ion-label>{{loc.description}}</ion-label>\n          </ion-item>\n        </ion-list>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n</ion-content>\n\n<ion-footer>\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="resetStudent()" ion-button class="btn-danger">Reset</button>\n      <button (click)="addStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/enquiry/enquiry.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_7__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_21__ionic_native_camera__["a" /* Camera */],
-        __WEBPACK_IMPORTED_MODULE_19__ionic_native_file__["a" /* File */],
-        __WEBPACK_IMPORTED_MODULE_20__ionic_native_file_path__["a" /* FilePath */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_9__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_10__providers_network_network__["a" /* Networks */],
-        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_6__angular_http__["b" /* Http */]])
-], EnquiryPage);
-
-;
-//# sourceMappingURL=enquiry.js.map
-
-/***/ }),
-
 /***/ 166:
 /***/ (function(module, exports) {
 
@@ -2257,7 +2088,7 @@ Center = __decorate([
 
 /***/ }),
 
-/***/ 27:
+/***/ 30:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2271,13 +2102,13 @@ Center = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_network_network__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__search_search__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__signup_signup__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__center_center__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__indent_indent__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__reports_reports__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__dispatch_dispatch__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__enquiry_enquiry__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__signup_signup__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__center_center__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__indent_indent__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__reports_reports__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__dispatch_dispatch__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__enquiry_enquiry__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__home_tab_home_tab__ = __webpack_require__(537);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__notification_tab_notification_tab__ = __webpack_require__(539);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__profile_tab_profile_tab__ = __webpack_require__(540);
@@ -2392,7 +2223,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'home-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>\n      OUR LITTLE WONDERZ\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n  <ion-tabs>\n    <ion-tab tabIcon="home" tabTitle="Home" [root]="home"></ion-tab>\n    <ion-tab tabIcon="notifications" tabTitle="Notification" [root]="notification"></ion-tab>\n    <ion-tab tabIcon="settings" tabTitle="Profile" [root]="profile"></ion-tab>\n  </ion-tabs>\n</ion-content>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/home/home.html"*/
+        selector: 'home-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>\n      OUR LITTLE WONDERZ\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n  <ion-tabs>\n    <ion-tab tabIcon="home" tabTitle="Home" [root]="home"></ion-tab>\n    <ion-tab tabIcon="notifications" tabTitle="Notification" [root]="notification"></ion-tab>\n    <ion-tab tabIcon="settings" tabTitle="Profile" [root]="profile"></ion-tab>\n  </ion-tabs>\n</ion-content>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/home/home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_4__providers_students_students__["a" /* Students */],
@@ -3059,24 +2890,38 @@ var HomeTab = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("classStudentsCanvas"),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
 ], HomeTab.prototype, "classStudentsCanvas", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("centerStudentsCanvas"),
-    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _b || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
 ], HomeTab.prototype, "centerStudentsCanvas", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("classTypeStudentsCanvas"),
-    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _c || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
 ], HomeTab.prototype, "classTypeStudentsCanvas", void 0);
 HomeTab = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'home-tab',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/home-tab/home-tab.html"*/'<ion-content style="background:#9e9e9e1a;">\n    <div class="fixed-content">\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>MARKETING</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> {{marketingNumber}} </ion-card-title>\n                        <span class="high-class">{{marketingThisYearNumber}} this year</span>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>CONVERSION</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> {{conversionNumber}} </ion-card-title>\n                        <span [class]="checkClass(conversionNumber, marketingNumber)">+\n                            {{conversionNumber / marketingNumber * 100 | number : \'1.0-0\'}}% of target</span>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>STUDENTS</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> {{studentNumber}} </ion-card-title>\n                        <span [class]="checkClass(lastYearStudentNumber, studentNumber)">+\n                            {{lastYearStudentNumber / studentNumber * 100 | number : \'1.0-0\'}}% from last\n                            year</span>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>PENDING INDENTATIONS</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> {{pendingIndentationNumber}} </ion-card-title>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>STUDENTS IN CLASSES</b>\n                    </ion-card-content>\n                    <canvas #classStudentsCanvas></canvas>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>STUDENTS IN CENTERS</b>\n                    </ion-card-content>\n                    <canvas #centerStudentsCanvas></canvas>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\' || user.role == \'dispatcher\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>TOTAL INDENTATIONS</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> {{totalIndentations}} </ion-card-title>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>OPEN INDENTATIONS</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> {{totalOpenIndentations}} </ion-card-title>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>SALES</b>\n                    </ion-card-content>\n                    <ion-card-header>\n                        <ion-card-title> &#8377; {{totalIndentationsAmount | number:\'.2\'}} </ion-card-title>\n                    </ion-card-header>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>ADMISSION TYPE BREAKUP</b>\n                    </ion-card-content>\n                    <canvas #classTypeStudentsCanvas></canvas>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n        <ion-row *ngIf="user.role == \'admin\' || user.role == \'centerAdmin\' || user.role == \'counsellor\'">\n            <ion-col>\n                <ion-card>\n                    <ion-card-content>\n                        <b>BIRTHDAY TODAY</b>\n                    </ion-card-content>\n                    <ion-card-content>\n                        <div class="swiper-container">\n                            <div class="swiper-wrapper">\n                                <div class="swiper-slide" *ngFor="let student of todayBirthdayStudents">\n                                    <img class="profile-photo" *ngIf="student.photo" src={{student.photo}} />\n                                    <img class="profile-photo" *ngIf="!student.photo" src="assets/images/avatar.png" />\n                                    <h6>{{student.name}}</h6>\n                                    <p>{{student.center}}</p>\n                                </div>\n                            </div>\n                        </div>\n                    </ion-card-content>\n                    <ion-card-content *ngIf="todayBirthdayStudents.length <= 0">\n                        <h5>No Birthday Found Today!</h5>\n                    </ion-card-content>\n                </ion-card>\n            </ion-col>\n        </ion-row>\n\n    </div>\n</ion-content>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/home-tab/home-tab.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__providers_students_students__["a" /* Students */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_students_students__["a" /* Students */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__["a" /* Auth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__["a" /* Auth */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_9__providers_center_center__["a" /* Center */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_center_center__["a" /* Center */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_10__providers_network_network__["a" /* Networks */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__providers_network_network__["a" /* Networks */]) === "function" && _q || Object, typeof (_r = typeof __WEBPACK_IMPORTED_MODULE_11__providers_indentation_indentation__["a" /* Indentation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__providers_indentation_indentation__["a" /* Indentation */]) === "function" && _r || Object, typeof (_s = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === "function" && _s || Object, typeof (_t = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _t || Object, typeof (_u = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _u || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_7__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_9__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_10__providers_network_network__["a" /* Networks */],
+        __WEBPACK_IMPORTED_MODULE_11__providers_indentation_indentation__["a" /* Indentation */],
+        __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]])
 ], HomeTab);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
 //# sourceMappingURL=home-tab.js.map
 
 /***/ }),
@@ -3335,9 +3180,9 @@ ProfileTab = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__enquiry_enquiry__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__enquiry_enquiry__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_call_number__ = __webpack_require__(37);
@@ -3429,7 +3274,7 @@ var PromotionPage = (function () {
         });
         this.studentService.getStudents().then(function (data) {
             data = __WEBPACK_IMPORTED_MODULE_6_lodash__["filter"](data, function (o) {
-                return (o.status == 'indented' && o.is_Indented && o.study_year == '2018-19');
+                return (o.status == 'indented' && o.is_Indented && o.study_year == '2019-20');
             });
             _this.storage.get('user').then(function (user) {
                 data = __WEBPACK_IMPORTED_MODULE_6_lodash__["filter"](data, function (o) {
@@ -3523,17 +3368,14 @@ var PromotionPage = (function () {
         if (student.class_group === 'Play Group') {
             student.class_group = 'Nursery';
         }
+        if (student.study_year === '2020-21') {
+            student.study_year = '2021-22';
+        }
         if (student.study_year === '2019-20') {
             student.study_year = '2020-21';
         }
         if (student.study_year === '2018-19') {
             student.study_year = '2019-20';
-        }
-        if (student.study_year === '2017-18') {
-            student.study_year = '2018-19';
-        }
-        if (student.study_year === '2016-17') {
-            student.study_year = '2017-18';
         }
         this.storage.set('confirmed_student', student);
         if (student.parent_name == "")
@@ -3630,17 +3472,17 @@ PromotionPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__confirm_confirm__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__confirm_confirm__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_call_number__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_forms__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_file__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_file_path__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(58);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4133,7 +3975,7 @@ __decorate([
 ], AdmineditPage.prototype, "fileInput", void 0);
 AdmineditPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'adminedit-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/adminedit/adminedit.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    EDIT (ADMIN)\n  </ion-title>\n  <!-- <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons> -->\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list *ngIf="showListing && selectedCenter">\n\n    <div class="search-row search-full">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="mail"></ion-icon> {{student.email_id}}\n            </a>\n            <br>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="call"></ion-icon> {{student.phone_number}} \n            </a>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}} ({{student.study_year}})</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="warning" (click)="edit(student)">\n            <ion-icon name="create"></ion-icon>\n            Edit\n          </button>\n          <button ion-button color="danger" (click)="delete(student)">\n            <ion-icon name="trash"></ion-icon>\n            Delete\n          </button>\n        </ion-item-options>\n\n        <ion-item-options side="left">\n          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">\n            <ion-icon name="call"></ion-icon>\n            Contact\n          </button>\n        </ion-item-options>\n\n    </ion-item-sliding>\n\n  </ion-list>\n\n\n  <ion-list *ngIf="showListing && !selectedCenter" style="margin-bottom:50px;">\n        \n    <ion-item *ngFor="let center of centers" class="results_list_mobile" (click)="selectCenter(center)">\n            <h1>{{center.center_name}}</h1>\n            <h4>{{center.center_address}}</h4>\n    </ion-item>\n\n  </ion-list>\n\n\n  <ion-list no-lines *ngIf="!showListing">\n\n      <form [formGroup]="studentForm">\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name" (ionChange)="onNameChange()"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female"></ion-radio>\n          </ion-item>\n        </ion-list>\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Email Id of the Parent  -->\n        <ion-item>\n          <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n          <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n \n        <!-- Phone no of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <!-- Alternate Contact of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <!-- Locality of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n \n        <!-- Study Year of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="bookmarks"></ion-icon> Study Year*</ion-label>\n            <ion-select formControlName="study_year" interface="popover" (ionChange)="onYearChange()">\n              <ion-option value="2016-17">May 2016 - April 2017</ion-option>\n              <ion-option value="2017-18">May 2017 - April 2018</ion-option>\n              <ion-option value="2018-19">May 2018 - April 2019</ion-option>\n              <ion-option value="2019-20">May 2019 - April 2020</ion-option>\n              <ion-option value="2020-21">May 2020 - April 2021</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.study_year.valid  && (studentForm.controls.study_year.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_group.valid  && (studentForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_type.valid  && (studentForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- uniform_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.uniform_size.valid  && (studentForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <!-- shoe_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.shoe_size.valid  && (studentForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <br><br><br><br>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>\n              <p *ngIf="studentForm.controls.photo.value == \'\'">Select Image</p>\n              <p *ngIf="studentForm.controls.photo.value != \'\'">Change Image</p>\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n  </ion-list>\n</ion-content>\n\n<ion-footer>\n  <div class="gm_drawer_footer_wrapper" *ngIf="!showListing">\n    <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n    <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n  </div>\n\n  <div class="gm_drawer_footer_wrapper" *ngIf="showListing && selectedCenter">\n    <button (click)="reselectCenter()" ion-button class="btn-danger" style="width:100%;">Cancel</button>\n  </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/adminedit/adminedit.html"*/
+        selector: 'adminedit-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/adminedit/adminedit.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    EDIT (ADMIN)\n  </ion-title>\n  <!-- <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="add-circle"></ion-icon></button>\n  </ion-buttons> -->\n </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list *ngIf="showListing && selectedCenter">\n\n    <div class="search-row search-full">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()"\n        ></ion-searchbar>\n    </div>\n \n    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="students && !students.length" />\n    <h1 *ngIf="students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile">\n     \n        <button ion-item>\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="mail"></ion-icon> {{student.email_id}}\n            </a>\n            <br>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="call"></ion-icon> {{student.phone_number}} \n            </a>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h2><ion-icon name="locate"></ion-icon> {{student.locality}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2>{{student.class_group}} ({{student.study_year}})</h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right">\n          <button ion-button color="warning" (click)="edit(student)">\n            <ion-icon name="create"></ion-icon>\n            Edit\n          </button>\n          <button ion-button color="danger" (click)="delete(student)">\n            <ion-icon name="trash"></ion-icon>\n            Delete\n          </button>\n        </ion-item-options>\n\n        <ion-item-options side="left">\n          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">\n            <ion-icon name="call"></ion-icon>\n            Contact\n          </button>\n        </ion-item-options>\n\n    </ion-item-sliding>\n\n  </ion-list>\n\n\n  <ion-list *ngIf="showListing && !selectedCenter" style="margin-bottom:50px;">\n        \n    <ion-item *ngFor="let center of centers" class="results_list_mobile" (click)="selectCenter(center)">\n            <h1>{{center.center_name}}</h1>\n            <h4>{{center.center_address}}</h4>\n    </ion-item>\n\n  </ion-list>\n\n\n  <ion-list no-lines *ngIf="!showListing">\n\n      <form [formGroup]="studentForm">\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name" (ionChange)="onNameChange()"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female"></ion-radio>\n          </ion-item>\n        </ion-list>\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Email Id of the Parent  -->\n        <ion-item>\n          <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n          <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n \n        <!-- Phone no of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <!-- Alternate Contact of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <!-- Locality of the Parent  -->\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality"></ion-input>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n \n        <!-- Study Year of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="bookmarks"></ion-icon> Study Year*</ion-label>\n            <ion-select formControlName="study_year" interface="popover" (ionChange)="onYearChange()">\n              <ion-option value="2018-19">May 2018 - April 2019</ion-option>\n              <ion-option value="2019-20">May 2019 - April 2020</ion-option>\n              <ion-option value="2020-21">May 2020 - April 2021</ion-option>\n              <ion-option value="2021-22">May 2021 - April 2022</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.study_year.valid  && (studentForm.controls.study_year.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_group.valid  && (studentForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.class_type.valid  && (studentForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- uniform_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.uniform_size.valid  && (studentForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <!-- shoe_size of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="">NA</ion-option>\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n        <p class="errorMessage" *ngIf="!studentForm.controls.shoe_size.valid  && (studentForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <br><br><br><br>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>\n              <p *ngIf="studentForm.controls.photo.value == \'\'">Select Image</p>\n              <p *ngIf="studentForm.controls.photo.value != \'\'">Change Image</p>\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n  </ion-list>\n</ion-content>\n\n<ion-footer>\n  <div class="gm_drawer_footer_wrapper" *ngIf="!showListing">\n    <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n    <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n  </div>\n\n  <div class="gm_drawer_footer_wrapper" *ngIf="showListing && selectedCenter">\n    <button (click)="reselectCenter()" ion-button class="btn-danger" style="width:100%;">Cancel</button>\n  </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/adminedit/adminedit.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2__providers_students_students__["a" /* Students */],
@@ -4169,7 +4011,7 @@ AdmineditPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_call_number__ = __webpack_require__(37);
@@ -4425,9 +4267,9 @@ DeletestudentPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4724,8 +4566,8 @@ IdcardrequestPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5016,8 +4858,8 @@ IdcardprintPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_indentation_indentation__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_moment__ = __webpack_require__(2);
@@ -5253,9 +5095,9 @@ ApproveindentPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5585,23 +5427,23 @@ Networks = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_call_number__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ngx_google_places_autocomplete__ = __webpack_require__(876);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ngx_google_places_autocomplete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ngx_google_places_autocomplete__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_enquiry_enquiry__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_login_login__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_signup_signup__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_enquiry_enquiry__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_login_login__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_signup_signup__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_search_search__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_reports_reports__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_confirm_confirm__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_indent_indent__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_center_center__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_dispatch_dispatch__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_reports_reports__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_confirm_confirm__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_indent_indent__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_center_center__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_dispatch_dispatch__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_promotion_promotion__ = __webpack_require__(541);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_adminedit_adminedit__ = __webpack_require__(542);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_deletestudent_deletestudent__ = __webpack_require__(543);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_approveindent_approveindent__ = __webpack_require__(546);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_idcardrequest_idcardrequest__ = __webpack_require__(544);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_idcardprint_idcardprint__ = __webpack_require__(545);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_editstudent_editstudent__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_editstudent_editstudent__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_studentslist_studentslist__ = __webpack_require__(547);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_home_tab_home_tab__ = __webpack_require__(537);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_notification_tab_notification_tab__ = __webpack_require__(539);
@@ -5611,9 +5453,9 @@ Networks = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__providers_indentation_indentation__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__providers_network_network__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_native_file__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_native_file__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__ionic_native_transfer__ = __webpack_require__(536);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__ionic_native_file_path__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__ionic_native_file_path__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__ionic_native_camera__ = __webpack_require__(58);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5762,15 +5604,15 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_native__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_enquiry_enquiry__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_enquiry_enquiry__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_search_search__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_signup_signup__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_center_center__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_indent_indent__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_reports_reports__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_dispatch_dispatch__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_signup_signup__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_center_center__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_indent_indent__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_reports_reports__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_dispatch_dispatch__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_promotion_promotion__ = __webpack_require__(541);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_adminedit_adminedit__ = __webpack_require__(542);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_deletestudent_deletestudent__ = __webpack_require__(543);
@@ -5968,9 +5810,9 @@ MyApp = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_students_students__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__enquiry_enquiry__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__enquiry_enquiry__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__confirm_confirm__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_call_number__ = __webpack_require__(37);
@@ -6106,7 +5948,7 @@ var SearchPage = (function () {
             .catch(function () { return console.log("Error launching dialer"); });
     };
     SearchPage.prototype.update = function (student) {
-        if (student.study_year == '2018-19') {
+        if (student.study_year == '2019-20') {
             if (student.class_group == "Play Group")
                 student.class_group = 'Nursery';
             else if (student.class_group == "Nursery")
@@ -6117,7 +5959,7 @@ var SearchPage = (function () {
                 student.class_group = 'UKG';
             else
                 student.class_group = 'Play Group';
-            student.study_year = '2019-20';
+            student.study_year = '2020-21';
         }
         this.storage.set("confirmed_student", student);
         this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__confirm_confirm__["a" /* ConfirmPage */]);
@@ -6205,6 +6047,1152 @@ SearchPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EnquiryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_students_students__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_center_center__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_network_network__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__search_search__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__login_login__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__signup_signup__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__center_center__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__indent_indent__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__reports_reports__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__dispatch_dispatch__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__confirm_confirm__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_file__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_file_path__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_camera__ = __webpack_require__(58);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+// Providers
+
+
+
+
+// Pages
+
+
+
+
+
+
+
+
+// Files Images
+
+
+
+var EnquiryPage = (function () {
+    function EnquiryPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, formBuilder, camera, file, filePath, actionSheetCtrl, toastCtrl, platform, app, menu, centerService, networkService, storage, loading, http) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.studentService = studentService;
+        this.modalCtrl = modalCtrl;
+        this.alertCtrl = alertCtrl;
+        this.authService = authService;
+        this.formBuilder = formBuilder;
+        this.camera = camera;
+        this.file = file;
+        this.filePath = filePath;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.toastCtrl = toastCtrl;
+        this.platform = platform;
+        this.app = app;
+        this.menu = menu;
+        this.centerService = centerService;
+        this.networkService = networkService;
+        this.storage = storage;
+        this.loading = loading;
+        this.http = http;
+        this.submitAttempt = false;
+        this.counter = false;
+        this.isAdmin = false;
+        this.isCurrentYear = true;
+        this.isDispatcher = false;
+        this.isCenterAdmin = false;
+        this.isCounsellor = false;
+        this.isMatching = false;
+        this.locationOptions = [];
+        this.addStudent = function () {
+            _this.submitAttempt = true;
+            if (_this.studentForm.valid) {
+                _this.studentForm.value.dob = __WEBPACK_IMPORTED_MODULE_5_moment__(_this.studentForm.value.dob, "YYYY-MM-DD").toDate();
+                _this.studentService.createStudent(_this.studentForm.value).then(function (result) {
+                    _this.presentToast('student data saved successfully');
+                    _this.search();
+                }, function (err) {
+                    _this.presentToast('Failed! Please try again.');
+                });
+            }
+        };
+        this.search = function () {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_11__search_search__["a" /* SearchPage */]);
+        };
+        this.logOut = function () {
+            _this.authService.logout();
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_12__login_login__["a" /* LoginPage */]);
+        };
+        this.onNameChange = function () {
+            _this.studentForm.value.name = _this.toTitleCase(_this.studentForm.value.name);
+            _this.studentForm.value.name = _this.studentForm.value.name.replace(/\./g, ' ');
+            _this.studentForm.controls['name'].setValue(_this.studentForm.value.name);
+        };
+        this.onEmailChange = function () {
+            _this.studentForm.value.email_id = _this.studentForm.value.email_id.toLowerCase();
+            _this.studentForm.value.email_id = _this.studentForm.value.email_id.replace(/\s/g, '');
+            _this.studentForm.controls['email_id'].setValue(_this.studentForm.value.email_id);
+            _this.checkMatching();
+        };
+        this.onPhoneChange = function () {
+            _this.checkMatching();
+        };
+        this.onYearChange = function () {
+            _this.isCurrentYear = (_this.studentForm.value.study_year == "2019-20") ? true : false;
+            if (_this.studentForm.value.dob != '')
+                _this.onDobChange();
+        };
+        this.onDobChange = function () {
+            var dob = _this.studentForm.value.dob;
+            var now = new Date();
+            _this.studentForm.value.today_age = _this.getAge(dob, now);
+            now.setDate(1);
+            now.setMonth(5);
+            var nowDate = new Date();
+            if (nowDate.getMonth() < 12)
+                now.setFullYear(now.getFullYear() - 1);
+            _this.studentForm.value.month_age = _this.getAge(dob, now);
+            _this.studentForm.value.month_date = now;
+            _this.studentForm.value.today_age.years += 1900;
+            _this.today_age_years = _this.studentForm.value.today_age.years;
+            _this.today_age_months = _this.studentForm.value.today_age.months;
+            _this.today_age_days = _this.studentForm.value.today_age.days;
+            var tempYear = _this.studentForm.value.month_date.getYear();
+            if (!_this.isCurrentYear)
+                tempYear += 1;
+            _this.month_date = _this.studentForm.value.month_date.getDate() + "/June/" + (tempYear + 1901);
+            _this.studentForm.value.month_age.years += 1901;
+            _this.month_age_years = _this.studentForm.value.month_age.years;
+            _this.month_age_months = _this.studentForm.value.month_age.months;
+            _this.month_age_days = _this.studentForm.value.month_age.days;
+            if (!_this.isCurrentYear)
+                _this.month_age_years += 1;
+            if (!_this.isCurrentYear)
+                _this.studentForm.value.month_age.years += 1;
+            _this.class_group = _this.calculateClass(_this.studentForm.value.month_age);
+            _this.studentForm.controls['class_group'].setValue(_this.class_group);
+            _this.checkMatching();
+        };
+        this.getAge = function (birthday, tillday) {
+            var today = new Date(tillday.getYear(), tillday.getMonth(), tillday.getDate());
+            var yearNow = today.getFullYear();
+            var monthNow = today.getMonth();
+            var dateNow = today.getDate();
+            var dob = new Date(birthday.substring(0, 4), birthday.substring(5, 7) - 1, birthday.substring(8, 10));
+            var yearDob = dob.getFullYear();
+            var monthDob = dob.getMonth();
+            var dateDob = dob.getDate();
+            var age = {};
+            var yearAge = yearNow - yearDob;
+            if (monthNow >= monthDob)
+                var monthAge = monthNow - monthDob;
+            else {
+                yearAge--;
+                var monthAge = 12 + monthNow - monthDob;
+            }
+            if (dateNow >= dateDob)
+                var dateAge = dateNow - dateDob;
+            else {
+                monthAge--;
+                var dateAge = 31 + dateNow - dateDob;
+                if (monthAge < 0) {
+                    monthAge = 11;
+                    yearAge--;
+                }
+            }
+            age = {
+                years: yearAge,
+                months: monthAge,
+                days: dateAge
+            };
+            return age;
+        };
+        this.takePhoto = function () {
+            var actionSheet = _this.actionSheetCtrl.create({
+                title: 'Select Image Source',
+                buttons: [
+                    {
+                        text: 'Load from Library',
+                        handler: function () {
+                            _this.takePicture(_this.camera.PictureSourceType.PHOTOLIBRARY);
+                        }
+                    },
+                    {
+                        text: 'Use Camera',
+                        handler: function () {
+                            _this.takePicture(_this.camera.PictureSourceType.CAMERA);
+                        }
+                    },
+                    {
+                        text: 'Cancel',
+                        role: 'cancel'
+                    }
+                ]
+            });
+            actionSheet.present();
+        };
+        if (this.networkService.noConnection()) {
+            this.networkService.showNetworkAlert();
+        }
+        this.studentForm = formBuilder.group({
+            name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            email_id: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            phone_number: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern('[0-9]*'), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            gender: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            dob: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            parent_name: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            alternate_contact: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(10), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern('[0-9]*')])],
+            locality: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            study_year: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            center: [''],
+            counsellor: [''],
+            today_age: [''],
+            month_date: [''],
+            month_age: [''],
+            class_group: [''],
+            photo: [''],
+            student_id: ['']
+        });
+        this.storage.get('user').then(function (user) {
+            if (user.role === "counsellor")
+                _this.isCounsellor = true;
+            else if (user.role === "admin") {
+                _this.isAdmin = true;
+                _this.openReportsPage();
+            }
+            else if (user.role === "dispatcher") {
+                _this.isDispatcher = true;
+                _this.openDispatcherPage();
+            }
+            else if (user.role === "centerAdmin")
+                _this.isCenterAdmin = true;
+            else
+                _this.isCounsellor = true;
+        });
+        this.studentService.getAllStudents().then(function (data) {
+            _this.studentsList = data;
+        }, function (err) {
+            console.log("not allowed");
+        });
+    }
+    EnquiryPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.loader = this.loading.create({
+            content: 'Please wait...',
+        });
+        this.studentForm.controls['study_year'].setValue("2019-20");
+        this.onYearChange();
+        this.storage.get('user').then(function (users) {
+            _this.users = users;
+            _this.centerService.searchCenter().then(function (centers) {
+                _this.userCenter = __WEBPACK_IMPORTED_MODULE_3_lodash__["find"](centers, ['center_code', _this.users.center]);
+                _this.studentService.getAllStudents().then(function (data) {
+                    var student = __WEBPACK_IMPORTED_MODULE_3_lodash__["filter"](data, ['center', _this.userCenter.center_code]);
+                    var student_ids = _this.userCenter.center_code;
+                    student_ids += student ? (student.length > 0 ? student.length : 0) : 0;
+                    _this.studentForm.controls['student_id'].setValue(student_ids);
+                }, function (err) {
+                    console.log("not allowed");
+                });
+            }, function (err) {
+                console.log(err);
+            });
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    EnquiryPage.prototype.resetStudent = function () {
+        this.studentForm.controls['name'].setValue('');
+        this.studentForm.controls['email_id'].setValue('');
+        this.studentForm.controls['phone_number'].setValue('');
+        this.studentForm.controls['parent_name'].setValue('');
+        this.studentForm.controls['alternate_contact'].setValue('');
+        this.studentForm.controls['locality'].setValue('');
+        this.studentForm.controls['today_age'].setValue('');
+        this.studentForm.controls['month_date'].setValue('');
+        this.studentForm.controls['month_age'].setValue('');
+        this.studentForm.controls['class_group'].setValue('');
+        this.studentForm.controls['photo'].setValue('');
+        this.studentForm.controls['dob'].setValue('');
+        this.studentForm.controls['study_year'].setValue("2019-20");
+        this.today_age_years = '';
+        this.today_age_months = '';
+        this.today_age_days = '';
+        this.month_date = '';
+        this.month_age_years = '';
+        this.month_age_months = '';
+        this.month_age_days = '';
+        this.class_group = '';
+    };
+    EnquiryPage.prototype.toTitleCase = function (str) {
+        return str.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    };
+    EnquiryPage.prototype.calculateClass = function (birthday) {
+        var age = (birthday.years * 100) + birthday.months;
+        if (age >= 106 && age < 206)
+            return "Play Group";
+        else if (age >= 206 && age < 306)
+            return "Nursery";
+        else if (age >= 306 && age < 406)
+            return "LKG";
+        else if (age >= 406 && age < 506)
+            return "UKG";
+        return "Not eligible";
+    };
+    EnquiryPage.prototype.createFileName = function () {
+        var d = new Date(), n = d.getTime(), newFileName = n + ".jpg";
+        return newFileName;
+    };
+    // Copy the image to a local folder
+    EnquiryPage.prototype.copyFileToLocalDir = function (namePath, currentName, newFileName) {
+        var _this = this;
+        this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
+            _this.lastImage = newFileName;
+        }, function (error) {
+            _this.presentToast('Error while storing file.');
+        });
+    };
+    EnquiryPage.prototype.presentToast = function (text) {
+        var toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
+    // Always get the accurate path to your apps folder
+    EnquiryPage.prototype.pathForImage = function (img) {
+        if (img === null) {
+            return '';
+        }
+        else {
+            return cordova.file.dataDirectory + img;
+        }
+    };
+    EnquiryPage.prototype.uploadImage = function () {
+        // File for Upload
+        var targetPath = this.pathForImage(this.lastImage);
+        // File name only
+        var filename = this.lastImage;
+        var path = targetPath + filename;
+        this.getFileContentAsBase64(path, function (base64Image) {
+            this.studentForm.photo = base64Image;
+        });
+    };
+    EnquiryPage.prototype.getFileContentAsBase64 = function (path, callback) {
+        window.resolveLocalFileSystemURL(path, gotFile, fail);
+        function fail(e) {
+            alert('Cannot found requested file');
+        }
+        function gotFile(fileEntry) {
+            fileEntry.file(function (file) {
+                var reader = new FileReader();
+                reader.onloadend = function (e) {
+                    var content = this.result;
+                    callback(content);
+                };
+                // The most important point, use the readAsDatURL Method from the file plugin
+                reader.readAsDataURL(file);
+            });
+        }
+    };
+    EnquiryPage.prototype.takePicture = function (sourceType) {
+        var _this = this;
+        // Create options for the Camera Dialog
+        var options = {
+            quality: 100,
+            sourceType: sourceType,
+            saveToPhotoAlbum: false,
+            correctOrientation: true
+        };
+        // Get the data of an image
+        this.camera.getPicture(options).then(function (imagePath) {
+            // Special handling for Android library
+            if (_this.platform.is('android') && sourceType === _this.camera.PictureSourceType.PHOTOLIBRARY) {
+                _this.filePath.resolveNativePath(imagePath)
+                    .then(function (filePath) {
+                    var correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+                    var currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+                    _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+                });
+            }
+            else {
+                var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+                var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+                _this.copyFileToLocalDir(correctPath, currentName, _this.createFileName());
+            }
+        }, function (err) {
+            _this.presentToast(err);
+        });
+    };
+    EnquiryPage.prototype.openSignupPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_13__signup_signup__["a" /* SignupPage */]);
+    };
+    EnquiryPage.prototype.openCenterPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_14__center_center__["a" /* CenterPage */]);
+    };
+    EnquiryPage.prototype.openReportsPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_16__reports_reports__["a" /* ReportsPage */]);
+    };
+    EnquiryPage.prototype.openIndentPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_15__indent_indent__["a" /* IndentPage */]);
+    };
+    EnquiryPage.prototype.openDispatcherPage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_17__dispatch_dispatch__["a" /* DispatchPage */]);
+    };
+    EnquiryPage.prototype.getPicture = function () {
+        var _this = this;
+        var actionSheet = this.actionSheetCtrl.create({
+            title: 'Select Image Source',
+            buttons: [
+                {
+                    text: 'Load from Library',
+                    handler: function () {
+                        _this.fileInput.nativeElement.click();
+                    }
+                },
+                {
+                    text: 'Use Camera',
+                    handler: function () {
+                        _this.camera.getPicture({
+                            quality: 1,
+                            destinationType: _this.camera.DestinationType.DATA_URL,
+                            targetWidth: 10,
+                            targetHeight: 10
+                        }).then(function (data) {
+                            _this.studentForm.patchValue({ 'photo': 'data:image/jpg;base64,' + data });
+                        }, function (err) {
+                            alert('Unable to take photo');
+                        });
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel'
+                }
+            ]
+        });
+        actionSheet.present();
+    };
+    EnquiryPage.prototype.processWebImage = function (event) {
+        var _this = this;
+        var reader = new FileReader();
+        reader.onload = function (readerEvent) {
+            var imageData = readerEvent.target.result;
+            _this.studentForm.patchValue({ 'photo': imageData });
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        console.log(this.studentForm.controls['photo'].value);
+    };
+    EnquiryPage.prototype.getProfileImageStyle = function () {
+        return ('url(' + this.studentForm.controls['photo'].value + ')');
+    };
+    EnquiryPage.prototype.findDuplicates = function (data) {
+        var result = [];
+        data.forEach(function (element, index) {
+            // Find if there is a duplicate or not
+            if (data.indexOf(element, index + 1) > -1) {
+                // Find if the element is already in the result array or not
+                if (result.indexOf(element) === -1) {
+                    result.push(element);
+                }
+            }
+        });
+        return result;
+    };
+    EnquiryPage.prototype.showConfirm = function (stu) {
+        var _this = this;
+        var msg = 'Name: ' + stu.name + '<br/> Email: ' + stu.email_id + "<br/> Phone: " + stu.phone_number + "<br/> Gender: " + stu.gender + "<br/> Parent: " + stu.parent_name + "<br/>Center: " + stu.center + "<br/> Confirm same student?";
+        var confirm = this.alertCtrl.create({
+            title: 'Similar Enquiry',
+            message: msg,
+            buttons: [
+                {
+                    text: 'Yes! Confirm',
+                    handler: function () {
+                        _this.storage.set('confirmed_student', stu);
+                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_18__confirm_confirm__["a" /* ConfirmPage */]);
+                    }
+                },
+                {
+                    text: 'No! Enquire',
+                    handler: function () {
+                        console.log('Agree clicked');
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    EnquiryPage.prototype.checkMatching = function () {
+        var list = [];
+        this.isMatching = false;
+        this.matchingStudent = null;
+        if (this.studentForm.controls['dob'].value != '') {
+            for (var i = 0; i < this.studentsList.length; i++) {
+                if (__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentsList[i].dob).isSame(__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentForm.controls['dob'].value), 'day') && __WEBPACK_IMPORTED_MODULE_5_moment__(this.studentsList[i].dob).isSame(__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentForm.controls['dob'].value), 'month') && __WEBPACK_IMPORTED_MODULE_5_moment__(this.studentsList[i].dob).isSame(__WEBPACK_IMPORTED_MODULE_5_moment__(this.studentForm.controls['dob'].value), 'year')) {
+                    list.push(this.studentsList[i]);
+                }
+            }
+        }
+        if (this.studentForm.controls['email_id'].value != '') {
+            for (var i = 0; i < this.studentsList.length; i++) {
+                if (this.studentsList[i].email_id == this.studentForm.controls['email_id'].value) {
+                    list.push(this.studentsList[i]);
+                }
+            }
+        }
+        if (this.studentForm.controls['phone_number'].value != '') {
+            for (var i = 0; i < this.studentsList.length; i++) {
+                if (this.studentsList[i].phone_number == this.studentForm.controls['phone_number'].value) {
+                    list.push(this.studentsList[i]);
+                }
+            }
+            for (var i = 0; i < this.studentsList.length; i++) {
+                if (this.studentsList[i].alternate_contact == this.studentForm.controls['phone_number'].value) {
+                    list.push(this.studentsList[i]);
+                }
+            }
+        }
+        if (this.studentForm.controls['alternate_contact'].value != '') {
+            for (var i = 0; i < this.studentsList.length; i++) {
+                if (this.studentsList[i].phone_number == this.studentForm.controls['alternate_contact'].value) {
+                    list.push(this.studentsList[i]);
+                }
+            }
+            for (var i = 0; i < this.studentsList.length; i++) {
+                if (this.studentsList[i].alternate_contact == this.studentForm.controls['alternate_contact'].value) {
+                    list.push(this.studentsList[i]);
+                }
+            }
+        }
+        if (list.length > 0) {
+            var resu = this.findDuplicates(list);
+            if (resu.length > 0 && !this.counter) {
+                this.isMatching = true;
+                this.counter = true;
+                this.matchingStudent = resu[0];
+                this.showConfirm(this.matchingStudent);
+            }
+        }
+    };
+    EnquiryPage.prototype.onLocalityChange = function ($event) {
+        var _this = this;
+        this.locationOptions = [];
+        if ($event._value.length > 4) {
+            var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + $event._value +
+                "&types=geocode&key=AIzaSyDxiToPCcr2LL1EC_vkzYtBiQO_9kbIfqs";
+            this.http.get(url)
+                .subscribe(function (res) {
+                var data = res.json();
+                _this.locationOptions = data.predictions;
+            }, function (err) { });
+        }
+    };
+    EnquiryPage.prototype.onLocSelect = function (description) {
+        this.studentForm.controls['locality'].setValue(description);
+    };
+    return EnquiryPage;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('fileInput'),
+    __metadata("design:type", Object)
+], EnquiryPage.prototype, "fileInput", void 0);
+EnquiryPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'enquiry-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/enquiry/enquiry.html"*/'<ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>\n      ENQUIRY\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding class="enquiry-page">\n \n    <ion-list no-lines>\n\n      <form [formGroup]="studentForm">\n\n        <!-- Year of Joining of the student -->\n        <ion-list radio-group formControlName="study_year" (ionChange)="onYearChange()">\n          <ion-item style="width: 50%; float: left; background: #f4f4f4;font-weight: bolder;color: #e62626;">\n            <ion-label>May 2019 - April 2020</ion-label>\n            <ion-radio value="2019-20"></ion-radio>\n          </ion-item>\n          <ion-item style="width: 50%; float: left; background: #f4f4f4;font-weight: bolder;color: #e62626;">\n            <ion-label>May 2020 - April 2021</ion-label>\n            <ion-radio value="2020-21"></ion-radio>\n          </ion-item>\n        </ion-list>\n \n        <!-- Name of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Name*</ion-label>\n            <ion-input type="text" formControlName="name" (ionChange)="onNameChange()"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.name.valid  && (studentForm.controls.name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n\n        <!-- Gender of the student -->\n        <ion-list radio-group formControlName="gender">\n          <ion-list-header> <ion-icon name="transgender"></ion-icon> Gender* </ion-list-header>\n          <ion-item>\n            <ion-label>Male</ion-label>\n            <ion-radio value="Male"></ion-radio>\n          </ion-item>\n          <ion-item>\n            <ion-label>Female</ion-label>\n            <ion-radio value="Female"></ion-radio>\n          </ion-item>\n        </ion-list>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.gender.valid  && (studentForm.controls.gender.dirty || submitAttempt)">\n          Please select Gender\n        </p>\n\n        <!-- DOB of the student -->\n        <ion-item>\n          <ion-label floating><ion-icon name="clock"></ion-icon> DOB*</ion-label>\n          <ion-datetime displayFormat="DD/MMM/YYYY" (ionChange)="onDobChange()" pickerFormat="DD MMM YYYY" formControlName="dob"></ion-datetime>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.dob.valid  && (studentForm.controls.dob.dirty || submitAttempt)">\n          Please select valid date\n        </p>\n\n        <ion-item>\n            <h2>Age as of Today - \n            <span class="numbering">{{ today_age_years }} . {{ today_age_months }}</span></h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Age as of {{ month_date }} - <span class="numbering">{{ month_age_years }} . {{ month_age_months }}</span> </h2>\n        </ion-item>\n\n        <ion-item>\n            <h2>Class - \n            <span class="numbering">{{ class_group }}</span></h2>\n        </ion-item>\n\n        <!-- Name of the Parent -->\n        <ion-item>\n            <ion-label floating><ion-icon name="people"></ion-icon> Parent Name*</ion-label>\n            <ion-input type="text" formControlName="parent_name"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.parent_name.valid  && (studentForm.controls.parent_name.dirty || submitAttempt)">\n          Please enter a valid name\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="mail"></ion-icon> E-mail*</ion-label>\n            <ion-input type="text" (ionChange)="onEmailChange()" formControlName="email_id"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.email_id.valid  && (studentForm.controls.email_id.dirty || submitAttempt)">\n          Please enter a valid E-mail Id\n        </p>\n \n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Phone No*</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()"formControlName="phone_number"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.phone_number.valid  && (studentForm.controls.phone_number.dirty || submitAttempt)">\n          Please enter a valid Phone No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="call"></ion-icon> Alternate Contact</ion-label>\n            <ion-input type="text" (ionChange)="onPhoneChange()" formControlName="alternate_contact"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.alternate_contact.valid  && (studentForm.controls.alternate_contact.dirty || submitAttempt)">\n          Please enter a valid alternate No.\n        </p>\n\n        <ion-item>\n            <ion-label floating><ion-icon name="locate"></ion-icon> Locality*</ion-label>\n            <ion-input type="text" formControlName="locality" (ionChange)="onLocalityChange($event)"></ion-input>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!studentForm.controls.locality.valid  && (studentForm.controls.locality.dirty || submitAttempt)">\n          Please enter a valid locality\n        </p>\n\n        <ion-list>\n          <ion-item *ngFor="let loc of locationOptions" (click)="onLocSelect(loc.description)">\n            <ion-label>{{loc.description}}</ion-label>\n          </ion-item>\n        </ion-list>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>Select Image\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n</ion-content>\n\n<ion-footer>\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="resetStudent()" ion-button class="btn-danger">Reset</button>\n      <button (click)="addStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/enquiry/enquiry.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_7__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_21__ionic_native_camera__["a" /* Camera */],
+        __WEBPACK_IMPORTED_MODULE_19__ionic_native_file__["a" /* File */],
+        __WEBPACK_IMPORTED_MODULE_20__ionic_native_file_path__["a" /* FilePath */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_9__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_10__providers_network_network__["a" /* Networks */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_6__angular_http__["b" /* Http */]])
+], EnquiryPage);
+
+;
+//# sourceMappingURL=enquiry.js.map
+
+/***/ }),
+
+/***/ 74:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_network_network__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(75);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var LoginPage = (function () {
+    function LoginPage(navCtrl, authService, loadingCtrl, formBuilder, networkService) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.authService = authService;
+        this.loadingCtrl = loadingCtrl;
+        this.formBuilder = formBuilder;
+        this.networkService = networkService;
+        this.logoState = "in";
+        this.cloudState = "in";
+        this.loginState = "in";
+        this.formState = "in";
+        this.errorMessage = "";
+        this.submitAttempt = false;
+        this.isForgotPassword = false;
+        this.passwordType = 'password';
+        this.passwordIcon = 'eye-off';
+        if (this.networkService.noConnection()) {
+            this.networkService.showNetworkAlert();
+        }
+        this.loginForm = formBuilder.group({
+            email: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
+        });
+        this.forgotPasswordForm = formBuilder.group({
+            email: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])]
+        });
+        this.loginForm.valueChanges.subscribe(function (data) {
+            _this.loginForm.setValue({
+                email: _this.onEmailChange(data.email),
+                password: data.password
+            }, { emitEvent: false });
+        });
+        this.forgotPasswordForm.valueChanges.subscribe(function (data) {
+            _this.forgotPasswordForm.setValue({
+                email: _this.onEmailChange(data.email)
+            }, { emitEvent: false });
+        });
+    }
+    LoginPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.showLoader();
+        //Check if already authenticated
+        this.authService.checkAuthentication().then(function (res) {
+            console.log("Already authorized");
+            _this.loading.dismiss();
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
+        }, function (err) {
+            console.log("Not already authorized");
+            _this.loading.dismiss();
+        });
+    };
+    LoginPage.prototype.onEmailChange = function (email_id) {
+        email_id = email_id.toLowerCase();
+        email_id = email_id.replace(/\s/g, '');
+        return email_id;
+    };
+    LoginPage.prototype.login = function () {
+        var _this = this;
+        this.showLoader();
+        this.submitAttempt = true;
+        var credentials = {
+            email: this.loginForm.value.email,
+            password: this.loginForm.value.password
+        };
+        if (this.loginForm.valid) {
+            this.authService.login(credentials).then(function (result) {
+                _this.loading.dismiss();
+                console.log(result);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
+            }, function (err) {
+                _this.errorMessage = "Authentication Failed!";
+                _this.loading.dismiss();
+                console.log(err);
+            });
+        }
+        else {
+            this.errorMessage = "Please fill all details correctly";
+            this.loading.dismiss();
+        }
+    };
+    LoginPage.prototype.submitForgotPassword = function () {
+        var _this = this;
+        this.showLoader();
+        this.submitAttempt = true;
+        var credentials = {
+            email: this.forgotPasswordForm.value.email,
+        };
+        if (this.forgotPasswordForm.valid) {
+            this.authService.forgotPassword(credentials).then(function (result) {
+                _this.loading.dismiss();
+                console.log(result);
+                _this.isForgotPassword = !_this.isForgotPassword;
+                _this.errorMessage = "Please check your mail for further information!";
+            }, function (err) {
+                _this.errorMessage = "Authentication Failed!";
+                _this.loading.dismiss();
+                console.log(err);
+            });
+        }
+        else {
+            this.errorMessage = "Please fill all details correctly";
+            this.loading.dismiss();
+        }
+    };
+    LoginPage.prototype.launchSignup = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__signup_signup__["a" /* SignupPage */]);
+        this.errorMessage = "";
+    };
+    LoginPage.prototype.showLoader = function () {
+        this.loading = this.loadingCtrl.create({
+            content: 'Authenticating...'
+        });
+        this.loading.present();
+    };
+    LoginPage.prototype.forgotPassword = function () {
+        this.isForgotPassword = !this.isForgotPassword;
+    };
+    LoginPage.prototype.hideShowPassword = function () {
+        this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+        this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+    };
+    return LoginPage;
+}());
+LoginPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'login',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/login/login.html"*/'<ion-content class="login-page">\n    <div padding id="cloud-layer">\n\n      <ion-row>\n        <ion-col>\n          <img [@flyInBottomSlow]="logoState" src="assets/images/logo_littleW_0.png" />\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf="!isForgotPassword">\n          <ion-col>\n              <ion-list inset [@bounceInBottom]="formState">\n\n                <form [formGroup]="loginForm">\n   \n                    <ion-item>\n                      <ion-label><ion-icon name="person"></ion-icon></ion-label>\n                      <ion-input formControlName="email" placeholder="email" type="text"></ion-input>\n                    </ion-item>\n\n                    <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="errorMessage">\n                      Enter valid email id\n                    </p>\n       \n                    <ion-item>\n                      <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                      <ion-input required formControlName="password" placeholder="password" [type]="passwordType"></ion-input>\n                      <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)=\'hideShowPassword()\' style="z-index:9999999;"></ion-icon>\n                    </ion-item>\n\n                    <p *ngIf="!loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)" class="errorMessage">\n                      Enter valid password\n                    </p>\n\n                  </form>\n              </ion-list>\n          </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf="!isForgotPassword">\n          <ion-col>\n              <button ion-button full (click)="login()" [@fadeIn]="loginState" class="login-button">Login</button>\n          </ion-col>\n      </ion-row>\n\n      <ion-col *ngIf="!isForgotPassword">\n          <a class="forgot-password" (click)="forgotPassword()" [@fadeIn]="loginState"> FORGOT PASSWORD? </a>\n      </ion-col>\n\n      <ion-row *ngIf="isForgotPassword">\n          <ion-col>\n              <ion-list inset [@bounceInBottom]="formState">\n\n                <form [formGroup]="forgotPasswordForm">\n   \n                    <ion-item>\n                      <ion-label><ion-icon name="person"></ion-icon></ion-label>\n                      <ion-input formControlName="email" placeholder="email" type="text"></ion-input>\n                    </ion-item>\n\n                    <p *ngIf="!forgotPasswordForm.controls.email.valid  && (forgotPasswordForm.controls.email.dirty || submitAttempt)" class="errorMessage">\n                      Enter valid email id\n                    </p>\n\n                </form>\n              </ion-list>\n          </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf="isForgotPassword">\n          <ion-col>\n              <button ion-button full (click)="submitForgotPassword()" [@fadeIn]="loginState" class="login-button">Submit</button>\n          </ion-col>\n      </ion-row>\n\n      <ion-col *ngIf="isForgotPassword">\n          <a class="forgot-password" (click)="forgotPassword()" [@fadeIn]="loginState"> Login? </a>\n      </ion-col>\n\n      <ion-row>\n        <ion-col>\n            <p class="errorMessage">{{errorMessage}}</p>\n        </ion-col>\n      </ion-row>\n\n    </div>\n \n</ion-content>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/login/login.html"*/,
+        animations: [
+            //For the logo
+            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('flyInBottomSlow', [
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
+                    transform: 'translate3d(0,0,0)'
+                })),
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,2000px,0' }),
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('2000ms ease-in-out')
+                ])
+            ]),
+            //For the background detail
+            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('flyInBottomFast', [
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
+                    transform: 'translate3d(0,0,0)'
+                })),
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,2000px,0)' }),
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('1000ms ease-in-out')
+                ])
+            ]),
+            //For the login form
+            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('bounceInBottom', [
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
+                    transform: 'translate3d(0,0,0)'
+                })),
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('2000ms 200ms ease-in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["keyframes"])([
+                        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,2000px,0)', offset: 0 }),
+                        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,-20px,0)', offset: 0.9 }),
+                        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,0,0)', offset: 1 })
+                    ]))
+                ])
+            ]),
+            //For login button
+            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('fadeIn', [
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
+                    opacity: 1
+                })),
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ opacity: 0 }),
+                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('1000ms 2000ms ease-in')
+                ])
+            ])
+        ]
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_4__providers_network_network__["a" /* Networks */]])
+], LoginPage);
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 75:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_center_center__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_students_students__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(30);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var SignupPage = (function () {
+    function SignupPage(navCtrl, navParams, centerService, studentService, authService, loading, app, menu, storage, toastCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.centerService = centerService;
+        this.studentService = studentService;
+        this.authService = authService;
+        this.loading = loading;
+        this.app = app;
+        this.menu = menu;
+        this.storage = storage;
+        this.toastCtrl = toastCtrl;
+        this.active = true;
+        this.isPasswordMatching = true;
+        this.isExisting = false;
+        this.btnText = "Save";
+        this.existingUser = false;
+        this.isUserDeletable = false;
+    }
+    SignupPage.prototype.ionViewDidLoad = function () {
+        this.loader = this.loading.create({
+            content: 'Please wait...',
+        });
+        this.getCenters();
+        this.getUsers();
+    };
+    // Function to make email small letters on change
+    SignupPage.prototype.onEmailChange = function () {
+        this.email = this.email.toLowerCase();
+    };
+    SignupPage.prototype.reset = function () {
+        this.existingUser = false;
+        this.role = "";
+        this.email = "";
+        this.password = "";
+        this.confirm_password = "";
+        this.name = "";
+        this.center = "";
+        this.active = true;
+        this.isPasswordMatching = true;
+        this.isExisting = false;
+        this._id = "";
+        this.myInput = "";
+        this.mySelect = "";
+        this.btnText = "Save";
+        this.existingUser = false;
+        this.isUserDeletable = false;
+    };
+    SignupPage.prototype.presentToast = function (text) {
+        var toast = this.toastCtrl.create({
+            message: text,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.present();
+    };
+    // Function to get list of all the centers
+    SignupPage.prototype.getCenters = function () {
+        var _this = this;
+        this.centers = [];
+        this.centerService.searchCenter().then(function (result) {
+            result = __WEBPACK_IMPORTED_MODULE_5_lodash__["filter"](result, function (o) {
+                return (o.active == true);
+            });
+            _this.centers = result;
+            _this.storage.get('user').then(function (user) {
+                if (user.role != "admin") {
+                    _this.centers = __WEBPACK_IMPORTED_MODULE_5_lodash__["find"](_this.centers, ['center_code', user.center]);
+                    _this.center = _this.centers;
+                }
+            });
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    // Function to get list of all the Users
+    SignupPage.prototype.getUsers = function () {
+        var _this = this;
+        this.users = [];
+        this.authService.searchUser().then(function (result) {
+            _this.users = result;
+            for (var i = 0; i < _this.users.length; i++) {
+                _this.users[i].password = "";
+            }
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    SignupPage.prototype.save = function () {
+        var _this = this;
+        if (!this.isExisting && this.isPasswordMatching) {
+            this.loader.present();
+            var details = {
+                email: this.email,
+                password: this.password,
+                role: this.role,
+                name: this.name,
+                center: this.center,
+                active: this.active
+            };
+            this.authService.createAccount(details).then(function (result) {
+                _this.loader.dismiss();
+                _this.reset();
+                _this.getUsers();
+                _this.presentToast('User data saved successfully');
+            }, function (err) {
+                _this.loader.dismiss();
+                _this.presentToast('Error! Please try again.');
+            });
+        }
+    };
+    SignupPage.prototype.update = function () {
+        var _this = this;
+        this.loader.present();
+        var details = {
+            email: this.email,
+            password: this.password,
+            role: this.role,
+            name: this.name,
+            center: this.center,
+            active: this.active
+        };
+        this.authService.updateAccount(details).then(function (result) {
+            _this.reset();
+            _this.loader.dismiss();
+            _this.getUsers();
+            _this.mySelect = null;
+            _this.myInput = '';
+            _this.presentToast('User data saved successfully');
+        }, function (err) {
+            _this.loader.dismiss();
+            _this.presentToast('Error! Please try again.');
+        });
+    };
+    // Function to search for a User dynamically based on an input
+    SignupPage.prototype.search = function () {
+        var _this = this;
+        var result = [];
+        for (var i = 0; i < this.users.length; i++) {
+            if (this.users[i].name.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) {
+                result.push(this.users[i]);
+            }
+            else if (this.users[i].email.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) {
+                result.push(this.users[i]);
+            }
+        }
+        if (result && result.length === 1) {
+            this.existingUser = true;
+            this.role = result[0].role;
+            this.email = result[0].email;
+            this.password = result[0].password;
+            this.confirm_password = result[0].password;
+            this.name = result[0].name;
+            this.center = result[0].center;
+            this.active = result[0].active;
+            this._id = result[0]._id;
+            this.btnText = "Update";
+            this.isUserDeletable = false;
+            this.studentService.getStudents().then(function (data) {
+                data = __WEBPACK_IMPORTED_MODULE_5_lodash__["filter"](data, function (o) {
+                    return (o.counsellor == this.email);
+                });
+                if (!data)
+                    _this.isUserDeletable = true;
+            }, function (err) {
+                console.log("not allowed");
+            });
+        }
+        else {
+            this.existingUser = false;
+            this.role = "";
+            this.email = "";
+            this.password = "";
+            this.confirm_password = "";
+            this.name = "";
+            this.center = "";
+            this.active = true;
+            this.isUserDeletable = false;
+        }
+    };
+    // Function to search for a User dynamically based on select
+    SignupPage.prototype.onSelectChange = function () {
+        var _this = this;
+        var result = [];
+        for (var i = 0; i < this.users.length; i++) {
+            if (this.users[i].name == this.mySelect)
+                result.push(this.users[i]);
+        }
+        if (result && result.length === 1) {
+            this.existingUser = true;
+            this.role = result[0].role;
+            this.email = result[0].email;
+            this.password = result[0].password;
+            this.confirm_password = result[0].password;
+            this.name = result[0].name;
+            this.center = result[0].center;
+            this.active = result[0].active;
+            this._id = result[0]._id;
+            this.btnText = "Update";
+            this.isUserDeletable = false;
+            this.studentService.getStudents().then(function (data) {
+                var student = [];
+                student = __WEBPACK_IMPORTED_MODULE_5_lodash__["filter"](data, function (o) {
+                    return (o.counsellor == result[0].email);
+                });
+                if (student.length <= 0)
+                    _this.isUserDeletable = true;
+            }, function (err) {
+                console.log("not allowed");
+            });
+        }
+        else {
+            this.existingUser = false;
+            this.role = "";
+            this.email = "";
+            this.password = "";
+            this.confirm_password = "";
+            this.name = "";
+            this.center = "";
+            this.active = true;
+            this.isUserDeletable = false;
+        }
+    };
+    // Function to check if user exists with same email ID
+    SignupPage.prototype.checkEmail = function () {
+        this.isExisting = false;
+        var result = __WEBPACK_IMPORTED_MODULE_5_lodash__["find"](this.users, ['email', this.email]);
+        this.isExisting = (result != null && result != undefined) ? true : false;
+    };
+    // Function to check if password and confirm password match
+    SignupPage.prototype.checkPassword = function () {
+        this.isPasswordMatching = false;
+        if ((this.password == undefined || this.password == null)
+            && (this.confirm_password == undefined || this.confirm_password == null)) {
+            this.isPasswordMatching = false;
+        }
+        else {
+            this.isPasswordMatching = (this.password == this.confirm_password) ? true : false;
+        }
+    };
+    SignupPage.prototype.openHomePage = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__home_home__["a" /* HomePage */]);
+    };
+    SignupPage.prototype.delete = function () {
+        var _this = this;
+        this.loader.present();
+        var details = {
+            email: this.email,
+        };
+        this.authService.deleteAccount(details).then(function (result) {
+            _this.reset();
+            _this.loader.dismiss();
+            _this.getUsers();
+            _this.mySelect = null;
+            _this.myInput = '';
+            _this.presentToast('User delete successfully');
+        }, function (err) {
+            _this.loader.dismiss();
+            _this.presentToast('Error! Please try again.');
+        });
+    };
+    return SignupPage;
+}());
+SignupPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'signup',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/signup/signup.html"*/' <ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <!-- <ion-buttons start>\n        <button ion-button icon-only (click)="openHomePage()"><ion-icon name="close"></ion-icon></button>\n    </ion-buttons> -->\n    <ion-title>Users</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n    <div class="search-row">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()">\n        </ion-searchbar>\n        <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">\n          <ion-option *ngFor="let user of users" [value]="user.name">{{user.name}}</ion-option>\n        </ion-select>\n    </div>\n \n    <ion-row class="account-form">\n        <ion-col>\n            <ion-list inset>\n\n                <ion-item *ngIf="!existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-select interface="popover" [(ngModel)]="center">\n                    <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>\n                  </ion-select>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-input [(ngModel)]="center" [readonly]=true placeholder="Center" type="text"></ion-input>\n                </ion-item>\n \n                <ion-item *ngIf="!existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" (ionChange)="onEmailChange()" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" [readonly]=true placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="isExisting">Email already exists</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="password" (ionChange)="checkPassword()" placeholder="Password" type="password"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="confirm_password" placeholder="Confirm Password" (ionChange)="checkPassword()" type="password"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="!isPasswordMatching">Password do not match</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="person-add"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="name" placeholder="Name"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label>Active</ion-label>\n                    <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>\n                </ion-item>\n \n                <ion-list radio-group [(ngModel)]="role" style="margin-bottom: 120px;">\n                  <ion-item>\n                    <ion-label>Center</ion-label>\n                    <ion-radio value="counsellor" checked></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Dispatcher</ion-label>\n                    <ion-radio value="dispatcher"></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Admin</ion-label>\n                    <ion-radio value="admin"></ion-radio>\n                  </ion-item>\n                </ion-list>\n \n            </ion-list>\n        \n        </ion-col>\n    </ion-row>\n\n</ion-content>\n\n<ion-footer>\n  <div class="gm_drawer_footer_wrapper"> \n \n    <button ion-button (click)="delete()" *ngIf="isUserDeletable" class="delete-button" style="position: fixed;">Delete User</button>\n\n    <button ion-button (click)="save()" *ngIf="btnText == \'Save\'" class="continue-button">{{ btnText }}</button>\n    <button ion-button (click)="update()" *ngIf="btnText != \'Save\'" class="continue-button">{{ btnText }}</button>\n\n  </div>\n</ion-footer>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/signup/signup.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__providers_center_center__["a" /* Center */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_students_students__["a" /* Students */],
+        __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__["a" /* Auth */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* App */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* MenuController */],
+        __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* ToastController */]])
+], SignupPage);
+
+//# sourceMappingURL=signup.js.map
+
+/***/ }),
+
+/***/ 77:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfirmPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
@@ -6214,8 +7202,8 @@ SearchPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_auth_auth__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_center_center__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__search_search__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_path__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_path__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_camera__ = __webpack_require__(58);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6524,7 +7512,7 @@ __decorate([
 ], ConfirmPage.prototype, "fileInput", void 0);
 ConfirmPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'confirm-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/confirm/confirm.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-buttons start>\n    <button ion-button icon-only (click)="goBack()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n \n    <div class="booking_card" style="height:200px;" *ngIf="student != null">\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h6>{{student.name}}</h6>\n            <h6 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h6>\n            <h6 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h6>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="mail"></ion-icon> {{student.email_id}}\n            </a>\n            <br>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="call"></ion-icon> {{student.phone_number}} \n            </a>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h6><ion-icon name="locate"></ion-icon> {{student.locality}}</h6>\n            <h6><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h6>\n          </div>\n    </div>\n\n    <ion-list no-lines>\n\n      <form [formGroup]="confirmForm">\n \n      <!-- Study Year of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="bookmarks"></ion-icon> Study Year*</ion-label>\n            <ion-select formControlName="study_year" interface="popover" (ionChange)="onYearChange()">\n              <ion-option value="2019-20">May 2019 - April 2020</ion-option>\n              <ion-option value="2020-21">May 2020 - April 2021</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.study_year.valid  && (confirmForm.controls.study_year.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_group.valid  && (confirmForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_type.valid  && (confirmForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <ion-item>\n          <ion-label>Uniform</ion-label>\n          <ion-toggle formControlName="needUniform" (ionChange)="onUniformChange()" checked="true" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- uniform_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needUniform">\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.uniform_size.valid  && (confirmForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <ion-item>\n          <ion-label>Shoe</ion-label>\n          <ion-toggle formControlName="needShoe" checked="true" (ionChange)="onShoeChange()" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- shoe_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needShoe">\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.shoe_size.valid  && (confirmForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>\n              <p *ngIf="confirmForm.controls.photo.value == \'\'">Select Image</p>\n              <p *ngIf="confirmForm.controls.photo.value != \'\'">Change Image</p>\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n</ion-content>\n\n<ion-footer>\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/confirm/confirm.html"*/
+        selector: 'confirm-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/confirm/confirm.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-buttons start>\n    <button ion-button icon-only (click)="goBack()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons>\n  <ion-title>\n    SPARK\n  </ion-title>\n </ion-navbar>\n</ion-header>\n\n<ion-content padding class="home-page">\n \n    <div class="booking_card" style="height:200px;" *ngIf="student != null">\n          <div class="col_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student"/></div>\n          </div>\n          <div class="col_right">\n            <h6>{{student.name}}</h6>\n            <h6 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h6>\n            <h6 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h6>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="mail"></ion-icon> {{student.email_id}}\n            </a>\n            <br>\n            <a (click)="presentActionSheet(student.phone_number, student.email_id)">\n              <ion-icon name="call"></ion-icon> {{student.phone_number}} \n            </a>\n            <!-- <h2><ion-icon name="call"></ion-icon> {{student.alternate_contact}}</h2> -->\n            <h6><ion-icon name="locate"></ion-icon> {{student.locality}}</h6>\n            <h6><ion-icon name="clock"></ion-icon> {{student.dob | date: \'dd/MMM/yyyy\'}} </h6>\n          </div>\n    </div>\n\n    <ion-list no-lines>\n\n      <form [formGroup]="confirmForm">\n \n      <!-- Study Year of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="bookmarks"></ion-icon> Study Year*</ion-label>\n            <ion-select formControlName="study_year" interface="popover" (ionChange)="onYearChange()">\n              <ion-option value="2020-21">May 2020 - April 2021</ion-option>\n              <ion-option value="2021-22">May 2021 - April 2022</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.study_year.valid  && (confirmForm.controls.study_year.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- Class of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Class*</ion-label>\n            <ion-select formControlName="class_group" interface="popover">\n              <ion-option value="Play Group">Play Group</ion-option>\n              <ion-option value="Nursery">Nursery</ion-option>\n              <ion-option value="LKG">LKG</ion-option>\n              <ion-option value="UKG">UKG</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_group.valid  && (confirmForm.controls.class_group.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <!-- class_type of the student -->\n        <ion-item>\n            <ion-label floating><ion-icon name="office"></ion-icon> Type*</ion-label>\n            <ion-select formControlName="class_type" interface="popover">\n              <ion-option value="Annual">Annual</ion-option>\n              <ion-option value="Mid-term">Mid-term</ion-option>\n              <ion-option value="Early start">Early start</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.class_type.valid  && (confirmForm.controls.class_type.dirty || submitAttempt)">\n          Please select Class Group\n        </p>\n\n        <ion-item>\n          <ion-label>Uniform</ion-label>\n          <ion-toggle formControlName="needUniform" (ionChange)="onUniformChange()" checked="true" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- uniform_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needUniform">\n            <ion-label floating><ion-icon name="clothes"></ion-icon> Uniform Size*</ion-label>\n            <ion-select formControlName="uniform_size" interface="popover">\n              <ion-option value="18">18</ion-option>\n              <ion-option value="20">20</ion-option>\n              <ion-option value="22">22</ion-option>\n              <ion-option value="24">24</ion-option>\n              <ion-option value="26">26</ion-option>\n              <ion-option value="28">28</ion-option>\n              <ion-option value="30">30</ion-option>\n              <ion-option value="32">32</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.uniform_size.valid  && (confirmForm.controls.uniform_size.dirty || submitAttempt)">\n          Please select Uniform Size\n        </p>\n\n        <ion-item>\n          <ion-label>Shoe</ion-label>\n          <ion-toggle formControlName="needShoe" checked="true" (ionChange)="onShoeChange()" class="toggle-large"></ion-toggle>\n        </ion-item>\n\n        <!-- shoe_size of the student -->\n        <ion-item *ngIf="confirmForm.value.needShoe">\n            <ion-label floating><ion-icon name="shoe"></ion-icon> Shoe Size*</ion-label>\n            <ion-select formControlName="shoe_size" interface="popover">\n              <ion-option value="6">6</ion-option>\n              <ion-option value="7">7</ion-option>\n              <ion-option value="8">8</ion-option>\n              <ion-option value="9">9</ion-option>\n              <ion-option value="10">10</ion-option>\n              <ion-option value="11">11</ion-option>\n              <ion-option value="12">12</ion-option>\n              <ion-option value="13">13</ion-option>\n            </ion-select>\n        </ion-item>\n\n        <p class="errorMessage" *ngIf="!confirmForm.controls.shoe_size.valid  && (confirmForm.controls.shoe_size.dirty || submitAttempt)">\n          Please select Shoe Size\n        </p>\n\n        <ion-toolbar color="primary" class="upload_button">\n          <ion-buttons>\n            <button ion-button icon-left (click)="getPicture()">\n              <ion-icon name="camera"></ion-icon>\n              <p *ngIf="confirmForm.controls.photo.value == \'\'">Select Image</p>\n              <p *ngIf="confirmForm.controls.photo.value != \'\'">Change Image</p>\n            </button>\n            <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"  (change)="processWebImage($event)" />\n          </ion-buttons>\n        </ion-toolbar>\n\n      </form>\n \n    </ion-list>\n\n    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>\n</ion-content>\n\n<ion-footer>\n    <div class="gm_drawer_footer_wrapper">\n      <button (click)="goBack()" ion-button class="btn-danger">Cancel</button>\n      <button (click)="confirmStudent()" ion-button class="btn-success">Submit</button>\n    </div>\n</ion-footer>\n'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/confirm/confirm.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_4__providers_students_students__["a" /* Students */],
@@ -6550,790 +7538,264 @@ ConfirmPage = __decorate([
 
 /***/ }),
 
-/***/ 75:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_network_network__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__signup_signup__ = __webpack_require__(76);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-var LoginPage = (function () {
-    function LoginPage(navCtrl, authService, loadingCtrl, formBuilder, networkService) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.authService = authService;
-        this.loadingCtrl = loadingCtrl;
-        this.formBuilder = formBuilder;
-        this.networkService = networkService;
-        this.logoState = "in";
-        this.cloudState = "in";
-        this.loginState = "in";
-        this.formState = "in";
-        this.errorMessage = "";
-        this.submitAttempt = false;
-        this.isForgotPassword = false;
-        this.passwordType = 'password';
-        this.passwordIcon = 'eye-off';
-        if (this.networkService.noConnection()) {
-            this.networkService.showNetworkAlert();
-        }
-        this.loginForm = formBuilder.group({
-            email: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-            password: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])],
-        });
-        this.forgotPasswordForm = formBuilder.group({
-            email: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])]
-        });
-        this.loginForm.valueChanges.subscribe(function (data) {
-            _this.loginForm.setValue({
-                email: _this.onEmailChange(data.email),
-                password: data.password
-            }, { emitEvent: false });
-        });
-        this.forgotPasswordForm.valueChanges.subscribe(function (data) {
-            _this.forgotPasswordForm.setValue({
-                email: _this.onEmailChange(data.email)
-            }, { emitEvent: false });
-        });
-    }
-    LoginPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.showLoader();
-        //Check if already authenticated
-        this.authService.checkAuthentication().then(function (res) {
-            console.log("Already authorized");
-            _this.loading.dismiss();
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
-        }, function (err) {
-            console.log("Not already authorized");
-            _this.loading.dismiss();
-        });
-    };
-    LoginPage.prototype.onEmailChange = function (email_id) {
-        email_id = email_id.toLowerCase();
-        email_id = email_id.replace(/\s/g, '');
-        return email_id;
-    };
-    LoginPage.prototype.login = function () {
-        var _this = this;
-        this.showLoader();
-        this.submitAttempt = true;
-        var credentials = {
-            email: this.loginForm.value.email,
-            password: this.loginForm.value.password
-        };
-        if (this.loginForm.valid) {
-            this.authService.login(credentials).then(function (result) {
-                _this.loading.dismiss();
-                console.log(result);
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__home_home__["a" /* HomePage */]);
-            }, function (err) {
-                _this.errorMessage = "Authentication Failed!";
-                _this.loading.dismiss();
-                console.log(err);
-            });
-        }
-        else {
-            this.errorMessage = "Please fill all details correctly";
-            this.loading.dismiss();
-        }
-    };
-    LoginPage.prototype.submitForgotPassword = function () {
-        var _this = this;
-        this.showLoader();
-        this.submitAttempt = true;
-        var credentials = {
-            email: this.forgotPasswordForm.value.email,
-        };
-        if (this.forgotPasswordForm.valid) {
-            this.authService.forgotPassword(credentials).then(function (result) {
-                _this.loading.dismiss();
-                console.log(result);
-                _this.isForgotPassword = !_this.isForgotPassword;
-                _this.errorMessage = "Please check your mail for further information!";
-            }, function (err) {
-                _this.errorMessage = "Authentication Failed!";
-                _this.loading.dismiss();
-                console.log(err);
-            });
-        }
-        else {
-            this.errorMessage = "Please fill all details correctly";
-            this.loading.dismiss();
-        }
-    };
-    LoginPage.prototype.launchSignup = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__signup_signup__["a" /* SignupPage */]);
-        this.errorMessage = "";
-    };
-    LoginPage.prototype.showLoader = function () {
-        this.loading = this.loadingCtrl.create({
-            content: 'Authenticating...'
-        });
-        this.loading.present();
-    };
-    LoginPage.prototype.forgotPassword = function () {
-        this.isForgotPassword = !this.isForgotPassword;
-    };
-    LoginPage.prototype.hideShowPassword = function () {
-        this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-        this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
-    };
-    return LoginPage;
-}());
-LoginPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'login',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/login/login.html"*/'<ion-content class="login-page">\n    <div padding id="cloud-layer">\n\n      <ion-row>\n        <ion-col>\n          <img [@flyInBottomSlow]="logoState" src="assets/images/logo_littleW_0.png" />\n        </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf="!isForgotPassword">\n          <ion-col>\n              <ion-list inset [@bounceInBottom]="formState">\n\n                <form [formGroup]="loginForm">\n   \n                    <ion-item>\n                      <ion-label><ion-icon name="person"></ion-icon></ion-label>\n                      <ion-input formControlName="email" placeholder="email" type="text"></ion-input>\n                    </ion-item>\n\n                    <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="errorMessage">\n                      Enter valid email id\n                    </p>\n       \n                    <ion-item>\n                      <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                      <ion-input required formControlName="password" placeholder="password" [type]="passwordType"></ion-input>\n                      <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)=\'hideShowPassword()\' style="z-index:9999999;"></ion-icon>\n                    </ion-item>\n\n                    <p *ngIf="!loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)" class="errorMessage">\n                      Enter valid password\n                    </p>\n\n                  </form>\n              </ion-list>\n          </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf="!isForgotPassword">\n          <ion-col>\n              <button ion-button full (click)="login()" [@fadeIn]="loginState" class="login-button">Login</button>\n          </ion-col>\n      </ion-row>\n\n      <ion-col *ngIf="!isForgotPassword">\n          <a class="forgot-password" (click)="forgotPassword()" [@fadeIn]="loginState"> FORGOT PASSWORD? </a>\n      </ion-col>\n\n      <ion-row *ngIf="isForgotPassword">\n          <ion-col>\n              <ion-list inset [@bounceInBottom]="formState">\n\n                <form [formGroup]="forgotPasswordForm">\n   \n                    <ion-item>\n                      <ion-label><ion-icon name="person"></ion-icon></ion-label>\n                      <ion-input formControlName="email" placeholder="email" type="text"></ion-input>\n                    </ion-item>\n\n                    <p *ngIf="!forgotPasswordForm.controls.email.valid  && (forgotPasswordForm.controls.email.dirty || submitAttempt)" class="errorMessage">\n                      Enter valid email id\n                    </p>\n\n                </form>\n              </ion-list>\n          </ion-col>\n      </ion-row>\n\n      <ion-row *ngIf="isForgotPassword">\n          <ion-col>\n              <button ion-button full (click)="submitForgotPassword()" [@fadeIn]="loginState" class="login-button">Submit</button>\n          </ion-col>\n      </ion-row>\n\n      <ion-col *ngIf="isForgotPassword">\n          <a class="forgot-password" (click)="forgotPassword()" [@fadeIn]="loginState"> Login? </a>\n      </ion-col>\n\n      <ion-row>\n        <ion-col>\n            <p class="errorMessage">{{errorMessage}}</p>\n        </ion-col>\n      </ion-row>\n\n    </div>\n \n</ion-content>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/login/login.html"*/,
-        animations: [
-            //For the logo
-            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('flyInBottomSlow', [
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
-                    transform: 'translate3d(0,0,0)'
-                })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,2000px,0' }),
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('2000ms ease-in-out')
-                ])
-            ]),
-            //For the background detail
-            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('flyInBottomFast', [
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
-                    transform: 'translate3d(0,0,0)'
-                })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,2000px,0)' }),
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('1000ms ease-in-out')
-                ])
-            ]),
-            //For the login form
-            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('bounceInBottom', [
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
-                    transform: 'translate3d(0,0,0)'
-                })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('2000ms 200ms ease-in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["keyframes"])([
-                        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,2000px,0)', offset: 0 }),
-                        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,-20px,0)', offset: 0.9 }),
-                        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ transform: 'translate3d(0,0,0)', offset: 1 })
-                    ]))
-                ])
-            ]),
-            //For login button
-            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["trigger"])('fadeIn', [
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["state"])('in', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({
-                    opacity: 1
-                })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["transition"])('void => *', [
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["style"])({ opacity: 0 }),
-                    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["animate"])('1000ms 2000ms ease-in')
-                ])
-            ])
-        ]
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_network_network__["a" /* Networks */]])
-], LoginPage);
-
-//# sourceMappingURL=login.js.map
-
-/***/ }),
-
-/***/ 76:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_center_center__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_students_students__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(27);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-var SignupPage = (function () {
-    function SignupPage(navCtrl, navParams, centerService, studentService, authService, loading, app, menu, storage, toastCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.centerService = centerService;
-        this.studentService = studentService;
-        this.authService = authService;
-        this.loading = loading;
-        this.app = app;
-        this.menu = menu;
-        this.storage = storage;
-        this.toastCtrl = toastCtrl;
-        this.active = true;
-        this.isPasswordMatching = true;
-        this.isExisting = false;
-        this.btnText = "Save";
-        this.existingUser = false;
-        this.isUserDeletable = false;
-    }
-    SignupPage.prototype.ionViewDidLoad = function () {
-        this.loader = this.loading.create({
-            content: 'Please wait...',
-        });
-        this.getCenters();
-        this.getUsers();
-    };
-    // Function to make email small letters on change
-    SignupPage.prototype.onEmailChange = function () {
-        this.email = this.email.toLowerCase();
-    };
-    SignupPage.prototype.reset = function () {
-        this.existingUser = false;
-        this.role = "";
-        this.email = "";
-        this.password = "";
-        this.confirm_password = "";
-        this.name = "";
-        this.center = "";
-        this.active = true;
-        this.isPasswordMatching = true;
-        this.isExisting = false;
-        this._id = "";
-        this.myInput = "";
-        this.mySelect = "";
-        this.btnText = "Save";
-        this.existingUser = false;
-        this.isUserDeletable = false;
-    };
-    SignupPage.prototype.presentToast = function (text) {
-        var toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    };
-    // Function to get list of all the centers
-    SignupPage.prototype.getCenters = function () {
-        var _this = this;
-        this.centers = [];
-        this.centerService.searchCenter().then(function (result) {
-            result = __WEBPACK_IMPORTED_MODULE_5_lodash__["filter"](result, function (o) {
-                return (o.active == true);
-            });
-            _this.centers = result;
-            _this.storage.get('user').then(function (user) {
-                if (user.role != "admin") {
-                    _this.centers = __WEBPACK_IMPORTED_MODULE_5_lodash__["find"](_this.centers, ['center_code', user.center]);
-                    _this.center = _this.centers;
-                }
-            });
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    // Function to get list of all the Users
-    SignupPage.prototype.getUsers = function () {
-        var _this = this;
-        this.users = [];
-        this.authService.searchUser().then(function (result) {
-            _this.users = result;
-            for (var i = 0; i < _this.users.length; i++) {
-                _this.users[i].password = "";
-            }
-        }, function (err) {
-            console.log(err);
-        });
-    };
-    SignupPage.prototype.save = function () {
-        var _this = this;
-        if (!this.isExisting && this.isPasswordMatching) {
-            this.loader.present();
-            var details = {
-                email: this.email,
-                password: this.password,
-                role: this.role,
-                name: this.name,
-                center: this.center,
-                active: this.active
-            };
-            this.authService.createAccount(details).then(function (result) {
-                _this.loader.dismiss();
-                _this.reset();
-                _this.getUsers();
-                _this.presentToast('User data saved successfully');
-            }, function (err) {
-                _this.loader.dismiss();
-                _this.presentToast('Error! Please try again.');
-            });
-        }
-    };
-    SignupPage.prototype.update = function () {
-        var _this = this;
-        this.loader.present();
-        var details = {
-            email: this.email,
-            password: this.password,
-            role: this.role,
-            name: this.name,
-            center: this.center,
-            active: this.active
-        };
-        this.authService.updateAccount(details).then(function (result) {
-            _this.reset();
-            _this.loader.dismiss();
-            _this.getUsers();
-            _this.mySelect = null;
-            _this.myInput = '';
-            _this.presentToast('User data saved successfully');
-        }, function (err) {
-            _this.loader.dismiss();
-            _this.presentToast('Error! Please try again.');
-        });
-    };
-    // Function to search for a User dynamically based on an input
-    SignupPage.prototype.search = function () {
-        var _this = this;
-        var result = [];
-        for (var i = 0; i < this.users.length; i++) {
-            if (this.users[i].name.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) {
-                result.push(this.users[i]);
-            }
-            else if (this.users[i].email.toLowerCase().indexOf(this.myInput.toLowerCase()) >= 0) {
-                result.push(this.users[i]);
-            }
-        }
-        if (result && result.length === 1) {
-            this.existingUser = true;
-            this.role = result[0].role;
-            this.email = result[0].email;
-            this.password = result[0].password;
-            this.confirm_password = result[0].password;
-            this.name = result[0].name;
-            this.center = result[0].center;
-            this.active = result[0].active;
-            this._id = result[0]._id;
-            this.btnText = "Update";
-            this.isUserDeletable = false;
-            this.studentService.getStudents().then(function (data) {
-                data = __WEBPACK_IMPORTED_MODULE_5_lodash__["filter"](data, function (o) {
-                    return (o.counsellor == this.email);
-                });
-                if (!data)
-                    _this.isUserDeletable = true;
-            }, function (err) {
-                console.log("not allowed");
-            });
-        }
-        else {
-            this.existingUser = false;
-            this.role = "";
-            this.email = "";
-            this.password = "";
-            this.confirm_password = "";
-            this.name = "";
-            this.center = "";
-            this.active = true;
-            this.isUserDeletable = false;
-        }
-    };
-    // Function to search for a User dynamically based on select
-    SignupPage.prototype.onSelectChange = function () {
-        var _this = this;
-        var result = [];
-        for (var i = 0; i < this.users.length; i++) {
-            if (this.users[i].name == this.mySelect)
-                result.push(this.users[i]);
-        }
-        if (result && result.length === 1) {
-            this.existingUser = true;
-            this.role = result[0].role;
-            this.email = result[0].email;
-            this.password = result[0].password;
-            this.confirm_password = result[0].password;
-            this.name = result[0].name;
-            this.center = result[0].center;
-            this.active = result[0].active;
-            this._id = result[0]._id;
-            this.btnText = "Update";
-            this.isUserDeletable = false;
-            this.studentService.getStudents().then(function (data) {
-                var student = [];
-                student = __WEBPACK_IMPORTED_MODULE_5_lodash__["filter"](data, function (o) {
-                    return (o.counsellor == result[0].email);
-                });
-                if (student.length <= 0)
-                    _this.isUserDeletable = true;
-            }, function (err) {
-                console.log("not allowed");
-            });
-        }
-        else {
-            this.existingUser = false;
-            this.role = "";
-            this.email = "";
-            this.password = "";
-            this.confirm_password = "";
-            this.name = "";
-            this.center = "";
-            this.active = true;
-            this.isUserDeletable = false;
-        }
-    };
-    // Function to check if user exists with same email ID
-    SignupPage.prototype.checkEmail = function () {
-        this.isExisting = false;
-        var result = __WEBPACK_IMPORTED_MODULE_5_lodash__["find"](this.users, ['email', this.email]);
-        this.isExisting = (result != null && result != undefined) ? true : false;
-    };
-    // Function to check if password and confirm password match
-    SignupPage.prototype.checkPassword = function () {
-        this.isPasswordMatching = false;
-        if ((this.password == undefined || this.password == null)
-            && (this.confirm_password == undefined || this.confirm_password == null)) {
-            this.isPasswordMatching = false;
-        }
-        else {
-            this.isPasswordMatching = (this.password == this.confirm_password) ? true : false;
-        }
-    };
-    SignupPage.prototype.openHomePage = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__home_home__["a" /* HomePage */]);
-    };
-    SignupPage.prototype.delete = function () {
-        var _this = this;
-        this.loader.present();
-        var details = {
-            email: this.email,
-        };
-        this.authService.deleteAccount(details).then(function (result) {
-            _this.reset();
-            _this.loader.dismiss();
-            _this.getUsers();
-            _this.mySelect = null;
-            _this.myInput = '';
-            _this.presentToast('User delete successfully');
-        }, function (err) {
-            _this.loader.dismiss();
-            _this.presentToast('Error! Please try again.');
-        });
-    };
-    return SignupPage;
-}());
-SignupPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'signup',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/signup/signup.html"*/' <ion-header>\n  <ion-navbar color="secondary">\n    <ion-buttons left>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n    </ion-buttons>\n    <!-- <ion-buttons start>\n        <button ion-button icon-only (click)="openHomePage()"><ion-icon name="close"></ion-icon></button>\n    </ion-buttons> -->\n    <ion-title>Users</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n    <div class="search-row">\n        <ion-searchbar\n            [(ngModel)]="myInput"\n            (animated)="true"\n            (placeholder)="Search"\n            (ionInput)="search()">\n        </ion-searchbar>\n        <ion-select interface="popover" [(ngModel)]="mySelect" (ionChange)="onSelectChange()" class="search-ic">\n          <ion-option *ngFor="let user of users" [value]="user.name">{{user.name}}</ion-option>\n        </ion-select>\n    </div>\n \n    <ion-row class="account-form">\n        <ion-col>\n            <ion-list inset>\n\n                <ion-item *ngIf="!existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-select interface="popover" [(ngModel)]="center">\n                    <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>\n                  </ion-select>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                  <ion-label>Center</ion-label>\n                  <ion-input [(ngModel)]="center" [readonly]=true placeholder="Center" type="text"></ion-input>\n                </ion-item>\n \n                <ion-item *ngIf="!existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" (ionChange)="onEmailChange()" (ionChange)="checkEmail()" required placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <ion-item *ngIf="existingUser">\n                    <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="email" [readonly]=true placeholder="Email" type="email"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="isExisting">Email already exists</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="password" (ionChange)="checkPassword()" placeholder="Password" type="password"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="confirm_password" placeholder="Confirm Password" (ionChange)="checkPassword()" type="password"></ion-input>\n                </ion-item>\n\n                <p class="error-message" *ngIf="!isPasswordMatching">Password do not match</p>\n\n                <ion-item>\n                    <ion-label><ion-icon name="person-add"></ion-icon></ion-label>\n                    <ion-input [(ngModel)]="name" placeholder="Name"></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-label>Active</ion-label>\n                    <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>\n                </ion-item>\n \n                <ion-list radio-group [(ngModel)]="role" style="margin-bottom: 120px;">\n                  <ion-item>\n                    <ion-label>Center</ion-label>\n                    <ion-radio value="counsellor" checked></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Dispatcher</ion-label>\n                    <ion-radio value="dispatcher"></ion-radio>\n                  </ion-item>\n                  <ion-item>\n                    <ion-label>Admin</ion-label>\n                    <ion-radio value="admin"></ion-radio>\n                  </ion-item>\n                </ion-list>\n \n            </ion-list>\n        \n        </ion-col>\n    </ion-row>\n\n</ion-content>\n\n<ion-footer>\n  <div class="gm_drawer_footer_wrapper"> \n \n    <button ion-button (click)="delete()" *ngIf="isUserDeletable" class="delete-button" style="position: fixed;">Delete User</button>\n\n    <button ion-button (click)="save()" *ngIf="btnText == \'Save\'" class="continue-button">{{ btnText }}</button>\n    <button ion-button (click)="update()" *ngIf="btnText != \'Save\'" class="continue-button">{{ btnText }}</button>\n\n  </div>\n</ion-footer>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/signup/signup.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* App */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* ToastController */]])
-], SignupPage);
-
-//# sourceMappingURL=signup.js.map
-
-/***/ }),
-
-/***/ 867:
+/***/ 864:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 407,
-	"./af.js": 407,
-	"./ar": 408,
-	"./ar-dz": 409,
-	"./ar-dz.js": 409,
-	"./ar-kw": 410,
-	"./ar-kw.js": 410,
-	"./ar-ly": 411,
-	"./ar-ly.js": 411,
-	"./ar-ma": 412,
-	"./ar-ma.js": 412,
-	"./ar-sa": 413,
-	"./ar-sa.js": 413,
-	"./ar-tn": 414,
-	"./ar-tn.js": 414,
-	"./ar.js": 408,
-	"./az": 415,
-	"./az.js": 415,
-	"./be": 416,
-	"./be.js": 416,
-	"./bg": 417,
-	"./bg.js": 417,
-	"./bm": 418,
-	"./bm.js": 418,
-	"./bn": 419,
-	"./bn.js": 419,
-	"./bo": 420,
-	"./bo.js": 420,
-	"./br": 421,
-	"./br.js": 421,
-	"./bs": 422,
-	"./bs.js": 422,
-	"./ca": 423,
-	"./ca.js": 423,
-	"./cs": 424,
-	"./cs.js": 424,
-	"./cv": 425,
-	"./cv.js": 425,
-	"./cy": 426,
-	"./cy.js": 426,
-	"./da": 427,
-	"./da.js": 427,
-	"./de": 428,
-	"./de-at": 429,
-	"./de-at.js": 429,
-	"./de-ch": 430,
-	"./de-ch.js": 430,
-	"./de.js": 428,
-	"./dv": 431,
-	"./dv.js": 431,
-	"./el": 432,
-	"./el.js": 432,
-	"./en-SG": 433,
-	"./en-SG.js": 433,
-	"./en-au": 434,
-	"./en-au.js": 434,
-	"./en-ca": 435,
-	"./en-ca.js": 435,
-	"./en-gb": 436,
-	"./en-gb.js": 436,
-	"./en-ie": 437,
-	"./en-ie.js": 437,
-	"./en-il": 438,
-	"./en-il.js": 438,
-	"./en-nz": 439,
-	"./en-nz.js": 439,
-	"./eo": 440,
-	"./eo.js": 440,
-	"./es": 441,
-	"./es-do": 442,
-	"./es-do.js": 442,
-	"./es-us": 443,
-	"./es-us.js": 443,
-	"./es.js": 441,
-	"./et": 444,
-	"./et.js": 444,
-	"./eu": 445,
-	"./eu.js": 445,
-	"./fa": 446,
-	"./fa.js": 446,
-	"./fi": 447,
-	"./fi.js": 447,
-	"./fo": 448,
-	"./fo.js": 448,
-	"./fr": 449,
-	"./fr-ca": 450,
-	"./fr-ca.js": 450,
-	"./fr-ch": 451,
-	"./fr-ch.js": 451,
-	"./fr.js": 449,
-	"./fy": 452,
-	"./fy.js": 452,
-	"./ga": 453,
-	"./ga.js": 453,
-	"./gd": 454,
-	"./gd.js": 454,
-	"./gl": 455,
-	"./gl.js": 455,
-	"./gom-latn": 456,
-	"./gom-latn.js": 456,
-	"./gu": 457,
-	"./gu.js": 457,
-	"./he": 458,
-	"./he.js": 458,
-	"./hi": 459,
-	"./hi.js": 459,
-	"./hr": 460,
-	"./hr.js": 460,
-	"./hu": 461,
-	"./hu.js": 461,
-	"./hy-am": 462,
-	"./hy-am.js": 462,
-	"./id": 463,
-	"./id.js": 463,
-	"./is": 464,
-	"./is.js": 464,
-	"./it": 465,
-	"./it-ch": 466,
-	"./it-ch.js": 466,
-	"./it.js": 465,
-	"./ja": 467,
-	"./ja.js": 467,
-	"./jv": 468,
-	"./jv.js": 468,
-	"./ka": 469,
-	"./ka.js": 469,
-	"./kk": 470,
-	"./kk.js": 470,
-	"./km": 471,
-	"./km.js": 471,
-	"./kn": 472,
-	"./kn.js": 472,
-	"./ko": 473,
-	"./ko.js": 473,
-	"./ku": 474,
-	"./ku.js": 474,
-	"./ky": 475,
-	"./ky.js": 475,
-	"./lb": 476,
-	"./lb.js": 476,
-	"./lo": 477,
-	"./lo.js": 477,
-	"./lt": 478,
-	"./lt.js": 478,
-	"./lv": 479,
-	"./lv.js": 479,
-	"./me": 480,
-	"./me.js": 480,
-	"./mi": 481,
-	"./mi.js": 481,
-	"./mk": 482,
-	"./mk.js": 482,
-	"./ml": 483,
-	"./ml.js": 483,
-	"./mn": 484,
-	"./mn.js": 484,
-	"./mr": 485,
-	"./mr.js": 485,
-	"./ms": 486,
-	"./ms-my": 487,
-	"./ms-my.js": 487,
-	"./ms.js": 486,
-	"./mt": 488,
-	"./mt.js": 488,
-	"./my": 489,
-	"./my.js": 489,
-	"./nb": 490,
-	"./nb.js": 490,
-	"./ne": 491,
-	"./ne.js": 491,
-	"./nl": 492,
-	"./nl-be": 493,
-	"./nl-be.js": 493,
-	"./nl.js": 492,
-	"./nn": 494,
-	"./nn.js": 494,
-	"./pa-in": 495,
-	"./pa-in.js": 495,
-	"./pl": 496,
-	"./pl.js": 496,
-	"./pt": 497,
-	"./pt-br": 498,
-	"./pt-br.js": 498,
-	"./pt.js": 497,
-	"./ro": 499,
-	"./ro.js": 499,
-	"./ru": 500,
-	"./ru.js": 500,
-	"./sd": 501,
-	"./sd.js": 501,
-	"./se": 502,
-	"./se.js": 502,
-	"./si": 503,
-	"./si.js": 503,
-	"./sk": 504,
-	"./sk.js": 504,
-	"./sl": 505,
-	"./sl.js": 505,
-	"./sq": 506,
-	"./sq.js": 506,
-	"./sr": 507,
-	"./sr-cyrl": 508,
-	"./sr-cyrl.js": 508,
-	"./sr.js": 507,
-	"./ss": 509,
-	"./ss.js": 509,
-	"./sv": 510,
-	"./sv.js": 510,
-	"./sw": 511,
-	"./sw.js": 511,
-	"./ta": 512,
-	"./ta.js": 512,
-	"./te": 513,
-	"./te.js": 513,
-	"./tet": 514,
-	"./tet.js": 514,
-	"./tg": 515,
-	"./tg.js": 515,
-	"./th": 516,
-	"./th.js": 516,
-	"./tl-ph": 517,
-	"./tl-ph.js": 517,
-	"./tlh": 518,
-	"./tlh.js": 518,
-	"./tr": 519,
-	"./tr.js": 519,
-	"./tzl": 520,
-	"./tzl.js": 520,
-	"./tzm": 521,
-	"./tzm-latn": 522,
-	"./tzm-latn.js": 522,
-	"./tzm.js": 521,
-	"./ug-cn": 523,
-	"./ug-cn.js": 523,
-	"./uk": 524,
-	"./uk.js": 524,
-	"./ur": 525,
-	"./ur.js": 525,
-	"./uz": 526,
-	"./uz-latn": 527,
-	"./uz-latn.js": 527,
-	"./uz.js": 526,
-	"./vi": 528,
-	"./vi.js": 528,
-	"./x-pseudo": 529,
-	"./x-pseudo.js": 529,
-	"./yo": 530,
-	"./yo.js": 530,
-	"./zh-cn": 531,
-	"./zh-cn.js": 531,
-	"./zh-hk": 532,
-	"./zh-hk.js": 532,
-	"./zh-tw": 533,
-	"./zh-tw.js": 533
+	"./af": 406,
+	"./af.js": 406,
+	"./ar": 407,
+	"./ar-dz": 408,
+	"./ar-dz.js": 408,
+	"./ar-kw": 409,
+	"./ar-kw.js": 409,
+	"./ar-ly": 410,
+	"./ar-ly.js": 410,
+	"./ar-ma": 411,
+	"./ar-ma.js": 411,
+	"./ar-sa": 412,
+	"./ar-sa.js": 412,
+	"./ar-tn": 413,
+	"./ar-tn.js": 413,
+	"./ar.js": 407,
+	"./az": 414,
+	"./az.js": 414,
+	"./be": 415,
+	"./be.js": 415,
+	"./bg": 416,
+	"./bg.js": 416,
+	"./bm": 417,
+	"./bm.js": 417,
+	"./bn": 418,
+	"./bn.js": 418,
+	"./bo": 419,
+	"./bo.js": 419,
+	"./br": 420,
+	"./br.js": 420,
+	"./bs": 421,
+	"./bs.js": 421,
+	"./ca": 422,
+	"./ca.js": 422,
+	"./cs": 423,
+	"./cs.js": 423,
+	"./cv": 424,
+	"./cv.js": 424,
+	"./cy": 425,
+	"./cy.js": 425,
+	"./da": 426,
+	"./da.js": 426,
+	"./de": 427,
+	"./de-at": 428,
+	"./de-at.js": 428,
+	"./de-ch": 429,
+	"./de-ch.js": 429,
+	"./de.js": 427,
+	"./dv": 430,
+	"./dv.js": 430,
+	"./el": 431,
+	"./el.js": 431,
+	"./en-SG": 432,
+	"./en-SG.js": 432,
+	"./en-au": 433,
+	"./en-au.js": 433,
+	"./en-ca": 434,
+	"./en-ca.js": 434,
+	"./en-gb": 435,
+	"./en-gb.js": 435,
+	"./en-ie": 436,
+	"./en-ie.js": 436,
+	"./en-il": 437,
+	"./en-il.js": 437,
+	"./en-nz": 438,
+	"./en-nz.js": 438,
+	"./eo": 439,
+	"./eo.js": 439,
+	"./es": 440,
+	"./es-do": 441,
+	"./es-do.js": 441,
+	"./es-us": 442,
+	"./es-us.js": 442,
+	"./es.js": 440,
+	"./et": 443,
+	"./et.js": 443,
+	"./eu": 444,
+	"./eu.js": 444,
+	"./fa": 445,
+	"./fa.js": 445,
+	"./fi": 446,
+	"./fi.js": 446,
+	"./fo": 447,
+	"./fo.js": 447,
+	"./fr": 448,
+	"./fr-ca": 449,
+	"./fr-ca.js": 449,
+	"./fr-ch": 450,
+	"./fr-ch.js": 450,
+	"./fr.js": 448,
+	"./fy": 451,
+	"./fy.js": 451,
+	"./ga": 452,
+	"./ga.js": 452,
+	"./gd": 453,
+	"./gd.js": 453,
+	"./gl": 454,
+	"./gl.js": 454,
+	"./gom-latn": 455,
+	"./gom-latn.js": 455,
+	"./gu": 456,
+	"./gu.js": 456,
+	"./he": 457,
+	"./he.js": 457,
+	"./hi": 458,
+	"./hi.js": 458,
+	"./hr": 459,
+	"./hr.js": 459,
+	"./hu": 460,
+	"./hu.js": 460,
+	"./hy-am": 461,
+	"./hy-am.js": 461,
+	"./id": 462,
+	"./id.js": 462,
+	"./is": 463,
+	"./is.js": 463,
+	"./it": 464,
+	"./it-ch": 465,
+	"./it-ch.js": 465,
+	"./it.js": 464,
+	"./ja": 466,
+	"./ja.js": 466,
+	"./jv": 467,
+	"./jv.js": 467,
+	"./ka": 468,
+	"./ka.js": 468,
+	"./kk": 469,
+	"./kk.js": 469,
+	"./km": 470,
+	"./km.js": 470,
+	"./kn": 471,
+	"./kn.js": 471,
+	"./ko": 472,
+	"./ko.js": 472,
+	"./ku": 473,
+	"./ku.js": 473,
+	"./ky": 474,
+	"./ky.js": 474,
+	"./lb": 475,
+	"./lb.js": 475,
+	"./lo": 476,
+	"./lo.js": 476,
+	"./lt": 477,
+	"./lt.js": 477,
+	"./lv": 478,
+	"./lv.js": 478,
+	"./me": 479,
+	"./me.js": 479,
+	"./mi": 480,
+	"./mi.js": 480,
+	"./mk": 481,
+	"./mk.js": 481,
+	"./ml": 482,
+	"./ml.js": 482,
+	"./mn": 483,
+	"./mn.js": 483,
+	"./mr": 484,
+	"./mr.js": 484,
+	"./ms": 485,
+	"./ms-my": 486,
+	"./ms-my.js": 486,
+	"./ms.js": 485,
+	"./mt": 487,
+	"./mt.js": 487,
+	"./my": 488,
+	"./my.js": 488,
+	"./nb": 489,
+	"./nb.js": 489,
+	"./ne": 490,
+	"./ne.js": 490,
+	"./nl": 491,
+	"./nl-be": 492,
+	"./nl-be.js": 492,
+	"./nl.js": 491,
+	"./nn": 493,
+	"./nn.js": 493,
+	"./pa-in": 494,
+	"./pa-in.js": 494,
+	"./pl": 495,
+	"./pl.js": 495,
+	"./pt": 496,
+	"./pt-br": 497,
+	"./pt-br.js": 497,
+	"./pt.js": 496,
+	"./ro": 498,
+	"./ro.js": 498,
+	"./ru": 499,
+	"./ru.js": 499,
+	"./sd": 500,
+	"./sd.js": 500,
+	"./se": 501,
+	"./se.js": 501,
+	"./si": 502,
+	"./si.js": 502,
+	"./sk": 503,
+	"./sk.js": 503,
+	"./sl": 504,
+	"./sl.js": 504,
+	"./sq": 505,
+	"./sq.js": 505,
+	"./sr": 506,
+	"./sr-cyrl": 507,
+	"./sr-cyrl.js": 507,
+	"./sr.js": 506,
+	"./ss": 508,
+	"./ss.js": 508,
+	"./sv": 509,
+	"./sv.js": 509,
+	"./sw": 510,
+	"./sw.js": 510,
+	"./ta": 511,
+	"./ta.js": 511,
+	"./te": 512,
+	"./te.js": 512,
+	"./tet": 513,
+	"./tet.js": 513,
+	"./tg": 514,
+	"./tg.js": 514,
+	"./th": 515,
+	"./th.js": 515,
+	"./tl-ph": 516,
+	"./tl-ph.js": 516,
+	"./tlh": 517,
+	"./tlh.js": 517,
+	"./tr": 518,
+	"./tr.js": 518,
+	"./tzl": 519,
+	"./tzl.js": 519,
+	"./tzm": 520,
+	"./tzm-latn": 521,
+	"./tzm-latn.js": 521,
+	"./tzm.js": 520,
+	"./ug-cn": 522,
+	"./ug-cn.js": 522,
+	"./uk": 523,
+	"./uk.js": 523,
+	"./ur": 524,
+	"./ur.js": 524,
+	"./uz": 525,
+	"./uz-latn": 526,
+	"./uz-latn.js": 526,
+	"./uz.js": 525,
+	"./vi": 527,
+	"./vi.js": 527,
+	"./x-pseudo": 528,
+	"./x-pseudo.js": 528,
+	"./yo": 529,
+	"./yo.js": 529,
+	"./zh-cn": 530,
+	"./zh-cn.js": 530,
+	"./zh-hk": 531,
+	"./zh-hk.js": 531,
+	"./zh-tw": 532,
+	"./zh-tw.js": 532
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -7349,20 +7811,20 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 867;
+webpackContext.id = 864;
 
 /***/ }),
 
-/***/ 98:
+/***/ 99:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CenterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_center_center__ = __webpack_require__(22);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7700,457 +8162,6 @@ CenterPage = __decorate([
 ], CenterPage);
 
 //# sourceMappingURL=center.js.map
-
-/***/ }),
-
-/***/ 99:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IndentPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_students_students__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_center_center__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__home_home__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-var IndentPage = (function () {
-    function IndentPage(navCtrl, studentService, modalCtrl, alertCtrl, authService, loading, storage, centerService, indentationService, toastCtrl, CallNumber, actionSheetController) {
-        this.navCtrl = navCtrl;
-        this.studentService = studentService;
-        this.modalCtrl = modalCtrl;
-        this.alertCtrl = alertCtrl;
-        this.authService = authService;
-        this.loading = loading;
-        this.storage = storage;
-        this.centerService = centerService;
-        this.indentationService = indentationService;
-        this.toastCtrl = toastCtrl;
-        this.CallNumber = CallNumber;
-        this.actionSheetController = actionSheetController;
-        this.indented_students = [];
-        this.confirm_indent = false;
-        this.isCash = false;
-        this.total_amount = 0;
-        this.payment_date = __WEBPACK_IMPORTED_MODULE_11_moment__().format("YYYY-MM-DD");
-        this.students_amount = [];
-        this.today_date = __WEBPACK_IMPORTED_MODULE_11_moment__().format("YYYY-MM-DD");
-    }
-    IndentPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.loader = this.loading.create({
-            content: 'Please wait...',
-        });
-        this.studentService.getStudents().then(function (data) {
-            _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](data, function (o) {
-                return (o.status == 'confirmed' && !o.is_Indented);
-            });
-            _this.storage.get('user').then(function (user) {
-                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](_this.students, function (o) {
-                    return (o.center == user.center);
-                });
-                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["sortBy"](_this.students, 'enquiry_date');
-                _this.studentsList = __WEBPACK_IMPORTED_MODULE_9_lodash__["sortBy"](_this.students, 'enquiry_date');
-            });
-        }, function (err) {
-            console.log("not allowed");
-        });
-        this.centerService.searchCenter().then(function (centers) {
-            _this.storage.get('user').then(function (user) {
-                _this.email = user.email;
-                _this.center_code = user.center;
-                _this.user_center = __WEBPACK_IMPORTED_MODULE_9_lodash__["find"](centers, ['center_code', user.center]);
-                _this.isCash = _this.user_center.cash;
-            });
-        });
-    };
-    IndentPage.prototype.presentToast = function (text) {
-        var toast = this.toastCtrl.create({
-            message: text,
-            duration: 3000,
-            position: 'top'
-        });
-        toast.present();
-    };
-    IndentPage.prototype.add = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__home_home__["a" /* HomePage */]);
-    };
-    IndentPage.prototype.edit = function (student) {
-        this.storage.set('edit_student', student._id);
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__editstudent_editstudent__["a" /* EditstudentPage */]);
-    };
-    IndentPage.prototype.indent = function (student) {
-        console.log(this.today_date);
-        this.indented_students.push(student);
-        for (var i = 0; i < this.students.length; i++) {
-            if (this.students[i] === student)
-                this.students[i].indented = true;
-        }
-        this.addAmount(student);
-    };
-    IndentPage.prototype.unindent = function (student) {
-        var s = -1;
-        for (var i = 0; i < this.indented_students.length; i++) {
-            if (this.indented_students[i] === student) {
-                s = i;
-                break;
-            }
-        }
-        this.indented_students.splice(s, 1);
-        for (var k = 0; k < this.students.length; k++) {
-            if (this.students[k] === student)
-                delete this.students[k].indented;
-        }
-        this.subtractAmount(student);
-    };
-    IndentPage.prototype.addAmount = function (student) {
-        if (student.class_group === 'Play Group') {
-            if (student.class_type === "Annual")
-                this.total_amount += Number(this.user_center.playgroup.annual);
-            if (student.class_type === "Mid-term")
-                this.total_amount += Number(this.user_center.playgroup.mid_term);
-            if (student.class_type === "Early start")
-                this.total_amount += Number(this.user_center.playgroup.early_start);
-        }
-        else if (student.class_group === 'Nursery') {
-            if (student.class_type === "Annual")
-                this.total_amount += Number(this.user_center.nursery.annual);
-            if (student.class_type === "Mid-term")
-                this.total_amount += Number(this.user_center.nursery.mid_term);
-            if (student.class_type === "Early start")
-                this.total_amount += Number(this.user_center.nursery.early_start);
-        }
-        else if (student.class_group === 'LKG') {
-            if (student.class_type === "Annual")
-                this.total_amount += Number(this.user_center.lkg.annual);
-            if (student.class_type === "Mid-term")
-                this.total_amount += Number(this.user_center.lkg.mid_term);
-            if (student.class_type === "Early start")
-                this.total_amount += Number(this.user_center.lkg.early_start);
-        }
-        else if (student.class_group === 'UKG') {
-            if (student.class_type === "Annual")
-                this.total_amount += Number(this.user_center.ukg.annual);
-            if (student.class_type === "Mid-term")
-                this.total_amount += Number(this.user_center.ukg.mid_term);
-            if (student.class_type === "Early start")
-                this.total_amount += Number(this.user_center.ukg.early_start);
-        }
-    };
-    IndentPage.prototype.subtractAmount = function (student) {
-        if (student.class_group === 'Play Group') {
-            if (student.class_type === "Annual")
-                this.total_amount -= this.user_center.playgroup.annual;
-            if (student.class_type === "Mid-term")
-                this.total_amount -= this.user_center.playgroup.mid_term;
-            if (student.class_type === "Early start")
-                this.total_amount -= this.user_center.playgroup.early_start;
-        }
-        else if (student.class_group === 'Nursery') {
-            if (student.class_type === "Annual")
-                this.total_amount -= this.user_center.nursery.annual;
-            if (student.class_type === "Mid-term")
-                this.total_amount -= this.user_center.nursery.mid_term;
-            if (student.class_type === "Early start")
-                this.total_amount -= this.user_center.nursery.early_start;
-        }
-        else if (student.class_group === 'LKG') {
-            if (student.class_type === "Annual")
-                this.total_amount -= this.user_center.lkg.annual;
-            if (student.class_type === "Mid-term")
-                this.total_amount -= this.user_center.lkg.mid_term;
-            if (student.class_type === "Early start")
-                this.total_amount -= this.user_center.lkg.early_start;
-        }
-        else if (student.class_group === 'UKG') {
-            if (student.class_type === "Annual")
-                this.total_amount -= this.user_center.ukg.annual;
-            if (student.class_type === "Mid-term")
-                this.total_amount -= this.user_center.ukg.mid_term;
-            if (student.class_type === "Early start")
-                this.total_amount -= this.user_center.ukg.early_start;
-        }
-    };
-    IndentPage.prototype.findAmount = function (cg, ct) {
-        if (cg === 'Play Group' && ct === 'Annual')
-            return (this.user_center.playgroup.annual);
-        else if (cg === 'Play Group' && ct === 'Mid-term')
-            return (this.user_center.playgroup.mid_term);
-        else if (cg === 'Play Group' && ct === 'Early start')
-            return (this.user_center.playgroup.early_start);
-        else if (cg === 'Nursery' && ct === 'Annual')
-            return (this.user_center.nursery.annual);
-        else if (cg === 'Nursery' && ct === 'Mid-term')
-            return (this.user_center.nursery.mid_term);
-        else if (cg === 'Nursery' && ct === 'Early start')
-            return (this.user_center.nursery.early_start);
-        else if (cg === 'LKG' && ct === 'Annual')
-            return (this.user_center.lkg.annual);
-        else if (cg === 'LKG' && ct === 'Mid-term')
-            return (this.user_center.lkg.mid_term);
-        else if (cg === 'LKG' && ct === 'Early start')
-            return (this.user_center.lkg.early_start);
-        else if (cg === 'UKG' && ct === 'Annual')
-            return (this.user_center.ukg.annual);
-        else if (cg === 'UKG' && ct === 'Mid-term')
-            return (this.user_center.ukg.mid_term);
-        else if (cg === 'UKG' && ct === 'Early start')
-            return (this.user_center.ukg.early_start);
-        else
-            return 0;
-    };
-    IndentPage.prototype.indentStudents = function () {
-        this.confirm_indent = !this.confirm_indent;
-        this.setCheque();
-    };
-    IndentPage.prototype.setCash = function () {
-        this.payment_mode = "cash";
-    };
-    IndentPage.prototype.setCheque = function () {
-        this.payment_mode = "cheque";
-    };
-    IndentPage.prototype.setOnline = function () {
-        this.payment_mode = "online";
-    };
-    IndentPage.prototype.reset = function () {
-        var _this = this;
-        this.indented_students = [];
-        this.confirm_indent = false;
-        this.total_amount = 0;
-        this.payment_mode = "";
-        this.payment_date = __WEBPACK_IMPORTED_MODULE_11_moment__().format("YYYY-MM-DD");
-        this.bank_name = "";
-        this.transaction_no = "";
-        this.cheque_no = "";
-        this.students_amount = [];
-        this.studentService.getStudents().then(function (data) {
-            _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](data, function (o) {
-                return (o.status == 'confirmed' && !o.is_Indented);
-            });
-            _this.storage.get('user').then(function (user) {
-                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["filter"](_this.students, function (o) {
-                    return (o.center == user.center);
-                });
-                _this.students = __WEBPACK_IMPORTED_MODULE_9_lodash__["sortBy"](_this.students, 'enquiry_date');
-            });
-        }, function (err) {
-            console.log("not allowed");
-        });
-    };
-    IndentPage.prototype.callNumber = function (num) {
-        this.CallNumber.callNumber(num, false)
-            .then(function () { return console.log('Launched dialer!'); })
-            .catch(function () { return console.log('Error launching dialer'); });
-    };
-    // Function to search for a student dynamically based on an input
-    IndentPage.prototype.search = function () {
-        var result = [];
-        for (var i = 0; i < this.studentsList.length; i++) {
-            if (this.studentsList[i].name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) {
-                result.push(this.studentsList[i]);
-            }
-            else if (this.studentsList[i].parent_name.toUpperCase().indexOf(this.myInput.toUpperCase()) == 0) {
-                result.push(this.studentsList[i]);
-            }
-            else if (__WEBPACK_IMPORTED_MODULE_9_lodash__["includes"](this.studentsList[i].phone_number, this.myInput)) {
-                result.push(this.studentsList[i]);
-            }
-        }
-        this.students = result;
-        if (this.myInput === "")
-            this.students = this.studentsList;
-    };
-    IndentPage.prototype.confirmIndent = function () {
-        var _this = this;
-        this.loader.present();
-        var indentation = {
-            total_amount: this.total_amount,
-            payment_mode: this.payment_mode,
-            payment_date: __WEBPACK_IMPORTED_MODULE_11_moment__(this.payment_date, "YYYY-MM-DD").toDate(),
-            bank_name: this.bank_name,
-            transaction_no: this.transaction_no,
-            cheque_no: this.cheque_no,
-            email: this.email,
-            center_code: this.center_code,
-            students_amount: []
-        };
-        for (var is = 0; is < this.indented_students.length; is++) {
-            var tempis = {
-                student_id: this.indented_students[is].student_id,
-                student_key: this.indented_students[is]._id,
-                student_name: this.indented_students[is].name,
-                phone_number: this.indented_students[is].phone_number,
-                gender: this.indented_students[is].gender,
-                class_group: this.indented_students[is].class_group,
-                class_type: this.indented_students[is].class_type,
-                uniform_size: this.indented_students[is].uniform_size,
-                shoe_size: this.indented_students[is].shoe_size,
-                amount: this.findAmount(this.indented_students[is].class_group, this.indented_students[is].class_type),
-                is_dispatched: false
-            };
-            indentation.students_amount.push(tempis);
-        }
-        this.indentationService.createIndentation(indentation).then(function (result) {
-            _this.loader.dismiss();
-            _this.reset();
-            _this.presentToast('Indentation successfull');
-        }, function (err) {
-            _this.loader.dismiss();
-            _this.presentToast('Error! Please try again.');
-        });
-        for (var ik = 0; ik < this.indented_students.length; ik++) {
-            this.indented_students[ik].status = "indented";
-            this.indented_students[ik].is_Indented = true;
-            this.indented_students[ik].admin_edit = false;
-            delete this.indented_students[ik].indented;
-            this.studentService.updateStudent(this.indented_students[ik]).then(function (result) {
-                console.log('student data saved successfully');
-            }, function (err) {
-                console.log('student data saving failed');
-            });
-        }
-    };
-    IndentPage.prototype.presentActionSheet = function (num, email) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var actionSheet;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.actionSheetController.create({
-                            buttons: [
-                                {
-                                    text: "Call",
-                                    icon: "call",
-                                    handler: function () {
-                                        _this.callNumber(num);
-                                    }
-                                },
-                                {
-                                    text: "Whatsapp",
-                                    icon: "logo-whatsapp",
-                                    handler: function () {
-                                        window.open(("https://wa.me/91" + num), "_blank");
-                                    }
-                                },
-                                {
-                                    text: "SMS",
-                                    icon: "text",
-                                    handler: function () {
-                                        window.open("sms://" + num);
-                                    }
-                                },
-                                {
-                                    text: "Email",
-                                    icon: "mail",
-                                    handler: function () {
-                                        window.open("mailto://" + email);
-                                    }
-                                },
-                                {
-                                    text: "Cancel",
-                                    icon: "close",
-                                    role: "cancel",
-                                    handler: function () {
-                                        console.log("Cancel clicked");
-                                    }
-                                }
-                            ]
-                        })];
-                    case 1:
-                        actionSheet = _a.sent();
-                        return [4 /*yield*/, actionSheet.present()];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return IndentPage;
-}());
-IndentPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'indent-page',template:/*ion-inline-start:"/home/akash/Code/akash/spark/client/src/pages/indent/indent.html"*/'<ion-header>\n <ion-navbar color="secondary">\n  <ion-buttons left>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  </ion-buttons>\n  <ion-title>\n    INDENTATION\n  </ion-title>\n  <!-- <ion-buttons end>\n    <button ion-button icon-only (click)="add()"><ion-icon name="close"></ion-icon></button>\n  </ion-buttons> -->\n </ion-navbar>\n</ion-header>\n \n<ion-content>\n\n  <div class="search-row search-full" *ngIf="!confirm_indent">\n      <ion-searchbar\n          [(ngModel)]="myInput"\n          (animated)="true"\n          (placeholder)="Search"\n          (ionInput)="search()"\n      ></ion-searchbar>\n  </div>\n\n  <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="!confirm_indent && students && !students.length" />\n  <h1 *ngIf="!confirm_indent && students && !students.length" class="no_record"> NO RECORDS FOUND </h1>\n\n  <ion-list *ngIf="!confirm_indent && students && students.length" style="margin-bottom: 50px;">\n \n    <ion-item-sliding *ngFor="let student of students" class="results_list_mobile indent_results" style="height:100%;">\n     \n        <button ion-item>\n          <div class="col_left indent_left">\n            <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>\n            <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>\n            <br/>\n            <h2 *ngIf="student.study_year != \'2019-20\'" style="color: red;"> You cannot indent this, admission is not for 2019-20 </h2>\n          </div>\n          <div class="col_right indent_right">\n            <h1>{{student.name}}</h1>\n            <h3 *ngIf="student.gender === \'Male\'"> S/O {{student.parent_name}}</h3>\n            <h3 *ngIf="student.gender !== \'Male\'"> D/O {{student.parent_name}}</h3>\n            <h2>{{student.class_group}}</h2>\n            <h2><ion-icon name="clock"></ion-icon> {{student.confirmation_date | date: \'dd/MMM/yyyy\'}} </h2>\n            <h2><ion-icon name="book"></ion-icon> {{student.study_year}} </h2>\n          </div>\n        </button>\n     \n        <ion-item-options side="right" *ngIf="student.study_year == \'2019-20\'">\n          <button ion-button color="info" (click)="edit(student)">\n            <ion-icon name="create"></ion-icon>\n            Edit\n          </button>\n          <button ion-button color="secondary" (click)="indent(student)" *ngIf="!student.indented">\n            <ion-icon name="redo"></ion-icon>\n            Indent\n          </button>\n          <button ion-button color="danger" (click)="unindent(student)" *ngIf="student.indented">\n            <ion-icon name="undo"></ion-icon>\n            UnIndent\n          </button>\n        </ion-item-options>\n\n        <ion-item-options side="left">\n          <button ion-button color="secondary" (click)="presentActionSheet(student.phone_number, student.email_id)">\n            <ion-icon name="call"></ion-icon>\n            Contact\n          </button>\n        </ion-item-options>\n    </ion-item-sliding>\n\n  </ion-list>\n\n  <ion-list *ngIf="confirm_indent" style="margin-bottom: 50px;">\n\n    <div class="button-bar" *ngIf="isCash">\n        <a class="button button-positive button-indent" (click)="setCash()">Cash</a>\n        <a class="button button-positive button-indent" (click)="setCheque()">Cheque</a>\n        <a class="button button-positive button-indent" (click)="setOnline()">Online</a>\n    </div>\n\n    <div class="button-bar" *ngIf="!isCash">\n        <a class="button button-positive button-half" (click)="setCheque()">Cheque</a>\n        <a class="button button-positive button-half" (click)="setOnline()">Online</a>\n    </div>\n\n    <ion-list inset>\n\n        <ion-item>\n            <h3> Amount: {{ total_amount }} </h3>\n        </ion-item>\n\n        <ion-item>\n            <ion-label><ion-icon name="calendar"></ion-icon></ion-label>\n            <ion-datetime [(ngModel)]="payment_date" placeholder="Date of Payment" required displayFormat="DD/MMM/YYYY" ></ion-datetime>\n        </ion-item>\n \n        <ion-item *ngIf="payment_mode != \'cash\'">\n            <ion-label><ion-icon name="home"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="bank_name" placeholder="Name of the bank" type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'online\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="transaction_no" placeholder="Transaction No." type="string"></ion-input>\n        </ion-item>\n\n        <ion-item *ngIf="payment_mode == \'cheque\'">\n            <ion-label><ion-icon name="card"></ion-icon></ion-label>\n            <ion-input [(ngModel)]="cheque_no" placeholder="Cheque No." type="string"></ion-input>\n        </ion-item>\n\n    </ion-list>\n    \n  </ion-list>\n\n</ion-content>\n\n<ion-footer>\n    <div class="gm_drawer_footer_wrapper" *ngIf="!confirm_indent && students && students.length">\n      <div class="amt_button">\n        <p class="total_left"> \n            <em> &#8377; {{ total_amount }} </em>\n            <br/>\n            <span *ngIf="indented_students && indented_students.length"> {{ indented_students.length }} Students </span>\n        </p>\n      </div>\n      <button (click)="indentStudents()" [disabled]="!indented_students || !indented_students.length" ion-button class="btn-success">Indent</button>\n    </div>\n\n    <div class="gm_drawer_footer_wrapper" *ngIf="confirm_indent">\n      <button (click)="indentStudents()" ion-button class="btn-danger">Go Back</button>\n      <button (click)="confirmIndent()" ion-button class="btn-success">Confirm</button>\n    </div>\n</ion-footer>'/*ion-inline-end:"/home/akash/Code/akash/spark/client/src/pages/indent/indent.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_students_students__["a" /* Students */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_4__providers_auth_auth__["a" /* Auth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_10__ionic_storage__["b" /* Storage */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_center_center__["a" /* Center */],
-        __WEBPACK_IMPORTED_MODULE_6__providers_indentation_indentation__["a" /* Indentation */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__["a" /* CallNumber */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]])
-], IndentPage);
-
-//# sourceMappingURL=indent.js.map
 
 /***/ })
 

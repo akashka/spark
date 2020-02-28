@@ -58,7 +58,7 @@ export class PromotionPage {
     });
     this.studentService.getStudents().then((data) => {
       data = _.filter(data, function(o) { 
-        return (o.status == 'indented' && o.is_Indented && o.study_year == '2018-19'); 
+        return (o.status == 'indented' && o.is_Indented && o.study_year == '2019-20'); 
       });
       this.storage.get('user').then((user) => {
         data = _.filter(data, function(o) { 
@@ -147,10 +147,9 @@ export class PromotionPage {
     if(student.class_group === 'Nursery') { student.class_group = 'LKG'; }
     if(student.class_group === 'Play Group') { student.class_group = 'Nursery'; }
 
+    if(student.study_year === '2020-21') { student.study_year = '2021-22'; }
     if(student.study_year === '2019-20') { student.study_year = '2020-21'; }
     if(student.study_year === '2018-19') { student.study_year = '2019-20'; }
-    if(student.study_year === '2017-18') { student.study_year = '2018-19'; }
-    if(student.study_year === '2016-17') { student.study_year = '2017-18'; }
 
     this.storage.set('confirmed_student', student);
     if(student.parent_name == "") this.showMessage(student);

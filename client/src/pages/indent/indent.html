@@ -37,7 +37,7 @@
             <div *ngIf="student.photo"><img src={{student.photo}} class="bg_student indent_student"/></div>
             <div *ngIf="!student.photo"><img src="assets/images/NoImageAvailable.png" class="bg_student indent_student"/></div>
             <br/>
-            <h2 *ngIf="student.study_year != '2019-20'" style="color: red;"> You cannot indent this, admission is not for 2019-20 </h2>
+            <h2 *ngIf="student.study_year != '2020-21'" style="color: red;"> You cannot indent this, admission is not for 2020-21 </h2>
           </div>
           <div class="col_right indent_right">
             <h1>{{student.name}}</h1>
@@ -49,7 +49,7 @@
           </div>
         </button>
      
-        <ion-item-options side="right" *ngIf="student.study_year == '2019-20'">
+        <ion-item-options side="right" *ngIf="student.study_year == '2020-21'">
           <button ion-button color="info" (click)="edit(student)">
             <ion-icon name="create"></ion-icon>
             Edit

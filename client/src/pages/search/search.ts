@@ -132,7 +132,7 @@ export class SearchPage {
   }
 
   update(student) {
-    if(student.study_year == '2018-19') {
+    if(student.study_year == '2019-20') {
       if(student.class_group == "Play Group")
         student.class_group = 'Nursery';
       else if(student.class_group == "Nursery")
@@ -142,7 +142,7 @@ export class SearchPage {
       else if(student.class_group == "UKG")
         student.class_group = 'UKG';
       else student.class_group = 'Play Group';
-      student.study_year = '2019-20';
+      student.study_year = '2020-21';
     }
     this.storage.set("confirmed_student", student);
     this.navCtrl.setRoot(ConfirmPage);
