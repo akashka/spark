@@ -88,6 +88,8 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "cordova-plugin-googlemaps/spark-tbxml-android.gradle"
+apply from: "cordova-plugin-googlemaps/spark-apikey.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -253,6 +255,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:25.+"
     compile "com.appsee:appsee-android:2.4.1"
     compile "com.android.support:support-v4:24.1.1+"
+    compile "com.google.android.gms:play-services-maps:$PLAY_SERVICES_VERSION"
+    compile "com.google.android.gms:play-services-location:$PLAY_SERVICES_VERSION"
+    compile "com.android.support:support-core-utils:$ANDROID_SUPPORT_V4_VERSION"
+    compile "com.android.support:support-v4:$ANDROID_SUPPORT_V4_VERSION"
     // SUB-PROJECT DEPENDENCIES END
 }
 

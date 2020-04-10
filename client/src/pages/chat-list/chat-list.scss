@@ -1,0 +1,21 @@
+.chat-list {
+    opacity: 1 !important;
+    border-radius: 0 !important;
+
+    .label {
+        margin-top: 5px !important;
+        margin-bottom: 5px !important;
+    }
+    .bg_student {
+        height: 100px !important;
+        border-radius: 50%;
+        margin-top: -5px;
+    }
+    .col_left {
+        width: 33% !important;
+    }
+    .col_right {
+        width: 65% !important;
+        height: auto !important;
+    }
+}

@@ -28,6 +28,8 @@ import { IdcardrequestPage } from '../pages/idcardrequest/idcardrequest';
 import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
 import { EditstudentPage } from '../pages/editstudent/editstudent';
 import { StudentslistPage } from '../pages/studentslist/studentslist';
+import { ChatGroupPage } from '../pages/chat-group/chat-group';
+import { ChatListPage } from '../pages/chat-list/chat-list';
 
 import { HomeTab } from '../pages/home-tab/home-tab';
 import { NotificationTab } from '../pages/notification-tab/notification-tab';
@@ -39,12 +41,21 @@ import { Auth } from '../providers/auth/auth';
 import { Center } from '../providers/center/center';
 import { Indentation } from '../providers/indentation/indentation';
 import { Networks } from '../providers/network/network';
+import { Chats } from '../providers/chats/chats';
 
 // Camera
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { Media } from '@ionic-native/media';
+
+// Chat
+import { EmojiPickerModule } from 'ionic-emoji-picker';
+
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 @NgModule({
   declarations: [
@@ -69,7 +80,9 @@ import { Camera } from '@ionic-native/camera';
     StudentslistPage,
     HomeTab,
     NotificationTab,
-    ProfileTab
+    ProfileTab,
+    ChatGroupPage,
+    ChatListPage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +91,8 @@ import { Camera } from '@ionic-native/camera';
     CalendarModule,
     GooglePlaceModule,
     IonicStorageModule.forRoot(MyApp),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    EmojiPickerModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -103,7 +117,9 @@ import { Camera } from '@ionic-native/camera';
     StudentslistPage,
     HomeTab,
     NotificationTab,
-    ProfileTab
+    ProfileTab,
+    ChatGroupPage,
+    ChatListPage
   ],
   providers: [
     IonicStorageModule,
@@ -116,7 +132,12 @@ import { Camera } from '@ionic-native/camera';
     Transfer,
     Camera,
     FilePath,
-    CallNumber
+    CallNumber,
+    Chats,
+    Geolocation,
+    GoogleMaps,
+    FileChooser,
+    Media
   ]
 })
 export class AppModule {}

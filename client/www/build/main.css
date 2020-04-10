@@ -25407,6 +25407,191 @@ textarea.text-input {
   position: initial;
 }
 
+chat-group-page ion-footer {
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
+  background-color: #fff;
+}
+
+chat-group-page .line-breaker {
+  white-space: pre-line;
+}
+
+chat-group-page .input-wrap {
+  padding: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+chat-group-page .input-wrap textarea {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border: 0;
+  border-bottom: 1px #387ef5;
+  border-style: solid;
+  margin-left: 3em;
+}
+
+chat-group-page .message-wrap {
+  padding: 0 10px;
+}
+
+chat-group-page .message-wrap .message {
+  position: relative;
+  padding: 10px 0;
+}
+
+chat-group-page .message-wrap .message .user-img {
+  position: absolute;
+  border-radius: 45px;
+  width: 45px;
+  height: 45px;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+}
+
+chat-group-page .message-wrap .message .msg-detail {
+  width: 100%;
+  display: inline-block;
+}
+
+chat-group-page .message-wrap .message .msg-detail p {
+  margin: 0;
+}
+
+chat-group-page .message-wrap .message .msg-detail .msg-info p {
+  font-size: 0.8em;
+  color: #888;
+}
+
+chat-group-page .message-wrap .message .msg-detail .msg-content {
+  position: relative;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  color: #fff;
+  width: auto;
+  max-width: 80%;
+}
+
+chat-group-page .message-wrap .message .msg-detail .msg-content span.triangle {
+  background-color: #fff;
+  border-radius: 2px;
+  height: 8px;
+  width: 8px;
+  top: 12px;
+  display: block;
+  border-style: solid;
+  border-color: #ddd;
+  border-width: 1px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+}
+
+chat-group-page .message-wrap .message.left .msg-content {
+  background-color: #fff;
+  float: left;
+}
+
+chat-group-page .message-wrap .message.left .msg-detail {
+  padding-left: 60px;
+}
+
+chat-group-page .message-wrap .message.left .user-img {
+  left: 0;
+}
+
+chat-group-page .message-wrap .message.left .msg-detail .msg-content {
+  color: #343434;
+}
+
+chat-group-page .message-wrap .message.left .msg-detail .msg-content span.triangle {
+  border-top-width: 0;
+  border-right-width: 0;
+  left: -5px;
+}
+
+chat-group-page .message-wrap .message.right .msg-detail {
+  padding-right: 60px;
+}
+
+chat-group-page .message-wrap .message.right .msg-detail .msg-info {
+  text-align: right;
+}
+
+chat-group-page .message-wrap .message.right .user-img {
+  right: 0;
+}
+
+chat-group-page .message-wrap .message.right ion-spinner {
+  position: absolute;
+  right: 10px;
+  top: 50px;
+}
+
+chat-group-page .message-wrap .message.right .msg-detail .msg-content {
+  background-color: #387ef5;
+  float: right;
+}
+
+chat-group-page .message-wrap .message.right .msg-detail .msg-content span.triangle {
+  background-color: #387ef5;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  right: -5px;
+}
+
+chat-group-page ion-fab {
+  bottom: 0px !important;
+  left: -0.33em !important;
+}
+
+chat-group-page ion-fab-list {
+  width: 100rem;
+  background: white;
+  margin: -5px 50px !important;
+}
+
+chat-group-page emoji-content {
+  min-width: 36rem !important;
+}
+
+chat-group-page .gm-style-mtc {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.chat-list {
+  opacity: 1 !important;
+  border-radius: 0 !important;
+}
+
+.chat-list .label {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+.chat-list .bg_student {
+  height: 100px !important;
+  border-radius: 50%;
+  margin-top: -5px;
+}
+
+.chat-list .col_left {
+  width: 33% !important;
+}
+
+.chat-list .col_right {
+  width: 65% !important;
+  height: auto !important;
+}
+
 .booking_card {
   border-bottom: 1px solid #e7e7e7;
   padding: 15px;

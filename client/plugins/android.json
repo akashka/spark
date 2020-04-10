@@ -33,6 +33,24 @@
     },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-googlemaps": {
+      "PLAY_SERVICES_VERSION": "15.0.1",
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-media": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-file-opener2": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.olw.spark"
     }
   },
   "dependent_plugins": {
@@ -46,9 +64,6 @@
       "PACKAGE_NAME": "io.ionic.starter"
     },
     "cordova-plugin-email-composer": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-file": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
     "cordova-plugin-statusbar": {

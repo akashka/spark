@@ -64,8 +64,11 @@
             <ion-item *ngIf="isAdmin" (click)="go_to_deletestudent()" menuClose>
                 Restore Student (Admin)
             </ion-item>
+            <ion-item (click)="go_to_chatList()" menuClose>
+                Chats
+            </ion-item>
             <ion-item (click)="go_to_login()" menuClose
-                style="bottom: 0; position: fixed; background-color: red; color: white;">
+                style="bottom: 0; position: sticky; background-color: red; color: white; opacity: 1;">
                 SignOut
             </ion-item>
         </ion-list>

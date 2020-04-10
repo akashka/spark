@@ -3,6 +3,7 @@ var AuthenticationController = require('./controllers/authentication'),
     CenterController = require('./controllers/centers'),  
     IndentationController = require('./controllers/indentations'),  
     MiscController = require('./controllers/misc'),
+    ChatController = require('./controllers/chats'),
     express = require('express'),
     passportService = require('../config/passport'),
     passport = require('passport'),
@@ -28,6 +29,7 @@ module.exports = function(app){
         centerRoutes = express.Router();
         indentationRoutes = express.Router();
         miscRoutes = express.Router();
+        chatRoutes = express.Router();
 
     // Auth Routes
     apiRoutes.use('/auth', authRoutes);
@@ -86,7 +88,16 @@ module.exports = function(app){
             }
         });
     });
-    
+
+    // Chat Routes
+    apiRoutes.use('/chats', chatRoutes); 
+    chatRoutes.get('/list', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.getChatListing);
+    chatRoutes.get('/messages/:chatId/:userId', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.getChatMessages);
+    chatRoutes.put('/messages/:id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.updateChatMessage);
+    chatRoutes.put('/:id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.updateChat);
+
+    chatRoutes.post('/uploadToS3', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.uploadToS3);
+
     // Set up routes
     app.use('/api', apiRoutes);
  

@@ -1,0 +1,67 @@
+  <ion-header>
+    <ion-navbar color="primary">
+      <ion-buttons left>
+        <button ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        {{chat.tempName}}
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content #scrollElement id="scrollElement">
+      <!-- <div #map id="map" style="height: 150px; width: 75em;"></div> -->
+    <div class="message-wrap">
+      <div *ngFor="let message of messages" class="message" [class.left]="message.from !== user._id"
+        [class.right]="message.from === user._id">
+        <img class="user-img" [src]="getUserProfileImage(message.from)" alt="">
+        <div class="msg-detail">
+          <div class="msg-info">
+            <p>
+              {{ getUserName(message.from) }}&nbsp;&nbsp;&nbsp;{{message.created | date:'MMM dd, yyyy, hh:MM'}}</p>
+          </div>
+          <div class="msg-content">
+            <span class="triangle"></span>
+            <p class="line-breaker" *ngIf="message.type === 'text'">{{message.text}}</p>
+            <div *ngIf="message.type === 'location'" (click)="openGoogleMap(message.latitude, message.longitude)">
+              <div #map id="map" style="height: 150px; width: 18em; position: relative; overflow: hidden; padding: 0; margin: -0.56em; margin-left: -5.6em;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+
+
+  <ion-footer no-border *ngIf="!isSilentMember">
+    <div class="input-wrap">
+      <ion-fab bottom left edge auto-close-on-click-outside #fab>
+        <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+        <ion-fab-list side="right">
+          <button ion-fab (click)="emoziToggled = !emoziToggled" 
+              [(emojiPickerIf)]="emoziToggled" [emojiPickerDirection]="'top'"
+              (emojiPickerSelect)="handleEmoziSelection($event); emoziToggled = !emoziToggled; fab.close();">
+            <ion-icon name="md-happy"></ion-icon>
+          </button>
+          <button ion-fab (click)="sendAttachment()"><ion-icon name="attach"></ion-icon></button>
+          <button ion-fab (click)="sendCamera()"><ion-icon name="camera"></ion-icon></button>
+          <button ion-fab (press)="sendSound()" (touchend)="stopRecording()"><ion-icon name="mic"></ion-icon></button>
+          <button ion-fab (click)="sendLocation()"><ion-icon name="locate"></ion-icon></button>
+        </ion-fab-list>
+      </ion-fab>
+      <textarea placeholder="Enter Message Here" rows="2" [(ngModel)]="message" (ionChange)="onMessageChange()"
+        style="min-height: auto;"></textarea>
+      <button ion-button clear icon-only item-right (click)="sendMessage()" 
+            style="margin-right: -0.9em;" [class.button-disabled]="message === ''">
+        <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+      </button>
+    </div>
+  </ion-footer>
+
+  <ion-footer no-border *ngIf="isSilentMember">
+    <h3 style="background: red;color: white; font-weight: bold; margin: 0; padding: 0; text-align: center;">
+      You are not authorized to send message here
+    </h3>
+  </ion-footer>

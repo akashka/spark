@@ -20,6 +20,7 @@ import { IdcardrequestPage } from '../pages/idcardrequest/idcardrequest';
 import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
 import { ApproveindentPage } from '../pages/approveindent/approveindent';
 import { StudentslistPage } from '../pages/studentslist/studentslist';
+import { ChatListPage } from '../pages/chat-list/chat-list';
 
 // Services
 import { Auth } from '../providers/auth/auth';
@@ -54,6 +55,7 @@ export class MyApp {
     this.userSubscription = Auth.userChanged.subscribe(
       (user) => this.getData(user)
     );
+
   }
 
   getData(user) {
@@ -179,6 +181,10 @@ export class MyApp {
 
   go_to_studentslist() {
     this.nav.setRoot(StudentslistPage);
+  }
+
+  go_to_chatList() {
+    this.nav.setRoot(ChatListPage);
   }
 
 }

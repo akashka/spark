@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      CHAT
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <div class="search-row search-full">
+      <ion-searchbar [(ngModel)]="myInput" (animated)="true" (placeholder)="Search" (ionInput)="search()">
+      </ion-searchbar>
+    </div>
+
+    <img src="assets/images/emoji-faces.jpg" class="emozi" *ngIf="chats && !chats.length" />
+    <h1 *ngIf="chats && !chats.length" class="no_record"> NO RECORDS FOUND </h1>
+
+    <ion-item *ngFor="let chat of chats" (click)="displayMessages(chat)" class="chat-list" style="border-radius: 0 !important;">
+
+      <!-- <button ion-item> -->
+        <div class="col_left">
+          <div ><img src={{getChatImage(chat.dp)}} class="bg_student" /></div>
+        </div>
+        <div class="col_right">
+          <h1>{{getChatName(chat.name)}}</h1>
+          <h2> {{chat.members.length}} Members</h2>
+          <h3>Last Active  
+            <span *ngIf="chat.last_login && chat.last_login[user._id]">{{getLastActive(chat.last_login[user._id])}}</span>
+            <span *ngIf="!chat.last_login || !chat.last_login[user._id]">Not Available</span>
+          </h3>
+        </div>
+      <!-- </button> -->
+    </ion-item>
+
+  </ion-list>
+</ion-content>
