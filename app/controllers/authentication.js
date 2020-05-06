@@ -21,7 +21,7 @@ sgMail.setApiKey(apiKey);
 function generateToken(user) {
   console.log("Generating Token for user " + user.email);
   return jwt.sign(user, authConfig.secret, {
-    expiresIn: 10080
+    expiresIn: 1008000000
   });
 }
 
@@ -464,6 +464,3 @@ exports.changePassword = function(req, res, next) {
   });
 };
 
-exports.updatePhoto = function(req, res, next) {
-    
-};

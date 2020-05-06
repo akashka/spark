@@ -25,7 +25,6 @@
 // }
 
 chat-group-page {
-
   ion-footer {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.11);
     background-color: #fff;
@@ -158,5 +157,235 @@ chat-group-page {
     display: none !important;
     visibility: hidden !important;
   }
-
 }
+
+// Whatsapp css
+._3_KyJ {
+  padding: 0;
+  margin: -7px;
+  border-radius: 5px;
+}
+
+.q5faU {
+  box-sizing: border-box;
+  color: inherit;
+  display: block;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+._2RBFb {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 13px;
+}
+
+._2Lg-1 {
+  flex: none;
+  margin-top: -1px;
+}
+
+._2e0eP {
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon-doc-generic {
+  height: 21px;
+  width: 21px;
+  background-color: transparent;
+  background-image: url(
+    data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAA8CAYAAADL94L/AAAByElEQVR4Ae3axdJTQRAFYFyegA3u8ALseCDcicsGhxt3x+G32BXc3X3NBnfXYTqp3sZlhuqpOlXZRL46He9ReJyJxGSTEreaPfEHZiX+1uSJvelVNu+Jvjd7Yk9zI8aSUe0eDpjCIYfNSuw5v/zF5In/6mU27478tXriLJvXjdSwPq1lCDTCmxjiCNav8GZYBVMwWKagX8kWjk9vCcMhYWhEFEw1+oV0wZjdPKY6Vn9EwmBDTYPwBoXCYPLGDQTJjkHQNQRJj0FQtmgs+C8wOHIIkh2DoDu5vD5Xfkz9hsTBWDyxhjDYUDqvLRYSY1JilSQGyyxXOt4QKJPX70NDQmI27gyxHcn9bH/5RFMNAUgoDI4afOAMHBiCdiDNj5woGAhgsCEYudSI1lBCRwoPL957slAoDDYEoPXb/ZVs3FE/y9072fDxsx4BMPVfGOpl1VY/y5++4EWM1Fm9LcCKpy8RpnchDGEIQxjCEIYwhCEMYQhDGMIQhjCEIQxhCEMYwhCGMIQhDGEIQxhYNlXiP+XHXLRDM5thQVpyzIfS2YtLceVEkRmzalsgMArPhp258bA6b/LEb8LqPM930VNdvY/fhMmCxw+Of+4BTcPInBo2AAAAAElFTkSuQmCC
+  );
+}
+
+._3FXB1 {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.gDOmN {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+._1YbLB {
+  flex: none;
+  -webkit-transition: -webkit-filter 0.16s linear;
+  max-height: 200px;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+._2cfqh {
+  flex-grow: 1;
+}
+
+.tFdoF {
+  align-items: center;
+  display: flex;
+}
+
+._1uzym {
+  flex: none;
+  height: 34px;
+  width: 34px;
+  position: relative;
+  display: block;
+  margin-top: -1px;
+}
+
+._3zwKD {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  display: block;
+  background-color: transparent;
+  color: white;
+  margin-right: 15px;
+}
+
+._1A7et {
+  flex: 1;
+  padding-left: 15px;
+}
+
+._30Qsm {
+  position: relative;
+  top: -1px;
+  width: 100%;
+}
+
+._1M0Ew {
+	bottom: 4px;
+	font-size: 11px;
+	line-height: 15px;
+	position: absolute;
+}
+
+._4_92b {
+	height: 21px;
+	width: 100%;
+	box-sizing: border-box;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-appearance: none;
+	outline: none;
+	position: relative;
+	display: block;
+	background-color: transparent !important;
+}
+
+._4_92b::-webkit-slider-runnable-track {
+	height: 3px;
+}
+
+._4_92b::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 13px;
+	height: 13px;
+	transition: all 0.1s ease;
+}
+
+._4_92b::-webkit-slider-thumb {
+	margin-top: -5px;
+	border-radius: 5;
+	border: none;
+}
+
+._4_92b:active::-webkit-slider-thumb {
+	width: 15px;
+	height: 15px;
+}
+
+._4_92b:active::-webkit-slider-thumb {
+	margin-top: -6px;
+}
+
+._4_92b:disabled::-webkit-slider-thumb {
+	display: none;
+}
+
+._4_92b::-moz-range-track {
+	height: 3px;
+}
+
+._4_92b::-moz-range-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 13px;
+	height: 13px;
+	transition: all 0.1s ease;
+	border: none;
+}
+
+._4_92b::-moz-focus-outer {
+  border: 0
+}
+
+._4_92b:active::-moz-range-thumb {
+	width: 15px;
+	height: 15px;
+}
+
+._4_92b:active::-moz-range-thumb {
+	margin-top: -6px;
+}
+
+._4_92b:disabled::-moz-range-thumb {
+	display: none;
+}
+
+._4_92b::-ms-track {
+	height: 3px;
+}
+
+._4_92b::-ms-track {
+	border: none;
+}
+
+._4_92b::-ms-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 13px;
+	height: 13px;
+}
+
+.Q8uSF {
+  height: 3px;
+  width: 0px;
+  pointer-events: none;
+  z-index: 10;
+  left: 0px;
+}
+
+.chat-image-header .toolbar-background {
+  background: black !important;
+  opacity: 0.75;
+}
+
+.chat-image-header .bar-button-default-md {
+  color: white !important;
+}
+
+.contact-avatar {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  float: left;
+}
+

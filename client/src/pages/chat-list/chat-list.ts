@@ -23,6 +23,8 @@ import { Center } from '../../providers/center/center';
 import { Chats } from '../../providers/chats/chats';
 import { Networks } from '../../providers/network/network';
 
+import { ChatCreatePage } from '../chat-create/chat-create';
+
 @Component({
   selector: 'chat-list-page',
   templateUrl: './chat-list.html'
@@ -34,6 +36,7 @@ export class ChatListPage {
   users: any;
   myInput: string;
   public loader: any;
+  isAdmin: Boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -63,17 +66,43 @@ export class ChatListPage {
         });
         this.storage.get('user').then((user) => {
           this.user = user;
+          this.isAdmin = this.user.role === 'admin';
           result = _.filter(result, function (o) {
             return (
               (o.members.indexOf(user._id) > -1) ||
-              (o.silent_members.indexOf(user._id) > -1)
+              (o.silent_members.indexOf(user._id) > -1) ||
+              (o.admin.indexOf(user._id) > -1)
             )
           });
           this.chats = result;
-          this.allChats = result;    
+          this.allChats = result;
         });
       }, (err) => {
         console.log(err);
+      });
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  refresher(event) {
+    this.chatService.getChatList().then((result) => {
+      result = _.filter(result, function (o) {
+        return (o.active);
+      });
+      this.storage.get('user').then((user) => {
+        this.user = user;
+        this.isAdmin = this.user.role === 'admin';
+        result = _.filter(result, function (o) {
+          return (
+            (o.members.indexOf(user._id) > -1) ||
+            (o.silent_members.indexOf(user._id) > -1) ||
+            (o.admin.indexOf(user._id) > -1)
+          )
+        });
+        this.chats = result;
+        this.allChats = result;
+        event.target.complete();
       });
     }, (err) => {
       console.log(err);
@@ -109,7 +138,7 @@ export class ChatListPage {
       if (uuser.photo) return uuser.photo;
     }
     if (dp && dp.type === 'direct') {
-      return dp.src;
+      if (dp.src != '') return dp.src;
     }
     return 'assets/images/NoImageAvailable.png';
   }
@@ -128,6 +157,10 @@ export class ChatListPage {
 
   getLastActive(last_login) {
     return (moment(last_login).fromNow());
+  }
+
+  createNew() {
+    this.navCtrl.setRoot(ChatCreatePage);
   }
 
 };

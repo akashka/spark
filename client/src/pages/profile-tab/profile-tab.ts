@@ -54,7 +54,6 @@ export class ProfileTab {
         dob: [this.profileDetails.dob],
         gender: [this.profileDetails.gender],
         phone_no: [this.profileDetails.phone_no, Validators.compose([Validators.maxLength(10), Validators.minLength(10), Validators.pattern('[0-9]*')])],
-        whatsapp_no: [this.profileDetails.whatsapp_no, Validators.compose([Validators.maxLength(10), Validators.minLength(10), Validators.pattern('[0-9]*')])],
         photo: [this.profileDetails.photo],
         active: [this.profileDetails.active, Validators.compose([Validators.required])],
         center: [this.profileDetails.center, Validators.compose([Validators.required])],

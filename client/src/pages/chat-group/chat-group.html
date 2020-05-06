@@ -8,11 +8,17 @@
       <ion-title>
         {{chat.tempName}}
       </ion-title>
+      <ion-buttons start>
+        <button ion-button icon-only (click)="information()">
+          <ion-icon name="information"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-navbar>
   </ion-header>
 
-  <ion-content #scrollElement id="scrollElement">
-      <!-- <div #map id="map" style="height: 150px; width: 75em;"></div> -->
+  <ion-content>
+
+    <!-- <div #map id="map" style="height: 150px; width: 75em;"></div> -->
     <div class="message-wrap">
       <div *ngFor="let message of messages" class="message" [class.left]="message.from !== user._id"
         [class.right]="message.from === user._id">
@@ -20,41 +26,178 @@
         <div class="msg-detail">
           <div class="msg-info">
             <p>
-              {{ getUserName(message.from) }}&nbsp;&nbsp;&nbsp;{{message.created | date:'MMM dd, yyyy, hh:MM'}}</p>
+              {{ getUserName(message.from) }}&nbsp;&nbsp;&nbsp;{{message.created | date:'MMM dd, yyyy, hh:mm'}}</p>
           </div>
           <div class="msg-content">
             <span class="triangle"></span>
+
+            <!-- Text Type -->
             <p class="line-breaker" *ngIf="message.type === 'text'">{{message.text}}</p>
-            <div *ngIf="message.type === 'location'" (click)="openGoogleMap(message.latitude, message.longitude)">
-              <div #map id="map" style="height: 150px; width: 18em; position: relative; overflow: hidden; padding: 0; margin: -0.56em; margin-left: -5.6em;"></div>
+
+            <!-- Map type -->
+            <div *ngIf="message.type === 'location'">
+              <div class="_3_KyJ">
+                <div class="q5faU" (click)="openGoogleMap(message.latitude, message.longitude)">
+                  <div class="_2RBFb">
+                    <div class="_2Lg-1">
+                      <div class="_2e0eP">
+                        <ion-icon large name="locate"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="_3UPcK">
+                      <span dir="auto" class="_3FXB1">
+                        Map Location
+                      </span>
+                    </div>
+                    <div class="_17viz">
+                      <span data-icon="audio-download" class="">
+                        <ion-icon large name="navigate"></ion-icon>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- Document type -->
+            <div *ngIf="message.type === 'document'">
+              <div class="_3_KyJ">
+                <div class="q5faU" (click)="openDocument(message.documentPath)">
+                  <div class="_2RBFb">
+                    <div class="_2Lg-1">
+                      <div class="_2e0eP icon-doc-generic"></div>
+                    </div>
+                    <div class="_3UPcK"><span dir="auto" class="_3FXB1">{{getFileName(message.documentPath)}}</span>
+                    </div>
+                    <div class="_17viz">
+                      <span data-icon="audio-download" class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="24" height="24">
+                          <path fill="currentColor"
+                            d="M17 2c8.3 0 15 6.7 15 15s-6.7 15-15 15S2 25.3 2 17 8.7 2 17 2m0-1C8.2 1 1 8.2 1 17s7.2 16 16 16 16-7.2 16-16S25.8 1 17 1z">
+                          </path>
+                          <path fill="currentColor"
+                            d="M22.4 17.5h-3.2v-6.8c0-.4-.3-.7-.7-.7h-3.2c-.4 0-.7.3-.7.7v6.8h-3.2c-.6 0-.8.4-.4.8l5 5.3c.5.7 1 .5 1.5 0l5-5.3c.7-.5.5-.8-.1-.8z">
+                          </path>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image type -->
+            <div *ngIf="message.type === 'image'" (click)="openImage(message.imagePath)">
+              <div class="gDOmN">
+                <img src={{message.imagePath}} class="_1YbLB">
+              </div>
+            </div>
+
+            <!-- SOund type -->
+            <div *ngIf="message.type === 'audio'">
+              <div class="_2cfqh">
+                <div class="tFdoF _3L8ub _38DlQ">
+                  <div class="_1uzym">
+                    <button class="_3zwKD">
+                      <span data-icon="audio-play" class="" *ngIf="!message.playing" (click)="playAudio(message)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+                          <path fill="currentColor"
+                            d="M8.5 8.7c0-1.7 1.2-2.4 2.6-1.5l14.4 8.3c1.4.8 1.4 2.2 0 3l-14.4 8.3c-1.4.8-2.6.2-2.6-1.5V8.7z">
+                          </path>
+                        </svg>
+                      </span>
+                      <span data-icon="audio-pause" class="" *ngIf="message.playing" (click)="stopAudio(message)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+                          <path fill="currentColor"
+                            d="M8.5 8.7c0-1.7 1.2-2.4 2.6-1.5l14.4 8.3c1.4.8 1.4 2.2 0 3l-14.4 8.3c-1.4.8-2.6.2-2.6-1.5V8.7z">
+                          </path>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="_1A7et">
+                    <div class="_1M0Ew">
+                      {{calculateTimePlayed('time')}}
+                    </div>
+                    <div class="_30Qsm">
+                      <ion-range min="0" max="{{message.duration}}" [(ngModel)]="position"></ion-range>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact type -->
+            <div *ngIf="message.type === 'contact'">
+              <div class="_3_KyJ">
+                <div class="q5faU" (click)="openContact(message)">
+                  <div class="_2RBFb">
+                    <div class="_2Lg-1">
+                      <div class="_2e0eP">
+                        <ion-icon large name="people"></ion-icon>
+                      </div>
+                    </div>
+                    <div class="_3UPcK">
+                      <span dir="auto" class="_3FXB1">
+                        {{message.contactList.length}} Contacts Shared
+                      </span>
+                    </div>
+                    <div class="_17viz">
+                      <span data-icon="audio-download" class="">
+                        <ion-icon large name="open"></ion-icon>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="refresher($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-content>
 
 
   <ion-footer no-border *ngIf="!isSilentMember">
     <div class="input-wrap">
       <ion-fab bottom left edge auto-close-on-click-outside #fab>
-        <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+        <button ion-fab mini>
+          <ion-icon name="add"></ion-icon>
+        </button>
         <ion-fab-list side="right">
-          <button ion-fab (click)="emoziToggled = !emoziToggled" 
+          <!-- <button ion-fab (click)="emoziToggled = !emoziToggled" 
               [(emojiPickerIf)]="emoziToggled" [emojiPickerDirection]="'top'"
               (emojiPickerSelect)="handleEmoziSelection($event); emoziToggled = !emoziToggled; fab.close();">
             <ion-icon name="md-happy"></ion-icon>
+          </button> -->
+          <button ion-fab (click)="sendAttachment()">
+            <ion-icon name="attach"></ion-icon>
           </button>
-          <button ion-fab (click)="sendAttachment()"><ion-icon name="attach"></ion-icon></button>
-          <button ion-fab (click)="sendCamera()"><ion-icon name="camera"></ion-icon></button>
-          <button ion-fab (press)="sendSound()" (touchend)="stopRecording()"><ion-icon name="mic"></ion-icon></button>
-          <button ion-fab (click)="sendLocation()"><ion-icon name="locate"></ion-icon></button>
+          <button ion-fab (click)="sendCamera()">
+            <ion-icon name="camera"></ion-icon>
+          </button>
+          <!-- <button ion-fab (click)="sendGallery()"><ion-icon name="images"></ion-icon></button> -->
+          <button ion-fab (click)="sendSound()">
+            <ion-icon name="mic"></ion-icon>
+          </button>
+          <button ion-fab (click)="sendLocation()">
+            <ion-icon name="locate"></ion-icon>
+          </button>
+          <button ion-fab (click)="sendContact()">
+            <ion-icon name="people"></ion-icon>
+          </button>
         </ion-fab-list>
       </ion-fab>
       <textarea placeholder="Enter Message Here" rows="2" [(ngModel)]="message" (ionChange)="onMessageChange()"
         style="min-height: auto;"></textarea>
-      <button ion-button clear icon-only item-right (click)="sendMessage()" 
-            style="margin-right: -0.9em;" [class.button-disabled]="message === ''">
+      <button ion-button clear icon-only item-right (click)="sendMessage()" style="margin-right: -0.9em;"
+        [class.button-disabled]="message === ''">
         <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
       </button>
     </div>

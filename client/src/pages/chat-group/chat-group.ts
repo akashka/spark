@@ -1,6 +1,5 @@
 // <reference types="@types/googlemaps" />
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Content } from 'ionic-angular';
 import {
   NavController,
   NavParams,
@@ -11,12 +10,15 @@ import {
   Platform,
   App,
   MenuController,
-  LoadingController
+  LoadingController,
+  Content
 } from 'ionic-angular';
 import * as _ from 'lodash'
 import { Storage } from '@ionic/storage';
-import { Http } from '@angular/http';
 import { ChatListPage } from '../chat-list/chat-list';
+import { ChatCreatePage } from '../chat-create/chat-create';
+import { Http, Headers } from '@angular/http';
+import * as aws from "aws-sdk";
 
 // Providers
 import { Students } from '../../providers/students/students';
@@ -26,11 +28,23 @@ import { Chats } from '../../providers/chats/chats';
 import { Networks } from '../../providers/network/network';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { Media, MediaObject } from '@ionic-native/media';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { MediaPlugin, MediaObject } from '@ionic-native/media';
 import { File } from '@ionic-native/file';
+import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { Geolocation } from '@ionic-native/geolocation';
+import { ChatInfoPage } from '../chat-info/chat-info';
+import { Base64 } from "@ionic-native/base64";
+import { NativeAudio } from '@ionic-native/native-audio';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { FileOpener } from '@ionic-native/file-opener';
 
-declare var google;
+import { ChatPhoneContactPage } from './chat-phone-contact';
+import { ChatPhoneListPage } from './chat-phone-list';
+import { ChatImagePage } from './chat-image';
 
 @Component({
   selector: 'chat-group-page',
@@ -43,11 +57,13 @@ export class ChatGroupPage {
   message = '';
   public loader: any;
   chat: any = [];
-  isSilentMember: Boolean;
+  isSilentMember: Boolean = false;
+  isAdmin: Boolean = false;
   emoziToggled: boolean = false;
+  phoneContacts: any = [];
+  loading: any;
 
-  @ViewChild("scrollElement") content: Content;
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild(Content) contentArea: Content;
   map: any;
 
   constructor(
@@ -66,46 +82,59 @@ export class ChatGroupPage {
     public centerService: Center,
     public networkService: Networks,
     public storage: Storage,
-    public loading: LoadingController,
+    public loadingCtrl: LoadingController,
     public http: Http,
     public camera: Camera,
     public fileChooser: FileChooser,
-    public media: Media,
-    public file: File
+    public media: MediaPlugin,
+    public file: File,
+    public contacts: Contacts,
+    public sanitizer: DomSanitizer,
+    public transfer: FileTransfer,
+    public filePath: FilePath,
+    public geolocation: Geolocation,
+    public base64: Base64,
+    public alertController: AlertController,
+    public nativeAudio: NativeAudio,
+    public androidPermissions: AndroidPermissions,
+    public fileOpener: FileOpener
   ) {
-
   }
 
   ngOnInit() {
-    this.loader = this.loading.create({
-      content: 'Please wait...',
-    });
+    this.showLoader('Please wait...');
     this.storage.get('user').then((user) => {
       this.user = user;
       this.authService.searchUser().then((result) => {
         this.users = result;
         this.storage.get('chatGroup').then((chat) => {
           this.chat = chat;
-          if (
-            this.chat.silent_members.indexOf(user._id) > -1 ||
-            this.chat.members.indexOf(user._id) <= -1
-          ) {
-            this.isSilentMember = true;
-          } else {
-            this.isSilentMember = false;
-          }
+          this.isSilentMember = this.chat.silent_members.indexOf(user._id) > -1;
+          this.isAdmin = this.chat.admin.indexOf(user._id) > -1;
+          this.loading.dismiss();
           this.getChatMessages();
         });
       });
+    });
+    this.storage.get('phoneContacts').then((phoneContacts) => {
+      this.phoneContacts = JSON.parse(phoneContacts);
     });
   }
 
   getChatMessages() {
     this.chatService.getChatMessages(this.chat._id, this.user._id).then((result) => {
       this.messages = _.sortBy(result, 'created');
-      this.loader.dismiss();
-      this.markmap();
+      this.contentArea.scrollToBottom();
       this.getChatMessages();
+    });
+  }
+
+  refresher(event) {
+    alert('event ' + JSON.stringify(event));
+    this.chatService.getChatMessages(this.chat._id, this.user._id).then((result) => {
+      this.messages = _.sortBy(result, 'created');
+      this.contentArea.scrollToBottom();
+      event.target.complete();
     });
   }
 
@@ -119,8 +148,7 @@ export class ChatGroupPage {
       });
       this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
         this.message = '';
-        let dimensions = this.content.getContentDimensions();
-        this.content.scrollTo(0, dimensions.contentHeight, 0);
+        this.contentArea.scrollToBottom();
       }, (err) => {
       });
     }
@@ -134,13 +162,20 @@ export class ChatGroupPage {
     return '';
   }
 
-  onMessageChange() {
-    console.log('e');
-  }
-
   goBack() {
     this.storage.remove("chatGroup");
     this.navCtrl.setRoot(ChatListPage);
+  }
+
+  information() {
+    this.navCtrl.push(ChatInfoPage, {
+      isSilentMember: this.isSilentMember,
+      isAdmin: this.isAdmin,
+      chat: this.chat,
+      messages: this.messages,
+      users: this.users,
+      user: this.user
+    });
   }
 
   private presentToast(text) {
@@ -168,31 +203,6 @@ export class ChatGroupPage {
     this.chatService.stopGetChatMessages();
   }
 
-  // Map
-  markmap() {
-    setTimeout(() => {
-      for (var i = 0; i < this.messages.length; i++) {
-        if (this.messages[i].type === 'location') {
-          if (this.mapElement.nativeElement.innerText === '') {
-            let mapCenter = new google.maps.LatLng(
-              parseFloat(this.messages[i].latitude).toFixed(5),
-              parseFloat(this.messages[i].longitude).toFixed(5)
-            );
-            let mapOptions = {
-              zoom: 13,
-              mapTypeId: google.maps.MapTypeId.ROADMAP,
-              mapTypeControl: true,
-              center: mapCenter,
-              fullscreenControl: false,
-              disableDefaultUI: true
-            }
-            this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-          }
-        }
-      }
-    }, 100);
-  }
-
   openGoogleMap(latitude, longitude) {
     latitude = parseFloat(latitude).toFixed(5);
     longitude = parseFloat(longitude).toFixed(5);
@@ -200,114 +210,415 @@ export class ChatGroupPage {
     window.open(newUrl, "_blank");
   }
 
-  sendLocation() {
-    navigator.geolocation.getCurrentPosition(res => {
-      this.messages.push({
-        from: this.user._id,
-        created: new Date(),
-        type: 'location',
-        latitude: res.coords.latitude,
-        longitude: res.coords.longitude,
-      });
-      this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
-        let dimensions = this.content.getContentDimensions();
-        this.content.scrollTo(0, dimensions.contentHeight, 0);
-      }, (err) => {
-        this.presentToast(err);
-      });
+  async sendLocation() {
+    const alert = await this.alertController.create({
+      title: 'Share your Location!',
+      message: `This will share your current location with the help of map to all the members here.
+      Are you sure you want to share your current location?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirm',
+          handler: () => {
+            this.geolocation.getCurrentPosition().then(res => {
+              this.messages.push({
+                from: this.user._id,
+                created: new Date(),
+                type: 'location',
+                latitude: res.coords.latitude,
+                longitude: res.coords.longitude,
+              });
+              this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+                this.contentArea.scrollToBottom();
+              }, (err) => {
+                this.presentToast(err);
+              });
+            }, (err) => {
+              this.presentToast(JSON.stringify(err));
+            });
+          }
+        }
+      ]
     });
+
+    await alert.present();
   }
 
   // Attachment
   sendAttachment() {
-    alert('abc');
     this.fileChooser.open().then(uri => {
-      alert(uri);
-    }).catch(err => this.presentToast(err));
-  }
+      this.showLoader('Uploading...');
+      this.filePath.resolveNativePath(uri).then(resolvedFilePath => {
+        let pathurl = resolvedFilePath.substring(0, resolvedFilePath.lastIndexOf('/'));
+        let fileurl = resolvedFilePath.substring(resolvedFilePath.lastIndexOf('/') + 1, resolvedFilePath.length);
+        this.file.readAsDataURL(pathurl, fileurl).then((res) => {
+          let fileExtension = fileurl.split('.').pop();
+          var fileName = 'chat_' + this.chat._id + '_' + this.messages.length + '.' + fileExtension;
+          this.chatService.uploadToS3(res, fileName, fileExtension).then((result: any) => {
+            this.messages.push({
+              from: this.user._id,
+              created: new Date(),
+              type: 'document',
+              documentPath: result ? (result.Location ? result.Location : fileName) : fileName,
+            });
+            this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+              this.loading.dismiss();
+              this.contentArea.scrollToBottom();
+            }, (err) => {
+              this.presentToast(err);
+              this.loading.dismiss();
+            });
+          }, (err) => {
+            this.presentToast(err);
+            this.loading.dismiss();
+          });
+        }).catch(err => {
+          this.presentToast(JSON.stringify(err));
+          this.loading.dismiss();
+        });
+      }).catch(err => {
+        this.presentToast(JSON.stringify(err));
+        this.loading.dismiss();
+      });
+    }).catch(err => {
+      this.presentToast(JSON.stringify(err));
+      this.loading.dismiss();
+    });
+  };
 
   // Camera
   sendCamera() {
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      allowEdit: true,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+      mediaType: this.camera.MediaType.ALLMEDIA,
+      saveToPhotoAlbum: true
+    };
     this.camera.getPicture(options).then((imageData) => {
+      var fileName = 'chat_' + this.chat._id + '_' + this.messages.length + '.jpeg';
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      var fileName = 'chat_'+this.chat._id+'_'+this.messages.length+'.jpg';
-      var contentType = 'image/jpg';
-      this.chatService.uploadToS3(base64Image, fileName, 'base/64', contentType).then((result) => {
-        console.log(result);
+      this.chatService.uploadToS3(base64Image, fileName, 'jpeg').then((result: any) => {
         this.messages.push({
           from: this.user._id,
           created: new Date(),
           type: 'image',
-          imagePath: fileName,
+          imagePath: result ? (result.Location ? result.Location : fileName) : fileName,
         });
         this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
-          let dimensions = this.content.getContentDimensions();
-          this.content.scrollTo(0, dimensions.contentHeight, 0);
+          this.loading.dismiss();
+          this.contentArea.scrollToBottom();
         }, (err) => {
           this.presentToast(err);
+          this.loading.dismiss();
         });
       }, (err) => {
         this.presentToast(err);
+        this.loading.dismiss();
       });
     }, (err) => {
       this.presentToast(err);
+      this.loading.dismiss();
     });
+  }
+
+  // Contact
+  sendContact() {
+    let mmModal = this.modalCtrl.create(ChatPhoneContactPage, {
+      users: this.phoneContacts,
+      selectedUser: []
+    });
+    mmModal.onDidDismiss(selectedUser => {
+      this.presentToast("selected " + selectedUser.length + " Contacts");
+      this.confirmContactList(selectedUser);
+    });
+    mmModal.present();
+  };
+
+  confirmContactList(contactList) {
+    if(contactList && contactList.length > 0) {
+      let conModal = this.modalCtrl.create(ChatPhoneListPage, {
+        users: contactList,
+        add: false,
+        message: false,
+        call: false,
+        remove: true,
+        confirm: true
+      });
+      conModal.onDidDismiss(users => {
+        this.sendContactList(users);
+      });
+      conModal.present();
+    }
+  }
+
+  sendContactList(contactList) {
+    if(contactList && contactList.length > 0) {
+      this.messages.push({
+        from: this.user._id,
+        created: new Date(),
+        type: 'contact',
+        contactList: contactList,
+      });
+      this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+        this.message = '';
+        this.contentArea.scrollToBottom();
+      }, (err) => {
+        this.presentToast(JSON.stringify(err));
+      });
+    }
   }
 
   // Sound
   public isRecording: Boolean = false;
-  public fileToSave;
-  sendSound() {
-    this.isRecording = true;
+  public fileToSave: MediaObject;
+  public timer: Number = 0;
+  public clocker = {
+    hours: '00',
+    seconds: '00'
+  };
+  async sendSound() {
+    this.isRecording = false;
+    const malert = await this.alertController.create({
+      title: 'Record Audio',
+      message: `
+        <div *ngIf="isRecording">
+          <div class="_1uzym">
+            <button class="_3zwKD" (click)="sstopRecording()">
+              <ion-icon name="mic-off" style="color: grey;"></ion-icon>
+            </button>
+            <h3 style="display:inline-block;position:absolute;color: red; padding: 10px;">{{clocker.hours}} : {{clocker.seconds}}</h3>
+          </div>
+        </div>
+        <div *ngIf="!isRecording">
+          <div class="_1uzym">
+            <button class="_3zwKD" (click)="startRecording()">
+              <ion-icon name="mic" style="color: grey;"></ion-icon>
+            </button>
+            <h3 style="color: red; padding: 10px;">{{clocker.hours}} : {{clocker.seconds}}</h3>
+          </div>
+        </div>
+      `,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirm',
+          handler: () => {
+            this.saveAudio();
+          }
+        }
+      ]
+    });
     this.fileToSave = this.media.create(
-      this.file.tempDirectory
-        ? this.file.tempDirectory.replace(/^file:\/\//, '') + 'my_file.m4a'
-        : './my_file.m4a'
+      this.file.dataDirectory
+        ? this.file.dataDirectory.replace(/^file:\/\//, '') + 'my_file.mp3'
+        : './my_file.mp3'
     );
     this.file.createFile(
-      this.file.tempDirectory ? this.file.tempDirectory : './', 'my_file.m4a', true
+      this.file.dataDirectory ? this.file.dataDirectory : './', 'my_file.mp3', true
     ).then(() => {
-      this.fileToSave.startRecord();
-      if(this.isRecording) window.setTimeout(() => this.fileToSave.stopRecord(), 10000);
-      this.saveRecording();
+      malert.present();
     }, (err) => {
-      this.presentToast(err);
+      this.presentToast(JSON.stringify(err));
     });
   }
 
-  stopRecording() {
-    if(this.isRecording) this.fileToSave.stopRecord();
-    this.saveRecording();
+  inter: any;
+  startRecording() {
+    this.fileToSave.startRecord();
+    this.inter = setInterval(function () {
+      if (this.isRecording) {
+        this.timer++;
+        this.clocker = {
+          hours: ((this.timer / 60) > 9) ? (this.timer / 60).toString() : ("0" + this.timer / 60),
+          seconds: ((this.timer % 60) > 9) ? (this.timer % 60).toString() : ("0" + this.timer % 60)
+        };
+      }
+    }, 100);
+    this.isRecording = true;
   }
 
-  saveRecording() {
+  stopRecording() {
+    this.fileToSave.stopRecord();
     this.isRecording = false;
-    var fileName = 'chat_'+this.chat._id+'_'+this.messages.length+'.m4a';
-      this.chatService.uploadToS3(this.fileToSave, fileName, '', 'audio/m4a').then((result) => {
-        console.log(result);
+    this.timer = 0;
+    this.clocker = {
+      hours: '00',
+      seconds: '00'
+    };
+    clearInterval(this.inter);
+  }
+
+  saveAudio() {
+    var fileName = 'chat_' + this.chat._id + '_' + this.messages.length + '.mp3';
+    this.base64.encodeFile(
+      this.file.dataDirectory ? this.file.dataDirectory.replace(/^file:\/\//, '') : './' + 'my_file.mp3'
+    ).then((base64: any) => {
+      var x = base64.substr(13, base64.length);
+      this.chatService.uploadToS3(x, fileName, 'mp3').then((result: any) => {
         this.messages.push({
           from: this.user._id,
           created: new Date(),
-          type: 'image',
-          imagePath: fileName,
+          type: 'audio',
+          audioPath: result ? (result.Location ? result.Location : fileName) : fileName,
         });
         this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
           this.fileToSave.release();
-          let dimensions = this.content.getContentDimensions();
-          this.content.scrollTo(0, dimensions.contentHeight, 0);
+          this.contentArea.scrollToBottom();
         }, (err) => {
           this.presentToast(err);
         });
       }, (err) => {
         this.presentToast(err);
       });
+    });
+  }
+
+  // Displaying Files
+  getFileName(resolvedFilePath) {
+    let pathurl = resolvedFilePath.substring(0, resolvedFilePath.lastIndexOf('/'));
+    let fileurl = resolvedFilePath.substring(resolvedFilePath.lastIndexOf('/') + 1, resolvedFilePath.length);
+    let fileExtension = fileurl.split('.').pop();
+    return this.chatService.getFileNameFromString[('.' + fileExtension)];
+  }
+
+  openDocument(resolvedFilePath) {
+    let pathurl = resolvedFilePath.substring(0, resolvedFilePath.lastIndexOf('/'));
+    let fileurl = resolvedFilePath.substring(resolvedFilePath.lastIndexOf('/') + 1, resolvedFilePath.length);
+    let fileExtension = fileurl.split('.').pop();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    this.presentToast(resolvedFilePath + ' - ' + this.file.externalRootDirectory + ' - ' + fileExtension);
+
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(status => {
+      if (status.hasPermission) {
+        fileTransfer.download(resolvedFilePath, (this.file.externalRootDirectory + 'olw.' + fileExtension), true).then((entry) => {
+          this.fileOpener.open(entry.toURL(), this.chatService.getMimeTypefromString[('.' + fileExtension)])
+            .then(() => console.log('File is opened'))
+            .catch(e => console.log('Error opening file', e));
+        }, (error) => {
+          alert(JSON.stringify(error));
+        });
+      } else {
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then((permiss) => {
+          if (permiss.hasPermission) {
+            fileTransfer.download(resolvedFilePath, (this.file.externalRootDirectory + 'olw.' + fileExtension), true).then((entry) => {
+              this.fileOpener.open(entry.toURL(), this.chatService.getMimeTypefromString[('.' + fileExtension)])
+                .then(() => console.log('File is opened'))
+                .catch(e => console.log('Error opening file', e));
+            }, (error) => {
+              alert(JSON.stringify(error));
+            });
+          }
+        }, (error) => {
+          alert(JSON.stringify(error));
+        });
+      }
+    }, (err) => {
+      this.presentToast(JSON.stringify(err));
+    });
+  }
+
+  // Displaying Images
+  openImage(resolvedFilePath) {
+    let mmModal = this.modalCtrl.create(ChatImagePage, {
+      filePath: resolvedFilePath,
+      chatName: this.chat.tempName
+    });
+    mmModal.present();
+  }
+
+  // Dispaying Audio
+  audio: MediaObject;
+  position: any = 0;
+  interva: any;
+  playAudio(message) {
+    if (this.audio) {
+      this.audio.release();
+      message.duration = this.audio.getDuration();
+    }
+    this.position = 0;
+    message.playing = true;
+    const resolvedFilePath = message.audioPath;
+    let pathurl = resolvedFilePath.substring(0, resolvedFilePath.lastIndexOf('/'));
+    let fileurl = resolvedFilePath.substring(resolvedFilePath.lastIndexOf('/') + 1, resolvedFilePath.length);
+    let fileExtension = fileurl.split('.').pop();
+    this.audio = this.media.create(resolvedFilePath);
+    if (this.audio) {
+      message.duration = this.audio.getDuration();
+      this.audio.play();
+    }
+    this.interva = setInterval(function () {
+      let last_position = this.position;
+      this.audio.getCurrentPosition().then(position => {
+        if (position >= 0 && position < this.duration) {
+          if (Math.abs(last_position - position) >= 1) {
+            this.audio.seekTo(last_position * 1000);
+          } else {
+            this.position = position;
+          }
+        } else if (position >= this.duration) {
+          this.stop();
+        }
+      });
+    }, 100);
+  }
+
+  stopAudio(message) {
+    message.playing = false;
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.release();
+    }
+    this.position = 0;
+    clearInterval(this.interva);
+  }
+
+  calculateTimePlayed(param) {
+    if (this.audio) {
+      let totalTime = this.audio.getDuration();
+      this.audio.getCurrentPosition().then((timePlayed) => {
+        if (param == 'percentage') return (timePlayed / totalTime % 100) + '%';
+        else if (param == 'average') return (timePlayed / totalTime % 100);
+        else return (timePlayed + ' / ' + totalTime);
+      });
+    }
+  }
+
+  // View COntact
+  openContact(message) {
+    let coModal = this.modalCtrl.create(ChatPhoneListPage, {
+      users: message.contactList,
+      add: true,
+      message: true,
+      call: true,
+      remove: false,
+      confirm: false
+    });
+    coModal.onDidDismiss(users => {
+      console.log(users);
+    });
+    coModal.present();
+  }
+
+  showLoader(content) {
+    this.loading = this.loadingCtrl.create({
+      content: content
+    });
+    this.loading.present();
   }
 
 }

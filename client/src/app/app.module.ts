@@ -30,6 +30,12 @@ import { EditstudentPage } from '../pages/editstudent/editstudent';
 import { StudentslistPage } from '../pages/studentslist/studentslist';
 import { ChatGroupPage } from '../pages/chat-group/chat-group';
 import { ChatListPage } from '../pages/chat-list/chat-list';
+import { ChatCreatePage } from '../pages/chat-create/chat-create';
+import { ChatContactPage } from '../pages/chat-create/chat-contact';
+import { ChatInfoPage } from '../pages/chat-info/chat-info';
+import { ChatPhoneContactPage } from '../pages/chat-group/chat-phone-contact';
+import { ChatImagePage } from '../pages/chat-group/chat-image';
+import { ChatPhoneListPage } from '../pages/chat-group/chat-phone-list';
 
 import { HomeTab } from '../pages/home-tab/home-tab';
 import { NotificationTab } from '../pages/notification-tab/notification-tab';
@@ -48,14 +54,18 @@ import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { Media } from '@ionic-native/media';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { MediaPlugin } from '@ionic-native/media';
 
 // Chat
 import { EmojiPickerModule } from 'ionic-emoji-picker';
-
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { GoogleMaps } from '@ionic-native/google-maps';
+import { Contacts } from '@ionic-native/contacts';
+import { Geolocation } from '@ionic-native/geolocation';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Base64 } from "@ionic-native/base64";
+import { NativeAudio } from '@ionic-native/native-audio';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { FileOpener } from '@ionic-native/file-opener';
 
 @NgModule({
   declarations: [
@@ -82,7 +92,13 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     NotificationTab,
     ProfileTab,
     ChatGroupPage,
-    ChatListPage
+    ChatListPage,
+    ChatCreatePage,
+    ChatContactPage,
+    ChatInfoPage,
+    ChatPhoneContactPage,
+    ChatImagePage,
+    ChatPhoneListPage
   ],
   imports: [
     BrowserModule,
@@ -119,7 +135,13 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     NotificationTab,
     ProfileTab,
     ChatGroupPage,
-    ChatListPage
+    ChatListPage,
+    ChatCreatePage,
+    ChatContactPage,
+    ChatInfoPage,
+    ChatPhoneContactPage,
+    ChatImagePage,
+    ChatPhoneListPage
   ],
   providers: [
     IonicStorageModule,
@@ -134,10 +156,15 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     FilePath,
     CallNumber,
     Chats,
+    Base64,
     Geolocation,
-    GoogleMaps,
     FileChooser,
-    Media
+    MediaPlugin,
+    Contacts,
+    FileTransfer,
+    NativeAudio,
+    AndroidPermissions,
+    FileOpener
   ]
 })
 export class AppModule {}

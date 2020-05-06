@@ -45,27 +45,27 @@ module.exports = function(app){
  
     // Student Routes
     apiRoutes.use('/students', studentRoutes); 
-    studentRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.getStudents);
-    studentRoutes.get('/allStudents', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.getAllStudents);
-    studentRoutes.get('/inactiveStudents', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.getInactiveStudents);
-    studentRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.createStudent);
-    studentRoutes.put('/editStudent/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.editStudent);
-    studentRoutes.put('/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.updateStudent);
-    studentRoutes.put('/sendReportsMail/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.sendReportsMail);
-    studentRoutes.put('/sendIndentationReport/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), StudentController.sendIndentationReport);
+    studentRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.getStudents);
+    studentRoutes.get('/allStudents', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.getAllStudents);
+    studentRoutes.get('/inactiveStudents', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.getInactiveStudents);
+    studentRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.createStudent);
+    studentRoutes.put('/editStudent/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.editStudent);
+    studentRoutes.put('/:student_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.updateStudent);
+    studentRoutes.put('/sendReportsMail/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.sendReportsMail);
+    studentRoutes.put('/sendIndentationReport/:email_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), StudentController.sendIndentationReport);
 
      // Center Routes
     apiRoutes.use('/centers', centerRoutes); 
-    centerRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), CenterController.getCenters);
-    centerRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), CenterController.createCenter);
-    centerRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), CenterController.updateCenter);
+    centerRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), CenterController.getCenters);
+    centerRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), CenterController.createCenter);
+    centerRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), CenterController.updateCenter);
  
     // Indentation Routes
     apiRoutes.use('/indentations', indentationRoutes); 
-    indentationRoutes.put('/approve/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.approveIndentation);
-    indentationRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.getIndentations);
-    indentationRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.createIndentation);
-    indentationRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher']), IndentationController.updateIndentation);
+    indentationRoutes.put('/approve/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), IndentationController.approveIndentation);
+    indentationRoutes.get('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), IndentationController.getIndentations);
+    indentationRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), IndentationController.createIndentation);
+    indentationRoutes.put('/:_id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), IndentationController.updateIndentation);
 
     // Misc Routes
     apiRoutes.use('/misc', miscRoutes);
@@ -95,8 +95,9 @@ module.exports = function(app){
     chatRoutes.get('/messages/:chatId/:userId', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.getChatMessages);
     chatRoutes.put('/messages/:id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.updateChatMessage);
     chatRoutes.put('/:id', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.updateChat);
+    chatRoutes.post('/', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.createChat);
 
-    chatRoutes.post('/uploadToS3', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.uploadToS3);
+    apiRoutes.post('/uploadToS3', requireAuth, AuthenticationController.roleAuthorization(['admin','centeradmin','counsellor','dispatcher','teacher','parent']), ChatController.uploadToS3);
 
     // Set up routes
     app.use('/api', apiRoutes);

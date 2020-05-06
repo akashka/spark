@@ -200,6 +200,7 @@ exports.updateStudent = function (req, res, next) {
       sendAdminSms(student, "confirmed");
       sendParentMail(student, "confirmed");
       sendParentSms(student, "confirmed");
+      registerStudent(student);
     }
 
     res.json(student);
@@ -529,3 +530,90 @@ exports.editStudent = function (req, res, next) {
     res.json(student);
   });
 }
+
+registerStudent = function(student) {
+  var email = student.student_id;
+  var password = 'OLW@123';
+  var role = 'parent';
+  var center = student.center;
+  var name = student.name;
+  var active = student.is_Active;
+  var phone_no = student.phone_number;
+  var whatsapp_no = '';
+  var dob = student.dob;
+  var gender = student.gender;
+  var photo = student.photo;
+  var address = student.locality;
+  var class_group = [student.class_group];
+
+  if (!email) {
+    return ({ error: "You must enter an email address" });
+  }
+  if (!password) {
+    return ({ error: "You must enter a password" });
+  }
+  User.findOne({ email: email }, function(err, existingUser) {
+    if (err) {
+      return (err);
+    }
+    if (existingUser) {
+      return ({ error: "That email address is already in use" });
+    }
+    var user = new User({
+      email: email,
+      password: password,
+      role: role,
+      center: center,
+      name: name,
+      active: active,
+      phone_no: phone_no,
+      whatsapp_no: whatsapp_no,
+      dob: dob,
+      gender: gender,
+      photo: photo,
+      address: address,
+      class_group: class_group
+    });
+    user.save(function(err, user) {
+      if (err) {
+        return (err);
+      }
+      sendRegisterSMS(student);
+      sendRegisterEmail(student);
+      return user;
+    });
+  });
+};
+
+sendRegisterEmail = function(student) {
+  var stringTemplate = fs.readFileSync(path.join(__dirname, '../helpers') + '/parent_registration.html', "utf8");
+  stringTemplate = stringTemplate.replace('{{USERID}}', student.student_id);
+  stringTemplate = stringTemplate.replace('{{PASSWORD}}', "OLW@123");
+  var mailOptions = {
+    to: student.email_id,
+    from: 'info@little-wonders.in',
+    subject: 'Login credentials for OLW SPARK',
+    html: stringTemplate
+  };
+
+  sgMail.send(mailOptions, function (err) {
+    if (err) console.log(err);
+  });
+}
+
+sendRegisterSMS = function(student) {
+  var messageData = "You can now download our in-house mobile app SPARK from the following link, to interact with our teachers. " +
+      "Please use the following credentials for login. Do not forget to change the password and keep these details secured. " +
+      "https://bit.ly/olwspark" +
+      " ID: " + student.student_id + " Password: OLW@123" +
+      " For more details you can log on to www.little-wonders.in";
+
+  var formData = smsUrl + "&method=sms&message=" + encodeURIComponent(messageData) + "&to=" + student.phone_number + "&sender=" + senderID;
+
+  curl.request(formData, function optionalCallback(err, body) {
+    if (err) {
+      return console.error('Sending SMS to parent failed: ', err);
+    }
+    console.log('Successfully sent Register SMS to parent');
+  });
+};

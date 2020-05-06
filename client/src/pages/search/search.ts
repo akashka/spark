@@ -124,7 +124,7 @@ export class SearchPage {
   add() {
     this.navCtrl.setRoot(EnquiryPage);
   }
-
+ 
   callNumber(num) {
     this.CallNumber.callNumber(num, false)
       .then(() => console.log("Launched dialer!"))

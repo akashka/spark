@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="search()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      CREATE NEW CHAT
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="enquiry-page">
+
+  <ion-list no-lines>
+
+    <form [formGroup]="chatForm">
+
+      <!-- Name of the chat -->
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="book"></ion-icon> Chat Name*
+        </ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+
+      <p class="errorMessage" *ngIf="!chatForm.controls.name.valid  && (chatForm.controls.name.dirty || submitAttempt)">
+        Please enter a valid name
+      </p>
+
+      <ion-item>
+        <ion-label>Active</ion-label>
+        <ion-toggle formControlName="active" checked="true" class="toggle-large"></ion-toggle>
+      </ion-item>
+
+      <ion-row>
+        <h4 style="margin: 15px;"> MEMBERS </h4>
+        <button ion-button icon-only small icon-end color="dark" (click)="displayContactModal()"
+          style="position:absolute;right:0;margin:10px;padding:15px;">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-row>
+
+      <div class="row" *ngFor="let user of chatForm.controls.members?.value">
+        <div style="width:70%; float:left;">
+          <ion-label>{{getUserName(user)}}</ion-label>
+        </div>
+        <div class="row" style="width:15%; float:left;">
+          <ion-toggle checked="true" class="toggle-icon" (ionChange)="changeActiveToDeactive(user)" color="dark">
+          </ion-toggle>
+        </div>
+        <div style="position:absolute; right:0; margin-right: 10px;">
+          <button ion-button icon-only small icon-end (click)="editActive(user)" color="danger">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="row" *ngFor="let user of chatForm.controls.silent_members?.value">
+        <div style="width:70%; float:left;">
+          <ion-label>{{getUserName(user)}}</ion-label>
+        </div>
+        <div class="row" style="width:15%; float:left;">
+          <ion-toggle checked="false" class="toggle-icon" (ionChange)="changeDeactiveToActive(user)" color="dark">
+          </ion-toggle>
+        </div>
+        <div style="position:absolute; right:0; margin-right: 10px;">
+          <button ion-button icon-only small icon-end (click)="editSilent(user)" color="danger">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <ion-toolbar color="primary" class="upload_button">
+        <ion-buttons>
+          <button ion-button icon-left (click)="getPicture()">
+            <ion-icon name="camera"></ion-icon>Upload Profile picture
+          </button>
+          <input type="file" #fileInput name="files[]" style="visibility: hidden; height: 0px"
+            (change)="processWebImage($event)" />
+        </ion-buttons>
+      </ion-toolbar>
+
+    </form>
+
+  </ion-list>
+
+  <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+</ion-content>
+
+<ion-footer>
+  <div class="gm_drawer_footer_wrapper">
+    <button (click)="resetChat()" ion-button class="btn-danger">Reset</button>
+    <button (click)="addChat()" ion-button class="btn-success">Submit</button>
+  </div>
+</ion-footer>

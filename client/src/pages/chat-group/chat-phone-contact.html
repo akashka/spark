@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="default">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="arrow-back" style="color: white;"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Select Contact(s)
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="search-row">
+    <ion-searchbar [(ngModel)]="myInput" (animated)="true" (placeholder)="Search" (ionInput)="search()"
+      style="width:100%;">
+    </ion-searchbar>
+  </div>
+
+  <ion-list>
+    <ion-card *ngFor="let user of users" style="background: #eeeeee;">
+      <div style="padding: 15px;" (click)="user.isChecked = !user.isChecked">
+        <div style="width: 25%;float: left;">
+          <ion-avatar item-left>
+            <img *ngIf="user.photos && user.photos.length > 0" src={{user.photos[0].value}} />
+            <img *ngIf="!user.photos || user.photos.length <= 0" src='assets/images/NoImageAvailable.png' />
+          </ion-avatar>
+        </div>
+        <div style="width: 60%;float: left;padding:10px;">
+          <h2>{{user.displayName}}</h2>
+          <h3 *ngIf="user.phoneNumbers && user.phoneNumbers.length > 0">
+            {{user.phoneNumbers[0].value}}
+          </h3>
+          <h4 *ngIf="user.phoneNumbers && user.phoneNumbers.length > 0">
+            {{user.phoneNumbers[0].type}}
+          </h4>
+        </div>
+        <div style="width: 15%; float: left;padding-top: 25px;">
+          <ion-checkbox slot="end" [(ngModel)]="user.isChecked"></ion-checkbox>
+        </div>
+      </div>
+    </ion-card>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <div class="gm_drawer_footer_wrapper">
+    <button (click)="dismiss()" ion-button class="btn-success" style="width: 100%;">Submit</button>
+  </div>
+</ion-footer>

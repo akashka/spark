@@ -1,0 +1,39 @@
+<ion-content padding class="chat-info-page">
+
+  <ion-avatar>
+    <img src={{getChatImage(chat.dp)}}>
+  </ion-avatar>
+
+  <ion-buttons left style="position:absolute; top:0;">
+    <button ion-button icon-only large (click)="close()" style="background: transparent; box-shadow: none;">
+      <ion-icon name="close-circle" style="color: red;"></ion-icon>
+    </button>
+  </ion-buttons>
+
+  <h3 style="width:100%; text-align:center; margin-top:-25px; margin-bottom:0; color: white;">
+    {{getChatName(chat.name)}}
+  </h3>
+
+  <h3 style="padding-left: 15px;">{{getTotalMembers()}} Members</h3>
+
+  <div style="overflow-y:auto; max-height:35%;">
+    <ion-item *ngFor="let user of chat.admin">
+      <ion-row>
+        <ion-label>{{getUserName(user)}}</ion-label>
+        <ion-badge color="secondary">Admin</ion-badge>
+      </ion-row>
+      <ion-item> {{getUserRole(user)}}</ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of chat.members">
+      <ion-label>{{getUserName(user)}}</ion-label>
+      <ion-item> {{getUserRole(user)}}</ion-item>
+    </ion-item>
+
+    <ion-item *ngFor="let user of chat.silent_members">
+      <ion-label>{{getUserName(user)}}</ion-label>
+      <ion-item> {{getUserRole(user)}}</ion-item>
+    </ion-item>
+  </div>
+
+</ion-content>

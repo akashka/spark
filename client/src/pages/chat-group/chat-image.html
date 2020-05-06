@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar class="chat-image-header">
+    <ion-buttons left>
+      <button ion-button icon-only large (click)="dismiss()" style="background: transparent; box-shadow: none;">
+        <ion-icon name="close-circle" style="color: red;"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{chatName}}
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="download()">
+        <ion-icon name="cloud-download"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="gDOmN">
+    <img src={{filePath}} class="_1YbLB" style="max-width: 100%; max-height: 100%;">
+  </div>
+
+</ion-content>

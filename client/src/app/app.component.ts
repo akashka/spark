@@ -25,6 +25,8 @@ import { ChatListPage } from '../pages/chat-list/chat-list';
 // Services
 import { Auth } from '../providers/auth/auth';
 
+import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+
 @Component({
   templateUrl: './app.html'
 })
@@ -45,137 +47,156 @@ export class MyApp {
   userSubscription;
 
   @ViewChild(Nav) nav: Nav;
- 
-  constructor(platform: Platform, public storage: Storage, public authService: Auth) {
+
+  constructor(
+    platform: Platform,
+    public storage: Storage,
+    public authService: Auth,
+    public contacts: Contacts
+  ) {
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
+      // Storing COntacts
+      this.contacts.find(["*"]).then((contacts) => {
+        let allContact = contacts.sort(function (a, b) {
+          if (a.displayName < b.displayName) { return -1; }
+          if (a.displayName > b.displayName) { return 1; }
+          return 0;
+        });
+        var stringContact = JSON.parse(JSON.stringify(allContact));
+        for (let u = 0; u < stringContact.length; u++) {
+          stringContact[u] = stringContact[u]._objectInstance;
+          stringContact[u].isChecked = false;
+        };
+        var contactList = JSON.stringify(stringContact);
+        this.storage.set("phoneContacts", contactList);
+      });
     });
 
     this.userSubscription = Auth.userChanged.subscribe(
       (user) => this.getData(user)
     );
-
   }
 
   getData(user) {
-        if(user) {
-          if(user.role === "counsellor") {
-            this.isCounsellor = true;
-            this.isDispatcher = false;
-            this.isAdmin = false;
-            this.isCenterAdmin = false;
-            this.isTeacher = false;
-            this.isParent = false;
-          }
-          else if(user.role === "dispatcher") {
-            this.isDispatcher = true;
-            this.isCounsellor = false;
-            this.isAdmin = false;
-            this.isCenterAdmin = false;
-            this.isTeacher = false;
-            this.isParent = false;
-          } 
-          else if(user.role === "admin") {
-            this.isAdmin = true;
-            this.isCounsellor = false;
-            this.isDispatcher = false;
-            this.isCenterAdmin = false;
-            this.isTeacher = false;
-            this.isParent = false;
-          } 
-          else if(user.role === "centerAdmin") {
-            this.isCenterAdmin = true;
-            this.isAdmin = false;
-            this.isCounsellor = false;
-            this.isDispatcher = false;
-            this.isTeacher = false;
-            this.isParent = false;
-          } else if(user.role === "teacher") {
-            this.isTeacher = true;
-            this.isCenterAdmin = false;
-            this.isAdmin = false;
-            this.isCounsellor = false;
-            this.isDispatcher = false;
-            this.isParent = false;
-          } else if(user.role === "parent") {
-            this.isParent = true;
-            this.isCenterAdmin = false;
-            this.isAdmin = false;
-            this.isCounsellor = false;
-            this.isDispatcher = false;
-            this.isTeacher = false;
-          } else {
-            this.isParent = true;
-            this.isCenterAdmin = false;
-            this.isAdmin = false;
-            this.isCounsellor = false;
-            this.isDispatcher = false;
-            this.isTeacher = false;
-          }
-          this.userCenter = user.center;
-          this.user = user;
-        }
+    if (user) {
+      if (user.role === "counsellor") {
+        this.isCounsellor = true;
+        this.isDispatcher = false;
+        this.isAdmin = false;
+        this.isCenterAdmin = false;
+        this.isTeacher = false;
+        this.isParent = false;
+      }
+      else if (user.role === "dispatcher") {
+        this.isDispatcher = true;
+        this.isCounsellor = false;
+        this.isAdmin = false;
+        this.isCenterAdmin = false;
+        this.isTeacher = false;
+        this.isParent = false;
+      }
+      else if (user.role === "admin") {
+        this.isAdmin = true;
+        this.isCounsellor = false;
+        this.isDispatcher = false;
+        this.isCenterAdmin = false;
+        this.isTeacher = false;
+        this.isParent = false;
+      }
+      else if (user.role === "centerAdmin") {
+        this.isCenterAdmin = true;
+        this.isAdmin = false;
+        this.isCounsellor = false;
+        this.isDispatcher = false;
+        this.isTeacher = false;
+        this.isParent = false;
+      } else if (user.role === "teacher") {
+        this.isTeacher = true;
+        this.isCenterAdmin = false;
+        this.isAdmin = false;
+        this.isCounsellor = false;
+        this.isDispatcher = false;
+        this.isParent = false;
+      } else if (user.role === "parent") {
+        this.isParent = true;
+        this.isCenterAdmin = false;
+        this.isAdmin = false;
+        this.isCounsellor = false;
+        this.isDispatcher = false;
+        this.isTeacher = false;
+      } else {
+        this.isParent = true;
+        this.isCenterAdmin = false;
+        this.isAdmin = false;
+        this.isCounsellor = false;
+        this.isDispatcher = false;
+        this.isTeacher = false;
+      }
+      this.userCenter = user.center;
+      this.user = user;
+    }
   }
 
-  go_to_home(){
-    this.nav.setRoot(HomePage);  
+  go_to_home() {
+    this.nav.setRoot(HomePage);
   }
 
-  go_to_enquiry(){
-    this.nav.setRoot(EnquiryPage);  
+  go_to_enquiry() {
+    this.nav.setRoot(EnquiryPage);
   }
 
-  go_to_search(){
-    this.nav.setRoot(SearchPage);  
+  go_to_search() {
+    this.nav.setRoot(SearchPage);
   }
 
-  go_to_login(){
+  go_to_login() {
     this.authService.logout();
-    this.nav.setRoot(LoginPage);  
+    this.nav.setRoot(LoginPage);
   }
 
-  go_to_signup(){
-    this.nav.setRoot(SignupPage);  
+  go_to_signup() {
+    this.nav.setRoot(SignupPage);
   }
 
-  go_to_center(){
-    this.nav.setRoot(CenterPage);  
+  go_to_center() {
+    this.nav.setRoot(CenterPage);
   }
 
-  go_to_indent(){
-    this.nav.setRoot(IndentPage);  
+  go_to_indent() {
+    this.nav.setRoot(IndentPage);
   }
 
-  go_to_reports(){
-    this.nav.setRoot(ReportsPage);  
+  go_to_reports() {
+    this.nav.setRoot(ReportsPage);
   }
 
-  go_to_dispatch(){
-    this.nav.setRoot(DispatchPage);  
+  go_to_dispatch() {
+    this.nav.setRoot(DispatchPage);
   }
 
-  go_to_promotion(){
-    this.nav.setRoot(PromotionPage);  
+  go_to_promotion() {
+    this.nav.setRoot(PromotionPage);
   }
 
-  go_to_adminedit(){
-    this.nav.setRoot(AdmineditPage);  
+  go_to_adminedit() {
+    this.nav.setRoot(AdmineditPage);
   }
 
-  go_to_deletestudent(){
-    this.nav.setRoot(DeletestudentPage);  
+  go_to_deletestudent() {
+    this.nav.setRoot(DeletestudentPage);
   }
 
-  go_to_idcardrequest(){
+  go_to_idcardrequest() {
     this.nav.setRoot(IdcardrequestPage);
   }
 
-  go_to_idcardprint(){
+  go_to_idcardprint() {
     this.nav.setRoot(IdcardprintPage);
   }
 
-  go_to_approveindent(){
+  go_to_approveindent() {
     this.nav.setRoot(ApproveindentPage);
   }
 
