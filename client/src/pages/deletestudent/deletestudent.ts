@@ -31,6 +31,7 @@ export class DeletestudentPage {
   public isCounsellor: Boolean = false;
   myInput: string;
   public loader: any;
+  public user: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -47,6 +48,7 @@ export class DeletestudentPage {
     public actionSheetController: ActionSheetController
   ) {
       this.storage.get('user').then((user) => {
+        this.user = user;
               if(user.role === "counsellor")  this.isCounsellor = true;
          else if(user.role === "admin")  this.isAdmin = true;
          else if(user.role === "centerAdmin")  this.isCenterAdmin = true;

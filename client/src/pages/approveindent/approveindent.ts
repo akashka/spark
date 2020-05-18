@@ -40,6 +40,7 @@ export class ApproveindentPage {
   public myInputStudent: String = "";
   public loading: any;
   public students: any = [];
+  public user: any;
 
   constructor(
     public navCtrl: NavController,
@@ -52,7 +53,11 @@ export class ApproveindentPage {
     public centerService: Center,
     public indentationService: Indentation,
     public toastCtrl: ToastController
-  ) { }
+  ) {
+    this.storage.get("user").then(user => {
+      this.user = user;
+    });
+   }
 
   ionViewDidLoad() {
     this.fetchData();

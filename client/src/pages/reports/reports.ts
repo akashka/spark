@@ -72,7 +72,7 @@ export class ReportsPage {
     });
     this.studentService.getStudents().then((data) => {
       this.storage.get('user').then((user) => {
-	      if(user.role != "admin"){
+	      if(user.role != "admin" && user.role != 'readonlyadmin'){
 	        data = _.filter(data, function(o) { 
 	          return (o.center == user.center); 
 	        });
@@ -332,7 +332,7 @@ export class ReportsPage {
             }, (err) => {
                 this.presentToast('Error while sending mail');
 						});
-						if(user.role == "admin"){
+						if(user.role == "admin" || user.role == 'readonlyadmin'){
 								this.studentService.sendIndentationReport(user.email).then((data) => {}, (err) => {});
 						}
 				});

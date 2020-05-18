@@ -40,6 +40,7 @@ export class AdmineditPage {
   public student: any;
   public centers: any;
   public inCenter: any;
+  public user: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -58,6 +59,7 @@ export class AdmineditPage {
     public actionSheetController: ActionSheetController
   ) {
       this.storage.get('user').then((user) => {
+        this.user = user;
               if(user.role === "counsellor")  this.isCounsellor = true;
          else if(user.role === "admin")  this.isAdmin = true;
          else if(user.role === "centerAdmin")  this.isCenterAdmin = true;

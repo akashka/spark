@@ -34,6 +34,7 @@ export class SignupPage {
   _id;
   myInput;
   mySelect;
+  user;
   btnText: String = "Save";
   existingUser: Boolean = false;
   public loader: any;
@@ -102,6 +103,7 @@ export class SignupPage {
       });
       this.centers = result;
       this.storage.get('user').then((user) => {
+        this.user = user;
           if(user.role != "admin") {
               this.centers = _.find(this.centers, ['center_code', user.center]);
               this.center = this.centers;

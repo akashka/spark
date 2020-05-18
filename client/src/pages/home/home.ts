@@ -73,6 +73,7 @@ export class HomePage {
 
   public class_group: any;
   public isAdmin: Boolean = false;
+  public isReadonlyadmin: Boolean = false;
   public isCurrentYear: Boolean = true;
   public isDispatcher: Boolean = false;
   public isCenterAdmin: Boolean = false;
@@ -143,6 +144,10 @@ export class HomePage {
               if(user.role === "counsellor")  this.isCounsellor = true;
          else if(user.role === "admin")  {
               this.isAdmin = true;
+              this.openReportsPage();
+          }
+          else if(user.role === 'readonlyadmin') {
+              this.isReadonlyadmin = true;
               this.openReportsPage();
           }
           else if(user.role === "dispatcher")  {

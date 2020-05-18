@@ -35,6 +35,7 @@ export class MyApp {
   public isDispatcher: Boolean = false;
   public showMenu: Boolean = false;
   public userCenter: String = "";
+  public isReadonlyadmin: Boolean = false;
 
   userSubscription;
 
@@ -57,9 +58,17 @@ export class MyApp {
             this.isCounsellor = true;
             this.isDispatcher = false;
             this.isAdmin = false;
+            this.isReadonlyadmin = false;
           }
           else if(user.role === "dispatcher") {
             this.isDispatcher = true;
+            this.isCounsellor = false;
+            this.isAdmin = false;
+            this.isReadonlyadmin = false;
+          }
+          else if (user.role === "readonlyadmin") {
+            this.isReadonlyadmin = true;
+            this.isDispatcher = false;
             this.isCounsellor = false;
             this.isAdmin = false;
           } 
@@ -67,13 +76,16 @@ export class MyApp {
             this.isAdmin = true;
             this.isCounsellor = false;
             this.isDispatcher = false;
+            this.isReadonlyadmin = false;
           } 
-          else if(user.role === "centerAdmin") {
+          else if(user.role === "centeradmin") {
             this.isCenterAdmin = true;
+            this.isReadonlyadmin = false;
           }
           else {
             this.isCounsellor = true;
             this.isAdmin = false;
+            this.isReadonlyadmin = false;
           }
           this.userCenter = user.center;
         }

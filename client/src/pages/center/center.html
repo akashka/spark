@@ -31,7 +31,8 @@
  
                 <ion-item>
                     <ion-label><ion-icon name="paper-plane"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="center_name" (ionChange)="generateCode()" placeholder="Center Name" required type="string"></ion-input>
+                    <ion-input [(ngModel)]="center_name" (ionChange)="generateCode()" placeholder="Center Name" 
+                      required type="string" [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
  
                 <ion-item>
@@ -40,27 +41,32 @@
  
                <ion-item>
                     <ion-label><ion-icon name="call"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="center_phoneno" placeholder="Center Phone No" required type="string"></ion-input>
+                    <ion-input [(ngModel)]="center_phoneno" placeholder="Center Phone No" required 
+                      [disabled]="!user || user.role == 'readonlyadmin'" type="string"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label><ion-icon name="mail"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="center_email" placeholder="Center E-Mail" (ionChange)="onEmailChange()" required type="string"></ion-input>
+                    <ion-input [(ngModel)]="center_email" placeholder="Center E-Mail" (ionChange)="onEmailChange()" 
+                      [disabled]="!user || user.role == 'readonlyadmin'" required type="string"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label><ion-icon name="locate"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="center_address" placeholder="Center Address" required type="string"></ion-input>
+                    <ion-input [(ngModel)]="center_address" placeholder="Center Address" required 
+                      [disabled]="!user || user.role == 'readonlyadmin'" type="string"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-label>Active</ion-label>
-                  <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large"></ion-toggle>
+                  <ion-toggle [(ngModel)]="active" checked="true" class="toggle-large" 
+                      [disabled]="!user || user.role == 'readonlyadmin'"></ion-toggle>
                 </ion-item>
 
                 <ion-item>
                     <ion-label>Cash</ion-label>
-                  <ion-toggle [(ngModel)]="cash" checked="false" class="toggle-large"></ion-toggle>
+                  <ion-toggle [(ngModel)]="cash" checked="false" class="toggle-large" 
+                      [disabled]="!user || user.role == 'readonlyadmin'"></ion-toggle>
                 </ion-item>
 
 
@@ -68,17 +74,20 @@
 
                 <ion-item>
                   <ion-label color="primary">Annual</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.annual" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.annual" required 
+                      [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Mid-term</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.mid_term" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.mid_term" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Early start</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.early_start" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="playgroup.early_start" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
 
@@ -86,17 +95,20 @@
 
                 <ion-item>
                   <ion-label color="primary">Annual</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.annual" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.annual" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Mid-term</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.mid_term" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.mid_term" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Early start</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.early_start" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="nursery.early_start" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
 
@@ -104,17 +116,20 @@
 
                 <ion-item>
                   <ion-label color="primary">Annual</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.annual" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.annual" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Mid-term</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.mid_term" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.mid_term" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Early start</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.early_start" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="lkg.early_start" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
 
@@ -122,17 +137,20 @@
 
                 <ion-item>
                   <ion-label color="primary">Annual</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.annual" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.annual" required
+                    [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label color="primary">Mid-term</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.mid_term" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.mid_term" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
                 <ion-item style="margin-bottom: 100px;">
                   <ion-label color="primary">Early start</ion-label>
-                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.early_start" required></ion-input>
+                  <ion-input type="number" placeholder="Enter Number" [(ngModel)]="ukg.early_start" required
+                  [disabled]="!user || user.role == 'readonlyadmin'"></ion-input>
                 </ion-item>
 
             </ion-list>
@@ -142,7 +160,7 @@
  
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="user && user.role != 'readonlyadmin'">
   <div class="gm_drawer_footer_wrapper"> 
     <button ion-button (click)="save()" *ngIf="btnText == 'Save'" class="continue-button">{{ btnText }}</button>
     <button ion-button (click)="update()" *ngIf="btnText != 'Save'" class="continue-button">{{ btnText }}</button>

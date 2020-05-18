@@ -30,6 +30,7 @@ export class IdcardprintPage {
   public studentsList: any;
   public myInput: string;
   public loader: any;
+  public user: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -45,7 +46,11 @@ export class IdcardprintPage {
     public CallNumber: CallNumber,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController
-  ) { }
+  ) { 
+    this.storage.get("user").then(user => {
+      this.user = user;
+    });
+  }
  
   ionViewDidLoad() {
     this.fetchData();

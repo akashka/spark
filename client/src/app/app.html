@@ -6,31 +6,32 @@
     </ion-header>        
     <ion-content>
         <ion-list>
-        	<ion-item [hidden]=!isAdmin (click)="go_to_center()" menuClose>
+
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_center()" menuClose>
                 Centers
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_signup()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_signup()" menuClose>
                 Users
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_home()" menuClose>
+            <ion-item [hidden]="isAdmin || isReadonlyadmin" (click)="go_to_home()" menuClose>
                 Enquiry
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_search()" menuClose>
+            <ion-item [hidden]="isAdmin || isReadonlyadmin" (click)="go_to_search()" menuClose>
                 Confirm
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_indent()" menuClose>
+            <ion-item [hidden]="isAdmin || isReadonlyadmin" (click)="go_to_indent()" menuClose>
                 Indentations
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_promotion()" menuClose>
+            <ion-item [hidden]="isAdmin || isReadonlyadmin" (click)="go_to_promotion()" menuClose>
                 Promotions
             </ion-item>
-            <ion-item [hidden]=isAdmin (click)="go_to_idcardrequest()" menuClose>
+            <ion-item [hidden]="isAdmin || isReadonlyadmin" (click)="go_to_idcardrequest()" menuClose>
                 Request ID Card
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_approveindent()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_approveindent()" menuClose>
                 Approve Indentation
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_idcardprint()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_idcardprint()" menuClose>
                 Print ID Card
             </ion-item>
             <!-- <ion-item [hidden]=!isAdmin (click)="go_to_dispatch()" menuClose>
@@ -39,10 +40,10 @@
             <ion-item (click)="go_to_reports()" menuClose>
                 Reports
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_adminedit()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_adminedit()" menuClose>
                 Edit Student (Admin)
             </ion-item>
-            <ion-item [hidden]=!isAdmin (click)="go_to_deletestudent()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_deletestudent()" menuClose>
                 Restore Student (Admin)
             </ion-item>
             <ion-item (click)="go_to_login()" menuClose>

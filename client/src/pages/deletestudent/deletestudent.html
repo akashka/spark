@@ -55,7 +55,7 @@
           </div>
         </button>
      
-        <ion-item-options side="right">
+        <ion-item-options side="right" *ngIf="user && user.role != 'readonlyadmin'">
           <button ion-button color="danger" (click)="delete(student)">
             <ion-icon name="trash"></ion-icon>
             Restore
