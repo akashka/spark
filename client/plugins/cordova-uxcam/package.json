@@ -39,7 +39,7 @@
   },
   "cordova_name": "UXCam",
   "dependencies": {
-    "npm": "^5.7.1"
+    "npm": "^6.14.6"
   },
   "deprecated": false,
   "description": "Cordova plugin for UXCam - enables the recording of your applications screen",
