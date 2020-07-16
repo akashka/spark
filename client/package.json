@@ -52,7 +52,7 @@
         "ionic-native": "^2.9.0",
         "ionic-plugin-keyboard": "~2.2.1",
         "ionicons": "3.0.0",
-        "lodash": "^4.17.4",
+        "lodash": "^4.17.19",
         "mx.ferreyra.callnumber": "~0.0.2",
         "ng2-google-place-autocomplete": "^1.4.2",
         "ngx-google-places-autocomplete": "^2.0.1",
