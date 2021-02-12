@@ -25,7 +25,7 @@ export class Networks {
   showNetworkAlert() {
     let networkAlert = this.alertCtrl.create({
       title: 'No Internet Connection',
-      message: 'Please check your internet connection.',
+      message: 'Your Internet connection seems to have lost. Please check your internet connection.',
       buttons: [
         {
           text: 'Cancel',

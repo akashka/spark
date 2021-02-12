@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Add Class Video
+    </ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button icon-only (click)="search()"><ion-icon name="search"></ion-icon></button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="enquiry-page">
+
+  <ion-list no-lines>
+
+    <form [formGroup]="classroomForm">
+
+      <ion-item>
+        <ion-label floating> Center* </ion-label>
+        <ion-select interface="popover" formControlName="center">
+          <ion-option *ngFor="let cen of centers" [value]="cen.center_code"> {{cen.center_name}} </ion-option>
+        </ion-select>
+      </ion-item>
+      <p class="errorMessage"
+        *ngIf="!classroomForm.controls.center.valid  && (classroomForm.controls.center.dirty || submitAttempt)">
+        Please select a center
+      </p>
+
+      <ion-item>
+        <ion-label floating> Class Group* </ion-label>
+        <ion-select formControlName="class_group" interface="popover">
+          <ion-option value="Play Group">Play Group</ion-option>
+          <ion-option value="Nursery">Nursery</ion-option>
+          <ion-option value="LKG">LKG</ion-option>
+          <ion-option value="UKG">UKG</ion-option>
+        </ion-select>
+      </ion-item>
+      <p class="errorMessage"
+        *ngIf="!classroomForm.controls.class_group.valid  && (classroomForm.controls.class_group.dirty || submitAttempt)">
+        Please select Class Group
+      </p>
+
+      <ion-item>
+        <ion-label floating>Message</ion-label>
+        <ion-textarea rows="3" formControlName="video_msg"></ion-textarea>
+      </ion-item>
+      <p class="errorMessage"
+        *ngIf="!classroomForm.controls.video_msg.valid  && (classroomForm.controls.video_msg.dirty || submitAttempt)">
+        Please enter a valid video message
+      </p>
+
+      <ion-toolbar color="primary" class="upload_button">
+        <ion-buttons>
+          <button ion-button icon-left (click)="addVideo()" *ngIf="classroomForm.controls.video_src.value === ''">
+            <ion-icon name="videocam"></ion-icon>Upload Video
+          </button>
+          <button ion-button icon-left (click)="addVideo()" *ngIf="classroomForm.controls.video_src.value !== ''">
+            <ion-icon name="videocam"></ion-icon>Replace Video
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+
+    </form>
+
+  </ion-list>
+
+  <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+</ion-content>
+
+<ion-footer>
+  <div class="gm_drawer_footer_wrapper">
+    <button (click)="reset()" ion-button class="btn-danger">Reset</button>
+    <button (click)="save()" ion-button class="btn-success">Submit</button>
+  </div>
+</ion-footer>

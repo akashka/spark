@@ -2,7 +2,8 @@ var Center = require('../models/center');
  
 exports.getCenters = function(req, res, next) {
     Center.find(function(err, centers) {
-        if (err) { res.send(err); }
+        if (err) { console.log('err', err); res.send(err); }
+        console.log(centers);
         res.json(centers);
     });
 }

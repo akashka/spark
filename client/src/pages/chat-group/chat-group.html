@@ -8,7 +8,7 @@
       <ion-title>
         {{chat.tempName}}
       </ion-title>
-      <ion-buttons start>
+      <ion-buttons end>
         <button ion-button icon-only (click)="information()">
           <ion-icon name="information"></ion-icon>
         </button>
@@ -20,7 +20,7 @@
 
     <!-- <div #map id="map" style="height: 150px; width: 75em;"></div> -->
     <div class="message-wrap">
-      <div *ngFor="let message of messages" class="message" [class.left]="message.from !== user._id"
+      <div *ngFor="let message of messages; let last = last" class="message" [class.left]="message.from !== user._id"
         [class.right]="message.from === user._id">
         <img class="user-img" [src]="getUserProfileImage(message.from)" alt="">
         <div class="msg-detail">
@@ -32,7 +32,7 @@
             <span class="triangle"></span>
 
             <!-- Text Type -->
-            <p class="line-breaker" *ngIf="message.type === 'text'">{{message.text}}</p>
+            <p class="line-breaker" *ngIf="message.type === 'text'" style="color: white;">{{message.text}}</p>
 
             <!-- Map type -->
             <div *ngIf="message.type === 'location'">
@@ -154,13 +154,9 @@
 
           </div>
         </div>
+        {{last && funcCalled ? callFunction() : ''}}
       </div>
     </div>
-
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="refresher($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
   </ion-content>
 
 
@@ -183,9 +179,9 @@
             <ion-icon name="camera"></ion-icon>
           </button>
           <!-- <button ion-fab (click)="sendGallery()"><ion-icon name="images"></ion-icon></button> -->
-          <button ion-fab (click)="sendSound()">
+          <!-- <button ion-fab (click)="sendSound()">
             <ion-icon name="mic"></ion-icon>
-          </button>
+          </button> -->
           <button ion-fab (click)="sendLocation()">
             <ion-icon name="locate"></ion-icon>
           </button>

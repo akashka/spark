@@ -51,7 +51,7 @@
           </div>
         </button>
      
-        <ion-item-options side="right">
+        <ion-item-options side="right" *ngIf="user && user.role != 'readonlyadmin'">
           <button ion-button color="info" (click)="print(student)">
             <ion-icon name="redo"></ion-icon>
             Download ID Card

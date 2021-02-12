@@ -1,6 +1,70 @@
 <ion-content style="background:#9e9e9e1a;">
     <div class="fixed-content">
 
+        <h3 style="
+                padding: 10px; 
+                background: -webkit-linear-gradient(#4988fb, #333);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;">
+            {{welcomeMessage}} {{user.name}}!
+        </h3>
+        <p style="margin-top: -25px; margin-bottom: -10px; padding: 10px;color: blue;font-size: 1.5rem; ">(In
+            {{welcomeLanguage}})</p>
+
+        <ion-row *ngIf="user.role == 'parent' || user.role == 'teacher'">
+            <ion-card
+                style="font-weight: 700;border-radius: 2.5%;background-size: cover;background-image: url(https://99designs-blog.imgix.net/blog/wp-content/uploads/2018/12/Gradient_builder_2.jpg?auto=format&q=60&w=1815&h=1815&fit=crop&crop=faces);">
+                <ion-card-header>
+                    <ion-card-title style="font-weight: 700;"> Fun Fact of the Day ;-) </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <h5 style="text-align: justify; color: white; font-weight: 700;">{{messages[day]}}</h5>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'parent' || user.role == 'teacher'">
+            <ion-card style="font-weight: 700;border-radius: 10%;background: #e2e3f2;">
+                <ion-card-header>
+                    <ion-card-title style="font-weight: 700;font-size: 2rem;margin-bottom: -15px;"> Latest Class
+                    </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <div class="video-thumbnail" (click)="playVideo(latestClass)" *ngIf="latestClass">
+                        <img src={{latestClass.image_src}} style="max-height: 150px;" />
+                        <ion-icon name="play"></ion-icon>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+
+        <ion-row *ngIf="user.role == 'parent' || user.role == 'teacher'">
+            <ion-card
+                style="font-weight: 700;border-radius: 2.5%;min-height: 160px;background-size: cover;background-image: url(https://www.desktopbackground.org/download/o/2014/07/18/795387_question-mark-4_1920x1080_h.jpg);">
+                <ion-card-header>
+                    <ion-card-title style="font-weight: 700;font-size: 1.5rem;float: right;"> ISSUES? CONTACT SCHOOL!!!
+                    </ion-card-title>
+                </ion-card-header>
+                <ion-card-content *ngIf="centersList.length">
+                    <div>
+                        <h3 style="text-align: right; color: white; font-weight: 700; color: #00556f;"> CALL ON </h3>
+                        <h2 style="color: white; font-weight: 700; float: right; color: blue;">
+                            {{centersList[0].center_phoneno}}</h2>
+                    </div>
+                    <br />
+                    <br />
+                    <div>
+                        <h3 style="text-align: right; color: white; font-weight: 700; color: #00556f;"> MAIL ON </h3>
+                        <h2 style="text-align: justify; color: white; font-weight: 700; float: right; color: blue;">
+                            {{centersList[0].center_email}}</h2>
+                    </div>
+                    <br />
+                    <br />
+                </ion-card-content>
+            </ion-card>
+        </ion-row>
+
         <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor'">
             <ion-col>
                 <ion-card>
@@ -75,7 +139,8 @@
             </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor' || user.role == 'dispatcher'">
+        <ion-row
+            *ngIf="user.role == 'admin' || user.role == 'centerAdmin' || user.role == 'counsellor' || user.role == 'dispatcher'">
             <ion-col>
                 <ion-card>
                     <ion-card-content>

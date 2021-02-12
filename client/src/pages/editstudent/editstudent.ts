@@ -155,12 +155,12 @@ export class EditstudentPage {
   }
 
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   // update(student) {
   //   this.storage.set('edit_student', student._id);
-  //   this.navCtrl.setRoot(EditstudentPage);
+  //   this.navCtrl.push(EditstudentPage);
   // }
 
   private presentToast(text) {

@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-navbar color="secondary">
+        <ion-buttons left>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>
+            INFORMATION CENTER
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+        <ion-card style="background: #eeeeee;">
+            <div style="padding: 15px;" (click)="goToPrivacyPolicy()">
+                <div style="width: 90%;float: left;padding:10px;">
+                    <ion-icon name="document" style="padding-right: 30px;"></ion-icon>
+                    <h2 style="display: inline-block;">Privacy Policy</h2>
+                    <ion-icon name="arrow-forward" style="float: right;"></ion-icon>
+                </div>
+            </div>
+        </ion-card>
+        <ion-card style="background: #eeeeee;">
+            <div style="padding: 15px;" (click)="goToTermsConditions()">
+                <div style="width: 90%;float: left;padding:10px;">
+                    <ion-icon name="mail" style="padding-right: 25px;"></ion-icon>
+                    <h2 style="display: inline-block;">Terms & Conditions</h2>
+                    <ion-icon name="arrow-forward" style="float: right;"></ion-icon>
+                </div>
+            </div>
+        </ion-card>
+        <ion-card style="background: #eeeeee;">
+            <div style="padding: 15px;" (click)="goToFAQ()">
+                <div style="width: 90%;float: left;padding:10px;">
+                    <ion-icon name="help" style="padding-right: 35px;"></ion-icon>
+                    <h2 style="display: inline-block;">FAQ</h2>
+                    <ion-icon name="arrow-forward" style="float: right;"></ion-icon>
+                </div>
+            </div>
+        </ion-card>
+        <ion-card style="background: #eeeeee;">
+            <div style="padding: 15px;" (click)="goToContactUs()">
+                <div style="width: 90%;float: left;padding:10px;">
+                    <ion-icon name="call" style="padding-right: 30px;"></ion-icon>
+                    <h2 style="display: inline-block;">Contact Us</h2>
+                    <ion-icon name="arrow-forward" style="float: right;"></ion-icon>
+                </div>
+            </div>
+        </ion-card>
+    </ion-list>
+
+</ion-content>
+
+<ion-footer>
+    <p style="padding: 0 15px; font-weight: bold; color: black;">2020 © Our Little Wonderz</p>
+    <p style="padding: 0 15px; font-weight: bold; color: black;">Version 2.2021.1</p>
+</ion-footer>

@@ -1,36 +1,54 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      OUR LITTLE WONDERZ
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
 <ion-content>
   <div class="fixed-content">
 
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveProfile()">
-      
+
       <ion-list>
 
         <ion-item>
           <ion-label floating class="label_here">Name</ion-label>
-          <ion-input class="inputFields" type="text" formControlName="name" (keyup)="changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+          <ion-input class="inputFields" type="text" formControlName="name" (keyup)="changedSmtng()"
+            disabled="{{isDisabled}}"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label floating class="label_here">Phone No</ion-label>
-          <ion-input class="inputFields" type="number" formControlName="phone_no" (keyup)="changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+          <ion-input class="inputFields" type="number" formControlName="phone_no" (keyup)="changedSmtng()"
+            disabled="{{isDisabled}}"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label floating class="label_here">Date Of Birth</ion-label>
-          <ion-datetime class="inputFields" displayFormat="DD/MMM/YYYY" formControlName="dob" (ionChange)="changedSmtng()" disabled="{{isDisabled}}"></ion-datetime>
+          <ion-datetime class="inputFields" displayFormat="DD/MMM/YYYY" formControlName="dob"
+            (ionChange)="changedSmtng()" disabled="{{isDisabled}}"></ion-datetime>
         </ion-item>
-  
+
         <ion-item>
           <ion-label floating>Gender</ion-label>
-          <ion-select class="inputFields" formControlName="gender" (ionChange)="changedSmtng()" disabled="{{isDisabled}}">
+          <ion-select class="inputFields" formControlName="gender" (ionChange)="changedSmtng()"
+            disabled="{{isDisabled}}">
             <ion-option value="female">Female</ion-option>
             <ion-option value="male">Male</ion-option>
           </ion-select>
         </ion-item>
-        
+
         <ion-item>
-            <ion-label floating>Address</ion-label>
-            <ion-input class="inputFields" type="text" formControlName="address" (ionChange)="onLocalityChange($event);changedSmtng()" disabled="{{isDisabled}}"></ion-input>
+          <ion-label floating>Address</ion-label>
+          <ion-input class="inputFields" type="text" formControlName="address"
+            (ionChange)="onLocalityChange($event);changedSmtng()" disabled="{{isDisabled}}"></ion-input>
         </ion-item>
 
         <ion-list>
@@ -44,11 +62,14 @@
     </form>
   </div>
 </ion-content>
- 
+
 <ion-footer no-border>
   <ion-toolbar transparent>
-    <button ion-button full (click)="editProfile()" class="editSaveToggleBtn">
+    <button ion-button full (click)="editProfile()" class="editSaveToggleBtn" [hidden]="!isDisabled">
       EDIT
+    </button>
+    <button ion-button full (click)="editProfile()" class="editSaveToggleBtn" [hidden]="isDisabled">
+      SAVE
     </button>
   </ion-toolbar>
 </ion-footer>

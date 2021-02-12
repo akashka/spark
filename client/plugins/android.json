@@ -64,6 +64,35 @@
     },
     "cordova-plugin-android-permissions": {
       "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-battery-status": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-videoplayer": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-health": {
+      "GMS_VERSION": "16.0.1",
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-pedometer": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-google-analytics": {
+      "GMS_VERSION": "11.0.1",
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-streaming-media": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-stepcounter": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "co.realtime.plugins.CordovaPush": {
+      "PACKAGE_NAME": "com.olw.spark"
+    },
+    "cordova-plugin-firebase": {
+      "PACKAGE_NAME": "com.olw.spark"
     }
   },
   "dependent_plugins": {

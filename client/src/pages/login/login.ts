@@ -1,8 +1,7 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, MenuController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Auth } from '../../providers/auth/auth';
-import { Networks } from '../../providers/network/network';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
 
@@ -80,15 +79,11 @@ export class LoginPage {
       public authService: Auth, 
       public loadingCtrl: LoadingController,
       public formBuilder: FormBuilder,
-      public networkService: Networks
+      public menu: MenuController
     ) {
 
-        if (this.networkService.noConnection()) {
-          this.networkService.showNetworkAlert();
-        }
-
         this.loginForm = formBuilder.group({
-          email: ['', Validators.compose([Validators.maxLength(30), Validators.pattern("[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?"), Validators.required])],
+          email: ['', Validators.compose([Validators.maxLength(50), Validators.required])],
           password: ['', Validators.compose([Validators.required])],
         });
         this.forgotPasswordForm = formBuilder.group({
@@ -110,6 +105,14 @@ export class LoginPage {
           {emitEvent: false});
         });
     }
+
+    ionViewDidEnter() {
+      this.menu.swipeEnable(false);
+    }
+
+    ionViewWillLeave() {
+      this.menu.swipeEnable(true);
+    }
  
     ionViewDidLoad() {
         this.showLoader();
@@ -117,7 +120,7 @@ export class LoginPage {
         this.authService.checkAuthentication().then((res) => {
             console.log("Already authorized");
             this.loading.dismiss();
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.push(HomePage);
         }, (err) => {
             console.log("Not already authorized");
             this.loading.dismiss();
@@ -141,7 +144,7 @@ export class LoginPage {
             this.authService.login(credentials).then((result) => {
                   this.loading.dismiss();
                   console.log(result);
-                  this.navCtrl.setRoot(HomePage);
+                  this.navCtrl.push(HomePage);
             }, (err) => {
                 this.errorMessage = "Authentication Failed!"
                 this.loading.dismiss();

@@ -15,11 +15,11 @@
    
                     <ion-item>
                       <ion-label><ion-icon name="person"></ion-icon></ion-label>
-                      <ion-input formControlName="email" placeholder="email" type="text"></ion-input>
+                      <ion-input formControlName="email" placeholder="User Name" type="text"></ion-input>
                     </ion-item>
 
                     <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="errorMessage">
-                      Enter valid email id
+                      Enter valid User Name
                     </p>
        
                     <ion-item>

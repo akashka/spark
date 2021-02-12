@@ -155,7 +155,7 @@ export class StudentslistPage {
   }
 
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   onSelectChange() {

@@ -474,6 +474,79 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.permissions"
         ]
+    },
+    {
+        "id": "cordova-plugin-battery-status.battery",
+        "file": "plugins/cordova-plugin-battery-status/www/battery.js",
+        "pluginId": "cordova-plugin-battery-status",
+        "clobbers": [
+            "navigator.battery"
+        ]
+    },
+    {
+        "id": "cordova-plugin-videoplayer.videoplayer",
+        "file": "plugins/cordova-plugin-videoplayer/www/cordova-plugin-videoplayer.js",
+        "pluginId": "cordova-plugin-videoplayer",
+        "clobbers": [
+            "videoplayer"
+        ]
+    },
+    {
+        "id": "cordova-plugin-health.health",
+        "file": "plugins/cordova-plugin-health/www/android/health.js",
+        "pluginId": "cordova-plugin-health",
+        "clobbers": [
+            "navigator.health"
+        ]
+    },
+    {
+        "id": "cordova-plugin-pedometer.Pedometer",
+        "file": "plugins/cordova-plugin-pedometer/www/pedometer.js",
+        "pluginId": "cordova-plugin-pedometer",
+        "clobbers": [
+            "pedometer"
+        ]
+    },
+    {
+        "id": "cordova-plugin-google-analytics.UniversalAnalytics",
+        "file": "plugins/cordova-plugin-google-analytics/www/analytics.js",
+        "pluginId": "cordova-plugin-google-analytics",
+        "clobbers": [
+            "analytics",
+            "ga"
+        ]
+    },
+    {
+        "id": "cordova-plugin-streaming-media.StreamingMedia",
+        "file": "plugins/cordova-plugin-streaming-media/www/StreamingMedia.js",
+        "pluginId": "cordova-plugin-streaming-media",
+        "clobbers": [
+            "streamingMedia"
+        ]
+    },
+    {
+        "id": "cordova-plugin-stepcounter.stepcounter",
+        "file": "plugins/cordova-plugin-stepcounter/www/stepcounter.js",
+        "pluginId": "cordova-plugin-stepcounter",
+        "clobbers": [
+            "stepcounter"
+        ]
+    },
+    {
+        "id": "co.realtime.plugins.CordovaPush.OrtcPushPlugin",
+        "file": "plugins/co.realtime.plugins.CordovaPush/www/OrtcPlugin.js",
+        "pluginId": "co.realtime.plugins.CordovaPush",
+        "clobbers": [
+            "OrtcPushPlugin"
+        ]
+    },
+    {
+        "id": "cordova-plugin-firebase.FirebasePlugin",
+        "file": "plugins/cordova-plugin-firebase/www/firebase.js",
+        "pluginId": "cordova-plugin-firebase",
+        "clobbers": [
+            "FirebasePlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -504,7 +577,16 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "2.4.3",
     "com-badrit-base64": "0.2.0",
     "cordova-plugin-nativeaudio": "3.0.9",
-    "cordova-plugin-android-permissions": "1.0.2"
+    "cordova-plugin-android-permissions": "1.0.2",
+    "cordova-plugin-battery-status": "2.0.3",
+    "cordova-plugin-videoplayer": "0.1.4",
+    "cordova-plugin-health": "1.1.5",
+    "cordova-plugin-pedometer": "0.4.1",
+    "cordova-plugin-google-analytics": "1.9.0",
+    "cordova-plugin-streaming-media": "2.3.0",
+    "cordova-plugin-stepcounter": "1.0.0",
+    "co.realtime.plugins.CordovaPush": "0.2.2",
+    "cordova-plugin-firebase": "2.0.5"
 };
 // BOTTOM OF METADATA
 });

@@ -55,6 +55,7 @@ export class AdmineditPage {
   public centers: any;
   public inCenter: any;
   public lastImage: any;
+  public user: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -78,6 +79,7 @@ export class AdmineditPage {
     public platform: Platform,
   ) {
       this.storage.get('user').then((user) => {
+        this.user = user;
               if(user.role === "counsellor")  this.isCounsellor = true;
          else if(user.role === "admin")  this.isAdmin = true;
          else if(user.role === "centerAdmin")  this.isCenterAdmin = true;
@@ -153,7 +155,7 @@ export class AdmineditPage {
   }
  
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   callNumber(num) {
@@ -164,7 +166,7 @@ export class AdmineditPage {
 
   update(student) {
     this.storage.set('confirmed_student', student);
-    this.navCtrl.setRoot(ConfirmPage);
+    this.navCtrl.push(ConfirmPage);
   }
 
   private presentToast(text) {

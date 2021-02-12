@@ -12,9 +12,14 @@
 </ion-header>
 
 <ion-content padding class="home-page">
-  <ion-tabs>
+  <ion-tabs *ngIf="isParent">
     <ion-tab tabIcon="home" tabTitle="Home" [root]="home"></ion-tab>
-    <ion-tab tabIcon="notifications" tabTitle="Notification" [root]="notification"></ion-tab>
-    <ion-tab tabIcon="settings" tabTitle="Profile" [root]="profile"></ion-tab>
+    <ion-tab tabIcon="book" tabTitle="Classroom" [root]="classroomview"></ion-tab>
+    <!-- <ion-tab tabIcon="chatbubbles" tabTitle="Chat" [root]="chatGroup"></ion-tab> -->
+  </ion-tabs>
+  <ion-tabs *ngIf="!isParent">
+    <ion-tab tabIcon="home" tabTitle="Home" [root]="home"></ion-tab>
+    <!-- <ion-tab tabIcon="settings" tabTitle="Profile" [root]="profile"></ion-tab> -->
+    <!-- <ion-tab tabIcon="chatbubbles" tabTitle="Chat" [root]="chatGroup"></ion-tab> -->
   </ion-tabs>
 </ion-content>

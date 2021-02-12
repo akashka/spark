@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, ItemGroup } from 'ionic-angular';
+import { Platform, Nav, ItemGroup, AlertController, ToastController, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 
@@ -21,12 +21,21 @@ import { IdcardprintPage } from '../pages/idcardprint/idcardprint';
 import { ApproveindentPage } from '../pages/approveindent/approveindent';
 import { StudentslistPage } from '../pages/studentslist/studentslist';
 import { ChatListPage } from '../pages/chat-list/chat-list';
+import { ProfileTab } from '../pages/profile-tab/profile-tab';
+import { ClassroomaddPage } from '../pages/classroom-add/classroom-add';
+import { StaticPages } from '../pages/staticpages/privacypolicy';
 
 // Services
 import { Auth } from '../providers/auth/auth';
+import { FcmProvider } from '../providers/fcm';
 
 import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { BatteryStatus } from '@ionic-native/battery-status';
+import { Network } from '@ionic-native/network';
+import { tap } from 'rxjs/operator/map';
 
+declare var cordova: any;
 @Component({
   templateUrl: './app.html'
 })
@@ -43,6 +52,7 @@ export class MyApp {
   public showMenu: Boolean = false;
   public userCenter: String = "";
   public user: any = {};
+  public isReadonlyadmin: Boolean = false;
 
   userSubscription;
 
@@ -52,11 +62,84 @@ export class MyApp {
     platform: Platform,
     public storage: Storage,
     public authService: Auth,
-    public contacts: Contacts
+    public contacts: Contacts,
+    public androidPermissions: AndroidPermissions,
+    public batteryStatus: BatteryStatus,
+    public alertController: AlertController,
+    public network: Network,
+    public menu: MenuController,
+    public toastCtrl: ToastController,
+    public fcm: FcmProvider,
   ) {
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
+
+      // Getting Permissions
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.BATTERY_STATS).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.BATTERY_STATS)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.MEDIA_CONTENT_CONTROL).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.MEDIA_CONTENT_CONTROL)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_CONTACTS).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_CONTACTS)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.RECORD_AUDIO).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.RECORD_AUDIO)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.VIBRATE).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.VIBRATE)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_CONTACTS).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_CONTACTS)
+      );
+
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+        result => console.log('Has permission?', result.hasPermission),
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+      );
+
+      // fcm
+      fcm.getToken();
+      fcm.listenToNotifications().pipe(
+        tap(msg => {
+          // show a toast
+          const toast = toastCtrl.create({
+            message: msg.body,
+            duration: 3000
+          });
+          toast.present();
+        })
+      )
+        .subscribe();
+
       // Storing COntacts
       this.contacts.find(["*"]).then((contacts) => {
         let allContact = contacts.sort(function (a, b) {
@@ -77,6 +160,89 @@ export class MyApp {
     this.userSubscription = Auth.userChanged.subscribe(
       (user) => this.getData(user)
     );
+
+    if (this.batteryStatus) {
+      this.batteryStatus.onChange().subscribe(status => {
+        console.log(status.level, status.isPlugged);
+        if (!status.isPlugged && status.level < 15 && status.level % 5 == 0) {
+          this.presentBatteryAlert(status);
+        }
+      });
+    }
+
+    if (this.network) {
+      let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+        this.showNetworkAlert().then(() => {
+          disconnectSubscription.unsubscribe();
+        });
+      });
+    }
+
+  }
+
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  async presentAlert(title, message) {
+    const alert = await this.alertController.create({
+      title: title,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+
+  async presentBatteryAlert(status) {
+    const alert = await this.alertController.create({
+      title: ((status.level == 10 ? 'Low' : 'Critical') + ' Battery Level'),
+      message: (
+        'Your mobile battery is ' +
+        (status.level == 10 ? 'Low' : 'Critical') +
+        '. Please connect your phone to charger for uninterrupted service.'
+      ),
+      buttons: ['OK'],
+      enableBackdropDismiss: true,
+    });
+    await alert.present();
+  }
+
+  private showSettings() {
+    if (cordova.plugins.diagnostic.switchToWifiSettings) {
+      cordova.plugins.diagnostic.switchToWifiSettings();
+    } else {
+      cordova.plugins.diagnostic.switchToSettings();
+    }
+  }
+
+  async showNetworkAlert() {
+    let networkAlert = this.alertController.create({
+      title: 'No Internet Connection',
+      message: 'Your Internet connection seems to have lost. Please check your internet connection.',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => { }
+        },
+        {
+          text: 'Settings',
+          handler: () => {
+            networkAlert.dismiss().then(() => {
+              this.showSettings();
+            })
+          }
+        }
+      ],
+      enableBackdropDismiss: true,
+    });
+    networkAlert.present();
   }
 
   getData(user) {
@@ -88,9 +254,20 @@ export class MyApp {
         this.isCenterAdmin = false;
         this.isTeacher = false;
         this.isParent = false;
+        this.isReadonlyadmin = false;
       }
       else if (user.role === "dispatcher") {
         this.isDispatcher = true;
+        this.isCounsellor = false;
+        this.isAdmin = false;
+        this.isCenterAdmin = false;
+        this.isTeacher = false;
+        this.isParent = false;
+        this.isReadonlyadmin = false;
+      }
+      else if (user.role === "readonlyadmin") {
+        this.isReadonlyadmin = true;
+        this.isDispatcher = false;
         this.isCounsellor = false;
         this.isAdmin = false;
         this.isCenterAdmin = false;
@@ -104,6 +281,7 @@ export class MyApp {
         this.isCenterAdmin = false;
         this.isTeacher = false;
         this.isParent = false;
+        this.isReadonlyadmin = false;
       }
       else if (user.role === "centerAdmin") {
         this.isCenterAdmin = true;
@@ -112,27 +290,34 @@ export class MyApp {
         this.isDispatcher = false;
         this.isTeacher = false;
         this.isParent = false;
-      } else if (user.role === "teacher") {
+        this.isReadonlyadmin = false;
+      }
+      else if (user.role === "teacher") {
         this.isTeacher = true;
         this.isCenterAdmin = false;
         this.isAdmin = false;
         this.isCounsellor = false;
         this.isDispatcher = false;
         this.isParent = false;
-      } else if (user.role === "parent") {
+        this.isReadonlyadmin = false;
+      }
+      else if (user.role === "parent") {
         this.isParent = true;
         this.isCenterAdmin = false;
         this.isAdmin = false;
         this.isCounsellor = false;
         this.isDispatcher = false;
         this.isTeacher = false;
-      } else {
+        this.isReadonlyadmin = false;
+      }
+      else {
         this.isParent = true;
         this.isCenterAdmin = false;
         this.isAdmin = false;
         this.isCounsellor = false;
         this.isDispatcher = false;
         this.isTeacher = false;
+        this.isReadonlyadmin = false;
       }
       this.userCenter = user.center;
       this.user = user;
@@ -140,15 +325,15 @@ export class MyApp {
   }
 
   go_to_home() {
-    this.nav.setRoot(HomePage);
+    this.nav.push(HomePage);
   }
 
   go_to_enquiry() {
-    this.nav.setRoot(EnquiryPage);
+    this.nav.push(EnquiryPage);
   }
 
   go_to_search() {
-    this.nav.setRoot(SearchPage);
+    this.nav.push(SearchPage);
   }
 
   go_to_login() {
@@ -157,55 +342,67 @@ export class MyApp {
   }
 
   go_to_signup() {
-    this.nav.setRoot(SignupPage);
+    this.nav.push(SignupPage);
   }
 
   go_to_center() {
-    this.nav.setRoot(CenterPage);
+    this.nav.push(CenterPage);
   }
 
   go_to_indent() {
-    this.nav.setRoot(IndentPage);
+    this.nav.push(IndentPage);
   }
 
   go_to_reports() {
-    this.nav.setRoot(ReportsPage);
+    this.nav.push(ReportsPage);
   }
 
   go_to_dispatch() {
-    this.nav.setRoot(DispatchPage);
+    this.nav.push(DispatchPage);
   }
 
   go_to_promotion() {
-    this.nav.setRoot(PromotionPage);
+    this.nav.push(PromotionPage);
   }
 
   go_to_adminedit() {
-    this.nav.setRoot(AdmineditPage);
+    this.nav.push(AdmineditPage);
   }
 
   go_to_deletestudent() {
-    this.nav.setRoot(DeletestudentPage);
+    this.nav.push(DeletestudentPage);
   }
 
   go_to_idcardrequest() {
-    this.nav.setRoot(IdcardrequestPage);
+    this.nav.push(IdcardrequestPage);
   }
 
   go_to_idcardprint() {
-    this.nav.setRoot(IdcardprintPage);
+    this.nav.push(IdcardprintPage);
   }
 
   go_to_approveindent() {
-    this.nav.setRoot(ApproveindentPage);
+    this.nav.push(ApproveindentPage);
   }
 
   go_to_studentslist() {
-    this.nav.setRoot(StudentslistPage);
+    this.nav.push(StudentslistPage);
   }
 
   go_to_chatList() {
-    this.nav.setRoot(ChatListPage);
+    this.nav.push(ChatListPage);
+  }
+
+  go_to_profile_tab() {
+    this.nav.push(ProfileTab);
+  }
+
+  go_to_add_classroom() {
+    this.nav.push(ClassroomaddPage);
+  }
+
+  go_to_staticpages() {
+    this.nav.push(StaticPages);
   }
 
 }

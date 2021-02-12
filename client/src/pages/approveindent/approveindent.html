@@ -51,7 +51,7 @@
             </div>
           </button>
        
-          <ion-item-options side="right">
+          <ion-item-options side="right" *ngIf="user && user.role != 'readonlyadmin'">
             <button ion-button color="info" (click)="confirmIndent(indentation)">
               <ion-icon name="redo"></ion-icon>
               Approve

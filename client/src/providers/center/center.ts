@@ -7,9 +7,9 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Center {
 
-  url = "https://dummy-spark.herokuapp.com/";
+  // url = "https://dummy-spark.herokuapp.com/";
   // url = "https://spark-olw.herokuapp.com/";
-  // url = "http://localhost:8080/";
+  url = "http://localhost:8080/";
  
   constructor(public http: Http, public authService: Auth, public storage: Storage) {
  

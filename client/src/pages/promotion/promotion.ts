@@ -89,7 +89,7 @@ export class PromotionPage {
   }
  
   add() {
-  	this.navCtrl.setRoot(EnquiryPage);
+  	this.navCtrl.push(EnquiryPage);
   }
 
   callNumber(num) {
@@ -117,7 +117,7 @@ export class PromotionPage {
           role: 'cancel',
           handler: data => {
             this.storage.set('confirmed_student', student);
-            this.navCtrl.setRoot(ConfirmPage);
+            this.navCtrl.push(ConfirmPage);
           }
         },
         {
@@ -126,7 +126,7 @@ export class PromotionPage {
             student.parent_name = data.parent_name;
             student.locality = data.locality;
             this.storage.set('confirmed_student', student);
-            this.navCtrl.setRoot(ConfirmPage);
+            this.navCtrl.push(ConfirmPage);
           }
         }
       ]
@@ -153,7 +153,7 @@ export class PromotionPage {
 
     this.storage.set('confirmed_student', student);
     if(student.parent_name == "") this.showMessage(student);
-    else this.navCtrl.setRoot(ConfirmPage);
+    else this.navCtrl.push(ConfirmPage);
   }
 
 

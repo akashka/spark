@@ -23,7 +23,6 @@ import { Students } from '../../providers/students/students';
 import { Chats } from '../../providers/chats/chats';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
-import { Networks } from '../../providers/network/network';
 import { EmailComposer } from "ionic-native";
 
 @Component({
@@ -48,7 +47,6 @@ export class ChatImagePage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loading: LoadingController,
     public http: Http,

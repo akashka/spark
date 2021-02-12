@@ -19,7 +19,7 @@ var UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin','centeradmin','counsellor','dispatcher','teacher','parent'],
+        enum: ['admin','centeradmin','counsellor','dispatcher','readonlyadmin','teacher','parent'],
         default: 'parent',
         required: true
     },

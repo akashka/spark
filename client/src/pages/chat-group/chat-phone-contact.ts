@@ -20,7 +20,6 @@ import { Students } from '../../providers/students/students';
 import { Chats } from '../../providers/chats/chats';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
-import { Networks } from '../../providers/network/network';
 import { EmailComposer } from "ionic-native";
 
 @Component({
@@ -48,7 +47,6 @@ export class ChatPhoneContactPage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loadingCtrl: LoadingController,
     public http: Http,
@@ -61,8 +59,8 @@ export class ChatPhoneContactPage {
   ngOnInit(): void {
     this.users = this.params.get('users');
     this.selectedUser = [];
-    this.allUsers = this.users;  
-    this.loading.dismiss();  
+    this.allUsers = this.users;
+    this.loading.dismiss();
   }
 
   showLoader(content) {
@@ -72,28 +70,30 @@ export class ChatPhoneContactPage {
     this.loading.present();
   }
 
-search() {
-  this.users = [];
-  if (this.myInput === '') {
-    this.users = this.allUsers;
-  } else {
-    var maxLength = this.allUsers.length;
-    for (let u = 0; u < maxLength; u++) {
-      if (this.allUsers[u].displayName.toLowerCase().includes(this.myInput.toLowerCase())) {
-        this.users.push(this.allUsers[u]);
+  search() {
+    this.users = [];
+    if (this.myInput === '') {
+      this.users = this.allUsers;
+    } else {
+      var maxLength = this.allUsers.length;
+      for (let u = 0; u < maxLength; u++) {
+        if (this.allUsers[u].displayName.toLowerCase().includes(this.myInput.toLowerCase())) {
+          this.users.push(this.allUsers[u]);
+        }
       }
     }
   }
-}
 
-dismiss() {
-  this.selectedUser = [];
-  for (var u = 0; u < this.allUsers.length; u++) {
-    if (this.allUsers[u].isChecked) {
-      this.selectedUser.push(this.allUsers[u]);
+  dismiss() {
+    this.selectedUser = [];
+    if (this.allUsers) {
+      for (var u = 0; u < this.allUsers.length; u++) {
+        if (this.allUsers[u].isChecked) {
+          this.selectedUser.push(this.allUsers[u]);
+        }
+      }
     }
+    this.viewCtrl.dismiss(this.selectedUser);
   }
-  this.viewCtrl.dismiss(this.selectedUser);
-}
 
 };

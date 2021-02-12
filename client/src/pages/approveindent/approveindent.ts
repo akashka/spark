@@ -43,6 +43,7 @@ export class ApproveindentPage {
   public centers: any = [];
   public myInput: String = '';
   public mySelect: String = '';
+  public user: any;
 
   constructor(
     public navCtrl: NavController,
@@ -55,7 +56,11 @@ export class ApproveindentPage {
     public centerService: Center,
     public indentationService: Indentation,
     public toastCtrl: ToastController
-  ) { }
+  ) {
+    this.storage.get("user").then(user => {
+      this.user = user;
+    });
+   }
 
   ionViewDidLoad() {
     this.fetchData();
@@ -181,7 +186,7 @@ export class ApproveindentPage {
   }
 
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   onSelectChange() {

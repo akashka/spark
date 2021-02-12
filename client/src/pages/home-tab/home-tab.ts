@@ -21,9 +21,11 @@ import Swiper from 'swiper';
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
-import { Networks } from '../../providers/network/network';
+import { Classroom } from '../../providers/classroom/classroom';
+import { Chats } from '../../providers/chats/chats';
 import { Indentation } from '../../providers/indentation/indentation';
 import { userInfo } from "os";
+import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
 
 interface Window {
   resolveLocalFileSystemURL: any;
@@ -55,6 +57,7 @@ export class HomeTab {
   totalOpenIndentations: Number = 0;
   totalIndentationsAmount: Number = 0;
   todayBirthdayStudents: any = [];
+  latestClass: any;
 
   @ViewChild("classStudentsCanvas") classStudentsCanvas: ElementRef;
   @ViewChild("centerStudentsCanvas") centerStudentsCanvas: ElementRef;
@@ -62,6 +65,102 @@ export class HomeTab {
   classStudents: Chart;
   centerStudents: Chart;
   classTypeStudents: Chart;
+
+  languageList = [
+    'Assamese', 'Bengali', 'Bodo', 'Dogri', 'Gujrati', 'Hindi', 'Kannada', 'Kashmiri', 'Konkani', 'Maithili',
+    'Malayalam', 'Hindi', 'Manipuri', 'Nepali', 'Odia', 'Punjabi', 'Sanskrit', 'Hindi', 'Santali', 'Sindhi', 'Tamil', 'Telugu',
+    'Urdu', 'Hindi', 'French', 'Nepali', 'Portuguese', 'Spanish', 'Chinese', 'Hindi'
+  ];
+  welcomeMessageList = [
+    'Namoskar', 'Nomoshkar', 'Gojown Fwi', 'Namaste ji', 'Namaste', 'Namaskar', 'Namaskara', 'Namaskar',
+    'Namaskara', 'Pranaam', 'Namaskaram', 'Namaskar', 'Khurumjari', 'Namaskaram', 'Namascara', 'Sat Shri Akaal',
+    'Namaste', 'Namaskar', 'Henda Ho', 'Salaam', 'Vanakkam', 'Namaskaram', 'Aadaab', 'Namaskar', 'Bonjour',
+    'Namastē', 'Olá', 'Hola', 'Nǐ hǎo', 'Namaskar'
+  ];
+
+  rand = Math.round((Math.random() * 29) + 1);
+  welcomeMessage = this.welcomeMessageList[this.rand];
+  welcomeLanguage = this.languageList[this.rand];
+
+  now: any = new Date();
+  start: any = new Date(this.now.getFullYear(), 0, 0);
+  day: any = Math.floor((this.now - this.start) / (1000 * 60 * 60 * 24)) - 175;
+
+  messages = [
+    "It is impossible for most people to lick their own elbow. (try it!)",
+    "A crocodile cannot stick its tongue out.",
+    "A shrimp's heart is in its head.",
+    "It is physically impossible for pigs to look up into the sky.",
+    "The \"sixth sick sheik's sixth sheep's sick\" is believed to be the toughest tongue twister in the English language.",
+    "If you sneeze too hard, you could fracture a rib.",
+    "Wearing headphones for just an hour could increase the bacteria in your ear by 700 times.",
+    "In the course of an average lifetime, while sleeping you might eat around 70 assorted insects and 10 spiders, or more.",
+    "Some lipsticks contain fish scales.",
+    "Cat urine glows under a black-light.",
+    "Like fingerprints, everyone's tongue print is different.",
+    "Rubber bands last longer when refrigerated.",
+    "There are 293 ways to make change for a dollar.",
+    "The average person's left hand does 56% of the typing (when using the proper position of the hands on the keyboard; Hunting and pecking doesn't count!).",
+    "A shark is the only known fish that can blink with both eyes.",
+    "\"Dreamt\" is the only English word that ends in the letters \"mt\".",
+    "Almonds are a member of the peach family.",
+    "Maine is the only state that has a one-syllable name.",
+    "There are only four words in the English language which end in \"dous\": tremendous, horrendous, stupendous, and hazardous.",
+    "Los Angeles' full name is \"El Pueblo de Nuestra Senora la Reina de los Angeles de Porciuncula\"",
+    "A cat has 32 muscles in each ear.",
+    "An ostrich's eye is bigger than its brain.",
+    "Tigers have striped skin, not just striped fur.",
+    "The longest one-syllable words in the English language are \"scraunched\" and \"strengthed.\" Some suggest that \"squirreled\" could be included, but squirrel is intended to be pronounced as two syllables (squir-rel) according to most dictionaries. \"Screeched\" and \"strengths\" are two other long one-syllable words, but they only have 9 letters.",
+    "The characters Bert and Ernie on Sesame Street were named after Bert the cop and Ernie the taxi driver in Frank Capra's \"It's a Wonderful Life.\"",
+    "In many advertisements, the time displayed on a watch is 10:10.",
+    "A dime has 118 ridges around the edge.",
+    "The giant squid has the largest eyes in the world.",
+    "Most people fall asleep in seven minutes.",
+    "\"Stewardesses\" is the longest word that is typed with only the left hand.",
+    "You fart on average 14 times a day, and each fart travels from your body at 7 mph.",
+    "One of the ingredients needed to make dynamite is peanuts.",
+    "The largest living organism in the world is a fungus, it is in Oregon, covering 2,200 acres and is still growing.",
+    "Kangaroos can not walk backwards.",
+    "Want chocolate smelling poo?  There is a pill for that.",
+    "The shortest war in history lasted for only 38 minutes.",
+    "Sea Lions have rythmn.  They are the only animal known to be able to clap in beat.",
+    "While you sleep you can’t smell anything, even really, really bad or potent smells.",
+    "Some tumors can grow hair, teeth, bones, even fingernails.",
+    "Your brain uses 10 watts of energy to think, and does not feel pain.",
+    "Glass balls can bounce higher than rubber ones.",
+    "The smallest country in the world takes up .2 square miles, it is the Vatican City.",
+    "Hippopotamus milk is pink.",
+    "Your fingernails grow faster when you are cold.",
+    "Applesauce was the first food eatten in space by astronauts.",
+    "Snails take the longest naps, some lasting as long as three years.",
+    "The average person spends two weeks of their life waiting at traffic lights.",
+    "Before 1913 parents could mail their kids to Grandma’s – through the postal service.",
+    "Don’t like mosquitos?  Get a bat.  They eat 3,000 insects a night.",
+    "A typical cough is 60 mph, a sneeze is often faster than 100 mph.",
+    "Some fish cough.  Really.",
+    "Are you terrified  that a duck is watching you?  Some people are.  That is Anatidaephobia.",
+    "Goats have rectangular pupils in their eyes.",
+    "There are 31,556,926 seconds in a year.",
+    "Cans of diet soda will float in water, regular soda cans will sink.",
+    "Birds can not live in space – they need gravity or they can not swallow.",
+    "Some perfumes actually have whale poo in them.",
+    "Your feet typically produce a pint of sweat every single day.",
+    "On Venus, the planet, it rains metal.",
+    "Baby koalas are fed poo by their parents after they are born, this helps them digest Eucalyptus leaves later in life.",
+    "Of all the oxygen you breathe 20% of it is used by your brain.",
+    "You can cut a pie into 8 pieces, with only three cuts.",
+    "If a Donkey and a Zebra have a baby, it is called a Zonkey.",
+    "Llanfairpwllgwyngyllgogerychwyrndrobwyll llantysiliogogogoch is the hardest to pronounce town – you can visit it in Wales.",
+    "A tsunami can travel as fast as a jet plane.",
+    "In a room with 23 other people, there is a 50% chance that two of the people in the room will share a birthday.",
+    "All babies are born with blue eyes.",
+    "When you look at a bright sky and see white dots, you are looking at your blood.  Those are white blood cells.",
+    "Your small intestine is the largest internal organ in your body.",
+    "Love carrots?  Don’t eat too many or you will turn orange.",
+    "Cows can walk up stairs, but not down them.",
+    "Tiger shark embryos begin attacking eachother before they are even born, in their mother’s womb.",
+    "The surface of Mars is covered in rust, making the planet appear red."
+  ];
 
   constructor(
     public navCtrl: NavController,
@@ -75,49 +174,83 @@ export class HomeTab {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public indentationService: Indentation,
     public storage: Storage,
     public loadingCtrl: LoadingController,
-    public http: Http
+    public http: Http,
+    public streamingMedia: StreamingMedia,
+    public classroomService: Classroom
   ) {
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
       cssClass: 'custom-class custom-loading',
       spinner: 'bubbles',
     });
-    this.loading.present();
 
     this.storage.get('user').then((user) => {
       this.user = user;
-    });
 
-    this.studentService.getAllStudents().then((data) => {
-      this.studentsList = data;
+      if (this.user.role == 'admin' || this.user.role == 'centerAdmin' || this.user.role == 'counsellor') {
+        this.loading.present();
+        this.studentService.getAllStudents().then((data) => {
+          this.studentsList = data;
 
-      this.authService.searchUser().then((data) => {
-        this.usersList = data;
+          this.authService.searchUser().then((data) => {
+            this.usersList = data;
 
-        this.centerService.searchCenter().then((data) => {
-          this.centersList = data;
+            this.centerService.searchCenter().then((data) => {
+              this.centersList = data;
 
-          this.indentationService.searchIndentation().then((data) => {
-            this.indentationList = data;
+              this.indentationService.searchIndentation().then((data) => {
+                this.indentationList = data;
 
-            this.loading.dismiss();
-            this.massageData();
+                this.loading.dismiss();
+                this.massageData();
+              });
+
+            });
+
           });
 
+        }, (err) => {
+          console.log("not allowed");
+          this.loading.dismiss();
         });
+      }
 
-      });
+      if (this.user.role == 'teacher' || this.user.role == 'parent') {
+        this.loading.present();
+        this.classroomService.searchClassroom().then((result) => {
+          result = _.filter(result, function (o) {
+            return (o.class_group === user.class_group[0] && o.center === user.center);
+          });
+          result = _.orderBy(result, ['created_date'],['desc']);
+          this.latestClass = result[0];
 
-    }, (err) => {
-      console.log("not allowed");
+          this.centerService.searchCenter().then((data) => {
+            this.centersList = _.filter(data, function (o) {
+              return (o.center_code === user.center);
+            });
+            this.loading.dismiss();
+          });
+        }, (err) => {
+          console.log(err);
+          this.loading.dismiss();
+        });
+      }
+
     });
 
   }
 
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
 
   massageData() {
     if (this.user.role == 'admin') {
@@ -179,7 +312,14 @@ export class HomeTab {
     mySwiper.autoplay.start();
   }
 
-
+  async presentAlert(title, message) {
+    const alert = await this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
 
   // Admin
   getAdminMarketing() {
@@ -559,6 +699,16 @@ export class HomeTab {
     var mon2 = moment(date2).format('M');
     if (day1 === day2 && mon1 == mon2) return true;
     else return false;
+  }
+
+
+  playVideo(classroom) {
+    let options: StreamingVideoOptions = {
+      successCallback: () => { console.log('Video played') },
+      errorCallback: (e) => { console.log('Error streaming' + JSON.stringify(e)) },
+      orientation: 'landscape',
+    };
+    this.streamingMedia.playVideo(classroom.video_src, options);
   }
 
 }

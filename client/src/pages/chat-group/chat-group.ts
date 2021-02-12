@@ -25,7 +25,6 @@ import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
 import { Chats } from '../../providers/chats/chats';
-import { Networks } from '../../providers/network/network';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
@@ -62,8 +61,9 @@ export class ChatGroupPage {
   emoziToggled: boolean = false;
   phoneContacts: any = [];
   loading: any;
+  funcCalled: Boolean = true;
 
-  @ViewChild(Content) contentArea: Content;
+  @ViewChild(Content) content: Content;
   map: any;
 
   constructor(
@@ -80,7 +80,6 @@ export class ChatGroupPage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loadingCtrl: LoadingController,
     public http: Http,
@@ -121,36 +120,44 @@ export class ChatGroupPage {
     });
   }
 
-  getChatMessages() {
-    this.chatService.getChatMessages(this.chat._id, this.user._id).then((result) => {
-      this.messages = _.sortBy(result, 'created');
-      this.contentArea.scrollToBottom();
-      this.getChatMessages();
-    });
+  callFunction() {
+    this.content.scrollToBottom(0);
+    this.funcCalled = false;
   }
 
-  refresher(event) {
-    alert('event ' + JSON.stringify(event));
+  getChatMessages() {
     this.chatService.getChatMessages(this.chat._id, this.user._id).then((result) => {
-      this.messages = _.sortBy(result, 'created');
-      this.contentArea.scrollToBottom();
-      event.target.complete();
+      let resultSorted = _.sortBy(result, 'created');
+      for (var a = 0; a < resultSorted.length; a++) {
+        const abc = this.messages.filter(x => {
+          return x.from === resultSorted[a].from &&
+            x.created === resultSorted[a].created &&
+            x.type === resultSorted[a].type
+        });
+        if (!abc.length) {
+          this.messages.push(resultSorted[a]);
+          this.funcCalled = true;
+        }
+      }
+      setTimeout(() => {
+        this.getChatMessages();
+      }, 1000);
     });
   }
 
   sendMessage() {
     if (this.message != '') {
-      this.messages.push({
+      let temp = this.messages.map(x => Object.assign({}, x));
+      temp.push({
         from: this.user._id,
         created: new Date(),
         type: 'text',
         text: this.message,
       });
-      this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+      this.chatService.updateChatMessages(this.chat._id, temp).then((result) => {
         this.message = '';
-        this.contentArea.scrollToBottom();
-      }, (err) => {
-      });
+        this.funcCalled = true;
+      }, (err) => { });
     }
   }
 
@@ -164,7 +171,7 @@ export class ChatGroupPage {
 
   goBack() {
     this.storage.remove("chatGroup");
-    this.navCtrl.setRoot(ChatListPage);
+    this.navCtrl.push(ChatListPage);
   }
 
   information() {
@@ -227,15 +234,16 @@ export class ChatGroupPage {
           text: 'Confirm',
           handler: () => {
             this.geolocation.getCurrentPosition().then(res => {
-              this.messages.push({
+              let temp = this.messages.map(x => Object.assign({}, x));
+              temp.push({
                 from: this.user._id,
                 created: new Date(),
                 type: 'location',
                 latitude: res.coords.latitude,
                 longitude: res.coords.longitude,
               });
-              this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
-                this.contentArea.scrollToBottom();
+              this.chatService.updateChatMessages(this.chat._id, temp).then((result) => {
+                this.funcCalled = true;
               }, (err) => {
                 this.presentToast(err);
               });
@@ -261,15 +269,16 @@ export class ChatGroupPage {
           let fileExtension = fileurl.split('.').pop();
           var fileName = 'chat_' + this.chat._id + '_' + this.messages.length + '.' + fileExtension;
           this.chatService.uploadToS3(res, fileName, fileExtension).then((result: any) => {
-            this.messages.push({
+            let temp = this.messages.map(x => Object.assign({}, x));
+            temp.push({
               from: this.user._id,
               created: new Date(),
               type: 'document',
               documentPath: result ? (result.Location ? result.Location : fileName) : fileName,
             });
-            this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+            this.chatService.updateChatMessages(this.chat._id, temp).then((result) => {
               this.loading.dismiss();
-              this.contentArea.scrollToBottom();
+              this.funcCalled = true;
             }, (err) => {
               this.presentToast(err);
               this.loading.dismiss();
@@ -307,15 +316,16 @@ export class ChatGroupPage {
       var fileName = 'chat_' + this.chat._id + '_' + this.messages.length + '.jpeg';
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.chatService.uploadToS3(base64Image, fileName, 'jpeg').then((result: any) => {
-        this.messages.push({
+        let temp = this.messages.map(x => Object.assign({}, x));
+        temp.push({
           from: this.user._id,
           created: new Date(),
           type: 'image',
           imagePath: result ? (result.Location ? result.Location : fileName) : fileName,
         });
-        this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+        this.chatService.updateChatMessages(this.chat._id, temp).then((result) => {
           this.loading.dismiss();
-          this.contentArea.scrollToBottom();
+          this.funcCalled = true;
         }, (err) => {
           this.presentToast(err);
           this.loading.dismiss();
@@ -344,7 +354,7 @@ export class ChatGroupPage {
   };
 
   confirmContactList(contactList) {
-    if(contactList && contactList.length > 0) {
+    if (contactList && contactList.length > 0) {
       let conModal = this.modalCtrl.create(ChatPhoneListPage, {
         users: contactList,
         add: false,
@@ -361,16 +371,17 @@ export class ChatGroupPage {
   }
 
   sendContactList(contactList) {
-    if(contactList && contactList.length > 0) {
-      this.messages.push({
+    if (contactList && contactList.length > 0) {
+      let temp = this.messages.map(x => Object.assign({}, x));
+      temp.push({
         from: this.user._id,
         created: new Date(),
         type: 'contact',
         contactList: contactList,
       });
-      this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+      this.chatService.updateChatMessages(this.chat._id, temp).then((result) => {
         this.message = '';
-        this.contentArea.scrollToBottom();
+        this.funcCalled = true;
       }, (err) => {
         this.presentToast(JSON.stringify(err));
       });
@@ -470,15 +481,16 @@ export class ChatGroupPage {
     ).then((base64: any) => {
       var x = base64.substr(13, base64.length);
       this.chatService.uploadToS3(x, fileName, 'mp3').then((result: any) => {
-        this.messages.push({
+        let temp = this.messages.map(x => Object.assign({}, x));
+        temp.push({
           from: this.user._id,
           created: new Date(),
           type: 'audio',
           audioPath: result ? (result.Location ? result.Location : fileName) : fileName,
         });
-        this.chatService.updateChatMessages(this.chat._id, this.messages).then((result) => {
+        this.chatService.updateChatMessages(this.chat._id, temp).then((result) => {
           this.fileToSave.release();
-          this.contentArea.scrollToBottom();
+          this.funcCalled = true;
         }, (err) => {
           this.presentToast(err);
         });

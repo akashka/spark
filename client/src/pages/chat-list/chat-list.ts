@@ -21,7 +21,6 @@ import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
 import { Chats } from '../../providers/chats/chats';
-import { Networks } from '../../providers/network/network';
 
 import { ChatCreatePage } from '../chat-create/chat-create';
 
@@ -42,7 +41,7 @@ export class ChatListPage {
     public navCtrl: NavController,
     public studentService: Students,
     public chatService: Chats,
-    public modalCtrl: ModalController,
+    public modalController: ModalController,
     public alertCtrl: AlertController,
     public authService: Auth,
     public actionSheetCtrl: ActionSheetController,
@@ -51,7 +50,6 @@ export class ChatListPage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loading: LoadingController,
     public http: Http
@@ -121,13 +119,14 @@ export class ChatListPage {
     if (this.myInput === "") this.chats = this.allChats;
   };
 
-  displayMessages(group) {
-    // group.last_login[this.user._id] = new Date();
-    // this.chatService.updateChats(group._id, group).then((result) => {
-    // }, (err) => {
-    // });
+  async displayMessages(group) {
     group.tempName = this.getChatName(group.name);
     this.storage.set("chatGroup", group);
+    // const abc = await this.modalController.create({
+    //   component: ChatGroupPage,
+    //   cssClass: 'my-custom-class'
+    // });
+    // return await abc.present();
     this.navCtrl.setRoot(ChatGroupPage);
   }
 
@@ -160,7 +159,11 @@ export class ChatListPage {
   }
 
   createNew() {
-    this.navCtrl.setRoot(ChatCreatePage);
+    this.navCtrl.push(ChatCreatePage);
+  }
+
+  createSolo() {
+    
   }
 
 };

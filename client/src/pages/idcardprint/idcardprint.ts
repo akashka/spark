@@ -32,6 +32,7 @@ export class IdcardprintPage {
   public loader: any;
   public centers: any;
   public mySelect: string = '';
+  public user: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -47,7 +48,11 @@ export class IdcardprintPage {
     public CallNumber: CallNumber,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController
-  ) { }
+  ) { 
+    this.storage.get("user").then(user => {
+      this.user = user;
+    });
+  }
  
   ionViewDidLoad() {
     this.fetchData();
@@ -192,7 +197,7 @@ export class IdcardprintPage {
   }
 
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   onSelectChange() {

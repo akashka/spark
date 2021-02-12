@@ -28,7 +28,8 @@ export default function (newActiveIndex) {
   if (snapGrid.indexOf(translate) >= 0) {
     snapIndex = snapGrid.indexOf(translate);
   } else {
-    snapIndex = Math.floor(activeIndex / params.slidesPerGroup);
+    const skip = Math.min(params.slidesPerGroupSkip, activeIndex);
+    snapIndex = skip + Math.floor((activeIndex - skip) / params.slidesPerGroup);
   }
   if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
   if (activeIndex === previousIndex) {
@@ -53,7 +54,7 @@ export default function (newActiveIndex) {
   if (previousRealIndex !== realIndex) {
     swiper.emit('realIndexChange');
   }
-  if (swiper.initialized || swiper.runCallbacksOnInit) {
+  if (swiper.initialized || swiper.params.runCallbacksOnInit) {
     swiper.emit('slideChange');
   }
 }

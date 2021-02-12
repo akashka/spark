@@ -36,6 +36,9 @@ import { ChatInfoPage } from '../pages/chat-info/chat-info';
 import { ChatPhoneContactPage } from '../pages/chat-group/chat-phone-contact';
 import { ChatImagePage } from '../pages/chat-group/chat-image';
 import { ChatPhoneListPage } from '../pages/chat-group/chat-phone-list';
+import { ClassroomaddPage } from '../pages/classroom-add/classroom-add';
+import { ClassroomviewPage } from '../pages/classroom-view/classroom-view';
+import { PrivacyPolicyPage, TermsConditionsPage, FAQPage, ContactUs, StaticPages } from '../pages/staticpages/privacypolicy';
 
 import { HomeTab } from '../pages/home-tab/home-tab';
 import { NotificationTab } from '../pages/notification-tab/notification-tab';
@@ -46,8 +49,9 @@ import { Students } from '../providers/students/students';
 import { Auth } from '../providers/auth/auth';
 import { Center } from '../providers/center/center';
 import { Indentation } from '../providers/indentation/indentation';
-import { Networks } from '../providers/network/network';
 import { Chats } from '../providers/chats/chats';
+import { Classroom } from '../providers/classroom/classroom';
+import { FcmProvider } from '../providers/fcm';
 
 // Camera
 import { File } from '@ionic-native/file';
@@ -66,6 +70,19 @@ import { Base64 } from "@ionic-native/base64";
 import { NativeAudio } from '@ionic-native/native-audio';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { FileOpener } from '@ionic-native/file-opener';
+import { VideoPlayer } from '@ionic-native/video-player';
+import { BatteryStatus } from '@ionic-native/battery-status';
+import { Network } from '@ionic-native/network';
+import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media';
+import { Stepcounter } from '@ionic-native/stepcounter';
+
+import { Firebase } from '@ionic-native/firebase';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+
+const config = {
+
+}
 
 @NgModule({
   declarations: [
@@ -98,7 +115,14 @@ import { FileOpener } from '@ionic-native/file-opener';
     ChatInfoPage,
     ChatPhoneContactPage,
     ChatImagePage,
-    ChatPhoneListPage
+    ChatPhoneListPage,
+    ClassroomaddPage,
+    ClassroomviewPage,
+    PrivacyPolicyPage,
+    TermsConditionsPage,
+    FAQPage,
+    ContactUs,
+    StaticPages
   ],
   imports: [
     BrowserModule,
@@ -108,7 +132,9 @@ import { FileOpener } from '@ionic-native/file-opener';
     GooglePlaceModule,
     IonicStorageModule.forRoot(MyApp),
     IonicModule.forRoot(MyApp),
-    EmojiPickerModule.forRoot()
+    EmojiPickerModule.forRoot(),
+    AngularFireModule.initializeApp(config),
+    AngularFirestoreModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -141,14 +167,20 @@ import { FileOpener } from '@ionic-native/file-opener';
     ChatInfoPage,
     ChatPhoneContactPage,
     ChatImagePage,
-    ChatPhoneListPage
+    ChatPhoneListPage,
+    ClassroomaddPage,
+    ClassroomviewPage,
+    ContactUs,
+    StaticPages,
+    PrivacyPolicyPage,
+    TermsConditionsPage,
+    FAQPage
   ],
   providers: [
     IonicStorageModule,
     Students,
     Auth,
     Center,
-    Networks,
     Indentation,
     File,
     Transfer,
@@ -164,7 +196,15 @@ import { FileOpener } from '@ionic-native/file-opener';
     FileTransfer,
     NativeAudio,
     AndroidPermissions,
-    FileOpener
+    FileOpener,
+    VideoPlayer,
+    BatteryStatus,
+    Network,
+    Classroom,
+    StreamingMedia,
+    Stepcounter,
+    Firebase,
+    FcmProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }

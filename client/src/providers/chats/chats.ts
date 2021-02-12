@@ -8,9 +8,9 @@ import * as aws from "aws-sdk";
 @Injectable()
 export class Chats {
 
-  url = "https://dummy-spark.herokuapp.com/";
+  // url = "https://dummy-spark.herokuapp.com/";
   // url = "https://spark-olw.herokuapp.com/";
-  // url = "http://localhost:8080/";
+  url = "http://localhost:8080/";
 
   private httpSubscription;
 
@@ -118,6 +118,24 @@ export class Chats {
         });
     });
   };
+
+  generateScreenshotFromVideo(file_url, file_name) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', this.authService.token);
+      this.http.post(this.url + 'api/generateScreenshotFromVideo', {
+        file_name: file_name,
+        file_url: file_url
+      }, { headers: headers })
+        .map(res => res.json())
+        .subscribe((res) => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
 
   getMimeTypefromString = {
     ".3dm": "x-world/x-3dmf",

@@ -30,9 +30,9 @@ const Zoom = {
       gesture.scaleStart = Zoom.getDistanceBetweenTouches(e);
     }
     if (!gesture.$slideEl || !gesture.$slideEl.length) {
-      gesture.$slideEl = $(e.target).closest('.swiper-slide');
+      gesture.$slideEl = $(e.target).closest(`.${swiper.params.slideClass}`);
       if (gesture.$slideEl.length === 0) gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
-      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
       gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
       gesture.maxRatio = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
       if (gesture.$imageWrapEl.length === 0) {
@@ -40,7 +40,9 @@ const Zoom = {
         return;
       }
     }
-    gesture.$imageEl.transition(0);
+    if (gesture.$imageEl) {
+      gesture.$imageEl.transition(0);
+    }
     swiper.zoom.isScaling = true;
   },
   onGestureChange(e) {
@@ -97,7 +99,7 @@ const Zoom = {
     const { gesture, image } = zoom;
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
     if (image.isTouched) return;
-    if (Device.android) e.preventDefault();
+    if (Device.android && e.cancelable) e.preventDefault();
     image.isTouched = true;
     image.touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     image.touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -158,7 +160,9 @@ const Zoom = {
         return;
       }
     }
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     e.stopPropagation();
 
     image.isMoved = true;
@@ -237,8 +241,12 @@ const Zoom = {
     const zoom = swiper.zoom;
     const { gesture } = zoom;
     if (gesture.$slideEl && swiper.previousIndex !== swiper.activeIndex) {
-      gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
-      gesture.$imageWrapEl.transform('translate3d(0,0,0)');
+      if (gesture.$imageEl) {
+        gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
+      }
+      if (gesture.$imageWrapEl) {
+        gesture.$imageWrapEl.transform('translate3d(0,0,0)');
+      }
 
       zoom.scale = 1;
       zoom.currentScale = 1;
@@ -269,8 +277,12 @@ const Zoom = {
     const { gesture, image } = zoom;
 
     if (!gesture.$slideEl) {
-      gesture.$slideEl = swiper.clickedSlide ? $(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
-      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+      if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
+        gesture.$slideEl = swiper.$wrapperEl.children(`.${swiper.params.slideActiveClass}`);
+      } else {
+        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+      }
+      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
       gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
@@ -355,8 +367,12 @@ const Zoom = {
     const { gesture } = zoom;
 
     if (!gesture.$slideEl) {
-      gesture.$slideEl = swiper.clickedSlide ? $(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
-      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
+      if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
+        gesture.$slideEl = swiper.$wrapperEl.children(`.${swiper.params.slideActiveClass}`);
+      } else {
+        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+      }
+      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
       gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
@@ -378,17 +394,19 @@ const Zoom = {
     const passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
     const activeListenerWithCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
+    const slideSelector = `.${swiper.params.slideClass}`;
+
     // Scale image
     if (Support.gestures) {
-      swiper.$wrapperEl.on('gesturestart', '.swiper-slide', zoom.onGestureStart, passiveListener);
-      swiper.$wrapperEl.on('gesturechange', '.swiper-slide', zoom.onGestureChange, passiveListener);
-      swiper.$wrapperEl.on('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
+      swiper.$wrapperEl.on('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.on('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+      swiper.$wrapperEl.on('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
     } else if (swiper.touchEvents.start === 'touchstart') {
-      swiper.$wrapperEl.on(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-      swiper.$wrapperEl.on(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
-      swiper.$wrapperEl.on(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+      swiper.$wrapperEl.on(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.on(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+      swiper.$wrapperEl.on(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
       if (swiper.touchEvents.cancel) {
-        swiper.$wrapperEl.on(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.on(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
       }
     }
 
@@ -405,17 +423,19 @@ const Zoom = {
     const passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
     const activeListenerWithCapture = Support.passiveListener ? { passive: false, capture: true } : true;
 
+    const slideSelector = `.${swiper.params.slideClass}`;
+
     // Scale image
     if (Support.gestures) {
-      swiper.$wrapperEl.off('gesturestart', '.swiper-slide', zoom.onGestureStart, passiveListener);
-      swiper.$wrapperEl.off('gesturechange', '.swiper-slide', zoom.onGestureChange, passiveListener);
-      swiper.$wrapperEl.off('gestureend', '.swiper-slide', zoom.onGestureEnd, passiveListener);
+      swiper.$wrapperEl.off('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.off('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+      swiper.$wrapperEl.off('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
     } else if (swiper.touchEvents.start === 'touchstart') {
-      swiper.$wrapperEl.off(swiper.touchEvents.start, '.swiper-slide', zoom.onGestureStart, passiveListener);
-      swiper.$wrapperEl.off(swiper.touchEvents.move, '.swiper-slide', zoom.onGestureChange, activeListenerWithCapture);
-      swiper.$wrapperEl.off(swiper.touchEvents.end, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+      swiper.$wrapperEl.off(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.off(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+      swiper.$wrapperEl.off(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
       if (swiper.touchEvents.cancel) {
-        swiper.$wrapperEl.off(swiper.touchEvents.cancel, '.swiper-slide', zoom.onGestureEnd, passiveListener);
+        swiper.$wrapperEl.off(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
       }
     }
 

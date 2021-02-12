@@ -20,7 +20,6 @@ import { Students } from '../../providers/students/students';
 import { Chats } from '../../providers/chats/chats';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
-import { Networks } from '../../providers/network/network';
 
 import { CallNumber } from "@ionic-native/call-number";
 import { Contacts, Contact, ContactField, ContactName, ContactAddress, ContactOrganization } from '@ionic-native/contacts';
@@ -51,7 +50,6 @@ export class ChatPhoneListPage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loading: LoadingController,
     public http: Http,

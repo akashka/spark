@@ -21,7 +21,6 @@ import { Students } from '../../providers/students/students';
 import { Chats } from '../../providers/chats/chats';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
-import { Networks } from '../../providers/network/network';
 
 import { ChatListPage } from '../chat-list/chat-list';
 import { ChatContactPage } from '../chat-create/chat-contact';
@@ -52,7 +51,6 @@ export class ChatInfoPage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loading: LoadingController,
     public http: Http,

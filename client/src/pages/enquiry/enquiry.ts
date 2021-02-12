@@ -20,7 +20,6 @@ import { Http, Headers } from '@angular/http';
 import { Students } from '../../providers/students/students';
 import { Auth } from '../../providers/auth/auth';
 import { Center } from '../../providers/center/center';
-import { Networks } from '../../providers/network/network';
 
 // Pages
 import { SearchPage } from '../search/search';
@@ -79,6 +78,9 @@ export class EnquiryPage {
   public isCenterAdmin: Boolean = false;
   public isCounsellor: Boolean = false;
   public isMatching: Boolean = false;
+  public isReadonlyadmin: Boolean = false;
+  public isTeacher: Boolean = false;
+  public isParent: Boolean = false;
 
   public loader: any;
 
@@ -100,15 +102,10 @@ export class EnquiryPage {
     public app: App,
     public menu: MenuController,
     public centerService: Center,
-    public networkService: Networks,
     public storage: Storage,
     public loading: LoadingController,
     public http: Http
   ) {
-
-      if (this.networkService.noConnection()) {
-        this.networkService.showNetworkAlert();
-      }
 
       this.studentForm = formBuilder.group({
 
@@ -146,6 +143,10 @@ export class EnquiryPage {
               this.isAdmin = true;
               this.openReportsPage();
           }
+          else if(user.role === 'readonlyadmin') {
+              this.isReadonlyadmin = true;
+              this.openReportsPage();
+          }
           else if(user.role === "dispatcher")  {
               this.isDispatcher = true;
               this.openDispatcherPage();
@@ -159,6 +160,7 @@ export class EnquiryPage {
       }, (err) => {
           console.log("not allowed");
       });
+
   }
 
   ionViewDidLoad() {
@@ -230,7 +232,7 @@ export class EnquiryPage {
   };
 
   search = () => {
-    this.navCtrl.setRoot(SearchPage);
+    this.navCtrl.push(SearchPage);
   };
 
   logOut = () => {
@@ -486,23 +488,23 @@ export class EnquiryPage {
   }
 
   openSignupPage() {
-    this.navCtrl.setRoot(SignupPage);
+    this.navCtrl.push(SignupPage);
   }
 
   openCenterPage() {
-    this.navCtrl.setRoot(CenterPage);
+    this.navCtrl.push(CenterPage);
   }
 
   openReportsPage() {
-    this.navCtrl.setRoot(ReportsPage);
+    this.navCtrl.push(ReportsPage);
   }
 
   openIndentPage() {
-    this.navCtrl.setRoot(IndentPage);
+    this.navCtrl.push(IndentPage);
   }
 
   openDispatcherPage() {
-    this.navCtrl.setRoot(DispatchPage);
+    this.navCtrl.push(DispatchPage);
   }
 
   getPicture() {
@@ -579,7 +581,7 @@ export class EnquiryPage {
           text: 'Yes! Confirm',
           handler: () => {
             this.storage.set('confirmed_student', stu);
-            this.navCtrl.setRoot(ConfirmPage);
+            this.navCtrl.push(ConfirmPage);
           }
         },
         {

@@ -1,18 +1,13 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-buttons left>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+      <button ion-button icon-only (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
       CHAT
     </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="createNew()" *ngIf="isAdmin">
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -36,7 +31,7 @@
 
       <!-- <button ion-item> -->
       <div class="col_left">
-        <div><img src={{getChatImage(chat.dp)}} class="bg_student" /></div>
+        <div><img src={{getChatImage(chat.dp)}} class="bg_student" style="width: 100%;" /></div>
       </div>
       <div class="col_right">
         <h1>{{getChatName(chat.name)}}</h1>
@@ -50,4 +45,19 @@
     </ion-item>
 
   </ion-list>
+
+  <ion-fab bottom end fixed *ngIf="isAdmin">
+    <button ion-fab mini dark>
+      <ion-icon name="create"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="createSolo()">
+        <ion-icon name="person"></ion-icon>
+      </button>
+      <button ion-fab (click)="createNew()">
+        <ion-icon name="people"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-content>

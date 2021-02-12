@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { 
-    NavController, 
-    ModalController, 
-    AlertController, 
-    LoadingController,
-    ActionSheetController, 
-    ToastController, 
-    Platform,
-    App,
-    MenuController
-  } from 'ionic-angular';
+import {
+  NavController,
+  ModalController,
+  AlertController,
+  LoadingController,
+  ActionSheetController,
+  ToastController,
+  Platform,
+  App,
+  MenuController
+} from 'ionic-angular';
 import * as _ from 'lodash'
 import { HomePage } from '../home/home';
 import { Center } from '../../providers/center/center';
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: 'center-page',
@@ -55,38 +56,45 @@ export class CenterPage {
     early_start: 0
   };
   public loader: any;
+  public user: any;
 
   constructor(
-  			public navCtrl: NavController, 
-  			public centerService: Center, 
-  			public loading: LoadingController,
-        public app: App,
-        public menu: MenuController,
-        public modalCtrl: ModalController, 
-        public alertCtrl: AlertController, 
-        public actionSheetCtrl: ActionSheetController,
-        public toastCtrl: ToastController,
-        public platform: Platform
-	) { }
+    public navCtrl: NavController,
+    public centerService: Center,
+    public loading: LoadingController,
+    public app: App,
+    public menu: MenuController,
+    public modalCtrl: ModalController,
+    public alertCtrl: AlertController,
+    public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController,
+    public platform: Platform,
+    public storage: Storage
+  ) {
+    this.storage.get("user").then(user => {
+      this.user = user;
+      console.log(this.user);
+    });
+  }
 
   ionViewDidLoad() {
     this.loader = this.loading.create({
       content: 'Please wait...',
     });
-  	this.getCenters();
+    this.getCenters();
   }
 
   // Function to save new center
-  save(){
+  save() {
     this.loader.present();
     let center = {
       center_name: this.center_name,
-		  center_code: this.center_code,
-		  center_phoneno: this.center_phoneno,
-		  center_email: this.center_email,
-		  center_address: this.center_address,
+      center_code: this.center_code,
+      center_phoneno: this.center_phoneno,
+      center_email: this.center_email,
+      center_address: this.center_address,
       active: this.active,
-		  cash: this.cash,
+      cash: this.cash,
       playgroup: this.playgroup,
       nursery: this.nursery,
       lkg: this.lkg,
@@ -98,27 +106,27 @@ export class CenterPage {
       this.loader.dismiss();
       this.presentToast('Center data saved successfully');
     }, (err) => {
-        this.loader.dismiss();
-        this.presentToast('Error! Please try again.');
+      this.loader.dismiss();
+      this.presentToast('Error! Please try again.');
     });
   }
 
   // Function to update existing center
-  update(){
+  update() {
     this.loader.present();
     let center = {
-          center_name: this.center_name,
-    		  center_code: this.center_code,
-    		  center_phoneno: this.center_phoneno,
-    		  center_email: this.center_email,
-    		  center_address: this.center_address,
-          active: this.active,
-    		  cash: this.cash,
-          playgroup: this.playgroup,
-          nursery: this.nursery,
-          lkg: this.lkg,
-          ukg: this.ukg,
-          _id: this.center_id
+      center_name: this.center_name,
+      center_code: this.center_code,
+      center_phoneno: this.center_phoneno,
+      center_email: this.center_email,
+      center_address: this.center_address,
+      active: this.active,
+      cash: this.cash,
+      playgroup: this.playgroup,
+      nursery: this.nursery,
+      lkg: this.lkg,
+      ukg: this.ukg,
+      _id: this.center_id
     };
     this.centerService.updateCenter(center).then((result) => {
       this.reset();
@@ -127,8 +135,8 @@ export class CenterPage {
       this.mySelect = null;
       this.presentToast('Center data saved successfully');
     }, (err) => {
-        this.loader.dismiss();
-        this.presentToast('Error! Please try again.');
+      this.loader.dismiss();
+      this.presentToast('Error! Please try again.');
     });
   }
 
@@ -176,11 +184,11 @@ export class CenterPage {
 
   // Function to get list of all the centers
   getCenters() {
-  	this.centers = [];
-  	this.centerService.searchCenter().then((result) => {
-  		this.centers = result;
-  	}, (err) => {
-    	console.log(err);
+    this.centers = [];
+    this.centerService.searchCenter().then((result) => {
+      this.centers = result;
+    }, (err) => {
+      console.log(err);
     });
   }
 
@@ -191,23 +199,23 @@ export class CenterPage {
 
   // Function to search for a center dynamically based on an input
   search() {
-  	var result = [];
-  	
-    for(var i = 0; i < this.centers.length; i++) {
-      if (this.centers[i].center_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); } 
-      else if (this.centers[i].center_code.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); } 
-      else if (_.includes(this.centers[i].center_phoneno, this.myInput)) { result.push(this.centers[i]); } 
-      else if (this.centers[i].center_email.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); } 
+    var result = [];
+
+    for (var i = 0; i < this.centers.length; i++) {
+      if (this.centers[i].center_name.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); }
+      else if (this.centers[i].center_code.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); }
+      else if (_.includes(this.centers[i].center_phoneno, this.myInput)) { result.push(this.centers[i]); }
+      else if (this.centers[i].center_email.toUpperCase().indexOf(this.myInput.toUpperCase()) >= 0) { result.push(this.centers[i]); }
     }
 
-  	if(result && result.length === 1) {
-  	  this.center_name = result[0].center_name;
-  	  this.center_code = result[0].center_code;
-  	  this.center_phoneno = result[0].center_phoneno;
-  	  this.center_email = result[0].center_email;
-  	  this.center_address = result[0].center_address;
+    if (result && result.length === 1) {
+      this.center_name = result[0].center_name;
+      this.center_code = result[0].center_code;
+      this.center_phoneno = result[0].center_phoneno;
+      this.center_email = result[0].center_email;
+      this.center_address = result[0].center_address;
       this.active = result[0].active;
-  	  this.cash = result[0].cash;
+      this.cash = result[0].cash;
       this.playgroup = result[0].playgroup;
       this.nursery = result[0].nursery;
       this.lkg = result[0].lkg;
@@ -249,11 +257,11 @@ export class CenterPage {
 
   onSelectChange() {
     var result = [];
-    for(var i = 0; i < this.centers.length; i++) {
-      if (this.centers[i].center_name == this.mySelect) result.push(this.centers[i]) 
+    for (var i = 0; i < this.centers.length; i++) {
+      if (this.centers[i].center_name == this.mySelect) result.push(this.centers[i])
     }
 
-    if(result && result.length === 1) {
+    if (result && result.length === 1) {
       this.center_name = result[0].center_name;
       this.center_code = result[0].center_code;
       this.center_phoneno = result[0].center_phoneno;
@@ -304,32 +312,32 @@ export class CenterPage {
   generateCode() {
     var fields = this.center_name.split(' ');
     var str = "";
-    if(fields.length > 1) {
+    if (fields.length > 1) {
       var temp1 = fields[0];
       var temp2 = fields[1];
-      if(temp1.length > 0) str += temp1[0];
-      
-      if(temp1.length > 1) {
+      if (temp1.length > 0) str += temp1[0];
+
+      if (temp1.length > 1) {
         str += temp1[1];
-        if(temp2.length > 0) {
+        if (temp2.length > 0) {
           str += temp2[0];
-        } else if(temp.length > 2) str += temp[2];
-      } else if(temp2.length > 2) {
+        } else if (temp.length > 2) str += temp[2];
+      } else if (temp2.length > 2) {
         str += temp2[0];
         str += temp2[1];
       }
     }
-    else{
+    else {
       var temp = fields[0];
-      if(temp.length > 0) str += temp[0];
-      if(temp.length > 1) str += temp[1];
-      if(temp.length > 2) str += temp[2];
+      if (temp.length > 0) str += temp[0];
+      if (temp.length > 1) str += temp[1];
+      if (temp.length > 2) str += temp[2];
     }
     this.center_code = str.toUpperCase();
   }
 
   openHomePage() {
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.push(HomePage);
   }
 
 }

@@ -26,7 +26,7 @@
   "cordova-plugin-network-information": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-network-information"
+      "id": "cordova-plugin-network-information@^1.3.3"
     },
     "is_top_level": true,
     "variables": {}
@@ -147,6 +147,88 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-android-permissions@1.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-battery-status": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-battery-status@2.0.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "com.moust.cordova.videoplayer": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/moust/cordova-plugin-videoplayer.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-videoplayer": {
+    "source": {
+      "type": "registry",
+      "id": "git+https://github.com/moust/cordova-plugin-videoplayer.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-health": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-health"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-pedometer": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-pedometer"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-google-analytics": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-google-analytics"
+    },
+    "is_top_level": true,
+    "variables": {
+      "GMS_VERSION": "11.0.1"
+    }
+  },
+  "cordova-plugin-streaming-media": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-streaming-media@3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-stepcounter": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-stepcounter"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "co.realtime.plugins.CordovaPush": {
+    "source": {
+      "type": "registry",
+      "id": "cordovapush@0.2.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-firebase": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-firebase"
     },
     "is_top_level": true,
     "variables": {}

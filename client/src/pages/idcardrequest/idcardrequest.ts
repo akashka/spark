@@ -197,7 +197,7 @@ export class IdcardrequestPage {
   }
 
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   onSelectChange() {

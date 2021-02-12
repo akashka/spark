@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "825625274559",
-    "firebase_url": "https://olw-spark.firebaseio.com",
-    "project_id": "olw-spark",
-    "storage_bucket": "olw-spark.appspot.com"
+    "project_number": "341165559362",
+    "firebase_url": "https://white-terra-205621.firebaseio.com",
+    "project_id": "white-terra-205621",
+    "storage_bucket": "white-terra-205621.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:825625274559:android:b9b5576df272972d",
+        "mobilesdk_app_id": "1:341165559362:android:0eff933893f0e5c3cfa7db",
         "android_client_info": {
           "package_name": "com.olw.spark"
         }
       },
       "oauth_client": [
         {
-          "client_id": "825625274559-nbvbbe43vnd4o46i3vnm8u64u1s8ak5t.apps.googleusercontent.com",
+          "client_id": "341165559362-pi3lcgd7ul70d2s48qf32n3nn1bcnf3q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBGDVA0CKIwdthgzVeRSj5-irh2_TMeNcU"
+          "current_key": "AIzaSyDToCNeaE_hhhdOH4dHDoUJyZSn1zzkTCw"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341165559362-pi3lcgd7ul70d2s48qf32n3nn1bcnf3q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

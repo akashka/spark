@@ -27,6 +27,46 @@
         <provider android:authorities="${applicationId}.opener.provider" android:exported="false" android:grantUriPermissions="true" android:name="io.github.pwlin.cordova.plugins.fileopener2.FileProvider">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/opener_paths" />
         </provider>
+        <receiver android:enabled="true" android:name="com.google.android.gms.analytics.AnalyticsReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.analytics.AnalyticsService" />
+        <receiver android:enabled="true" android:exported="true" android:name="com.google.android.gms.analytics.CampaignTrackingReceiver">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        <activity android:configChanges="orientation|screenSize" android:label="Simple Audio Stream" android:name="com.hutchind.cordova.plugins.streamingmedia.SimpleAudioStream" />
+        <activity android:configChanges="orientation|screenSize" android:label="Simple Video Stream" android:name="com.hutchind.cordova.plugins.streamingmedia.SimpleVideoStream" />
+        <service android:enabled="true" android:name="net.texh.cordovapluginstepcounter.StepCounterService" />
+        <receiver android:name="net.texh.cordovapluginstepcounter.StepCounterBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <activity android:exported="true" android:name="co.realtime.plugins.android.cordovapush.OrtcPushHandlerActivity" />
+        <receiver android:name="co.realtime.plugins.android.cordovapush.GcmReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.olw.spark" />
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService" />
+        <service android:name="org.apache.cordova.firebase.FirebasePluginMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="org.apache.cordova.firebase.FirebasePluginInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver android:name="org.apache.cordova.firebase.OnNotificationOpenReceiver" />
     </application>
     <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="28" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -43,4 +83,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-feature android:name="android.hardware.sensor.stepcounter" />
+    <uses-feature android:name="android.hardware.sensor.stepdetector" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.olw.spark.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.olw.spark.permission.C2D_MESSAGE" />
 </manifest>

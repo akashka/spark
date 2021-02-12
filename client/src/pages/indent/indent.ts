@@ -102,12 +102,12 @@ export class IndentPage {
   }
  
   add() {
-  	this.navCtrl.setRoot(HomePage);
+  	this.navCtrl.push(HomePage);
   }
 
   edit(student) {
     this.storage.set('edit_student', student._id);
-    this.navCtrl.setRoot(EditstudentPage);
+    this.navCtrl.push(EditstudentPage);
   }
 
   indent(student) {

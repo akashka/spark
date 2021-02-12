@@ -21,6 +21,7 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
+        maven { url 'https://maven.fabric.io/public' } // Fabrics Maven repository from cordova-plugin-firebase
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -29,6 +30,8 @@ buildscript {
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.google.gms:google-services:4.1.0' // google-services dependency from cordova-plugin-firebase
+        classpath 'io.fabric.tools:gradle:1.25.4' // fabric dependency from cordova-plugin-firebase
     }
 }
 
@@ -37,6 +40,7 @@ allprojects {
     repositories {
         mavenCentral();
         jcenter()
+        google() // Google's Maven repository from cordova-plugin-firebase
     }
 }
 
@@ -86,6 +90,8 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "co.realtime.plugins.CordovaPush/spark-build.gradle"
+apply from: "cordova-plugin-firebase/spark-build.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -248,6 +254,13 @@ dependencies {
     compile "com.android.support:support-v4:25.+"
     compile "com.android.support:appcompat-v7:25.+"
     compile "com.appsee:appsee-android:2.4.1"
+    compile "com.google.android.gms:play-services-fitness:+"
+    compile "com.google.android.gms:play-services-analytics:+"
+    compile "com.google.android.gms:play-services-tagmanager:+"
+    compile "com.google.firebase:firebase-core:+"
+    compile "com.google.firebase:firebase-messaging:+"
+    compile "com.google.firebase:firebase-config:+"
+    compile "com.google.firebase:firebase-perf:+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

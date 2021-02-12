@@ -147,7 +147,7 @@ export class DispatchPage {
   }
 
   reset() {
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.push(HomePage);
   }
 
   confirmIndentStudents() {

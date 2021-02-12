@@ -265,7 +265,7 @@ export class ConfirmPage {
   }
 
   goBack() {
-    this.navCtrl.setRoot(SearchPage);
+    this.navCtrl.push(SearchPage);
   }
 
   getPicture() {

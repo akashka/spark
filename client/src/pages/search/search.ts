@@ -122,7 +122,7 @@ export class SearchPage {
   }
 
   add() {
-    this.navCtrl.setRoot(EnquiryPage);
+    this.navCtrl.push(EnquiryPage);
   }
  
   callNumber(num) {
@@ -145,7 +145,7 @@ export class SearchPage {
       student.study_year = '2020-21';
     }
     this.storage.set("confirmed_student", student);
-    this.navCtrl.setRoot(ConfirmPage);
+    this.navCtrl.push(ConfirmPage);
   }
 
   async presentActionSheet(num, email) {

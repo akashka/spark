@@ -12,20 +12,20 @@
                 <br />
                 <h6 class="m-0" style="color: mediumslateblue;">{{user.center}} - {{user.role}}</h6>
             </div>
-            <!-- <ion-fab top start fixed>
-                <button ion-fab mini>
+            <ion-fab top end fixed (click)="go_to_profile_tab()" menuClose>
+                <button ion-fab mini dark>
                     <ion-icon name="create"></ion-icon>
                 </button>
-            </ion-fab> -->
+            </ion-fab>
         </div>
         <ion-list>
             <ion-item (click)="go_to_home()" menuClose>
                 Home
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_center()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_center()" menuClose>
                 Centers
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_signup()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_signup()" menuClose>
                 Users
             </ion-item>
             <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_enquiry()" menuClose>
@@ -43,10 +43,10 @@
             <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_idcardrequest()" menuClose>
                 Request ID Card
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_approveindent()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_approveindent()" menuClose>
                 Approve Indentation
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_idcardprint()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_idcardprint()" menuClose>
                 Print ID Card
             </ion-item>
             <ion-item *ngIf="isDispatcher" (click)="go_to_dispatch()" menuClose>
@@ -58,14 +58,21 @@
             <ion-item *ngIf="isCenterAdmin || isCounsellor" (click)="go_to_studentslist()" menuClose>
                 Admitted Students
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_adminedit()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_adminedit()" menuClose>
                 Edit Student (Admin)
             </ion-item>
-            <ion-item *ngIf="isAdmin" (click)="go_to_deletestudent()" menuClose>
+            <ion-item [hidden]="!isAdmin && !isReadonlyadmin" (click)="go_to_deletestudent()" menuClose>
                 Restore Student (Admin)
             </ion-item>
-            <ion-item (click)="go_to_chatList()" menuClose>
+            <ion-item *ngIf="isAdmin || isCenterAdmin || isCounsellor || isReadonlyadmin"
+                (click)="go_to_add_classroom()" menuClose>
+                Classroom
+            </ion-item>
+            <ion-item *ngIf="!isParent" (click)="go_to_chatList()" menuClose>
                 Chats
+            </ion-item>
+            <ion-item (click)="go_to_staticpages()" menuClose>
+                Information Center
             </ion-item>
             <ion-item (click)="go_to_login()" menuClose
                 style="bottom: 0; position: sticky; background-color: red; color: white; opacity: 1;">
